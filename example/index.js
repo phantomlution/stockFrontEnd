@@ -8,15 +8,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.config.productionTip = false
 
-
-import DummyRed		from './dummy/DummyRed.vue'
-import DummyGreen	from './dummy/DummyGreen.vue'
-import DummyBlue	from './dummy/DummyBlue.vue'
-
-Vue.component(DummyRed.name, DummyRed)
-Vue.component(DummyGreen.name, DummyGreen)
-Vue.component(DummyBlue.name, DummyBlue)
-
 Vue.use(ElementUI, {
   size: 'mini'
 })

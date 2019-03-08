@@ -4,32 +4,29 @@
       <el-radio-button :label="item.value" :key="item.value" v-for="item of viewMode">{{ item.label }}</el-radio-button>
     </el-radio-group>
 
-    <span v-show="editMode">
-      <b>Cols</b>: <el-input-number :value="layout.cols" @input="setCols" controls-position="right" style="width: 80px" />
-      <b>Rows</b>: <el-input-number :value="layout.rows" @input="setRows" controls-position="right" style="width: 80px" />
-    </span>
+    <LrButtonForm v-show="editMode" :showFooter="false" buttonName="基础配置">
+      <el-form label-width="40px">
+        <el-form-item label="行数">
+          <el-input-number :value="layout.rows" @input="setRows" style="width: 120px" />
+        </el-form-item>
+        <el-form-item label="列数">
+          <el-input-number :value="layout.cols" @input="setCols" style="width: 120px" />
+        </el-form-item>
+      </el-form>
+    </LrButtonForm>
 
-    <LrButtonForm />
-
-    <el-popover v-model="addDialogVisible">
-      <div>
-        <el-form :model="formModel" ref="form" label-width="80px">
-          <el-form-item label="标题" prop="text" :rules="[ { required: true } ]">
-            <el-input v-model.trim="formModel.text" />
-          </el-form-item>
-          <el-form-item label="组件" prop="comp" :rules="[ { required: true } ]">
-            <el-select v-model="formModel.comp" >
-              <el-option v-for="item of availableComponentList" :label="item.label" :value="item.value" :key="item.value"/>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <div style="text-align: right">
-          <el-button @click.stop="cancelAdd">取消</el-button>
-          <el-button type="primary" @click.stop="confirmAdd">确定</el-button>
-        </div>
-      </div>
-      <el-button slot="reference" type="primary">添加</el-button>
-    </el-popover>
+    <LrButtonForm v-show="editMode" buttonName="添加栏目" :visible.sync="boxVisible" @confirm="confirm">
+      <el-form :model="formModel" ref="form" label-width="80px">
+        <el-form-item label="标题" prop="text" :rules="[ { required: true } ]">
+          <el-input v-model.trim="formModel.text" />
+        </el-form-item>
+        <el-form-item label="组件" prop="comp" :rules="[ { required: true } ]">
+          <el-select v-model="formModel.comp" >
+            <el-option v-for="item of availableComponentList" :label="item.label" :value="item.value" :key="item.value"/>
+          </el-select>
+        </el-form-item>
+      </el-form>
+    </LrButtonForm>
 	</div>
 </template>
 
@@ -53,13 +50,13 @@ export default {
 	data() {
 		return {
 		  viewMode,
-		  currentViewMode: viewMode[0].value,
+		  currentViewMode: viewMode[1].value,
       availableComponentList,
       formModel: {
 		    text: '',
         comp: ''
       },
-      addDialogVisible: false,
+      boxVisible: false,
 			localData: {
 				content: ''
 			}
@@ -75,25 +72,15 @@ export default {
 		  this.$emit('add', this.formModel)
 		},
 		setCols(v) {
+		  if (v === this.layout.cols) return
 			this.$emit('cols', v)
 		},
 		setRows(v) {
+		  if (v === this.layout.rows) return
 			this.$emit('rows', v)
 		},
-    clearDialog() {
-		  this.$refs.form && this.$refs.form.resetFields()
-      this.addDialogVisible = false
-    },
-    cancelAdd() {
-		  this.clearDialog()
-    },
-    confirmAdd() {
-		  this.$refs.form.validate(valid => {
-		    if (valid) {
-		      this.add()
-          this.clearDialog()
-        }
-      })
+    confirm() {
+      this.boxVisible = false
     }
 	}
 }
