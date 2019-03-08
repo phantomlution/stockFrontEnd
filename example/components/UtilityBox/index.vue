@@ -134,8 +134,8 @@ $padding: 8;
 .lr-utility__content{
   height: calc(100% - #{ $padding + 16 }px);
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
 }
 </style>

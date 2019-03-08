@@ -55,7 +55,7 @@ export default {
           meta: {
             title: '123',
             src: 'http://www.ifnews.com/',
-            width: 300,
+            width: 310,
             height: 565,
             proxy: true,
             contentPosition: {

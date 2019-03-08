@@ -3,7 +3,7 @@
     <div class="view-container" :style="containerStyle">
       <div v-show="showMask" class="view-box-mask" @mousedown="mousedown" @mousemove="mousemove" @mouseup="mouseup"></div>
       <div :id="contentId" class="view-box" :style="contentStyle">
-        <iframe type="text/html" :src="proxySrc" :width="width" :height="height" ref="frame"/>
+        <iframe :src="proxySrc" :width="width" :height="height" ref="frame"/>
       </div>
     </div>
   </div>
@@ -65,7 +65,8 @@ export default {
   computed: {
     scaleStyle() {
       return {
-        transform: `scale(${ this.scale })`
+        transform: `scale(${ this.scale })`,
+        'transform-origin': '0 0'
       }
     },
     containerStyle() {
