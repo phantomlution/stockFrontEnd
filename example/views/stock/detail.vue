@@ -25,21 +25,34 @@ export default {
       padding: [20, 80, 80, 80]
     })
 
-    // 最后一天的数据不准确
-    this.$http.post(`/api/stock/detail`, {
-      code: 'SZ000007'
-    }).then(response => {
-      console.log(response)
-      let data = response.data
-      console.log(data)
-      data = lodash.takeRight(data, 100)
-      this.updateChart(data)
-    }).catch(_ => {
-      console.log(_)
-
-    })
+    this.loadData()
   },
   methods: {
+    loadData() {
+      const code = 'SH600519'
+      Promise.all([
+        this.$http.post('/api/stock/detail', { code: code }),
+        this.$http.post('/api/stock/base', { symbol: code })
+      ]).then(responseList => {
+        console.log(responseList)
+        let floatShare = responseList[1].float_shares
+        let data = responseList[0].data
+        data.forEach(item => {
+          item.waterFrequencyPercent = item.volume / floatShare * 100
+          if (Math.abs(item.percent) > 10) {
+            item.waterFrequencyPercent = null
+          }
+        })
+        data = lodash.takeRight(data, 100)
+        const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)
+        console.log(lodash.mean(waterList))
+        // TODO 加条辅助线被，在木牛流马那
+
+      this.updateChart(data)
+      }).catch(_ => {
+        console.log(_)
+      })
+    },
     updateChart(data) {
       const chart = this.chart
       function pick(data, field) {
@@ -70,20 +83,21 @@ export default {
           alias: 'close',
           min: 0
         },
-        volume: {
-          alias: 'volume',
+        waterFrequencyPercent: {
+          alias: 'waterFrequencyPercent',
           formatter: function formatter(value) {
-            return parseInt(value / 10000 / 100, 10)
+            return value
           }
-        }
+        },
       };
       var view1 = chart.view();
-      view1.source(pick(data, ['close', 'volume', 'timestamp']), scale);
-      view1.axis('volume', {
+      view1.source(pick(data, ['close', 'waterFrequencyPercent', 'timestamp', 'percent']), scale);
+      view1.axis('waterFrequencyPercent', {
         grid: null
       });
-      view1.line().position('timestamp*close').color('#4FAAEB').size(2);
-      view1.line().position('timestamp*volume').color('#9AD681').size(2);
+      view1.line().position('timestamp*close').tooltip('timestamp*close*percent').color('#4FAAEB').size(2);
+      view1.line().position('timestamp*waterFrequencyPercent').color('#9AD681').size(2);
+//      chart.tooltip.view()
       chart.render();
     }
   }
