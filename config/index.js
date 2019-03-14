@@ -18,16 +18,24 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js',
       '@shellybits/v-chacheli/dist/ChacheliDesigner$': resolve('./src/Designer.vue'),
       '@shellybits/v-chacheli/dist/ChacheliLayout$': resolve('./src/Layout.vue'),
-
       '@shellybits/v-chacheli/dist/ChacheliDesigner.css$': 'empty-module',
-      '@shellybits/v-chacheli/dist/ChacheliLayout.css$': 'empty-module'
+      '@shellybits/v-chacheli/dist/ChacheliLayout.css$': 'empty-module',
+      '@': resolve('./example')
     }
   },
 
   dev: {
     assetsSubDirectory: 'example',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

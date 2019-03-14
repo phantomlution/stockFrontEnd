@@ -31,4 +31,11 @@ export const getZoomOutRatio = function(from, to) {
   return widthRatio > heightRatio ? heightRatio : widthRatio
 }
 
+export const idGenerator = {
+  index: 0,
+  next(prefix = 'random') {
+    this.index++
+    return `${ prefix }_${ new Date().getTime() }_${ this.index }`
+  }
+}
 
