@@ -8,7 +8,6 @@
         <div :id="chartId"></div>
       </div>
     </div>
-
   </div>
 </template>
 
