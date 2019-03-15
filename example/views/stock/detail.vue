@@ -1,6 +1,14 @@
 <template>
   <div style="height: 100vh">
-    <div :id="chartId"></div>
+    <div>
+      <div>
+        <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
+      </div>
+      <div>
+        <div :id="chartId"></div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -13,7 +21,18 @@ export default {
   data() {
     return {
       chart: null,
-      chartId: idGenerator.next()
+      chartId: idGenerator.next(),
+      analyzeModel: {
+        code: 'SZ000007',
+        dataCount: 70,
+        base: null,
+        source: []
+      }
+    }
+  },
+  watch: {
+    'analyzeModel.dataCount'(val) {
+      this.analyze()
     }
   },
   mounted() {
@@ -29,32 +48,50 @@ export default {
   },
   methods: {
     loadData() {
-      const code = 'SH600519'
+      const code = this.analyzeModel.code
       Promise.all([
         this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
-        console.log(responseList)
         let floatShare = responseList[1].float_shares
+        this.analyzeModel.base = responseList[1]
         let data = responseList[0].data
         data.forEach(item => {
-          item.waterFrequencyPercent = item.volume / floatShare * 100
+          item.waterFrequencyPercent = lodash.round(item.volume / floatShare * 100, 2)
           if (Math.abs(item.percent) > 10) {
             item.waterFrequencyPercent = null
           }
         })
-        data = lodash.takeRight(data, 100)
-        const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)
-        console.log(lodash.mean(waterList))
-        // TODO 加条辅助线被，在木牛流马那
-
-      this.updateChart(data)
+        this.analyzeModel.source = data
+        this.analyze()
       }).catch(_ => {
         console.log(_)
       })
     },
-    updateChart(data) {
+    getBase() {
+      return this.analyzeModel.base
+    },
+    analyze() {
+      let data = lodash.takeRight(this.analyzeModel.source, this.analyzeModel.dataCount)
+      const closeValueList = data.map(item => item.close)
+      const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)
+
+      const waterFrequencyPercent = lodash.round(lodash.mean(waterList), 2)
+      const average = lodash.round(lodash.mean(closeValueList), 2)
+      const base = this.getBase()
+      const waterFrequentCapitalScale = lodash.round(waterFrequencyPercent / 100 * base.float_shares * average /10000 / 10000, 2)
+      console.log(waterFrequentCapitalScale)
+
+      const guide = {
+        average,
+        waterFrequencyPercent,
+        waterFrequentCapitalScale
+      }
+      this.updateChart(data, guide)
+    },
+    updateChart(data, { waterFrequencyPercent, average }) {
       const chart = this.chart
+      chart.clear()
       function pick(data, field) {
         return data.map(function(item) {
           var result = {};
@@ -97,7 +134,34 @@ export default {
       });
       view1.line().position('timestamp*close').tooltip('timestamp*close*percent').color('#4FAAEB').size(2);
       view1.line().position('timestamp*waterFrequencyPercent').color('#9AD681').size(2);
-//      chart.tooltip.view()
+
+      view1.guide().line({
+        start: {
+          timestamp: 'min',
+          waterFrequencyPercent: waterFrequencyPercent
+        },
+        end: {
+          timestamp: 'max',
+          waterFrequencyPercent: waterFrequencyPercent
+        },
+        text: {
+          content: `${ waterFrequencyPercent }%`
+        }
+      })
+
+      view1.guide().line({
+        start: {
+          timestamp: 'min',
+          close: average
+        },
+        end: {
+          timestamp: 'max',
+          close: average
+        },
+        text: {
+          content: average
+        }
+      })
       chart.render();
     }
   }
