@@ -3,6 +3,9 @@
     <div>
       <div>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
+        <el-select v-model="analyzeModel.code" filterable :filter-method="throttleSearch" v-show="false">
+          <el-option v-for="item in analyzeModel.currentCodeList" :key="item.value" :label="`(${ item.label}) ${ item.value }`" :value="item.value"></el-option>
+        </el-select>
       </div>
       <div>
         <div :id="chartId"></div>
@@ -21,7 +24,10 @@ export default {
     return {
       chart: null,
       chartId: idGenerator.next(),
+      throttleSearch: null,
       analyzeModel: {
+        codeList: [],
+        currentCodeList: [],
         code: 'SZ000007',
         dataCount: 70,
         base: null,
@@ -32,6 +38,9 @@ export default {
   watch: {
     'analyzeModel.dataCount'(val) {
       this.analyze()
+    },
+    'analyzeModel.code'() {
+      this.loadData()
     }
   },
   mounted() {
@@ -44,10 +53,32 @@ export default {
     })
 
     this.loadData()
+    this.throttleSearch = lodash.throttle(this.filterStockItem, 50)
+  },
+  destroyed() {
+    this.throttleSearch = null
   },
   methods: {
+    loadStockList() {
+      this.$http.get('/api/stock/list').then(response => {
+        const codeNameMap = new Map()
+        response.nameList.forEach(item => {
+          codeNameMap.set(item.code, item.name)
+        })
+
+        const codeList = response.idList.map(item => ({
+          value: item.symbol,
+          label: codeNameMap.get(item.symbol)
+        }))
+        this.analyzeModel.codeList = codeList
+        this.filterStockItem()
+      }).catch(_ => {
+        console.log(_)
+      })
+    },
     loadData() {
       const code = this.analyzeModel.code
+      this.loadStockList()
       Promise.all([
         this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
@@ -65,6 +96,16 @@ export default {
         this.analyze()
       }).catch(_ => {
         console.log(_)
+      })
+    },
+    filterStockItem(query) {
+      console.log(query)
+      if (!query) {
+        this.analyzeModel.currentCodeList =  this.analyzeModel.codeList
+        return
+      }
+      this.analyzeModel.currentCodeList = this.analyzeModel.codeList.filter(item => {
+        return item.label.indexOf(query) !== -1 || item.value.indexOf(query) !== -1
       })
     },
     getBase() {
