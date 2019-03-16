@@ -3,6 +3,8 @@
     <div>
       <div>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
+        <el-button type="primary" @click.stop="downloadExcel">导出数据</el-button>
+        <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
         <el-select v-model="analyzeModel.code" filterable :filter-method="throttleSearch" v-show="true">
           <el-option v-for="item in analyzeModel.currentCodeList" :key="item.value" :label="`(${ item.label}) ${ item.value }`" :value="item.value"></el-option>
         </el-select>
@@ -21,6 +23,7 @@
 import G2 from '@antv/g2'
 import { idGenerator } from '@/utils'
 import lodash from 'lodash'
+import moment from 'moment'
 
 export default {
   data() {
@@ -30,6 +33,7 @@ export default {
       secondChart: null,
       secondChartId: idGenerator.next(),
       throttleSearch: null,
+      collector: [],
       analyzeModel: {
         codeList: [],
         currentCodeList: [],
@@ -44,9 +48,13 @@ export default {
     'analyzeModel.dataCount'(val) {
       this.analyze()
     },
-    'analyzeModel.code'() {
-      this.loadData()
+    'analyzeModel.code'(val) {
+      this.loadData(val)
+    },
+    collector(val) {
+      console.log('gotcha')
     }
+
   },
   mounted() {
     this.chart = new G2.Chart({
@@ -63,13 +71,28 @@ export default {
       height: window.innerHeight
     })
 
-    this.loadData()
+    this.loadData(this.analyzeModel.code)
     this.throttleSearch = lodash.throttle(this.filterStockItem, 50)
+    this.loadStockList()
   },
   destroyed() {
     this.throttleSearch = null
   },
   methods: {
+    startBash() {
+      const stockList = this.analyzeModel.currentCodeList
+      let i = 0
+      let requestInterval = setInterval(_ => {
+        if (stockList[i]) {
+          this.loadData(stockList[i].value)
+          i++
+        } else {
+          if (requestInterval) {
+            clearInterval(requestInterval)
+          }
+        }
+      }, 50)
+    },
     loadStockList() {
       this.$http.get('/api/stock/list').then(response => {
         const codeNameMap = new Map()
@@ -87,15 +110,14 @@ export default {
         console.log(_)
       })
     },
-    loadData() {
-      const code = this.analyzeModel.code
-      this.loadStockList()
+    loadData(code, collector = this.collector) {
       Promise.all([
         this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
         let floatShare = responseList[1].float_shares
-        this.analyzeModel.base = responseList[1]
+        const base = responseList[1]
+        this.analyzeModel.base = base
         let data = responseList[0].data
         data.forEach(item => {
           item.waterFrequencyPercent = lodash.round(item.volume / floatShare * 100, 2)
@@ -105,13 +127,12 @@ export default {
         })
         this.analyzeModel.source = data
         this.analyze()
-        this.getStockRepositoryGraph()
+        this.getStockRepositoryGraph(data, base.symbol, collector)
       }).catch(_ => {
         console.log(_)
       })
     },
     filterStockItem(query) {
-      console.log(query)
       if (!query) {
         this.analyzeModel.currentCodeList =  this.analyzeModel.codeList
         return
@@ -123,33 +144,63 @@ export default {
     getBase() {
       return this.analyzeModel.base
     },
+
+    downloadExcel() {
+      if (this.collector.length === 0) {
+        return this.$message.error('没有要导出的数据')
+      }
+      const keyList = Object.keys(this.collector[0])
+
+      const result = []
+      result.push(keyList)
+
+
+      this.collector.forEach(item => {
+        result.push(keyList.map(key => item[key]))
+      })
+
+      this.$excel.export({
+        data: result
+      })
+    },
     getWaterFrequencyPercentInDays(data, lastDays) {
       const calculateDataList = lodash.takeRight(data, lastDays)
       const waterList = calculateDataList.map(item => item.waterFrequencyPercent).filter(item => item !== null)
       return lodash.round(lodash.mean(waterList), 2)
     },
-    getStockRepositoryGraph() {
-      const dayDiff = 70
+    getStockRepositoryGraph(dataSource, code, collector) {
+      const dayDiff = 200
       const startDays = 10
       const endDays = 70
 
+      console.log(dataSource)
+
       const result = []
-      for(let i = dayDiff; i> 0; i--) {
-        let data = lodash.dropRight(this.analyzeModel.source, i)
+      for(let i = dayDiff; i>= 0; i--) {
+        let data = lodash.dropRight(dataSource, i)
+
         if (data.length < dayDiff) {
           throw new Error('数据量不足')
         }
         const waterFrequencyPercentStart = this.getWaterFrequencyPercentInDays(data, startDays)
         const waterFrequencyPercentEnd = this.getWaterFrequencyPercentInDays(data, endDays)
-
+        const timestamp = data[data.length - 1].timestamp
         result.push({
-          timestamp: data[data.length - 1].timestamp,
+          code,
+          timestamp,
+          date: moment(timestamp).format('YYYY-MM-DD'),
           diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
           last10: waterFrequencyPercentStart,
           last70: waterFrequencyPercentEnd
         })
-
       }
+      if (collector) {
+        const eureka = result.find(item => item.diff < -50)
+        if (eureka) {
+          collector.push(eureka)
+        }
+      }
+
       this.updateStockRepositoryGraph(result)
     },
     updateStockRepositoryGraph(data) {
@@ -199,7 +250,6 @@ export default {
       const average = lodash.round(lodash.mean(closeValueList), 2)
       const base = this.getBase()
       const waterFrequentCapitalScale = lodash.round(waterFrequencyPercent / 100 * base.float_shares * average /10000 / 10000, 2)
-      console.log(waterFrequentCapitalScale)
 
       const guide = {
         average,

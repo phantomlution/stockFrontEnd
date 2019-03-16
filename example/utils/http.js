@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Message } from 'element-ui'
 
 const axiosInstance = axios.create()
-axiosInstance.defaults.timeout = 15 * 1000
+axiosInstance.defaults.timeout = 0 //15 * 1000
 
 // 对后端的返回值进行优化
 const showFriendlyErrorMessage = function(response) {
