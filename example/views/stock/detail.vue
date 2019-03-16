@@ -3,12 +3,15 @@
     <div>
       <div>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
-        <el-select v-model="analyzeModel.code" filterable :filter-method="throttleSearch" v-show="false">
+        <el-select v-model="analyzeModel.code" filterable :filter-method="throttleSearch" v-show="true">
           <el-option v-for="item in analyzeModel.currentCodeList" :key="item.value" :label="`(${ item.label}) ${ item.value }`" :value="item.value"></el-option>
         </el-select>
       </div>
       <div>
         <div :id="chartId"></div>
+      </div>
+      <div>
+        <div :id="secondChartId"></div>
       </div>
     </div>
   </div>
@@ -24,6 +27,8 @@ export default {
     return {
       chart: null,
       chartId: idGenerator.next(),
+      secondChart: null,
+      secondChartId: idGenerator.next(),
       throttleSearch: null,
       analyzeModel: {
         codeList: [],
@@ -50,6 +55,12 @@ export default {
       width: window.innerWidth,
       height: window.innerHeight,
       padding: [20, 80, 80, 80]
+    })
+
+    this.secondChart = new G2.Chart({
+      container: this.secondChartId,
+      forceFit: true,
+      height: window.innerHeight
     })
 
     this.loadData()
@@ -94,6 +105,7 @@ export default {
         })
         this.analyzeModel.source = data
         this.analyze()
+        this.getStockRepositoryGraph()
       }).catch(_ => {
         console.log(_)
       })
@@ -110,6 +122,73 @@ export default {
     },
     getBase() {
       return this.analyzeModel.base
+    },
+    getWaterFrequencyPercentInDays(data, lastDays) {
+      const calculateDataList = lodash.takeRight(data, lastDays)
+      const waterList = calculateDataList.map(item => item.waterFrequencyPercent).filter(item => item !== null)
+      return lodash.round(lodash.mean(waterList), 2)
+    },
+    getStockRepositoryGraph() {
+      const dayDiff = 70
+      const startDays = 10
+      const endDays = 70
+
+      const result = []
+      for(let i = dayDiff; i> 0; i--) {
+        let data = lodash.dropRight(this.analyzeModel.source, i)
+        if (data.length < dayDiff) {
+          throw new Error('数据量不足')
+        }
+        const waterFrequencyPercentStart = this.getWaterFrequencyPercentInDays(data, startDays)
+        const waterFrequencyPercentEnd = this.getWaterFrequencyPercentInDays(data, endDays)
+
+        result.push({
+          timestamp: data[data.length - 1].timestamp,
+          diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
+          last10: waterFrequencyPercentStart,
+          last70: waterFrequencyPercentEnd
+        })
+
+      }
+      this.updateStockRepositoryGraph(result)
+    },
+    updateStockRepositoryGraph(data) {
+      const chart = this.secondChart
+      chart.clear()
+      var scale = {
+        timestamp: {
+          alias: '日期',
+          type: 'time',
+          mask: 'YYYY-MM-DD'
+        },
+      }
+
+      chart.source(data, scale);
+      chart.tooltip({
+        crosshairs: {
+          type: 'line'
+        }
+      });
+      chart.line().position('timestamp*diff').tooltip('timestamp*diff*last10*last70');
+      chart.point().position('timestamp*diff').size(4).shape('circle').style({
+        stroke: '#fff',
+        lineWidth: 1
+      });
+      chart.guide().line({
+        start: {
+          timestamp: 'min',
+          diff: -50
+        },
+        end: {
+          timestamp: 'max',
+          diff: -50
+        },
+        text: {
+          position: 'start',
+          content: `-50%`
+        }
+      })
+      chart.render();
     },
     analyze() {
       let data = lodash.takeRight(this.analyzeModel.source, this.analyzeModel.dataCount)
