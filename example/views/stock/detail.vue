@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div style="height: 100vh;overflow: auto">
     <div>
       <div>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
@@ -35,8 +35,10 @@ export default {
       secondChart: null,
       secondChartId: idGenerator.next(),
       throttleSearch: null,
+      autoLoad: true,
       collector: [],
       useChart: true,
+      chooseStock: true,
       analyzeModel: {
         codeList: [],
         currentCodeList: [],
@@ -52,6 +54,8 @@ export default {
       this.analyze()
     },
     'analyzeModel.code'(val) {
+      this.$message.success('正在重新加载')
+      this.useChart = true
       this.loadData(val)
     },
     collector() {
@@ -72,7 +76,10 @@ export default {
       forceFit: true,
       height: window.innerHeight
     })
-    // this.loadData(this.analyzeModel.code)
+    if (this.autoLoad) {
+      this.loadData(this.analyzeModel.code)
+    }
+
     this.throttleSearch = lodash.throttle(this.filterStockItem, 50)
     this.loadStockList()
   },
@@ -82,7 +89,7 @@ export default {
   methods: {
     startBash() {
       this.useChart = false
-      const stockList = this.analyzeModel.currentCodeList
+      let stockList = this.analyzeModel.currentCodeList
       stockList.forEach(stockItem => {
         setTimeout(_ => {
           this.loadData(stockItem.value)
@@ -114,16 +121,24 @@ export default {
     },
     loadData(code, collector = this.collector) {
       Promise.all([
-        this.$http.post('/api/stock/detail', { code: code, count: 420 }),
+        this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
         if (!responseList[0]) {
           throw new Error('找不到该数据')
         }
-        let floatShare = responseList[1].float_shares
+
         const base = responseList[1]
-        if (base.name.toUpperCase().indexOf('ST') !== -1) {
+        if (!base.float_shares) {
+          base.float_shares = base.total_shares // 基金股票
+        }
+        let floatShare = base.float_shares
+        const stockName = base.name.toUpperCase()
+        if (stockName.indexOf('ST') !== -1) {
           throw new Error('不考虑垃圾股')
+        }
+        if (stockName.indexOf('债') !== -1) {
+          throw new Error('跳过债券')
         }
         this.analyzeModel.base = base
         let data = responseList[0].data
@@ -135,7 +150,7 @@ export default {
         })
         this.analyzeModel.source = data
         this.analyze()
-        this.getStockRepositoryGraph(data, base.symbol, collector)
+        this.getStockRepositoryGraph(data, base.symbol, collector, base)
       }).catch(_ => {
         console.log(_)
       })
@@ -209,8 +224,8 @@ export default {
       }
       return false
     },
-    getStockRepositoryGraph(dataSource, code, collector) {
-      const dayDiff = 70
+    getStockRepositoryGraph(dataSource, code, collector, base) {
+      const dayDiff = this.chooseStock ? 3 : 70 // 填写为70有比较好的模型效果，3是为了快速选股
       const startDays = 10
       const endDays = 70
 
@@ -221,6 +236,7 @@ export default {
 
       const result = []
       for(let i = dayDiff; i>= 0; i--) {
+        // 获取最后 N 天的数据
         let data = lodash.dropRight(dataSource, i)
 
         if (data.length < endDays) {
@@ -250,15 +266,21 @@ export default {
         current.low = price.low
         current.close = price.close
         current.percent = price.percent
+        if (this.chooseStock) {
+          ongoing = null
+        }
         if (!ongoing) {
-          if (current.diff <= -1 * waterPercentThreshold) {
+          if (this.chooseStock || current.diff <= -1 * waterPercentThreshold) { // 选股是输入所有的热度
             tradeCount++
             ongoing = {
               code,
+              type: base.type,
               waitByInDate: current.timestamp,
               tradeCount,
               buyInDate: null,
               expectByIn: current.close, // 期待的买入价格
+              diff: current.diff,
+              last10: current.last10,
               last70: current.last70,
               startSellDate: null,
               expectSellPrice: null,
@@ -269,7 +291,10 @@ export default {
               holeDays: '',
               profitPercent: ''
             }
-            //debugger
+            if (this.chooseStock) {
+              this.addToCollector(collector, ongoing)
+              continue
+            }
           }
         } else {
           // 如果准备卖出时，还没有买入，那么交易无效，准备下一次交易
@@ -281,7 +306,7 @@ export default {
               ongoing.expectSellPrice = current.close
               //debugger
             } else if (current.last70 <= -1 * waterPercentThreshold) {
-              ongoing.last70 = current.last70
+              // ongoing.last70 = current.last70
             }
           }
 

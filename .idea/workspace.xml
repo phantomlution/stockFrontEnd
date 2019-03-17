@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/App.vue" afterPath="$PROJECT_DIR$/example/App.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/views/stock/detail.vue" afterPath="$PROJECT_DIR$/example/views/stock/detail.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -25,10 +24,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
+            <state relative-caret-position="170">
               <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding>
                 <element signature="e#140#161#0" expanded="true" />
@@ -49,14 +48,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="322" column="0" lean-forward="true" selection-start-line="322" selection-start-column="0" selection-end-line="322" selection-end-column="0" />
+            <state relative-caret-position="114">
+              <caret line="105" column="38" lean-forward="true" selection-start-line="105" selection-start-column="38" selection-end-line="105" selection-end-column="38" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#765#790#0" expanded="true" />
+                <element signature="e#780#805#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -146,12 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>filter</find>
-      <find>downloadData</find>
-      <find>read</find>
-      <find>download</find>
-      <find>console.log</find>
-      <find>startSellPrice</find>
       <find>collector</find>
       <find>format</find>
       <find>console.log('</find>
@@ -163,19 +156,25 @@
       <find>buyInDate</find>
       <find>expectSellPrice</find>
       <find>profit</find>
-      <find>analyze</find>
       <find>gotcha</find>
-      <find>loadData</find>
       <find>canByIn</find>
       <find>50</find>
       <find>waitBy</find>
       <find>useCha</find>
-      <find>getStockRepositoryGraph</find>
       <find>useChart</find>
       <find>updateStockRepositoryGraph</find>
-      <find>debugger</find>
       <find>getStock</find>
       <find>getTradeDaysBetweenTimeRage</find>
+      <find>diff</find>
+      <find>getWaterFrequencyPercentInDays</find>
+      <find>ongoing</find>
+      <find>waterFrequencyPercent</find>
+      <find>debugger</find>
+      <find>float_share</find>
+      <find>loadData</find>
+      <find>analyze</find>
+      <find>ST</find>
+      <find>getStockRepositoryGraph</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -484,7 +483,7 @@
       <workItem from="1552662687708" duration="5369000" />
       <workItem from="1552704408897" duration="1081000" />
       <workItem from="1552729675617" duration="2992000" />
-      <workItem from="1552787063964" duration="15420000" />
+      <workItem from="1552787063964" duration="20345000" />
     </task>
     <task id="LOCAL-00001" summary="集成全部的基础功能">
       <created>1552037063327</created>
@@ -556,11 +555,18 @@
       <option name="project" value="LOCAL" />
       <updated>1552820681343</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="接近完美的模型了">
+      <created>1552821662525</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1552821662525</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64371000" />
+    <option name="totallyTimeSpent" value="69296000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
@@ -598,7 +604,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33903134" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24110033" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24110033" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -615,6 +621,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <MESSAGE value="集成全部的基础功能" />
     <MESSAGE value="样式修复" />
     <MESSAGE value="可视化集成" />
@@ -624,7 +631,8 @@
     <MESSAGE value="集成前端自动化" />
     <MESSAGE value="集成水流双均线模型" />
     <MESSAGE value="集成模型分析" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成模型分析" />
+    <MESSAGE value="接近完美的模型了" />
+    <option name="LAST_COMMIT_MESSAGE" value="接近完美的模型了" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -913,16 +921,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding>
-            <element signature="e#140#161#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/utils/http.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -966,6 +964,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="105" column="38" lean-forward="true" selection-start-line="105" selection-start-column="38" selection-end-line="105" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#780#805#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/example/App.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -976,13 +985,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
+    <entry file="file://$PROJECT_DIR$/example/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="322" column="0" lean-forward="true" selection-start-line="322" selection-start-column="0" selection-end-line="322" selection-end-column="0" />
+        <state relative-caret-position="170">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#765#790#0" expanded="true" />
+            <element signature="e#140#161#0" expanded="true" />
           </folding>
         </state>
       </provider>
