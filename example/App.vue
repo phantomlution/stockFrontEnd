@@ -1,14 +1,13 @@
 <template>
   <div id="app">
-    <!--<el-tabs>-->
-      <!--<el-tab-pane label="detail">-->
+    <el-tabs>
+      <el-tab-pane label="detail">
         <stock-detail />
-      <!--</el-tab-pane>-->
-      <!--<el-tab-pane label="analyze">-->
-        <!--<stock-analyze />-->
-      <!--</el-tab-pane>-->
-    <!--</el-tabs>-->
-
+      </el-tab-pane>
+      <el-tab-pane label="analyze">
+        <stock-analyze />
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 

@@ -114,7 +114,7 @@ export default {
     },
     loadData(code, collector = this.collector) {
       Promise.all([
-        this.$http.post('/api/stock/detail', { code: code }),//, count: 420
+        this.$http.post('/api/stock/detail', { code: code, count: 420 }),
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
         if (!responseList[0]) {
@@ -197,6 +197,8 @@ export default {
       return false
     },
     hasEverSuspend(dataList) { // 判断是否有比较长的交易日无法交易（判断停牌等）
+      // 尝试一下最大考虑1年的数据
+      dataList = lodash.takeRight(dataList, 210)
       if (dataList.length > 1) {
         for(let i=0; i<dataList.length -1; i++) {
           const diff = this.getTradeDaysBetweenTimeRage(dataList[i], dataList[i+1])
@@ -319,7 +321,6 @@ export default {
         }
       }
 
-      console.log(this.useChart)
       if (!this.useChart) {
         return
       }

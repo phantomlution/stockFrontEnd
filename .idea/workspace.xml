@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/views/stock/analyze.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/App.vue" afterPath="$PROJECT_DIR$/example/App.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/views/stock/detail.vue" afterPath="$PROJECT_DIR$/example/views/stock/detail.vue" />
@@ -42,9 +41,9 @@
         <entry file="file://$PROJECT_DIR$/example/App.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="190">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding>
-                <element signature="e#302#348#0" expanded="true" />
+                <element signature="e#252#298#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,8 +52,8 @@
       <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="27" column="32" lean-forward="false" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+            <state relative-caret-position="108">
+              <caret line="322" column="0" lean-forward="true" selection-start-line="322" selection-start-column="0" selection-end-line="322" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#765#790#0" expanded="true" />
@@ -168,7 +167,6 @@
       <find>gotcha</find>
       <find>loadData</find>
       <find>canByIn</find>
-      <find>getTradeDaysBetweenTimeRage</find>
       <find>50</find>
       <find>waitBy</find>
       <find>useCha</find>
@@ -177,6 +175,7 @@
       <find>updateStockRepositoryGraph</find>
       <find>debugger</find>
       <find>getStock</find>
+      <find>getTradeDaysBetweenTimeRage</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -485,7 +484,7 @@
       <workItem from="1552662687708" duration="5369000" />
       <workItem from="1552704408897" duration="1081000" />
       <workItem from="1552729675617" duration="2992000" />
-      <workItem from="1552787063964" duration="14946000" />
+      <workItem from="1552787063964" duration="15420000" />
     </task>
     <task id="LOCAL-00001" summary="集成全部的基础功能">
       <created>1552037063327</created>
@@ -550,11 +549,18 @@
       <option name="project" value="LOCAL" />
       <updated>1552751575819</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="集成模型分析">
+      <created>1552820681343</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1552820681343</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63897000" />
+    <option name="totallyTimeSpent" value="64371000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
@@ -617,7 +623,8 @@
     <MESSAGE value="优化筛选日期为最近三个月" />
     <MESSAGE value="集成前端自动化" />
     <MESSAGE value="集成水流双均线模型" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成水流双均线模型" />
+    <MESSAGE value="集成模型分析" />
+    <option name="LAST_COMMIT_MESSAGE" value="集成模型分析" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -962,17 +969,17 @@
     <entry file="file://$PROJECT_DIR$/example/App.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
-          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
-            <element signature="e#302#348#0" expanded="true" />
+            <element signature="e#252#298#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="27" column="32" lean-forward="false" selection-start-line="27" selection-start-column="32" selection-end-line="27" selection-end-column="32" />
+        <state relative-caret-position="108">
+          <caret line="322" column="0" lean-forward="true" selection-start-line="322" selection-start-column="0" selection-end-line="322" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#765#790#0" expanded="true" />
