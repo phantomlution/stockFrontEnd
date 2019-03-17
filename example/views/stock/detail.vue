@@ -25,6 +25,8 @@ import { idGenerator } from '@/utils'
 import lodash from 'lodash'
 import moment from 'moment'
 
+const waterPercentThreshold = 50
+
 export default {
   data() {
     return {
@@ -34,6 +36,7 @@ export default {
       secondChartId: idGenerator.next(),
       throttleSearch: null,
       collector: [],
+      useChart: true,
       analyzeModel: {
         codeList: [],
         currentCodeList: [],
@@ -51,10 +54,9 @@ export default {
     'analyzeModel.code'(val) {
       this.loadData(val)
     },
-    collector(val) {
+    collector() {
       console.log('gotcha')
     }
-
   },
   mounted() {
     this.chart = new G2.Chart({
@@ -70,8 +72,7 @@ export default {
       forceFit: true,
       height: window.innerHeight
     })
-
-    this.loadData(this.analyzeModel.code)
+    // this.loadData(this.analyzeModel.code)
     this.throttleSearch = lodash.throttle(this.filterStockItem, 50)
     this.loadStockList()
   },
@@ -80,18 +81,19 @@ export default {
   },
   methods: {
     startBash() {
+      this.useChart = false
       const stockList = this.analyzeModel.currentCodeList
-      let i = 0
-      let requestInterval = setInterval(_ => {
-        if (stockList[i]) {
-          this.loadData(stockList[i].value)
-          i++
-        } else {
-          if (requestInterval) {
-            clearInterval(requestInterval)
-          }
-        }
-      }, 50)
+      stockList.forEach(stockItem => {
+        setTimeout(_ => {
+          this.loadData(stockItem.value)
+        }, 0)
+      })
+    },
+    dateFormat(timestamp) {
+      if (!timestamp) {
+        return ''
+      }
+      return moment(timestamp).format('YYYY-MM-DD')
     },
     loadStockList() {
       this.$http.get('/api/stock/list').then(response => {
@@ -112,11 +114,17 @@ export default {
     },
     loadData(code, collector = this.collector) {
       Promise.all([
-        this.$http.post('/api/stock/detail', { code: code }),
+        this.$http.post('/api/stock/detail', { code: code }),//, count: 420
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
+        if (!responseList[0]) {
+          throw new Error('找不到该数据')
+        }
         let floatShare = responseList[1].float_shares
         const base = responseList[1]
+        if (base.name.toUpperCase().indexOf('ST') !== -1) {
+          throw new Error('不考虑垃圾股')
+        }
         this.analyzeModel.base = base
         let data = responseList[0].data
         data.forEach(item => {
@@ -168,40 +176,194 @@ export default {
       const waterList = calculateDataList.map(item => item.waterFrequencyPercent).filter(item => item !== null)
       return lodash.round(lodash.mean(waterList), 2)
     },
+    getPrice(dataSource, timestamp) {
+      const current = dataSource.filter(item => item.timestamp === timestamp)
+      if (current.length === 0) {
+        throw new Error('找不到交易数据数据')
+      } else if (current.length > 1) {
+        throw new Error('历史数据被人篡改')
+      }
+      return current[0]
+    },
+    canByIn(expectPrice, todayHigh, todayLow, close, percent) {
+      if (expectPrice > todayLow && expectPrice < todayHigh) {
+        return true
+      }
+      // 若当天买入价高于当天最高价，且单日涨跌停价格不超过10%，也可以买入
+      if (expectPrice >= todayHigh && (expectPrice / (close / (1 + percent / 100))) <= 1.1) {
+        return true
+      }
+
+      return false
+    },
+    hasEverSuspend(dataList) { // 判断是否有比较长的交易日无法交易（判断停牌等）
+      if (dataList.length > 1) {
+        for(let i=0; i<dataList.length -1; i++) {
+          const diff = this.getTradeDaysBetweenTimeRage(dataList[i], dataList[i+1])
+          if (diff > 22) {
+            return true
+          }
+        }
+      }
+      return false
+    },
     getStockRepositoryGraph(dataSource, code, collector) {
-      const dayDiff = 200
+      const dayDiff = 70
       const startDays = 10
       const endDays = 70
 
-      console.log(dataSource)
+      const dateList = dataSource.map(item => item.timestamp)
+      if (this.hasEverSuspend(dateList)) {
+        throw new Error('数据不连续')
+      }
 
       const result = []
       for(let i = dayDiff; i>= 0; i--) {
         let data = lodash.dropRight(dataSource, i)
 
-        if (data.length < dayDiff) {
+        if (data.length < endDays) {
           throw new Error('数据量不足')
         }
+
         const waterFrequencyPercentStart = this.getWaterFrequencyPercentInDays(data, startDays)
         const waterFrequencyPercentEnd = this.getWaterFrequencyPercentInDays(data, endDays)
         const timestamp = data[data.length - 1].timestamp
         result.push({
           code,
           timestamp,
-          date: moment(timestamp).format('YYYY-MM-DD'),
+          date: this.dateFormat(timestamp),
           diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
           last10: waterFrequencyPercentStart,
           last70: waterFrequencyPercentEnd
         })
       }
-      if (collector) {
-        const eureka = result.find(item => item.diff < -50)
-        if (eureka) {
-          collector.push(eureka)
+
+      let ongoing = null
+      let tradeCount = 0
+      // 动态规划
+      for (let i=0; i<result.length; i++) {
+        let current = result[i]
+        const price = this.getPrice(dataSource, current.timestamp)
+        current.high = price.high
+        current.low = price.low
+        current.close = price.close
+        current.percent = price.percent
+        if (!ongoing) {
+          if (current.diff <= -1 * waterPercentThreshold) {
+            tradeCount++
+            ongoing = {
+              code,
+              waitByInDate: current.timestamp,
+              tradeCount,
+              buyInDate: null,
+              expectByIn: current.close, // 期待的买入价格
+              last70: current.last70,
+              startSellDate: null,
+              expectSellPrice: null,
+              actualSellDate: null,
+              exception: '',
+              waitBuyInDays: '',
+              waitSellDays: '',
+              holeDays: '',
+              profitPercent: ''
+            }
+            //debugger
+          }
+        } else {
+          // 如果准备卖出时，还没有买入，那么交易无效，准备下一次交易
+
+          // 确定卖出时间点
+          if (!ongoing.startSellDate) {
+            if (current.last10 >= ongoing.last70) {
+              ongoing.startSellDate = current.timestamp
+              ongoing.expectSellPrice = current.close
+              //debugger
+            } else if (current.last70 <= -1 * waterPercentThreshold) {
+              ongoing.last70 = current.last70
+            }
+          }
+
+          // 确定买入的时间点
+          if (!ongoing.buyInDate) { // 对买入进行修正
+            if (this.canByIn(ongoing.expectByIn, current.high, current.low, current.close, current.percent)) {
+              ongoing.buyInDate = current.timestamp
+            }
+          }
+
+          if (ongoing.startSellDate && current.timestamp > ongoing.startSellDate) { // 最早第二天卖
+            if (!ongoing.buyInDate || (ongoing.buyInDate > ongoing.startSellDate)) {
+              //debugger
+              ongoing.exception = `未买入。卖出时间点${ this.dateFormat(ongoing.startSellDate)},买入${ this.dateFormat(ongoing.buyInDate)}`
+              this.addToCollector(collector, ongoing)
+              ongoing = null
+              continue
+            } else { // 尝试卖出
+              if (ongoing.expectSellPrice > current.low && ongoing.expectSellPrice < current.high) {
+                ongoing.actualSellDate = current.timestamp
+
+                //debugger
+                ongoing.exception = '成功卖出'
+                this.addToCollector(collector, ongoing)
+                ongoing = null
+                continue
+              }
+            }
+          }
+        }
+        if (i === result.length - 1) {
+          if(ongoing) {
+            ongoing.exception = '被套牢'
+          }
+
+          this.addToCollector(collector, ongoing)
         }
       }
 
+      console.log(this.useChart)
+      if (!this.useChart) {
+        return
+      }
       this.updateStockRepositoryGraph(result)
+    },
+    getTradeDaysBetweenTimeRage(start, end) {
+      const oneDayMilliSeconds = 24 * 60 * 60 * 1000
+      let result = 0
+      while(start + oneDayMilliSeconds <= end) {
+        start += oneDayMilliSeconds
+        if (moment(start).day() === 0 || moment(start).day() === 6) { // 周末不计入交易日
+          continue
+        }
+        result += 1
+      }
+      return result
+    },
+    addToCollector(collector, model) {
+      if (!model) {
+        return
+      }
+      // 增加额外的值
+      let keyList = Object.keys(model)
+      keyList.forEach(key => {
+        if (key.indexOf('Date') !== -1) {
+          model[`${ key }String`] = model[key] ? this.dateFormat(model[key]) : null
+        }
+      })
+
+
+      if (model.waitByInDate && model.buyInDate) {
+        model.waitBuyInDays = this.getTradeDaysBetweenTimeRage(model.waitByInDate, model.buyInDate)
+      }
+      if (model.startSellDate && model.actualSellDate) {
+        model.waitSellDays = this.getTradeDaysBetweenTimeRage(model.startSellDate, model.actualSellDate)
+      }
+      if (model.buyInDate && model.actualSellDate) {
+        model.holeDays = this.getTradeDaysBetweenTimeRage(model.buyInDate, model.actualSellDate)
+      }
+      if (model.actualSellDate && model.expectByIn && model.expectSellPrice) {
+        model.profitPercent = lodash.round((model.expectSellPrice - model.expectByIn ) / model.expectByIn, 3)
+      }
+
+      collector.push(model)
     },
     updateStockRepositoryGraph(data) {
       const chart = this.secondChart
@@ -228,20 +390,23 @@ export default {
       chart.guide().line({
         start: {
           timestamp: 'min',
-          diff: -50
+          diff: -1 * waterPercentThreshold
         },
         end: {
           timestamp: 'max',
-          diff: -50
+          diff: -1 * waterPercentThreshold
         },
         text: {
           position: 'start',
-          content: `-50%`
+          content: `-${ waterPercentThreshold }%`
         }
       })
       chart.render();
     },
     analyze() {
+      if (!this.useChart) {
+        return
+      }
       let data = lodash.takeRight(this.analyzeModel.source, this.analyzeModel.dataCount)
       const closeValueList = data.map(item => item.close)
       const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)
