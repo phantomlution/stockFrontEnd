@@ -1,18 +1,11 @@
 <template>
   <div class="lr-box lr-disable-select">
-    <template v-if="title">
-      <div class="lr-box__title">
-        {{ title }}
-      </div>
-      <div class="lr-box__content">
-        <slot />
-      </div>
-    </template>
-    <template v-else>
-      <div class="lr-box__content">
-        <slot />
-      </div>
-    </template>
+    <div class="lr-box__title" v-if="title">
+      {{ title }}
+    </div>
+    <div class="lr-box__content">
+      <slot />
+    </div>
   </div>
 </template>
 
