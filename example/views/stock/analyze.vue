@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100vh">
+  <div>
     <input type="file" @change="handleFile" />
 
     <div :id="chartId" />

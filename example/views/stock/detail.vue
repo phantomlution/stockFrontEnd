@@ -1,21 +1,25 @@
 <template>
-  <div style="height: 100vh;overflow: auto">
+  <div style="overflow: auto">
     <div>
-      <div>
+      <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
-        <el-button type="primary" @click.stop="downloadExcel">导出数据</el-button>
+        <el-button type="primary" @click.stop="downloadExcel(true)">导出</el-button>
+        <el-button type="primary" @click.stop="downloadExcel(false)">分析</el-button>
         <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
         <el-select v-model="analyzeModel.code" filterable :filter-method="throttleSearch" v-show="true">
           <el-option v-for="item in analyzeModel.currentCodeList" :key="item.value" :label="`(${ item.label}) ${ item.value }`" :value="item.value"></el-option>
         </el-select>
         <el-button @click.stop="refresh">刷新</el-button>
-      </div>
-      <div>
+      </lr-box>
+      <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
+        <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
+      </lr-box>
+      <lr-box>
         <div :id="chartId"></div>
-      </div>
-      <div>
+      </lr-box>
+      <lr-box>
         <div :id="secondChartId"></div>
-      </div>
+      </lr-box>
     </div>
   </div>
 </template>
@@ -40,10 +44,13 @@ export default {
       collector: [],
       useChart: false,
       chooseStock: false,
+      choiceList: [], // 待选择列表
       analyzeModel: {
+        recentRecordCount: 3,
+        maxOutputStockCount: 10,
         codeList: [],
         currentCodeList: [],
-        code: 'SZ000007',
+        code: '',
         dataCount: 70,
         base: null,
         source: []
@@ -51,32 +58,31 @@ export default {
     }
   },
   watch: {
-    'analyzeModel.dataCount'(val) {
+    'analyzeModel.dataCount'() {
       this.analyze()
     },
-    'analyzeModel.code'(val) {
-      this.$message.success('正在重新加载')
-      this.useChart = true
-      this.chooseStock = false
-      this.loadData(val)
+    'analyzeModel.code'() {
+      this.refresh()
     },
     collector() {
       console.log('gotcha')
     }
   },
   mounted() {
-    this.chart = new G2.Chart({
-      container: this.chartId,
-      forceFit: true,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      padding: [20, 80, 80, 80]
-    })
+    this.$nextTick(_ => {
+      this.chart = new G2.Chart({
+        container: this.chartId,
+        forceFit: true,
+        width: window.innerWidth,
+        height: window.innerHeight,
+        padding: [20, 80, 80, 80]
+      })
 
-    this.secondChart = new G2.Chart({
-      container: this.secondChartId,
-      forceFit: true,
-      height: window.innerHeight
+      this.secondChart = new G2.Chart({
+        container: this.secondChartId,
+        forceFit: true,
+        height: window.innerHeight
+      })
     })
     if (this.autoLoad) {
      this.refresh()
@@ -88,12 +94,23 @@ export default {
     this.throttleSearch = null
   },
   methods: {
+    analyzeChoice(code) {
+      this.analyzeModel.code = code
+    },
     refresh() {
+      this.useChart = true
+      this.chooseStock = false
       this.loadData(this.analyzeModel.code)
+    },
+    removeChoice(index) {
+      this.choiceList.splice(index, 1)
     },
     startBash() {
       this.useChart = false
-      let stockList = this.analyzeModel.currentCodeList
+      this.chooseStock = true
+      this.collector = []
+      this.choiceList = []
+      let stockList = this.analyzeModel.codeList
       stockList.forEach(stockItem => {
         setTimeout(_ => {
           this.loadData(stockItem.value)
@@ -124,6 +141,9 @@ export default {
       })
     },
     loadData(code, collector = this.collector) {
+      if (!code) {
+        return
+      }
       Promise.all([
         this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
@@ -161,23 +181,48 @@ export default {
     },
     filterStockItem(query) {
       if (!query) {
-        this.analyzeModel.currentCodeList =  this.analyzeModel.codeList
+        this.analyzeModel.currentCodeList = lodash.take(this.analyzeModel.codeList, 10)
         return
       }
-      this.analyzeModel.currentCodeList = this.analyzeModel.codeList.filter(item => {
+      this.analyzeModel.currentCodeList = lodash.take(this.analyzeModel.codeList.filter(item => {
         return item.label.indexOf(query) !== -1 || item.value.indexOf(query) !== -1
-      })
+      }), 10)
     },
     getBase() {
       return this.analyzeModel.base
     },
 
-    downloadExcel() {
+    downloadExcel(download = false) {
       if (this.collector.length === 0) {
         return this.$message.error('没有要导出的数据')
       }
-      const keyList = Object.keys(this.collector[0])
 
+      this.collector.sort((former, later) => {
+        return former.diff - later.diff
+      })
+
+      const analyzeResult = []
+      let targetData = lodash.take(this.collector, this.analyzeModel.recentRecordCount * this.analyzeModel.maxOutputStockCount)
+      targetData.forEach(item => {
+        if (!analyzeResult.find(existItem => item.code === existItem.code)) {
+          if (analyzeResult.length < this.analyzeModel.maxOutputStockCount) {
+            analyzeResult.push(item)
+          }
+        }
+      })
+
+      this.choiceList = analyzeResult.map(item => {
+        return {
+          label: `(${ item.diff })${ item.name }`,
+          value: item.code
+        }
+      })
+
+
+      if (!download) {
+        return
+      }
+      const keyList = Object.keys(this.collector[0])
       const result = []
       result.push(keyList)
 
@@ -229,7 +274,7 @@ export default {
       return false
     },
     getStockRepositoryGraph(dataSource, code, collector, base) {
-      const dayDiff = this.chooseStock ? 3 : 70 // 填写为70有比较好的模型效果，3是为了快速选股
+      const dayDiff = this.chooseStock ? this.analyzeModel.recentRecordCount : 70 // 填写为70有比较好的模型效果，3是为了快速选股
       const startDays = 10
       const endDays = 70
 
@@ -278,6 +323,7 @@ export default {
             tradeCount++
             ongoing = {
               code,
+              name: base.name,
               type: base.type,
               waitByInDate: current.timestamp,
               tradeCount,
@@ -369,7 +415,7 @@ export default {
       return result
     },
     addToCollector(collector, model) {
-      if (!model) {
+      if (!this.chooseStock || !model) {
         return
       }
       // 增加额外的值
@@ -532,3 +578,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-stock-tag{
+  &:hover{
+    cursor: pointer;
+  }
+}
+</style>

@@ -14,6 +14,7 @@ export default {
         )
       )
 
+
       Vue.component(componentName, component)
     })
   }
