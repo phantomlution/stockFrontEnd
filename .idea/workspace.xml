@@ -24,10 +24,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
+            <state relative-caret-position="323">
               <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
               <folding>
                 <element signature="e#140#161#0" expanded="true" />
@@ -48,14 +48,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="105" column="38" lean-forward="true" selection-start-line="105" selection-start-column="38" selection-end-line="105" selection-end-column="38" />
+            <state relative-caret-position="222">
+              <caret line="312" column="14" lean-forward="false" selection-start-line="312" selection-start-column="14" selection-end-line="312" selection-end-column="14" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#780#805#0" expanded="true" />
+                <element signature="e#836#861#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -145,8 +145,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>collector</find>
-      <find>format</find>
       <find>console.log('</find>
       <find>console.log(</find>
       <find>dateFormat</find>
@@ -161,8 +159,6 @@
       <find>50</find>
       <find>waitBy</find>
       <find>useCha</find>
-      <find>useChart</find>
-      <find>updateStockRepositoryGraph</find>
       <find>getStock</find>
       <find>getTradeDaysBetweenTimeRage</find>
       <find>diff</find>
@@ -171,10 +167,14 @@
       <find>waterFrequencyPercent</find>
       <find>debugger</find>
       <find>float_share</find>
-      <find>loadData</find>
       <find>analyze</find>
       <find>ST</find>
+      <find>chooseStock</find>
+      <find>loadData</find>
       <find>getStockRepositoryGraph</find>
+      <find>useChart</find>
+      <find>updateStockRepositoryGraph</find>
+      <find>last70</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -225,7 +225,7 @@
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
+    <option name="y" value="65" />
     <option name="width" value="1280" />
     <option name="height" value="773" />
   </component>
@@ -483,7 +483,7 @@
       <workItem from="1552662687708" duration="5369000" />
       <workItem from="1552704408897" duration="1081000" />
       <workItem from="1552729675617" duration="2992000" />
-      <workItem from="1552787063964" duration="20345000" />
+      <workItem from="1552787063964" duration="21154000" />
     </task>
     <task id="LOCAL-00001" summary="集成全部的基础功能">
       <created>1552037063327</created>
@@ -562,14 +562,21 @@
       <option name="project" value="LOCAL" />
       <updated>1552821662525</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="大量策略优化">
+      <created>1552836240439</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1552836240440</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69296000" />
+    <option name="totallyTimeSpent" value="70105000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="773" extended-state="6" />
+    <frame x="0" y="65" width="1280" height="773" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24110033" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -632,7 +639,8 @@
     <MESSAGE value="集成水流双均线模型" />
     <MESSAGE value="集成模型分析" />
     <MESSAGE value="接近完美的模型了" />
-    <option name="LAST_COMMIT_MESSAGE" value="接近完美的模型了" />
+    <MESSAGE value="大量策略优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="大量策略优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -945,14 +953,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/ChacheliDesignerControl.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="64" column="10" lean-forward="false" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/views/stock/analyze.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1406">
@@ -964,13 +964,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
+    <entry file="file://$PROJECT_DIR$/example/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="105" column="38" lean-forward="true" selection-start-line="105" selection-start-column="38" selection-end-line="105" selection-end-column="38" />
+        <state relative-caret-position="323">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#780#805#0" expanded="true" />
+            <element signature="e#140#161#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -985,12 +984,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/index.js">
+    <entry file="file://$PROJECT_DIR$/example/ChacheliDesignerControl.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        <state relative-caret-position="398">
+          <caret line="64" column="10" lean-forward="false" selection-start-line="64" selection-start-column="10" selection-end-line="64" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/views/stock/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="312" column="14" lean-forward="false" selection-start-line="312" selection-start-column="14" selection-end-line="312" selection-end-column="14" />
           <folding>
-            <element signature="e#140#161#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#836#861#0" expanded="true" />
           </folding>
         </state>
       </provider>

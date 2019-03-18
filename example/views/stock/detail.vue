@@ -8,6 +8,7 @@
         <el-select v-model="analyzeModel.code" filterable :filter-method="throttleSearch" v-show="true">
           <el-option v-for="item in analyzeModel.currentCodeList" :key="item.value" :label="`(${ item.label}) ${ item.value }`" :value="item.value"></el-option>
         </el-select>
+        <el-button @click.stop="refresh">刷新</el-button>
       </div>
       <div>
         <div :id="chartId"></div>
@@ -56,6 +57,7 @@ export default {
     'analyzeModel.code'(val) {
       this.$message.success('正在重新加载')
       this.useChart = true
+      this.chooseStock = false
       this.loadData(val)
     },
     collector() {
@@ -77,9 +79,8 @@ export default {
       height: window.innerHeight
     })
     if (this.autoLoad) {
-      this.loadData(this.analyzeModel.code)
+     this.refresh()
     }
-
     this.throttleSearch = lodash.throttle(this.filterStockItem, 50)
     this.loadStockList()
   },
@@ -87,6 +88,9 @@ export default {
     this.throttleSearch = null
   },
   methods: {
+    refresh() {
+      this.loadData(this.analyzeModel.code)
+    },
     startBash() {
       this.useChart = false
       let stockList = this.analyzeModel.currentCodeList
@@ -306,7 +310,7 @@ export default {
               ongoing.expectSellPrice = current.close
               //debugger
             } else if (current.last70 <= -1 * waterPercentThreshold) {
-              // ongoing.last70 = current.last70
+              ongoing.last70 = current.last70
             }
           }
 
