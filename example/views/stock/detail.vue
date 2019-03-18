@@ -14,7 +14,7 @@
       <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
         <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
       </lr-box>
-      <lr-box>
+      <lr-box :title="analyzeModel.title">
         <div :id="chartId"></div>
       </lr-box>
       <lr-box>
@@ -50,6 +50,7 @@ export default {
         maxOutputStockCount: 10,
         codeList: [],
         currentCodeList: [],
+        title: '',
         code: '',
         dataCount: 70,
         base: null,
@@ -172,6 +173,7 @@ export default {
             item.waterFrequencyPercent = null
           }
         })
+        this.analyzeModel.title = base.name
         this.analyzeModel.source = data
         this.analyze()
         this.getStockRepositoryGraph(data, base.symbol, collector, base)
@@ -584,5 +586,10 @@ export default {
   &:hover{
     cursor: pointer;
   }
+}
+
+.el-tag{
+  margin-bottom: 8px;
+  margin-right: 8px;
 }
 </style>
