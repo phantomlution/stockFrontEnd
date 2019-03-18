@@ -38,8 +38,8 @@ export default {
       throttleSearch: null,
       autoLoad: true,
       collector: [],
-      useChart: true,
-      chooseStock: true,
+      useChart: false,
+      chooseStock: false,
       analyzeModel: {
         codeList: [],
         currentCodeList: [],
@@ -310,6 +310,7 @@ export default {
               ongoing.expectSellPrice = current.close
               //debugger
             } else if (current.last70 <= -1 * waterPercentThreshold) {
+              // 核心代码，测试了很多模型(这个效果最好)，能极大的提高盈利率和成交率
               ongoing.last70 = current.last70
             }
           }
