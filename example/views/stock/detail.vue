@@ -26,11 +26,12 @@
 
 <script>
 import G2 from '@antv/g2'
-import { idGenerator } from '@/utils'
+import { idGenerator, deepClone } from '@/utils'
 import lodash from 'lodash'
 import moment from 'moment'
 
 const waterPercentThreshold = 50
+const oneYearTradeCount = 210 // 每年的交易日数量
 
 export default {
   data() {
@@ -199,27 +200,34 @@ export default {
         return this.$message.error('没有要导出的数据')
       }
 
-      this.collector.sort((former, later) => {
-        return former.diff - later.diff
-      })
+      if (!download) {
+        let collectorData = deepClone(this.collector)
+        collectorData.sort((former, later) => {
+          return former.diff - later.diff
+        })
 
-      const analyzeResult = []
-      let targetData = lodash.take(this.collector, this.analyzeModel.recentRecordCount * this.analyzeModel.maxOutputStockCount)
-      targetData.forEach(item => {
-        if (!analyzeResult.find(existItem => item.code === existItem.code)) {
-          if (analyzeResult.length < this.analyzeModel.maxOutputStockCount) {
-            analyzeResult.push(item)
+        const today = new Date().getTime()
+        collectorData = collectorData.filter(item => { // 确保数据有效 & 最小数据点数门槛
+          return this.getTradeDaysBetweenTimeRage(item.lastDataTimestamp, today) < 22 && item.totalDataCount >= oneYearTradeCount
+        })
+
+        const analyzeResult = []
+        let targetData = lodash.take(collectorData, this.analyzeModel.recentRecordCount * this.analyzeModel.maxOutputStockCount)
+        targetData.forEach(item => {
+          if (!analyzeResult.find(existItem => item.code === existItem.code)) {
+            if (analyzeResult.length < this.analyzeModel.maxOutputStockCount) {
+              analyzeResult.push(item)
+            }
           }
-        }
-      })
+        })
 
-      this.choiceList = analyzeResult.map(item => {
-        return {
-          label: `(${ item.diff })${ item.name }`,
-          value: item.code
-        }
-      })
-
+        this.choiceList = analyzeResult.map(item => {
+          return {
+            label: `(${ item.diff })${ item.name }`,
+            value: item.code
+          }
+        })
+      }
 
       if (!download) {
         return
@@ -264,7 +272,7 @@ export default {
     },
     hasEverSuspend(dataList) { // 判断是否有比较长的交易日无法交易（判断停牌等）
       // 尝试一下最大考虑1年的数据
-      dataList = lodash.takeRight(dataList, 210)
+      dataList = lodash.takeRight(dataList, oneYearTradeCount)
       if (dataList.length > 1) {
         for(let i=0; i<dataList.length -1; i++) {
           const diff = this.getTradeDaysBetweenTimeRage(dataList[i], dataList[i+1])
@@ -300,7 +308,9 @@ export default {
         result.push({
           code,
           timestamp,
+          totalDataCount: dataSource.length,
           date: this.dateFormat(timestamp),
+          lastDataTimestamp: timestamp,
           diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
           last10: waterFrequencyPercentStart,
           last70: waterFrequencyPercentEnd
@@ -327,6 +337,8 @@ export default {
               code,
               name: base.name,
               type: base.type,
+              totalDataCount: current.totalDataCount,
+              lastDataTimestamp: current.lastDataTimestamp,
               waitByInDate: current.timestamp,
               tradeCount,
               buyInDate: null,

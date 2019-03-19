@@ -39,3 +39,6 @@ export const idGenerator = {
   }
 }
 
+export const deepClone = function(model) {
+  return JSON.parse(JSON.stringify(model))
+}
