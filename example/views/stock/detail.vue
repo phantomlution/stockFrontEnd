@@ -48,7 +48,7 @@ export default {
       choiceList: [], // 待选择列表
       analyzeModel: {
         recentRecordCount: 3,
-        maxOutputStockCount: 10,
+        maxOutputStockCount: 30,
         codeList: [],
         currentCodeList: [],
         title: '',
@@ -108,8 +108,8 @@ export default {
       this.choiceList.splice(index, 1)
     },
     startBash() {
-      this.useChart = false
-      this.chooseStock = true
+      this.useChart = true
+      this.chooseStock = false
       this.collector = []
       this.choiceList = []
       let stockList = this.analyzeModel.codeList
@@ -132,10 +132,17 @@ export default {
           codeNameMap.set(item.code, item.name)
         })
 
-        const codeList = response.idList.map(item => ({
+        let codeList = response.idList.map(item => ({
           value: item.symbol,
           label: codeNameMap.get(item.symbol)
         }))
+
+        codeList = [
+          {
+            value: 'SZ000007',
+            label: '123'
+          }
+        ]
         this.analyzeModel.codeList = codeList
         this.filterStockItem()
       }).catch(_ => {
@@ -322,6 +329,7 @@ export default {
       // 动态规划
       for (let i=0; i<result.length; i++) {
         let current = result[i]
+        let nextDay = result[i + 1]
         const price = this.getPrice(dataSource, current.timestamp)
         current.high = price.high
         current.low = price.low
@@ -331,33 +339,38 @@ export default {
           ongoing = null
         }
         if (!ongoing) {
-          if (this.chooseStock || current.diff <= -1 * waterPercentThreshold) { // 选股是输入所有的热度
+          const currentModel = {
+            code,
+            name: base.name,
+            type: base.type,
+            totalDataCount: current.totalDataCount,
+            lastDataTimestamp: current.lastDataTimestamp,
+            waitByInDate: current.timestamp,
+            tradeCount,
+            buyInDate: null,
+            expectByIn: current.close, // 期待的买入价格
+            diff: current.diff,
+            last10: current.last10,
+            last70: current.last70,
+            startSellDate: null,
+            expectSellPrice: null,
+            actualSellDate: null,
+            exception: '',
+            waitBuyInDays: '',
+            waitSellDays: '',
+            holeDays: '',
+            profitPercent: ''
+          }
+
+          if (this.chooseStock) {
             tradeCount++
-            ongoing = {
-              code,
-              name: base.name,
-              type: base.type,
-              totalDataCount: current.totalDataCount,
-              lastDataTimestamp: current.lastDataTimestamp,
-              waitByInDate: current.timestamp,
-              tradeCount,
-              buyInDate: null,
-              expectByIn: current.close, // 期待的买入价格
-              diff: current.diff,
-              last10: current.last10,
-              last70: current.last70,
-              startSellDate: null,
-              expectSellPrice: null,
-              actualSellDate: null,
-              exception: '',
-              waitBuyInDays: '',
-              waitSellDays: '',
-              holeDays: '',
-              profitPercent: ''
-            }
-            if (this.chooseStock) {
-              this.addToCollector(collector, ongoing)
-              continue
+            ongoing = currentModel
+            this.addToCollector(collector, ongoing)
+            continue
+          } else {
+            if (current.diff <= -1 * waterPercentThreshold && nextDay && current.diff < nextDay.diff) { // 第一个反弹点
+              tradeCount++
+              ongoing = currentModel
             }
           }
         } else {
@@ -369,7 +382,8 @@ export default {
               ongoing.startSellDate = current.timestamp
               ongoing.expectSellPrice = current.close
               //debugger
-            } else if (current.last70 <= -1 * waterPercentThreshold) {
+            }
+            if (current.last70 <= -1 * waterPercentThreshold) {
               // 核心代码，测试了很多模型(这个效果最好)，能极大的提高盈利率和成交率
               ongoing.last70 = current.last70
             }
@@ -429,7 +443,7 @@ export default {
       return result
     },
     addToCollector(collector, model) {
-      if (!this.chooseStock || !model) {
+      if (!model) {
         return
       }
       // 增加额外的值
