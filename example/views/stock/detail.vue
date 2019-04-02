@@ -55,7 +55,7 @@ export default {
       autoLoad: true,
       collector: [],
       useChart: true,
-      calculateNilDays: 2,
+      calculateNilDays: 3,
       choiceList: [], // 待选择列表
       analyzeModel: {
         recentRecordCount: 3,
