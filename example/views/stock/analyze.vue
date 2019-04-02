@@ -10,6 +10,7 @@
 import XLSX from 'xlsx'
 import { idGenerator } from '@/utils'
 import lodash from 'lodash'
+import moment from 'moment'
 
 export default {
   data() {
@@ -49,16 +50,28 @@ export default {
       }
     },
     updateChart(rawData) {
+      rawData = rawData
+        .filter(item => item.buyInDate > moment('2018-04-01').toDate().getTime())
+        .filter(item => item.expectByIn < 10)
+        .filter(item => item.holeDays <= 10)
+
       const chart = this.chart
       chart.clear()
+      console.log('update')
       const soldData = rawData.filter(item => item.actualSellDate).filter(item => item.waitBuyInDays === 1).map(item => {
         item.color = item.profitPercent > 0 ? 'red' : 'green'
         item.profitPercent = item.profitPercent * 100
         return item
       })
       this.analyzeData(soldData)
-      chart.source(soldData)
-      chart.point().position('holeDays*profitPercent').color('color').size(4).opacity(0.65).shape('circle');
+      chart.source(soldData, {
+        buyInDate: {
+          alias: '日期',
+          type: 'time',
+          mask: 'YYYY-MM-DD'
+        }
+      })
+      chart.point().position('holeDays*profitPercent').tooltip('holeDays*code*expectByIn').color('color').size(4).opacity(0.65).shape('circle');
       chart.render();
     },
     analyzeData(data) {

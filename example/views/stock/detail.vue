@@ -11,6 +11,16 @@
         </el-select>
         <el-button @click.stop="refresh">刷新</el-button>
       </lr-box>
+      <lr-box>
+        <el-form label-width="84px">
+          <el-form-item label="更新视图">
+            <el-switch v-model="useChart" />
+          </el-form-item>
+          <el-form-item :label="'近' + calculateNilDays + '日做空'" >
+            <el-switch v-model="hasNil" />
+          </el-form-item>
+        </el-form>
+      </lr-box>
       <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
         <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
       </lr-box>
@@ -32,6 +42,7 @@ import moment from 'moment'
 
 const waterPercentThreshold = 50
 const oneYearTradeCount = 210 // 每年的交易日数量
+const maxRequestCount = 200
 
 export default {
   data() {
@@ -43,8 +54,8 @@ export default {
       throttleSearch: null,
       autoLoad: true,
       collector: [],
-      useChart: false,
-      chooseStock: false,
+      useChart: true,
+      calculateNilDays: 2,
       choiceList: [], // 待选择列表
       analyzeModel: {
         recentRecordCount: 3,
@@ -59,15 +70,20 @@ export default {
       }
     }
   },
+  computed: {
+    hasNil() {
+      if (this.analyzeModel.source.length > 0) {
+        return lodash.takeRight(this.analyzeModel.source, this.calculateNilDays).filter(item => item.percent <= -5).length > 0
+      }
+      return false
+    }
+  },
   watch: {
     'analyzeModel.dataCount'() {
       this.analyze()
     },
     'analyzeModel.code'() {
       this.refresh()
-    },
-    collector() {
-      console.log('gotcha')
     }
   },
   mounted() {
@@ -100,24 +116,37 @@ export default {
       this.analyzeModel.code = code
     },
     refresh() {
-      this.useChart = true
-      this.chooseStock = false
       this.loadData(this.analyzeModel.code)
     },
     removeChoice(index) {
       this.choiceList.splice(index, 1)
     },
     startBash() {
-      this.useChart = true
-      this.chooseStock = false
       this.collector = []
       this.choiceList = []
       let stockList = this.analyzeModel.codeList
-      stockList.forEach(stockItem => {
-        setTimeout(_ => {
-          this.loadData(stockItem.value)
-        }, 0)
-      })
+      const needLoadCodeList = stockList.map(item => item.value)
+      let requestCount = 0
+      console.warn(moment().format('YYYY-MM-DD HH:mm:ss'))
+      const interval = setInterval(_ => {
+        if (requestCount < maxRequestCount) {
+          const currentCode = needLoadCodeList.pop()
+          if (currentCode) {
+            requestCount++
+            this.loadData(currentCode, true).then(_ => {
+              requestCount--
+            }).catch(_ => {
+              requestCount--
+            })
+          } else {
+            if (interval) {
+              console.warn('任务结束')
+              console.warn(moment().format('YYYY-MM-DD HH:mm:ss'))
+              clearInterval(interval)
+            }
+          }
+        }
+      }, 0)
     },
     dateFormat(timestamp) {
       if (!timestamp) {
@@ -137,23 +166,24 @@ export default {
           label: codeNameMap.get(item.symbol)
         }))
 
-        codeList = [
-          {
-            value: 'SZ000007',
-            label: '123'
-          }
-        ]
+//        codeList = [
+//          {
+//            value: 'SZ000007',
+//            label: '123'
+//          }
+//        ]
         this.analyzeModel.codeList = codeList
         this.filterStockItem()
       }).catch(_ => {
         console.log(_)
       })
     },
-    loadData(code, collector = this.collector) {
+    loadData(code, chooseStock = false) {
+      const collector = this.collector
       if (!code) {
-        return
+        return Promise.reject('no code represent')
       }
-      Promise.all([
+      return Promise.all([
         this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
@@ -184,7 +214,13 @@ export default {
         this.analyzeModel.title = base.name
         this.analyzeModel.source = data
         this.analyze()
-        this.getStockRepositoryGraph(data, base.symbol, collector, base)
+        this.getStockRepositoryGraph({
+          dataSource: data,
+          code: base.symbol,
+          collector,
+          base,
+          chooseStock
+        })
       }).catch(_ => {
         console.log(_)
       })
@@ -290,10 +326,11 @@ export default {
       }
       return false
     },
-    getStockRepositoryGraph(dataSource, code, collector, base) {
-      const dayDiff = this.chooseStock ? this.analyzeModel.recentRecordCount : 70 // 填写为70有比较好的模型效果，3是为了快速选股
+    getStockRepositoryGraph({dataSource, code, collector, base, chooseStock}) {
       const startDays = 10
       const endDays = 70
+      const dayDiff = chooseStock ? this.analyzeModel.recentRecordCount : dataSource.length - endDays // 填写为70有比较好的模型效果，3是为了快速选股
+
 
       const dateList = dataSource.map(item => item.timestamp)
       if (this.hasEverSuspend(dateList)) {
@@ -335,7 +372,7 @@ export default {
         current.low = price.low
         current.close = price.close
         current.percent = price.percent
-        if (this.chooseStock) {
+        if (chooseStock) {
           ongoing = null
         }
         if (!ongoing) {
@@ -343,6 +380,7 @@ export default {
             code,
             name: base.name,
             type: base.type,
+            percent: current.percent,
             totalDataCount: current.totalDataCount,
             lastDataTimestamp: current.lastDataTimestamp,
             waitByInDate: current.timestamp,
@@ -362,7 +400,19 @@ export default {
             profitPercent: ''
           }
 
-          if (this.chooseStock) {
+          // 临时代码，查找恶意做空
+
+//          if (current.diff <= -1 * waterPercentThreshold && current.percent <= -1 * 5) {
+//            tradeCount++
+//            ongoing = currentModel
+//            this.addToCollector(collector, ongoing)
+//          }
+//          continue
+//          if (i === result.length - 1) {
+//            return
+//          }
+
+          if (chooseStock) {
             tradeCount++
             ongoing = currentModel
             this.addToCollector(collector, ongoing)
@@ -383,7 +433,7 @@ export default {
               ongoing.expectSellPrice = current.close
               //debugger
             }
-            if (current.last70 <= -1 * waterPercentThreshold) {
+            if (current.diff <= ongoing.diff) {
               // 核心代码，测试了很多模型(这个效果最好)，能极大的提高盈利率和成交率
               ongoing.last70 = current.last70
             }
@@ -471,6 +521,7 @@ export default {
       collector.push(model)
     },
     updateStockRepositoryGraph(data) {
+      data = lodash.takeRight(data, this.analyzeModel.dataCount)
       const chart = this.secondChart
       chart.clear()
       var scale = {
