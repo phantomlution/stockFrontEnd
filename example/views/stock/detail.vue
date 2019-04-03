@@ -59,7 +59,7 @@ export default {
       choiceList: [], // 待选择列表
       analyzeModel: {
         recentRecordCount: 3,
-        maxOutputStockCount: 30,
+        maxOutputStockCount: 48,
         codeList: [],
         currentCodeList: [],
         title: '',
