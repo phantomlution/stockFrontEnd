@@ -9,6 +9,8 @@ import { idGenerator } from '@/utils'
 import lodash from 'lodash'
 import G2 from '@antv/g2'
 
+const THRESHOLD_WATER_PERCENT = 50
+
 export default {
   data() {
     return {
@@ -50,15 +52,15 @@ export default {
       chart.guide().line({
         start: {
           timestamp: 'min',
-          diff: -1 * waterPercentThreshold
+          diff: -1 * THRESHOLD_WATER_PERCENT
         },
         end: {
           timestamp: 'max',
-          diff: -1 * waterPercentThreshold
+          diff: -1 * THRESHOLD_WATER_PERCENT
         },
         text: {
           position: 'start',
-          content: `-${ waterPercentThreshold }%`
+          content: `-${ THRESHOLD_WATER_PERCENT }%`
         }
       })
       chart.render();

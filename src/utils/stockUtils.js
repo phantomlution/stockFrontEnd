@@ -51,7 +51,6 @@ export default class StockUtils {
 
   static getCodeList() {
     return new Promise((resolve, reject) => {
-      console.log(apiMap.getCodeList)
       http.get(apiMap.getCodeList).then(response => {
         console.log(response)
         const codeNameMap = new Map()
@@ -70,5 +69,34 @@ export default class StockUtils {
         reject(_)
       })
     })
+  }
+
+  static calculateMarketHalfPassivePercent(stockMap, days) {
+    const result = []
+    for(let i=0; i<days; i++) {
+      const startDate = moment().add('days', -1 * days + i).toDate()
+      const startDateString = this.dateFormat(startDate.getTime())
+      let total = 0
+      let halfNegativeCount = 0
+      for(let stock of stockMap.values()) {
+        const currentDayStock = stock.result.find(item => item.date === startDateString)
+        if (currentDayStock && currentDayStock.diff !== undefined) {
+          total++
+          if (currentDayStock.diff < -1 * 50) {
+            halfNegativeCount++
+          }
+        }
+      }
+      if (total > 0) {
+        result.push({
+          date: startDate.getTime(),
+          dateString: startDateString,
+          total,
+          halfNegativeCount
+        })
+      }
+    }
+
+    return result
   }
 }

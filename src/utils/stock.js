@@ -4,6 +4,8 @@ import stockUtils from './stockUtils'
 const RANGE_START_IN_DAYS = 10
 const RANGE_END_IN_DAYS = 70
 
+const RANGE_RECENT_TRADE_VOLUME = 100 // [基本面]近100日交易量
+
 export default class Stock {
 
   constructor(base, rawData) {
@@ -11,8 +13,16 @@ export default class Stock {
     this.code = base.code
     this.name = base.name
     this.rawData = rawData
-    this.isDataContinuous = true
+    this.options = {}
     this.result = this.getComputedData()
+    this.calculateOptions()
+  }
+
+  calculateOptions() { // 手动计算额外的数据
+    const dataList = lodash.takeRight(this.result.filter(item => item.diff !== undefined), RANGE_RECENT_TRADE_VOLUME)
+    if (dataList.length === RANGE_RECENT_TRADE_VOLUME) {
+      this.options.recentOneHundreadNegativeVolumePercent = `${ dataList.filter(item => item.diff < 0).length / RANGE_RECENT_TRADE_VOLUME }`
+    }
   }
 
   getComputedData() {
@@ -21,9 +31,7 @@ export default class Stock {
     const dayDiff = this.rawData.length - endDays
 
     const dateList = this.rawData.map(item => item.timestamp)
-    if (stockUtils.hasEverSuspend(dateList)) {
-      this.isDataContinuous = false
-    }
+    this.options.isDataContinuous = !stockUtils.hasEverSuspend(dateList)
 
     const result = []
     for(let i = dayDiff; i>= 0; i--) {
@@ -49,6 +57,6 @@ export default class Stock {
       })
     }
 
-    this.result = result
+    return result
   }
 }

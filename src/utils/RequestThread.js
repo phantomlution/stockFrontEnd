@@ -26,19 +26,19 @@ export default class {
         const parameter = this.parameterList.pop()
         if (parameter) {
           requestCount++
-          this.getRequest.then(_ => {
+          this.getRequest(parameter).then(_ => {
             this.finishCount++
             requestCount--
           }).catch(_ => {
             this.finishCount++
             requestCount--
           })
-        } else {
-          if (interval) {
-            this.state = THREAD_STATE.END
-            this.endTime = new Date().getTime()
-            clearInterval(interval)
-          }
+        }
+
+        if (interval && this.totalCount === this.finishCount) {
+          this.state = THREAD_STATE.END
+          this.endTime = new Date().getTime()
+          clearInterval(interval)
         }
       }
     }, 0)
@@ -51,17 +51,23 @@ export default class {
     }
   }
 
-  sync(callback) {
-    if (callback) {
-      let interval = setInterval(_ => {
-        callback(this.getStateModel())
-        if (this.state === THREAD_STATE.END) {
-          if (interval) {
-            clearInterval(interval)
-            interval = null
+  on({ sync, done }) {
+    let interval = setInterval(_ => {
+      if (this.state === THREAD_STATE.END) {
+        if (interval) {
+          clearInterval(interval)
+          interval = null
+          if (done) {
+            done(this.getStateModel())
           }
         }
-      }, STATE_UPDATE_MILL_SECONDS)
-    }
+      }
+      if (this.state === THREAD_STATE.RUNNING) {
+        if (sync) {
+          sync(this.getStateModel())
+        }
+      }
+    }, STATE_UPDATE_MILL_SECONDS)
   }
+
 }

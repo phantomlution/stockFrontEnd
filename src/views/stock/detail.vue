@@ -3,9 +3,8 @@
     <div>
       <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
-        <el-button type="primary" @click.stop="downloadExcel">分析</el-button>
         <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
-        <search-stock />
+        <search-stock ref="searchStock" />
         <el-button @click.stop="refresh">刷新</el-button>
       </lr-box>
       <lr-box>
@@ -20,9 +19,6 @@
       </lr-box>
       <base-chart ref="baseChart" />
       <trade-volume-chart ref="tradeVolumeChart" />
-      <lr-box>
-        <div :id="secondChartId"></div>
-      </lr-box>
     </div>
   </div>
 </template>
@@ -31,6 +27,7 @@
 import { idGenerator, deepClone } from '@/utils'
 import lodash from 'lodash'
 import Stock from '@/utils/stock'
+import stockUtils from '@/utils/stockUtils'
 import RequestThread from '@/utils/RequestThread'
 import baseChart from './chart/base.vue'
 import tradeVolumeChart from './chart/tradeVolume.vue'
@@ -44,7 +41,7 @@ export default {
   },
   data() {
     return {
-      collector: [],
+      stockMap: new Map(),
       useChart: true,
       choiceList: [], // 待选择列表
       analyzeModel: {
@@ -68,9 +65,6 @@ export default {
       this.refresh()
     }
   },
-  mounted() {
-
-  },
   methods: {
     analyzeChoice(code) {
       this.analyzeModel.code = code
@@ -82,16 +76,26 @@ export default {
       this.choiceList.splice(index, 1)
     },
     startBash() {
-      this.collector = []
-      this.choiceList = []
-      let stockList = this.analyzeModel.codeList
+      let stockList = this.$refs.searchStock.stockList
+
+      // 测试集
+      stockList = stockList.filter((item, itemIndex) => itemIndex <= 1000)
+
       const needLoadCodeList = stockList.map(item => item.value)
 
       const requestThread = new RequestThread(needLoadCodeList, _ => this.loadData(_, true))
-      requestThread.run()
-      requestThread.sync(state => { // 同步状态
-        console.log(state)
+
+      requestThread.on({
+        sync: state => { // 同步状态
+
+        },
+        done: state => { // 任务结束
+          const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 100)
+          console.log(result)
+        }
       })
+
+      requestThread.run()
     },
     loadData(code) {
       if (!code) {
@@ -101,15 +105,14 @@ export default {
         this.$http.post('/api/stock/detail', { code: code }),
         this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
-        if (!responseList[0]) {
+        if (!responseList[0] || !responseList[1]) {
           throw new Error('找不到该数据')
         }
 
         const base = responseList[1]
         if (!base.float_shares) {
-          base.float_shares = base.total_shares // 基金股票
+          throw new Error('不考虑非股票产品')
         }
-        let floatShare = base.float_shares
         const stockName = base.name.toUpperCase()
         if (stockName.indexOf('ST') !== -1) {
           throw new Error('不考虑垃圾股')
@@ -117,6 +120,8 @@ export default {
         if (stockName.indexOf('债') !== -1) {
           throw new Error('跳过债券')
         }
+        let floatShare = base.float_shares
+
 
         const analyzeModel = {}
 
@@ -137,35 +142,9 @@ export default {
         console.log(_)
       })
     },
-    downloadExcel() {
-      if (this.collector.length === 0) {
-        return this.$message.error('没有要导出的数据')
-      }
-
-      let collectorData = deepClone(this.collector)
-      collectorData.sort((former, later) => {
-        return former.diff - later.diff
-      })
-
-      const analyzeResult = []
-      let targetData = lodash.take(collectorData, this.analyzeModel.recentRecordCount * this.analyzeModel.maxOutputStockCount)
-      targetData.forEach(item => {
-        if (!analyzeResult.find(existItem => item.code === existItem.code)) {
-          if (analyzeResult.length < this.analyzeModel.maxOutputStockCount) {
-            analyzeResult.push(item)
-          }
-        }
-      })
-
-      this.choiceList = analyzeResult.map(item => {
-        return {
-          label: `(${ item.diff })${ item.name }`,
-          value: item.code
-        }
-      })
-    },
     analyze({ source, base }) {
       const stock = new Stock(base, source)
+      this.stockMap.set(base.code, stock)
       const dataCount = this.analyzeModel.dataCount
       if (!this.useChart) {
         return

@@ -8,7 +8,6 @@ import 'element-ui/lib/theme-chalk/index.css'
 import http from './utils/http'
 import excel from './utils/excel'
 import api from '@/api'
-console.log(api)
 Vue.config.productionTip = false
 
 Vue.use(ElementUI, {
