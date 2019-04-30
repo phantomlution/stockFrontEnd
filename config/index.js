@@ -3,6 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const config = require('./dev.env')
 
 function resolve (dir) {
   return path.resolve(__dirname, '..', dir)
@@ -12,24 +13,20 @@ module.exports = {
   base: {
     name: 'v-chacheli',
     entry:{
-      example: './example/index.js'
+      src: './src/index.js'
     },
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@shellybits/v-chacheli/dist/ChacheliDesigner$': resolve('./src/Designer.vue'),
-      '@shellybits/v-chacheli/dist/ChacheliLayout$': resolve('./src/Layout.vue'),
-      '@shellybits/v-chacheli/dist/ChacheliDesigner.css$': 'empty-module',
-      '@shellybits/v-chacheli/dist/ChacheliLayout.css$': 'empty-module',
-      '@': resolve('./example')
+      '@': resolve('./src')
     }
   },
 
   dev: {
-    assetsSubDirectory: 'example',
+    assetsSubDirectory: 'src',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://localhost:5001',
+        target: config.target,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -48,7 +45,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
-    useEslint: true,
+    useEslint: false,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,
@@ -71,7 +68,7 @@ module.exports = {
   build: {
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'example',
+    assetsSubDirectory: 'src',
     assetsPublicPath: '',
     productionSourceMap: false,
     devtool: '#source-map',
@@ -89,15 +86,6 @@ module.exports = {
   },
 
   lib: {
-    entry:{
-      // everything in one
-      'v-chacheli': './src/lib.js',
-
-      // split packages for designer/layout
-      'ChacheliDesigner': './src/Designer.vue',
-      'ChacheliLayout': './src/Layout.vue'
-    },
-
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: '',
     assetsPublicPath: '/',

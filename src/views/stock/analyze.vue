@@ -1,7 +1,6 @@
 <template>
   <div>
     <input type="file" @change="handleFile" />
-
     <div :id="chartId" />
   </div>
 </template>
@@ -11,6 +10,7 @@ import XLSX from 'xlsx'
 import { idGenerator } from '@/utils'
 import lodash from 'lodash'
 import moment from 'moment'
+import G2 from '@antv/g2'
 
 export default {
   data() {
