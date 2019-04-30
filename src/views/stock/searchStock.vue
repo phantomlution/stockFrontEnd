@@ -23,13 +23,15 @@ export default {
     }
   },
   mounted() {
-    this.loadStockList()
     this.throttleSearch = lodash.throttle(this.searchStockItem, 50)
   },
   destroyed() {
     this.throttleSearch = null
   },
   methods: {
+    doInit(codeList) {
+      this.stockList = codeList
+    },
     searchStockItem(query) {
       if (!query) {
         this.filteredStockList = lodash.take(this.stockList, 10)
@@ -38,14 +40,6 @@ export default {
       this.filteredStockList = lodash.take(this.stockList.filter(item => {
         return item.label.indexOf(query) !== -1 || item.value.indexOf(query) !== -1
       }), 10)
-    },
-    loadStockList() {
-      stockUtils.getCodeList().then(codeList => {
-        this.stockList = codeList
-      }).catch(_ => {
-        this.$message.error('初始化搜索框失败')
-        console.error(_)
-      })
     }
   }
 }

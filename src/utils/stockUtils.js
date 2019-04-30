@@ -61,8 +61,10 @@ export default class StockUtils {
           value: item.symbol,
           label: codeNameMap.get(item.symbol)
         }))
-
-        resolve(codeList)
+        resolve({
+          codeList,
+          baseList: response.idList
+        })
       }).catch(_ => {
         console.log(_)
         reject(_)
@@ -77,12 +79,16 @@ export default class StockUtils {
       const startDateString = this.dateFormat(startDate.getTime())
       let total = 0
       let halfNegativeCount = 0
+      let positiveCount = 0
       for(let stock of stockMap.values()) {
         const currentDayStock = stock.result.find(item => item.date === startDateString)
         if (currentDayStock && currentDayStock.diff !== undefined) {
           total++
           if (currentDayStock.diff < -1 * 50) {
             halfNegativeCount++
+          }
+          if (currentDayStock.diff > 0) {
+            positiveCount++
           }
         }
       }
@@ -91,7 +97,8 @@ export default class StockUtils {
           date: startDate.getTime(),
           dateString: startDateString,
           total,
-          halfNegativeCount
+          halfNegativeCount,
+          positiveCount
         })
       }
     }

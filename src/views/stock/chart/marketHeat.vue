@@ -38,7 +38,7 @@ export default {
       data = data.map(item => {
         return {
           date: item.date,
-          percent: lodash.round(100 * item.halfNegativeCount / item.total, 1)
+          percent: lodash.round(100 * item.positiveCount / item.total, 1)
         }
       })
 

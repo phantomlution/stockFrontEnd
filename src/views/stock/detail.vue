@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       stockMap: new Map(),
+      baseMap: new Map(),
       useChart: true,
       choiceList: [], // 待选择列表
       progress: {
@@ -89,6 +90,18 @@ export default {
       return `${ minutes > 0 ? minutes + '分' : ''}${ secondsRemainder }秒`
     }
   },
+  mounted() {
+    stockUtils.getCodeList().then(({ codeList, baseList }) => {
+      this.baseMap.clear()
+      baseList.forEach(item => {
+        this.baseMap.set(item.symbol, item)
+      })
+      this.$refs.searchStock.doInit(codeList)
+
+    }).catch(_ => {
+      console.error(_)
+    })
+  },
   methods: {
     analyzeChoice(code) {
       this.analyzeModel.code = code
@@ -119,7 +132,6 @@ export default {
           this.updateProgress(state)
           const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 365 * 2)
           this.$refs.marketHeat.updateChart(result)
-          console.log(result)
           this.useChart = true
         }
       })
@@ -128,17 +140,16 @@ export default {
     },
     loadData(code) {
       if (!code) {
-        return
+        return Promise.reject('code is empty')
       }
       return Promise.all([
         this.$http.post('/api/stock/detail', { code: code }),
-        this.$http.post('/api/stock/base', { symbol: code })
       ]).then(responseList => {
-        if (!responseList[0] || !responseList[1]) {
+        const base = this.baseMap.get(code)
+        if (!responseList[0] || !base) {
           throw new Error('找不到该数据')
         }
 
-        const base = responseList[1]
         if (!base.float_shares) {
           throw new Error('不考虑非股票产品')
         }

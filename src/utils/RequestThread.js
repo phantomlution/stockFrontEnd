@@ -1,4 +1,4 @@
-const MAX_REQUEST_QUEUE_LENGTH = 64
+const MAX_REQUEST_QUEUE_LENGTH = 200
 const STATE_UPDATE_MILL_SECONDS = 1000
 
 const THREAD_STATE = {
@@ -21,7 +21,6 @@ export default class {
     this.startTime = new Date().getTime()
     this.endTime = null
     this.state = THREAD_STATE.RUNNING
-    const intervalDuration = parseInt(1000 / MAX_REQUEST_QUEUE_LENGTH)
     const interval = setInterval(_ => {
       if (this.requestCount < MAX_REQUEST_QUEUE_LENGTH) {
         const parameter = this.parameterList.pop()
@@ -42,7 +41,7 @@ export default class {
           clearInterval(interval)
         }
       }
-    }, intervalDuration)
+    }, 0)
   }
 
   getStateModel() {
