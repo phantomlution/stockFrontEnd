@@ -5,51 +5,50 @@ const RANGE_START_IN_DAYS = 10
 const RANGE_END_IN_DAYS = 70
 
 export default class Stock {
-  constructor(code, dataSource) {
-    this.code = code
-    this.dataSource = dataSource
+
+  constructor(base, rawData) {
+    this.base = base
+    this.code = base.code
+    this.name = base.name
+    this.rawData = rawData
+    this.isDataContinuous = true
+    this.result = this.getComputedData()
   }
 
   getComputedData() {
-    return new Promise((resolve, reject) => {
-      const startDays = RANGE_START_IN_DAYS
-      const endDays = RANGE_END_IN_DAYS
-      const dayDiff = this.dataSource.length - endDays // 填写为70有比较好的模型效果，3是为了快速选股
+    const startDays = RANGE_START_IN_DAYS
+    const endDays = RANGE_END_IN_DAYS
+    const dayDiff = this.rawData.length - endDays
 
-      const dateList = this.dataSource.map(item => item.timestamp)
-      if (stockUtils.hasEverSuspend(dateList)) {
-        return reject({
-          message: '数据不连续'
-        })
+    const dateList = this.rawData.map(item => item.timestamp)
+    if (stockUtils.hasEverSuspend(dateList)) {
+      this.isDataContinuous = false
+    }
+
+    const result = []
+    for(let i = dayDiff; i>= 0; i--) {
+      // 获取最后 N 天的数据
+      let data = lodash.dropRight(this.rawData, i)
+
+      if (data.length < endDays) {
+        continue
       }
 
-      const result = []
-      for(let i = dayDiff; i>= 0; i--) {
-        // 获取最后 N 天的数据
-        let data = lodash.dropRight(this.dataSource, i)
+      const waterFrequencyPercentStart = stockUtils.getWaterFrequencyPercentInDays(data, startDays)
+      const waterFrequencyPercentEnd = stockUtils.getWaterFrequencyPercentInDays(data, endDays)
+      const timestamp = data[data.length - 1].timestamp
+      result.push({
+        code: this.code,
+        timestamp,
+        totalDataCount: this.rawData.length,
+        date: stockUtils.dateFormat(timestamp),
+        lastDataTimestamp: timestamp,
+        diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
+        last10: waterFrequencyPercentStart,
+        last70: waterFrequencyPercentEnd
+      })
+    }
 
-        if (data.length < endDays) {
-          return reject({
-            message: '数据量不足'
-          })
-        }
-
-        const waterFrequencyPercentStart = stockUtils.getWaterFrequencyPercentInDays(data, startDays)
-        const waterFrequencyPercentEnd = stockUtils.getWaterFrequencyPercentInDays(data, endDays)
-        const timestamp = data[data.length - 1].timestamp
-        result.push({
-          code: this.code,
-          timestamp,
-          totalDataCount: this.dataSource.length,
-          date: stockUtils.dateFormat(timestamp),
-          lastDataTimestamp: timestamp,
-          diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
-          last10: waterFrequencyPercentStart,
-          last70: waterFrequencyPercentEnd
-        })
-      }
-
-      return resolve(result)
-    })
+    this.result = result
   }
 }
