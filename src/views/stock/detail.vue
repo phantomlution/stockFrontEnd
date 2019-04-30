@@ -4,15 +4,18 @@
       <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
         <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
-        <search-stock ref="searchStock" />
-        <el-button @click.stop="refresh">刷新</el-button>
+        <search-stock ref="searchStock" @change="loadData"/>
       </lr-box>
-      <lr-box>
-        <el-form label-width="84px">
-          <el-form-item label="更新视图">
-            <el-switch v-model="useChart" />
-          </el-form-item>
-        </el-form>
+      <lr-box v-if="progress.totalCount">
+        <div style="display: flex">
+          <div style="flex: 1">
+            <el-progress :text-inside="true" :stroke-width="18" :percentage="progressPercent" color="#8e71c7"></el-progress>
+          </div>
+          <div style="margin-left: 8px;font-size: 14px;color: rgba(0, 0, 0, 0.65)">
+            {{ progress.finishCount }}/{{ progress.totalCount}},最大并发{{ progress.requestCount }},耗时{{ progress.seconds | inMinutes }}
+          </div>
+        </div>
+        <market-heat ref="marketHeat" />
       </lr-box>
       <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
         <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
@@ -31,12 +34,14 @@ import stockUtils from '@/utils/stockUtils'
 import RequestThread from '@/utils/RequestThread'
 import baseChart from './chart/base.vue'
 import tradeVolumeChart from './chart/tradeVolume.vue'
+import marketHeat from './chart/marketHeat.vue'
 import searchStock from './searchStock.vue'
 
 export default {
   components: {
     baseChart,
     tradeVolumeChart,
+    marketHeat,
     searchStock
   },
   data() {
@@ -44,6 +49,12 @@ export default {
       stockMap: new Map(),
       useChart: true,
       choiceList: [], // 待选择列表
+      progress: {
+        finishCount: 0,
+        totalCount: 0,
+        requestCount: 0,
+        seconds: 0
+      },
       analyzeModel: {
         recentRecordCount: 3,
         maxOutputStockCount: 48,
@@ -61,37 +72,55 @@ export default {
     'analyzeModel.dataCount'() {
       this.analyze()
     },
-    'analyzeModel.code'() {
-      this.refresh()
+  },
+  computed: {
+    progressPercent() {
+      if (this.progress.totalCount === 0) {
+        return 0
+      } else {
+        return parseInt(this.progress.finishCount / this.progress.totalCount * 100)
+      }
+    }
+  },
+  filters: {
+    inMinutes(seconds) {
+      const minutes = parseInt(seconds / 60)
+      const secondsRemainder = seconds % 60
+      return `${ minutes > 0 ? minutes + '分' : ''}${ secondsRemainder }秒`
     }
   },
   methods: {
     analyzeChoice(code) {
       this.analyzeModel.code = code
     },
-    refresh() {
-      this.loadData(this.analyzeModel.code)
-    },
     removeChoice(index) {
       this.choiceList.splice(index, 1)
+    },
+    updateProgress(model) {
+      Object.assign(this.progress, model)
     },
     startBash() {
       let stockList = this.$refs.searchStock.stockList
 
       // 测试集
-      stockList = stockList.filter((item, itemIndex) => itemIndex <= 1000)
+//      stockList = stockList.filter((item, itemIndex) => itemIndex <= 100)
 
       const needLoadCodeList = stockList.map(item => item.value)
 
       const requestThread = new RequestThread(needLoadCodeList, _ => this.loadData(_, true))
 
+      this.useChart = false
+      this.stockMap.clear()
       requestThread.on({
         sync: state => { // 同步状态
-
+          this.updateProgress(state)
         },
         done: state => { // 任务结束
-          const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 100)
+          this.updateProgress(state)
+          const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 365 * 2)
+          this.$refs.marketHeat.updateChart(result)
           console.log(result)
+          this.useChart = true
         }
       })
 
@@ -134,15 +163,13 @@ export default {
           }
         })
         analyzeModel.title = base.name
-        analyzeModel.source = data
-
         Object.assign(this.analyzeModel, analyzeModel)
-        this.analyze(analyzeModel)
+        this.analyze(data, base)
       }).catch(_ => {
         console.log(_)
       })
     },
-    analyze({ source, base }) {
+    analyze(source, base) {
       const stock = new Stock(base, source)
       this.stockMap.set(base.code, stock)
       const dataCount = this.analyzeModel.dataCount

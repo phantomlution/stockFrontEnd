@@ -52,7 +52,6 @@ export default class StockUtils {
   static getCodeList() {
     return new Promise((resolve, reject) => {
       http.get(apiMap.getCodeList).then(response => {
-        console.log(response)
         const codeNameMap = new Map()
         response.nameList.forEach(item => {
           codeNameMap.set(item.code, item.name)

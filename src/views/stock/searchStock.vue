@@ -17,6 +17,11 @@ export default {
       filteredStockList: []
     }
   },
+  watch: {
+    stockCode(val) {
+      this.$emit('change', val)
+    }
+  },
   mounted() {
     this.loadStockList()
     this.throttleSearch = lodash.throttle(this.searchStockItem, 50)
