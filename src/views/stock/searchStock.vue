@@ -8,17 +8,28 @@
 import stockUtils from '@/utils/stockUtils'
 import lodash from 'lodash'
 
+const props = {
+  value: {
+    type: String,
+    default: ''
+  }
+}
 export default {
+  props,
   data() {
     return {
-      stockCode: '',
+      stockCode: this.value,
       throttleSearch: null,
       stockList: [],
       filteredStockList: []
     }
   },
   watch: {
+    value(val) {
+      this.stockCode = val
+    },
     stockCode(val) {
+      this.$emit('input', val)
       this.$emit('change', val)
     }
   },
@@ -31,6 +42,7 @@ export default {
   methods: {
     doInit(codeList) {
       this.stockList = codeList
+      this.searchStockItem()
     },
     searchStockItem(query) {
       if (!query) {

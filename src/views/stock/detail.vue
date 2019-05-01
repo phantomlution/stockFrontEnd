@@ -2,9 +2,9 @@
   <div style="overflow: auto">
     <div>
       <lr-box>
-        <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" />
+        <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
         <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
-        <search-stock ref="searchStock" @change="loadData"/>
+        <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
       </lr-box>
       <lr-box v-if="progress.totalCount">
         <div style="display: flex">
@@ -46,9 +46,11 @@ export default {
   },
   data() {
     return {
+      stockCode: '',
       stockMap: new Map(),
       baseMap: new Map(),
       useChart: true,
+      historyDataCount: 420,
       choiceList: [], // 待选择列表
       progress: {
         finishCount: 0,
@@ -71,8 +73,10 @@ export default {
   },
   watch: {
     'analyzeModel.dataCount'() {
-      this.analyze()
-    },
+      this.$nextTick(_ => {
+        this.searchStock(this.stockCode)
+      })
+    }
   },
   computed: {
     progressPercent() {
@@ -103,6 +107,9 @@ export default {
     })
   },
   methods: {
+    searchStock(code) {
+      this.loadData(code, true)
+    },
     analyzeChoice(code) {
       this.analyzeModel.code = code
     },
@@ -116,11 +123,11 @@ export default {
       let stockList = this.$refs.searchStock.stockList
 
       // 测试集
-//      stockList = stockList.filter((item, itemIndex) => itemIndex <= 100)
+//      stockList = stockList.filter((item, itemIndex) => itemIndex <= 10)
 
       const needLoadCodeList = stockList.map(item => item.value)
 
-      const requestThread = new RequestThread(needLoadCodeList, _ => this.loadData(_, true))
+      const requestThread = new RequestThread(needLoadCodeList, _ => this.loadData(_, false))
 
       this.useChart = false
       this.stockMap.clear()
@@ -138,12 +145,19 @@ export default {
 
       requestThread.run()
     },
-    loadData(code) {
+    loadData(code, forceUpdate = false) {
       if (!code) {
         return Promise.reject('code is empty')
       }
+
+      if (this.stockMap.has(code)) { // 缓存中读取数据
+        const stock = this.stockMap.get(code)
+        this.updateStockInfo(stock, forceUpdate)
+        return Promise.resolve()
+      }
+
       return Promise.all([
-        this.$http.post('/api/stock/detail', { code: code }),
+        this.$http.post('/api/stock/detail', { code: code, count: this.historyDataCount }),
       ]).then(responseList => {
         const base = this.baseMap.get(code)
         if (!responseList[0] || !base) {
@@ -175,22 +189,23 @@ export default {
         })
         analyzeModel.title = base.name
         Object.assign(this.analyzeModel, analyzeModel)
-        this.analyze(data, base)
+        this.analyze(data, base, forceUpdate)
       }).catch(_ => {
         console.log(_)
       })
     },
-    analyze(source, base) {
+    analyze(source, base, forceUpdate) {
       const stock = new Stock(base, source)
-      this.stockMap.set(base.code, stock)
-      const dataCount = this.analyzeModel.dataCount
-      if (!this.useChart) {
-        return
-      }
-
-      this.$refs.baseChart.updateChart(stock, dataCount)
-      this.$refs.tradeVolumeChart.updateChart(stock, dataCount)
+      this.stockMap.set(base.symbol, stock)
+      this.updateStockInfo(stock, forceUpdate)
     },
+    updateStockInfo(stock, forceUpdate) {
+      const dataCount = this.analyzeModel.dataCount
+      if (forceUpdate || this.useChart) {
+        this.$refs.baseChart.updateChart(stock, dataCount)
+        this.$refs.tradeVolumeChart.updateChart(stock, dataCount)
+      }
+    }
   }
 }
 </script>

@@ -18,18 +18,19 @@ export default {
       chartId: idGenerator.next()
     }
   },
-  mounted() {
-    this.chart = new G2.Chart({
-      container: this.chartId,
-      forceFit: true,
-      height: window.innerHeight
-    })
-  },
   methods: {
     updateChart(stock, dataCount) {
       const data = lodash.takeRight(stock.result, dataCount)
+      if (this.chart) {
+        this.chart.clear()
+      } else {
+        this.chart = new G2.Chart({
+          container: this.chartId,
+          forceFit: true,
+          height: window.innerHeight
+        })
+      }
       const chart = this.chart
-      chart.clear()
       var scale = {
         timestamp: {
           alias: '日期',

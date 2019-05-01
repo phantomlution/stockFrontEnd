@@ -17,15 +17,6 @@ export default {
       chartId: idGenerator.next()
     }
   },
-  mounted() {
-    this.chart = new G2.Chart({
-      container: this.chartId,
-      forceFit: true,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      padding: [20, 80, 80, 80]
-    })
-  },
   methods: {
     updateChart(stock, dataCount) {
       const data = lodash.takeRight(stock.rawData, dataCount)
@@ -36,8 +27,19 @@ export default {
       const waterFrequencyPercent = lodash.round(lodash.mean(waterList), 2)
       const average = lodash.round(lodash.mean(closeValueList), 2)
 
+      if (this.chart) {
+        this.chart.clear()
+      } else {
+        this.chart = new G2.Chart({
+          container: this.chartId,
+          forceFit: true,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          padding: [20, 80, 80, 80]
+        })
+      }
+
       const chart = this.chart
-      chart.clear()
       function pick(data, field) {
         return data.map(function(item) {
           var result = {};
@@ -108,6 +110,7 @@ export default {
           content: average
         }
       })
+
       chart.render();
     }
   }

@@ -14,17 +14,19 @@ export default {
       chartId: idGenerator.next()
     }
   },
-  mounted() {
-    this.chart = new G2.Chart({
-      container: this.chartId,
-      forceFit: true,
-      width: window.innerWidth,
-      height: window.innerHeight,
-      padding: [20, 80, 80, 80]
-    })
-  },
   methods: {
     updateChart(data) {
+      if (this.chart) {
+        this.chart.clear()
+      } else {
+        this.chart = new G2.Chart({
+          container: this.chartId,
+          forceFit: true,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          padding: [20, 80, 80, 80]
+        })
+      }
       const chart = this.chart
       chart.clear()
       var scale = {

@@ -10,7 +10,7 @@ export default class Stock {
 
   constructor(base, rawData) {
     this.base = base
-    this.code = base.code
+    this.code = base.symbol
     this.name = base.name
     this.rawData = rawData
     this.options = {}
