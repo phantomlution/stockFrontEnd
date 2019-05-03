@@ -37,6 +37,20 @@ import tradeVolumeChart from './chart/tradeVolume.vue'
 import marketHeat from './chart/marketHeat.vue'
 import searchStock from './searchStock.vue'
 
+const fieldSet = new Set([
+  'amount',
+  'chg',
+  'close',
+  'high',
+  'low',
+  'market_capital',
+  'open',
+  'percent',
+  'timestamp',
+  'volume'
+])
+
+
 export default {
   components: {
     baseChart,
@@ -105,6 +119,11 @@ export default {
     }).catch(_ => {
       console.error(_)
     })
+
+    this.$http.socket('stockDetail', {
+      code: "SH600004",
+      count: 420
+    })
   },
   methods: {
     searchStock(code) {
@@ -137,13 +156,36 @@ export default {
         },
         done: state => { // 任务结束
           this.updateProgress(state)
-          const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 365 * 2)
-          this.$refs.marketHeat.updateChart(result)
           this.useChart = true
+          this.$nextTick(_ => {
+            setTimeout(_ => {
+              const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 365 * 2)
+              this.$refs.marketHeat.updateChart(result)
+            }, 0)
+          })
         }
       })
 
       requestThread.run()
+    },
+    formatData(stockDetail) {
+      const dataList = stockDetail.data.map(item => {
+        let model = {}
+        for(let i=0; i<stockDetail.column.length; i++) {
+          let column = stockDetail.column[i]
+          if (fieldSet.has(column)) {
+            model[column] = item[i]
+          }
+        }
+        return model
+      })
+      stockDetail.data = null
+      stockDetail.data = dataList
+    },
+    getStockDetailRequest(code) {
+      const data = { code: code, count: this.historyDataCount }
+      return this.$http.post('/api/stock/detail', data)
+//      return this.$http.socket('stockDetail', data)
     },
     loadData(code, forceUpdate = false) {
       if (!code) {
@@ -157,9 +199,10 @@ export default {
       }
 
       return Promise.all([
-        this.$http.post('/api/stock/detail', { code: code, count: this.historyDataCount }),
+        this.getStockDetailRequest(code)
       ]).then(responseList => {
         const base = this.baseMap.get(code)
+
         if (!responseList[0] || !base) {
           throw new Error('找不到该数据')
         }
@@ -180,6 +223,7 @@ export default {
         const analyzeModel = {}
 
         analyzeModel.base = base
+        this.formatData(responseList[0])
         let data = responseList[0].data
         data.forEach(item => {
           item.waterFrequencyPercent = lodash.round(item.volume / floatShare * 100, 2)

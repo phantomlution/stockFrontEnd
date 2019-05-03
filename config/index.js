@@ -22,7 +22,7 @@ module.exports = {
   },
 
   dev: {
-    assetsSubDirectory: 'src',
+    assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {

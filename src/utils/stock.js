@@ -4,7 +4,7 @@ import stockUtils from './stockUtils'
 const RANGE_START_IN_DAYS = 10
 const RANGE_END_IN_DAYS = 70
 
-const RANGE_RECENT_TRADE_VOLUME = 100 // [基本面]近100日交易量
+const RANGE_RECENT_TRADE_VOLUME = 200 // [基本面]近100日交易量
 
 export default class Stock {
 
@@ -19,9 +19,13 @@ export default class Stock {
   }
 
   calculateOptions() { // 手动计算额外的数据
-    const dataList = lodash.takeRight(this.result.filter(item => item.diff !== undefined), RANGE_RECENT_TRADE_VOLUME)
+    let dataList = lodash.takeRight(this.result.filter(item => item.diff !== undefined), RANGE_RECENT_TRADE_VOLUME)
     if (dataList.length === RANGE_RECENT_TRADE_VOLUME) {
-      this.options.recentOneHundreadNegativeVolumePercent = `${ dataList.filter(item => item.diff < 0).length / RANGE_RECENT_TRADE_VOLUME }`
+      dataList = dataList.map(item => Math.abs(item.diff))
+      dataList.sort()
+      dataList = dataList.filter((item, itemIndex) => itemIndex <= RANGE_RECENT_TRADE_VOLUME / 2)
+      const result = dataList[dataList.length - 1]
+      this.options.recentOneHundreadNegativeVolumePercent = result
     }
   }
 

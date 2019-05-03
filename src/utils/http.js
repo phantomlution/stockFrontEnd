@@ -3,6 +3,8 @@
  */
 import axios from 'axios'
 import { Message } from 'element-ui'
+import Vue from 'vue'
+import { idGenerator } from '@/utils'
 
 const axiosInstance = axios.create()
 axiosInstance.defaults.timeout = 0 //15 * 1000
@@ -92,6 +94,25 @@ const httpInstance = {
       params: data
     })
     return this.handleResponse(axiosInstance.delete(url, fullOption), fullOption)
+  },
+  socket(key, data, options) {
+    const requestId = idGenerator.next('request')
+    return new Promise((resolve, reject) => {
+      Vue.prototype.$socket.emit('request', {
+        key,
+        requestId,
+        params: data
+      })
+      Vue.prototype.$socket.on(`response_${requestId}`, data => {
+        const response = JSON.parse(data)
+        if (response.code !== 200) {
+          reject(response.data)
+        } else {
+          resolve(response.data)
+        }
+
+      })
+    })
   }
 }
 

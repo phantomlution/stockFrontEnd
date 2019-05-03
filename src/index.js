@@ -8,6 +8,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 import http from './utils/http'
 import excel from './utils/excel'
 import api from '@/api'
+import socket from '@/socket'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI, {
@@ -18,6 +19,8 @@ Vue.use(SlothUI)
 Vue.use(http)
 Vue.use(excel)
 Vue.use(api)
+
+Vue.use(socket)
 
 /* eslint-disable no-new */
 new Vue({
