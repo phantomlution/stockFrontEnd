@@ -3,8 +3,9 @@
     <div>
       <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
-        <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
-        <el-button type="primary" @click.stop="test">数据分析</el-button>
+        <el-button type="primary" @click.stop="startBash(true)">全量分析</el-button>
+        <el-button type="primary" @click.stop="startBash(false)">快速分析</el-button>
+        <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
       </lr-box>
       <lr-box v-if="progress.totalCount">
@@ -143,11 +144,13 @@ export default {
     updateProgress(model) {
       Object.assign(this.progress, model)
     },
-    startBash() {
+    startBash(full = false) {
       let stockList = this.$refs.searchStock.stockList
 
       // 测试集
-      stockList = stockList.filter((item, itemIndex) => itemIndex <= 100)
+      if (!full) { // 快速分析
+        stockList = stockList.filter((item, itemIndex) => itemIndex <= 100)
+      }
 
       const needLoadCodeList = stockList.map(item => item.value)
 
@@ -255,7 +258,7 @@ export default {
         this.$refs.tradeVolumeChart.updateChart(stock, dataCount)
       }
     },
-    test() {
+    startProbabilityModel() {
       const collector = []
       for(let stock of this.stockMap.values()) {
         let days = 10
