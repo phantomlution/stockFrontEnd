@@ -21,6 +21,7 @@ export default {
   methods: {
     updateChart(stock, dataCount) {
       const data = lodash.takeRight(stock.result, dataCount)
+      console.log(data)
       if (this.chart) {
         this.chart.clear()
       } else {
@@ -31,26 +32,25 @@ export default {
         })
       }
       const chart = this.chart
+      const view = chart.view()
       var scale = {
         timestamp: {
           alias: '日期',
           type: 'time',
           mask: 'YYYY-MM-DD'
-        },
+        }
       }
 
-      chart.source(data, scale);
-      chart.tooltip({
-        crosshairs: {
-          type: 'line'
+      view.source(data, scale);
+      view.line().position('timestamp*close').color('isMakeShort', isMakeShort => {
+        if (isMakeShort) {
+          return 'red'
+        } else {
+          return '#4FAAEB'
         }
-      });
-      chart.line().position('timestamp*diff').tooltip('timestamp*diff*last10*last70');
-      chart.point().position('timestamp*diff').size(4).shape('circle').style({
-        stroke: '#fff',
-        lineWidth: 1
-      });
-      chart.guide().line({
+      }).tooltip('timestamp*close*percent').size(2);
+      view.line().position('timestamp*diff').color('#9AD681').tooltip('timestamp*diff*lastStartDuration*lastEndDuration');
+      view.guide().line({
         start: {
           timestamp: 'min',
           diff: -1 * THRESHOLD_WATER_PERCENT

@@ -356,8 +356,8 @@ export default {
           date: this.dateFormat(timestamp),
           lastDataTimestamp: timestamp,
           diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
-          last10: waterFrequencyPercentStart,
-          last70: waterFrequencyPercentEnd
+          lastStartDuration: waterFrequencyPercentStart,
+          lastEndDuration: waterFrequencyPercentEnd
         })
       }
 
@@ -388,8 +388,8 @@ export default {
             buyInDate: null,
             expectByIn: current.close, // 期待的买入价格
             diff: current.diff,
-            last10: current.last10,
-            last70: current.last70,
+            lastStartDuration: current.lastStartDuration,
+            lastEndDuration: current.lastEndDuration,
             startSellDate: null,
             expectSellPrice: null,
             actualSellDate: null,
@@ -428,14 +428,14 @@ export default {
 
           // 确定卖出时间点
           if (!ongoing.startSellDate) {
-            if (current.last10 >= ongoing.last70) {
+            if (current.lastStartDuration >= ongoing.lastEndDuration) {
               ongoing.startSellDate = current.timestamp
               ongoing.expectSellPrice = current.close
               //debugger
             }
             if (current.diff <= ongoing.diff) {
               // 核心代码，测试了很多模型(这个效果最好)，能极大的提高盈利率和成交率
-              ongoing.last70 = current.last70
+              ongoing.lastEndDuration = current.lastEndDuration
             }
           }
 
@@ -538,7 +538,7 @@ export default {
           type: 'line'
         }
       });
-      chart.line().position('timestamp*diff').tooltip('timestamp*diff*last10*last70');
+      chart.line().position('timestamp*diff').tooltip('timestamp*diff*lastStartDuration*lastEndDuration');
       chart.point().position('timestamp*diff').size(4).shape('circle').style({
         stroke: '#fff',
         lineWidth: 1

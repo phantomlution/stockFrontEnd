@@ -4,6 +4,7 @@
       <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
         <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
+        <el-button type="primary" @click.stop="test">测试</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
       </lr-box>
       <lr-box v-if="progress.totalCount">
@@ -170,7 +171,7 @@ export default {
     },
     formatData(stockDetail) {
       const dataList = stockDetail.data.map(item => {
-        let model = {}
+        let model = Object.create(null)
         for(let i=0; i<stockDetail.column.length; i++) {
           let column = stockDetail.column[i]
           if (fieldSet.has(column)) {
@@ -184,8 +185,8 @@ export default {
     },
     getStockDetailRequest(code) {
       const data = { code: code, count: this.historyDataCount }
-      return this.$http.post('/api/stock/detail', data)
-//      return this.$http.socket('stockDetail', data)
+//      return this.$http.post('/api/stock/detail', data)
+      return this.$http.socket('stockDetail', data)
     },
     loadData(code, forceUpdate = false) {
       if (!code) {
@@ -249,6 +250,39 @@ export default {
         this.$refs.baseChart.updateChart(stock, dataCount)
         this.$refs.tradeVolumeChart.updateChart(stock, dataCount)
       }
+    },
+    test() {
+      const collector = []
+      for(let stock of this.stockMap.values()) {
+        let days = 10
+        let recentCalculateItemList = lodash.takeRight(stock.result, days)
+        if (recentCalculateItemList.length === days) {
+          let makeShortResult = {
+            lastResult: false,
+            makeShort: 0,
+            makeLong: 0
+          }
+          for(let i=recentCalculateItemList.length - 1; i> 0; i--) {
+            let result = stockUtils.isMakeShortPoint(recentCalculateItemList[i - 1], recentCalculateItemList[i])
+            if (makeShortResult.lastResult && !result) {
+              break
+            }
+            if (result) {
+              makeShortResult.makeShort++
+            } else {
+              makeShortResult.makeLong++
+            }
+            makeShortResult.lastResult = result
+          }
+          if (makeShortResult.makeShort > 0) {
+            collector.push([stock.code, stock.name, makeShortResult.makeShort])
+          }
+        }
+      }
+      collector.sort((former, later) => {
+        return later[2] - former[2]
+      })
+      console.log(collector)
     }
   }
 }

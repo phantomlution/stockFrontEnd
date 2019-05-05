@@ -40,24 +40,7 @@ export default {
       }
 
       const chart = this.chart
-      function pick(data, field) {
-        return data.map(function(item) {
-          var result = {};
-          for (var key in item) {
-            if (item.hasOwnProperty(key) && field.indexOf(key) !== -1) {
-              result[key] = item[key];
-            }
-          }
-          return result;
-        });
-      }
 
-
-      chart.scale({
-        volume: {
-          sync: true
-        }
-      });
       var scale = {
         timestamp: {
           alias: '日期',
@@ -76,10 +59,7 @@ export default {
         },
       };
       var view1 = chart.view();
-      view1.source(pick(data, ['close', 'waterFrequencyPercent', 'timestamp', 'percent']), scale);
-      view1.axis('waterFrequencyPercent', {
-        grid: null
-      });
+      view1.source(data, scale);
       view1.line().position('timestamp*close').tooltip('timestamp*close*percent').color('#4FAAEB').size(2);
       view1.line().position('timestamp*waterFrequencyPercent').color('#9AD681').size(2);
 

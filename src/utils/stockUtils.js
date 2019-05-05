@@ -105,4 +105,8 @@ export default class StockUtils {
 
     return result
   }
+
+  static isMakeShortPoint(yesterday, today) { // 是否当日交易量上升且价格下跌
+    return today.diff > yesterday.diff && today.close < yesterday.close
+  }
 }

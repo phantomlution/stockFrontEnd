@@ -1,8 +1,8 @@
 import lodash from 'lodash'
 import stockUtils from './stockUtils'
 
-const RANGE_START_IN_DAYS = 10
-const RANGE_END_IN_DAYS = 70
+const RANGE_START_IN_DAYS = 5
+const RANGE_END_IN_DAYS = 30
 
 const RANGE_RECENT_TRADE_VOLUME = 200 // [基本面]近100日交易量
 
@@ -19,6 +19,12 @@ export default class Stock {
   }
 
   calculateOptions() { // 手动计算额外的数据
+    for (let i=1; i<this.result.length; i++) {
+      const todayData = this.result[i]
+      const yesterdayData = this.result[i - 1]
+      todayData.isMakeShort = stockUtils.isMakeShortPoint(yesterdayData, todayData)
+    }
+
     let dataList = lodash.takeRight(this.result.filter(item => item.diff !== undefined), RANGE_RECENT_TRADE_VOLUME)
     if (dataList.length === RANGE_RECENT_TRADE_VOLUME) {
       dataList = dataList.map(item => Math.abs(item.diff))
@@ -49,18 +55,22 @@ export default class Stock {
       const waterFrequencyPercentStart = stockUtils.getWaterFrequencyPercentInDays(data, startDays)
       const waterFrequencyPercentEnd = stockUtils.getWaterFrequencyPercentInDays(data, endDays)
       const timestamp = data[data.length - 1].timestamp
+      const todayData = data[data.length - 1]
       result.push({
         code: this.code,
         timestamp,
+        close: todayData.close,
+        percent: todayData.percent,
         totalDataCount: this.rawData.length,
         date: stockUtils.dateFormat(timestamp),
         lastDataTimestamp: timestamp,
         diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
-        last10: waterFrequencyPercentStart,
-        last70: waterFrequencyPercentEnd
+        lastStartDuration: waterFrequencyPercentStart,
+        lastEndDuration: waterFrequencyPercentEnd
       })
     }
 
     return result
   }
+
 }
