@@ -123,7 +123,7 @@ export default {
 
     this.$http.socket('stockDetail', {
       code: "SH600004",
-      count: 420
+      count: this.historyDataCount
     })
   },
   methods: {
@@ -143,7 +143,7 @@ export default {
       let stockList = this.$refs.searchStock.stockList
 
       // 测试集
-//      stockList = stockList.filter((item, itemIndex) => itemIndex <= 10)
+      stockList = stockList.filter((item, itemIndex) => itemIndex <= 100)
 
       const needLoadCodeList = stockList.map(item => item.value)
 
