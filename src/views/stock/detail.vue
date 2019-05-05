@@ -7,6 +7,7 @@
         <el-button type="primary" @click.stop="test">测试</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
       </lr-box>
+      <make-short-table />
       <lr-box v-if="progress.totalCount">
         <div style="display: flex">
           <div style="flex: 1">
@@ -37,6 +38,7 @@ import baseChart from './chart/base.vue'
 import tradeVolumeChart from './chart/tradeVolume.vue'
 import marketHeat from './chart/marketHeat.vue'
 import searchStock from './searchStock.vue'
+import makeShortTable from './table/makeShortTable.vue'
 
 const fieldSet = new Set([
   'amount',
@@ -57,7 +59,8 @@ export default {
     baseChart,
     tradeVolumeChart,
     marketHeat,
-    searchStock
+    searchStock,
+    makeShortTable
   },
   data() {
     return {
@@ -120,11 +123,12 @@ export default {
     }).catch(_ => {
       console.error(_)
     })
-
-    this.$http.socket('stockDetail', {
-      code: "SH600004",
-      count: this.historyDataCount
+    this.$bus.$on('searchStockDetail', ({ code }) => {
+      this.searchStock(code)
     })
+  },
+  beforeDestroy() {
+    this.$bus.$off('searchStockDetail')
   },
   methods: {
     searchStock(code) {
@@ -262,8 +266,8 @@ export default {
             makeShort: 0,
             makeLong: 0
           }
-          for(let i=recentCalculateItemList.length - 1; i> 0; i--) {
-            let result = stockUtils.isMakeShortPoint(recentCalculateItemList[i - 1], recentCalculateItemList[i])
+          for(let i=recentCalculateItemList.length - 1; i>= 0; i--) {
+            let result = recentCalculateItemList[i].isMakeShort
             if (makeShortResult.lastResult && !result) {
               break
             }
@@ -275,14 +279,16 @@ export default {
             makeShortResult.lastResult = result
           }
           if (makeShortResult.makeShort > 0) {
-            collector.push([stock.code, stock.name, makeShortResult.makeShort])
+            collector.push({
+              code: stock.code,
+              name: stock.name,
+              makeShort: makeShortResult.makeShort,
+              makeLong: makeShortResult.makeLong
+            })
           }
         }
       }
-      collector.sort((former, later) => {
-        return later[2] - former[2]
-      })
-      console.log(collector)
+      this.$bus.$emit('analyzeMakeShort', collector)
     }
   }
 }
