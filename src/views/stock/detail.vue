@@ -4,7 +4,7 @@
       <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
         <el-button type="primary" @click.stop="startBash">启动脚本</el-button>
-        <el-button type="primary" @click.stop="test">测试</el-button>
+        <el-button type="primary" @click.stop="test">数据分析</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
       </lr-box>
       <lr-box v-if="progress.totalCount">
