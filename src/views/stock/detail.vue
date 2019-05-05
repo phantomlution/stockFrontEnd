@@ -144,7 +144,7 @@ export default {
     updateProgress(model) {
       Object.assign(this.progress, model)
     },
-    startBash(full = false) {
+    startBash(full = false) { // 是否是全量数据
       let stockList = this.$refs.searchStock.stockList
 
       // 测试集
