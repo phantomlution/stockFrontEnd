@@ -23,7 +23,7 @@ export default {
           container: this.chartId,
           forceFit: true,
           width: window.innerWidth,
-          height: window.innerHeight,
+          height: window.innerHeight / 2,
           padding: [20, 80, 80, 80]
         })
       }

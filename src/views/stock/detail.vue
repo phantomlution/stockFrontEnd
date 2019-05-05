@@ -7,7 +7,6 @@
         <el-button type="primary" @click.stop="test">测试</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
       </lr-box>
-      <make-short-table />
       <lr-box v-if="progress.totalCount">
         <div style="display: flex">
           <div style="flex: 1">
@@ -22,6 +21,7 @@
       <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
         <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
       </lr-box>
+      <make-short-table />
       <base-chart ref="baseChart" />
       <trade-volume-chart ref="tradeVolumeChart" />
     </div>
