@@ -7,6 +7,7 @@
         <el-button type="primary" @click.stop="startBash(false)">快速分析</el-button>
         <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+        <el-button @click.stop="openYearReport">年报</el-button>
       </lr-box>
       <lr-box v-if="progress.totalCount">
         <div style="display: flex">
@@ -292,6 +293,9 @@ export default {
         }
       }
       this.$bus.$emit('analyzeMakeShort', collector)
+    },
+    openYearReport() {
+      window.open(`https://xueqiu.com/snowman/S/${ this.stockCode }/detail#/ZYCWZB`)
     }
   }
 }

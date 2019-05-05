@@ -46,6 +46,9 @@ export default {
 
       for(let i=1; i<data.length; i++) {
         const today = data[i]
+        if (today.isMakeShort) {
+          this.addMakeShortPoint(view, [today.timestamp, today.close])
+        }
         const yesterday = data[i - 1]
         if (today.isMakeShort && yesterday.isMakeShort) {
           this.addGuideLine(view, [today.timestamp, today.close], [yesterday.timestamp, yesterday.close])
@@ -68,6 +71,17 @@ export default {
       })
 
       chart.render();
+    },
+    addMakeShortPoint(view, start) {
+      view.guide().dataMarker({
+        position: start,
+        content: '',
+        style: {
+          point: {
+            stroke: 'red'
+          }
+        }
+      });
     },
     addGuideLine(view, start, end) {
       view.guide().line({
