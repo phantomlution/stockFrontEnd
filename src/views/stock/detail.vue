@@ -3,9 +3,9 @@
     <div>
       <lr-box>
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
-        <el-button type="primary" @click.stop="startBash(true)">全量分析</el-button>
-        <el-button type="primary" @click.stop="startBash(false)">快速分析</el-button>
-        <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
+        <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
+        <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(false)">快速分析</el-button>
+        <el-button :loading="probabilityLoading" type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
         <el-button @click.stop="openYearReport">年报</el-button>
       </lr-box>
@@ -67,6 +67,8 @@ export default {
   data() {
     return {
       stockCode: '',
+      batchAnalyzeLoading: false,
+      probabilityLoading: false,
       stockMap: new Map(),
       baseMap: new Map(),
       useChart: true,
@@ -159,6 +161,7 @@ export default {
 
       this.useChart = false
       this.stockMap.clear()
+      this.batchAnalyzeLoading = true
       requestThread.on({
         sync: state => { // 同步状态
           this.updateProgress(state)
@@ -166,11 +169,12 @@ export default {
         done: state => { // 任务结束
           this.updateProgress(state)
           this.useChart = true
+          this.batchAnalyzeLoading = false
           this.$nextTick(_ => {
             setTimeout(_ => {
               const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 365 * 2)
               this.$refs.marketHeat.updateChart(result)
-            }, 0)
+            }, 300)
           })
         }
       })
@@ -192,7 +196,7 @@ export default {
       stockDetail.data = dataList
     },
     getStockDetailRequest(code) {
-      const data = { code: code, count: this.historyDataCount }
+      const data = { code: code }
 //      return this.$http.post('/api/stock/detail', data)
       return this.$http.socket('stockDetail', data)
     },
@@ -261,38 +265,44 @@ export default {
     },
     startProbabilityModel() {
       const collector = []
-      for(let stock of this.stockMap.values()) {
-        let days = 10
-        let recentCalculateItemList = lodash.takeRight(stock.result, days)
-        if (recentCalculateItemList.length === days) {
-          let makeShortResult = {
-            lastResult: false,
-            makeShort: 0,
-            makeLong: 0
-          }
-          for(let i=recentCalculateItemList.length - 1; i>= 0; i--) {
-            let result = recentCalculateItemList[i].isMakeShort
-            if (makeShortResult.lastResult && !result) {
-              break
+      this.probabilityLoading = true
+      this.$nextTick(_ => {
+        for(let stock of this.stockMap.values()) {
+          let days = 10
+          let recentCalculateItemList = lodash.takeRight(stock.result, days)
+          if (recentCalculateItemList.length === days) {
+            let makeShortResult = {
+              lastResult: false,
+              makeShort: 0,
+              makeLong: 0
             }
-            if (result) {
-              makeShortResult.makeShort++
-            } else {
-              makeShortResult.makeLong++
+            for(let i=recentCalculateItemList.length - 1; i>= 0; i--) {
+              let result = recentCalculateItemList[i].isMakeShort
+              if (makeShortResult.lastResult && !result) {
+                break
+              }
+              if (result) {
+                makeShortResult.makeShort++
+              } else {
+                makeShortResult.makeLong++
+              }
+              makeShortResult.lastResult = result
             }
-            makeShortResult.lastResult = result
-          }
-          if (makeShortResult.makeShort > 0) {
-            collector.push({
-              code: stock.code,
-              name: stock.name,
-              makeShort: makeShortResult.makeShort,
-              makeLong: makeShortResult.makeLong
-            })
+            if (makeShortResult.makeShort > 0) {
+              collector.push({
+                code: stock.code,
+                name: stock.name,
+                makeShort: makeShortResult.makeShort,
+                makeLong: makeShortResult.makeLong
+              })
+            }
           }
         }
-      }
-      this.$bus.$emit('analyzeMakeShort', collector)
+        this.$bus.$emit('analyzeMakeShort', collector)
+        this.$nextTick(_ => {
+          this.probabilityLoading = false
+        })
+      })
     },
     openYearReport() {
       window.open(`https://xueqiu.com/snowman/S/${ this.stockCode }/detail#/ZYCWZB`)
