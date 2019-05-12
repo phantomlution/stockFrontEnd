@@ -20,7 +20,7 @@ export default {
   methods: {
     updateChart(stock, dataCount) {
       const data = lodash.takeRight(stock.rawData, dataCount)
-      this.title = stock.name
+      this.title = stock.label
       const closeValueList = data.map(item => item.close)
       const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)
 

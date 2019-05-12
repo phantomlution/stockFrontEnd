@@ -72,18 +72,30 @@ export default class StockUtils {
     })
   }
 
-  static calculateMarketHalfPassivePercent(stockMap, days) {
+  static calculateMarketTrendPercentage(stockMap, days) {
     const result = []
-    for(let i=0; i<days; i++) {
+    for(let i=1; i<=days; i++) {
       const startDate = moment().add('days', -1 * days + i).toDate()
       const startDateString = this.dateFormat(startDate.getTime())
-      let total = 0
+      let usedStockCount = 0
       let halfNegativeCount = 0
       let positiveCount = 0
+      let makeShortCount = 0
+      let makeLongCount = 0
       for(let stock of stockMap.values()) {
         const currentDayStock = stock.result.find(item => item.date === startDateString)
-        if (currentDayStock && currentDayStock.diff !== undefined) {
-          total++
+        if (!currentDayStock) {
+          continue
+        }
+        usedStockCount++
+
+        if (currentDayStock.isMakeShort) {
+          makeShortCount++
+        }
+        if (currentDayStock.isMakeLong) {
+          makeLongCount++
+        }
+        if (currentDayStock.diff !== undefined) {
           if (currentDayStock.diff < -1 * 50) {
             halfNegativeCount++
           }
@@ -92,13 +104,15 @@ export default class StockUtils {
           }
         }
       }
-      if (total > 0) {
+
+      if (usedStockCount > 0) { // 排除非交易数据
         result.push({
           date: startDate.getTime(),
           dateString: startDateString,
-          total,
           halfNegativeCount,
-          positiveCount
+          positiveCount,
+          makeShortCount,
+          makeLongCount
         })
       }
     }
@@ -108,5 +122,9 @@ export default class StockUtils {
 
   static isMakeShortPoint(yesterday, today) { // 是否当日交易量上升且价格下跌
     return today.diff > yesterday.diff && today.close < yesterday.close
+  }
+
+  static isMakeLongPoint(yesterday, today) {
+    return today.diff < yesterday.diff && today.close > yesterday.close
   }
 }

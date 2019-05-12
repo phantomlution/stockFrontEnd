@@ -13,6 +13,7 @@ export default class Stock {
     this.code = base.symbol
     this.name = base.name
     this.rawData = rawData
+    this.label = `${ base.name }(${ base.symbol })`
     this.options = {}
     this.result = this.getComputedData()
     this.calculateOptions()
@@ -23,6 +24,7 @@ export default class Stock {
       const todayData = this.result[i]
       const yesterdayData = this.result[i - 1]
       todayData.isMakeShort = stockUtils.isMakeShortPoint(yesterdayData, todayData)
+      todayData.isMakeLong = stockUtils.isMakeLongPoint(yesterdayData, todayData)
     }
 
     let dataList = lodash.takeRight(this.result.filter(item => item.diff !== undefined), RANGE_RECENT_TRADE_VOLUME)

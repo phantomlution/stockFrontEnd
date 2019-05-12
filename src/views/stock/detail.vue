@@ -7,6 +7,8 @@
         <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(false)">快速分析</el-button>
         <el-button :loading="probabilityLoading" type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+        <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期">
+        </el-date-picker>
         <el-button @click.stop="openYearReport">年报</el-button>
       </lr-box>
       <lr-box v-if="progress.totalCount">
@@ -39,8 +41,9 @@ import RequestThread from '@/utils/RequestThread'
 import baseChart from './chart/base.vue'
 import tradeVolumeChart from './chart/tradeVolume.vue'
 import marketHeat from './chart/marketHeat.vue'
-import searchStock from './searchStock.vue'
+import searchStock from './components/searchStock.vue'
 import makeShortTable from './table/makeShortTable.vue'
+//import simulateDate from './components/simulateDate.vue'
 
 const fieldSet = new Set([
   'amount',
@@ -62,7 +65,8 @@ export default {
     tradeVolumeChart,
     marketHeat,
     searchStock,
-    makeShortTable
+    makeShortTable,
+//    simulateDate
   },
   data() {
     return {
@@ -73,6 +77,7 @@ export default {
       baseMap: new Map(),
       useChart: true,
       historyDataCount: 420,
+      targetDate: new Date(), // 模拟N日前的数据
       choiceList: [], // 待选择列表
       progress: {
         finishCount: 0,
@@ -128,7 +133,7 @@ export default {
       console.error(_)
     })
     this.$bus.$on('searchStockDetail', ({ code }) => {
-      this.searchStock(code)
+      this.stockCode = code
     })
   },
   beforeDestroy() {
@@ -172,7 +177,32 @@ export default {
           this.batchAnalyzeLoading = false
           this.$nextTick(_ => {
             setTimeout(_ => {
-              const result = stockUtils.calculateMarketHalfPassivePercent(this.stockMap, 365 * 2)
+              const result = stockUtils.calculateMarketTrendPercentage(this.stockMap, 365)
+              // 聚合上证指数
+              console.log(result)
+              this.$http.get('/api/stock/index', {
+                count: this.historyDataCount
+              }).then(response => {
+                const timestampIndex = response.column.indexOf('timestamp')
+                const percentIndex = response.column.indexOf('percent')
+                const matchDate = []
+                const notMatchDate = []
+                result.forEach(resultItem => {
+                  const indexItem = response.data.find(item => stockUtils.dateFormat(item[timestampIndex]) === resultItem.dateString)
+                  if (resultItem.makeShortCount >= resultItem.makeLongCount && indexItem[percentIndex] <= 0) {
+                    matchDate.push(resultItem.dateString)
+                  } else if (resultItem.makeLongCount >= resultItem.makeShortCount && indexItem[percentIndex] >= 0) {
+                    matchDate.push(resultItem.dateString)
+                  } else {
+                    notMatchDate.push(resultItem.dateString)
+                  }
+                })
+                console.log(matchDate)
+                console.log(notMatchDate)
+              }).catch(_ => {
+                console.error(_)
+              })
+
               this.$refs.marketHeat.updateChart(result)
             }, 300)
           })
@@ -215,7 +245,6 @@ export default {
         this.getStockDetailRequest(code)
       ]).then(responseList => {
         const base = this.baseMap.get(code)
-
         if (!responseList[0] || !base) {
           throw new Error('找不到该数据')
         }
@@ -238,11 +267,11 @@ export default {
         analyzeModel.base = base
         this.formatData(responseList[0])
         let data = responseList[0].data
+        if (data.length < this.historyDataCount) {
+          throw new Error('数据不足')
+        }
         data.forEach(item => {
           item.waterFrequencyPercent = lodash.round(item.volume / floatShare * 100, 2)
-          if (Math.abs(item.percent) > 10) {
-            item.waterFrequencyPercent = null
-          }
         })
         analyzeModel.title = base.name
         Object.assign(this.analyzeModel, analyzeModel)
@@ -264,45 +293,102 @@ export default {
       }
     },
     startProbabilityModel() {
-      const collector = []
       this.probabilityLoading = true
       this.$nextTick(_ => {
-        for(let stock of this.stockMap.values()) {
-          let days = 10
-          let recentCalculateItemList = lodash.takeRight(stock.result, days)
-          if (recentCalculateItemList.length === days) {
-            let makeShortResult = {
-              lastResult: false,
-              makeShort: 0,
-              makeLong: 0
-            }
-            for(let i=recentCalculateItemList.length - 1; i>= 0; i--) {
-              let result = recentCalculateItemList[i].isMakeShort
-              if (makeShortResult.lastResult && !result) {
-                break
-              }
-              if (result) {
-                makeShortResult.makeShort++
-              } else {
-                makeShortResult.makeLong++
-              }
-              makeShortResult.lastResult = result
-            }
-            if (makeShortResult.makeShort > 0) {
-              collector.push({
-                code: stock.code,
-                name: stock.name,
-                makeShort: makeShortResult.makeShort,
-                makeLong: makeShortResult.makeLong
-              })
-            }
-          }
-        }
-        this.$bus.$emit('analyzeMakeShort', collector)
+        this.$bus.$emit('analyzeMakeShort', this.analyzeMakeShort({
+          targetDate: this.targetDate
+        }))
+//        this.$bus.$emit('analyzeMakeShort', this.analyzeMyIdea())
         this.$nextTick(_ => {
           this.probabilityLoading = false
         })
       })
+    },
+    getTargetStockResultRange(stock, beforeDays = 0) {
+      return lodash.slice(stock.result, 0, stock.result.length - beforeDays)
+    },
+    getTargetStockResultMinValueInRecentDays(stockResult, days = 180) {
+      const recentCalculateItemList = lodash.takeRight(stockResult, days)
+      const minCloseList = recentCalculateItemList.map(item => item.close)
+      return lodash.min(minCloseList)
+    },
+    analyzeMakeShort({ targetDate }) {
+      const collector = []
+      for(let stock of this.stockMap.values()) {
+        let beforeDays = -1
+        for(let i=0; i<stock.rawData.length; i++) {
+          if (stock.rawData[stock.rawData.length - 1 - i].timestamp <= targetDate.getTime()) {
+            beforeDays = i
+            break
+          }
+        }
+        if (beforeDays === -1) {
+          continue
+        }
+
+        const targetStockResult = this.getTargetStockResultRange(stock, beforeDays)
+        let days = 10
+        let recentCalculateItemList = lodash.takeRight(targetStockResult, days)
+        if (recentCalculateItemList.length === days) {
+          let makeShortResult = {
+            lastResult: false,
+            makeShort: 0,
+            notMakeShort: 0
+          }
+          for(let i=recentCalculateItemList.length - 1; i>= 0; i--) {
+            let currentCalculateItem = recentCalculateItemList[i]
+            if (currentCalculateItem.percent <= -9) {
+              makeShortResult.floorCount++
+            } else if (currentCalculateItem.percent >= 9) {
+              makeShortResult.ceilingCount++
+            }
+            let result = currentCalculateItem.isMakeShort
+            if (makeShortResult.lastResult && !result) {
+              break
+            }
+            if (result) {
+              makeShortResult.makeShort++
+            } else {
+              makeShortResult.notMakeShort++
+            }
+            makeShortResult.lastResult = result
+          }
+          if (makeShortResult.makeShort > 0) {
+            const today = recentCalculateItemList[recentCalculateItemList.length - 1]
+            // 复盘
+            const newTargetStockResultList = lodash.takeRight(this.getTargetStockResultRange(stock, 0), beforeDays)
+            let mostRecentDay = newTargetStockResultList[newTargetStockResultList.length - 1]
+            if (!mostRecentDay) { // 修复对当日复盘时的异常数据点
+              mostRecentDay = {
+                close: today.close
+              }
+            }
+            const model = {
+              code: stock.code,
+              name: stock.name,
+              targetDate: today.date,
+              makeShort: makeShortResult.makeShort,
+              notMakeShort: makeShortResult.notMakeShort,
+              ceilingCount: newTargetStockResultList.filter(item => item.percent > 9).length,
+              floorCount: newTargetStockResultList.filter(item => item.percent < -9).length,
+              profit: lodash.round((mostRecentDay.close - today.close) / today.close * 100, 1),
+              lastDiff: today.diff,
+              close: today.close,
+              minClose: this.getTargetStockResultMinValueInRecentDays(targetStockResult)
+            }
+
+            model.closeIncrement = lodash.round((model.close / model.minClose - 1) * 100)
+            if (recentCalculateItemList.length > 3) {
+              const yesterday = recentCalculateItemList[recentCalculateItemList.length - 2]
+              const theDayBeforeYesterday = recentCalculateItemList[recentCalculateItemList.length - 3]
+              model.lastOneDayTrend = lodash.round(today.diff - yesterday.diff, 1)
+              model.lastTwoDayTrend = lodash.round(yesterday.diff - theDayBeforeYesterday.diff, 1)
+            }
+            collector.push(model)
+          }
+        }
+      }
+      return collector
     },
     openYearReport() {
       window.open(`https://xueqiu.com/snowman/S/${ this.stockCode }/detail#/ZYCWZB`)

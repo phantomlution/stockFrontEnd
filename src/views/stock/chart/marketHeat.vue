@@ -37,24 +37,47 @@ export default {
         },
       }
 
-      data = data.map(item => {
+      const chartData = []
+
+      const positiveTrendData = data.map(item => {
         return {
           date: item.date,
-          percent: lodash.round(100 * item.positiveCount / item.total, 1)
+          type: 'positiveTrend',
+          value: item.positiveCount
         }
       })
 
-      chart.source(data, scale);
+      const makeShortData = data.map(item => {
+        return {
+          date: item.date,
+          type: 'makeShort',
+          value: item.makeShortCount
+        }
+      })
+
+      const makeLongData = data.map(item => {
+        return {
+          date: item.date,
+          type: 'makeLong',
+          value: item.makeLongCount
+        }
+      })
+
+      Array.prototype.push.apply(chartData, positiveTrendData)
+      Array.prototype.push.apply(chartData, makeShortData)
+      Array.prototype.push.apply(chartData, makeLongData)
+
+      chart.source(chartData, scale);
       chart.tooltip({
         crosshairs: {
           type: 'line'
         }
       });
-      chart.line().position('date*percent').tooltip('date*percent');
-      chart.point().position('date*percent').size(4).shape('circle').style({
-        stroke: '#fff',
-        lineWidth: 1
-      });
+      chart.line().position('date*value').color('type');
+//      chart.point().position('date*percent').size(4).shape('circle').style({
+//        stroke: '#fff',
+//        lineWidth: 1
+//      });
 
 
       chart.render()

@@ -1,5 +1,5 @@
 <template>
-  <lr-box>
+  <lr-box :title="title">
     <div :id="chartId"></div>
   </lr-box>
 </template>
@@ -14,12 +14,14 @@ const THRESHOLD_WATER_PERCENT = 50
 export default {
   data() {
     return {
+      title: '',
       chart: null,
       chartId: idGenerator.next()
     }
   },
   methods: {
     updateChart(stock, dataCount) {
+      this.title = stock.label
       const data = lodash.takeRight(stock.result, dataCount)
       if (this.chart) {
         this.chart.clear()
@@ -48,10 +50,14 @@ export default {
         const today = data[i]
         if (today.isMakeShort) {
           this.addMakeShortPoint(view, [today.timestamp, today.close])
+        } else if (today.isMakeLong){
+          this.addMakeLongPoint(view, [today.timestamp, today.close])
         }
         const yesterday = data[i - 1]
         if (today.isMakeShort && yesterday.isMakeShort) {
-          this.addGuideLine(view, [today.timestamp, today.close], [yesterday.timestamp, yesterday.close])
+          this.addMakeShortGuideLine(view, [today.timestamp, today.close], [yesterday.timestamp, yesterday.close])
+        } else if (today.isMakeLong && yesterday.isMakeLong) {
+          this.addMakeLongGuideLine(view, [today.timestamp, today.close], [yesterday.timestamp, yesterday.close])
         }
       }
 
@@ -83,11 +89,34 @@ export default {
         }
       });
     },
-    addGuideLine(view, start, end) {
+    addMakeLongPoint(view, start) {
+      view.guide().dataMarker({
+        position: start,
+        content: '',
+        style: {
+          point: {
+            stroke: 'green'
+          }
+        }
+      });
+    },
+    addMakeShortGuideLine(view, start, end) {
       view.guide().line({
         top: true,
         lineStyle: {
           stroke: '#f00',
+          lineDash: [0],
+          lineWidth: 3,
+        },
+        start: start,
+        end: end
+      })
+    },
+    addMakeLongGuideLine(view, start, end) {
+      view.guide().line({
+        top: true,
+        lineStyle: {
+          stroke: '#0f0',
           lineDash: [0],
           lineWidth: 3,
         },
