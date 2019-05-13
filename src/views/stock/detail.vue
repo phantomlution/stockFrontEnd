@@ -36,6 +36,7 @@
 import { idGenerator, deepClone } from '@/utils'
 import lodash from 'lodash'
 import Stock from '@/utils/stock'
+import { RANGE_END_IN_DAYS } from '@/utils/stock'
 import stockUtils from '@/utils/stockUtils'
 import RequestThread from '@/utils/RequestThread'
 import baseChart from './chart/base.vue'
@@ -177,31 +178,17 @@ export default {
           this.batchAnalyzeLoading = false
           this.$nextTick(_ => {
             setTimeout(_ => {
-              const result = stockUtils.calculateMarketTrendPercentage(this.stockMap, 365)
+//              const result = stockUtils.calculateMarketTrendPercentage(this.stockMap, 365)
+              const result = stockUtils.calculateMarketTrendPercentage(this.stockMap, 100)
+              // 以365个自然日计算，四个效果差不多。误差为0时，匹配率为80%, 为0.4时，达到90%
               // 聚合上证指数
-              console.log(result)
-              this.$http.get('/api/stock/index', {
-                count: this.historyDataCount
-              }).then(response => {
-                const timestampIndex = response.column.indexOf('timestamp')
-                const percentIndex = response.column.indexOf('percent')
-                const matchDate = []
-                const notMatchDate = []
-                result.forEach(resultItem => {
-                  const indexItem = response.data.find(item => stockUtils.dateFormat(item[timestampIndex]) === resultItem.dateString)
-                  if (resultItem.makeShortCount >= resultItem.makeLongCount && indexItem[percentIndex] <= 0) {
-                    matchDate.push(resultItem.dateString)
-                  } else if (resultItem.makeLongCount >= resultItem.makeShortCount && indexItem[percentIndex] >= 0) {
-                    matchDate.push(resultItem.dateString)
-                  } else {
-                    notMatchDate.push(resultItem.dateString)
-                  }
-                })
-                console.log(matchDate)
-                console.log(notMatchDate)
-              }).catch(_ => {
-                console.error(_)
-              })
+//              this.simulateIndexMatchRate(result, 'SH000001')
+              // 聚合深证成指
+//              this.simulateIndexMatchRate(result, 'SZ399001')
+              // 聚合沪深300
+//              this.simulateIndexMatchRate(result, 'SH000300')
+              // 聚合上证50
+//              this.simulateIndexMatchRate(result, 'SH000016')
 
               this.$refs.marketHeat.updateChart(result)
             }, 300)
@@ -210,6 +197,39 @@ export default {
       })
 
       requestThread.run()
+    },
+    simulateIndexMatchRate(stockHistoryResult, code) { // 模拟大盘指数匹配率
+      this.$http.get('/api/stock/index', {
+        code,
+        count: this.historyDataCount
+      }).then(response => {
+        const timestampIndex = response.column.indexOf('timestamp')
+        const percentIndex = response.column.indexOf('percent')
+        const result = []
+        result.push(['code', code])
+        for(let i=0; i< 20; i++) {
+          const matchDate = []
+          const notMatchDate = []
+          const errorMargin = i * 0.1 // 误差范围
+          stockHistoryResult.forEach(resultItem => {
+            const indexItem = response.data.find(item => stockUtils.dateFormat(item[timestampIndex]) === resultItem.dateString)
+            if (resultItem.makeShortCount >= resultItem.makeLongCount && indexItem[percentIndex] <= errorMargin) {
+              matchDate.push(resultItem.dateString)
+            } else if (resultItem.makeLongCount >= resultItem.makeShortCount && indexItem[percentIndex] >= -1 * errorMargin) {
+              matchDate.push(resultItem.dateString)
+            } else {
+              notMatchDate.push(resultItem.dateString)
+            }
+          })
+          result.push([
+            `error margin: ${ lodash.round(errorMargin, 1) }`,
+            `${ lodash.round(matchDate.length / (matchDate.length + notMatchDate.length) * 100 ,1)}%`
+          ])
+        }
+        console.log(result)
+      }).catch(_ => {
+        console.error(_)
+      })
     },
     formatData(stockDetail) {
       const dataList = stockDetail.data.map(item => {
@@ -327,10 +347,12 @@ export default {
         }
 
         const targetStockResult = this.getTargetStockResultRange(stock, beforeDays)
-        let days = 10
+        let days = RANGE_END_IN_DAYS
         let recentCalculateItemList = lodash.takeRight(targetStockResult, days)
         if (recentCalculateItemList.length === days) {
           let makeShortResult = {
+            totalMakeShort: recentCalculateItemList.filter(item => item.isMakeShort).length,
+            totalMakeLong: recentCalculateItemList.filter(item => item.isMakeLong).length,
             lastResult: false,
             makeShort: 0,
             notMakeShort: 0
@@ -353,6 +375,7 @@ export default {
             }
             makeShortResult.lastResult = result
           }
+
           if (makeShortResult.makeShort > 0) {
             const today = recentCalculateItemList[recentCalculateItemList.length - 1]
             // 复盘
@@ -369,11 +392,15 @@ export default {
               targetDate: today.date,
               makeShort: makeShortResult.makeShort,
               notMakeShort: makeShortResult.notMakeShort,
+              totalMakeShort: makeShortResult.totalMakeShort,
+              totalMakeLong: makeShortResult.totalMakeLong,
               ceilingCount: newTargetStockResultList.filter(item => item.percent > 9).length,
               floorCount: newTargetStockResultList.filter(item => item.percent < -9).length,
               profit: lodash.round((mostRecentDay.close - today.close) / today.close * 100, 1),
               lastDiff: today.diff,
               close: today.close,
+              isMakeShort: today.isMakeShort,
+              isMakeLong: today.isMakeLong,
               minClose: this.getTargetStockResultMinValueInRecentDays(targetStockResult)
             }
 

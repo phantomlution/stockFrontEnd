@@ -1,8 +1,7 @@
 import lodash from 'lodash'
 import stockUtils from './stockUtils'
-
-const RANGE_START_IN_DAYS = 5
-const RANGE_END_IN_DAYS = 30
+const RANGE_START_IN_DAYS = 4
+export const RANGE_END_IN_DAYS = RANGE_START_IN_DAYS * 4
 
 const RANGE_RECENT_TRADE_VOLUME = 200 // [基本面]近100日交易量
 
@@ -62,6 +61,7 @@ export default class Stock {
         code: this.code,
         timestamp,
         close: todayData.close,
+        volume: todayData.volume,
         percent: todayData.percent,
         totalDataCount: this.rawData.length,
         date: stockUtils.dateFormat(timestamp),
