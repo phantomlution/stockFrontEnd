@@ -611,7 +611,7 @@
       <workItem from="1557455458828" duration="618000" />
       <workItem from="1557483054780" duration="15608000" />
       <workItem from="1557625545803" duration="16101000" />
-      <workItem from="1557721250988" duration="258000" />
+      <workItem from="1557721250988" duration="345000" />
     </task>
     <task id="LOCAL-00001" summary="集成全部的基础功能">
       <created>1552037063327</created>
@@ -893,11 +893,18 @@
       <option name="project" value="LOCAL" />
       <updated>1557714671097</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="减少数据量">
+      <created>1557722250328</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1557722250328</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191346000" />
+    <option name="totallyTimeSpent" value="191433000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
@@ -953,7 +960,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="接近完美的模型了" />
     <MESSAGE value="大量策略优化" />
     <MESSAGE value="调参前备份" />
     <MESSAGE value="集成一键分析" />
@@ -978,7 +984,8 @@
     <MESSAGE value="集成分析策略" />
     <MESSAGE value="集成年报" />
     <MESSAGE value="拟合指数曲线" />
-    <option name="LAST_COMMIT_MESSAGE" value="拟合指数曲线" />
+    <MESSAGE value="减少数据量" />
+    <option name="LAST_COMMIT_MESSAGE" value="减少数据量" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

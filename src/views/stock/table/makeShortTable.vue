@@ -63,7 +63,7 @@ export default {
 //        .filter(item => item.makeShort >= 1)
 //        .filter(item => item.notMakeShort <= 1) // 保证时效性
 //        .filter(item => item.lastDiff >= -75 && item.lastDiff <= -10) // 排除某一些情况下的垃圾股票
-        .filter(item => item.closeIncrement <= 50)
+        .filter(item => item.closeIncrement <= 30)
 
 //        .filter(item => item.lastOneDayTrend > 1 && item.lastTwoDayTrend > 1) // 保证最低回升速度
 
