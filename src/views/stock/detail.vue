@@ -7,9 +7,10 @@
         <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(false)">快速分析</el-button>
         <el-button :loading="probabilityLoading" type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
-        <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期">
-        </el-date-picker>
+        <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" />
+        <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" />
         <el-button @click.stop="openYearReport">年报</el-button>
+        <el-button @click.stop="refresh">刷新</el-button>
       </lr-box>
       <lr-box v-if="progress.totalCount">
         <div style="display: flex">
@@ -79,6 +80,7 @@ export default {
       useChart: true,
       historyDataCount: 420,
       targetDate: new Date(), // 模拟N日前的数据
+      lastDatePoint: '',
       choiceList: [], // 待选择列表
       progress: {
         finishCount: 0,
@@ -101,9 +103,7 @@ export default {
   },
   watch: {
     'analyzeModel.dataCount'() {
-      this.$nextTick(_ => {
-        this.searchStock(this.stockCode)
-      })
+      this.refresh()
     }
   },
   computed: {
@@ -141,6 +141,11 @@ export default {
     this.$bus.$off('searchStockDetail')
   },
   methods: {
+    refresh() {
+      this.$nextTick(_ => {
+        this.searchStock(this.stockCode)
+      })
+    },
     searchStock(code) {
       this.loadData(code, true)
     },
@@ -308,8 +313,16 @@ export default {
     updateStockInfo(stock, forceUpdate) {
       const dataCount = this.analyzeModel.dataCount
       if (forceUpdate || this.useChart) {
-        this.$refs.baseChart.updateChart(stock, dataCount)
-        this.$refs.tradeVolumeChart.updateChart(stock, dataCount)
+        this.$refs.baseChart.updateChart({
+          stock,
+          dataCount,
+          lastDatePoint: this.lastDatePoint
+        })
+        this.$refs.tradeVolumeChart.updateChart({
+          stock,
+          dataCount,
+          lastDatePoint: this.lastDatePoint
+        })
       }
     },
     startProbabilityModel() {
@@ -318,11 +331,43 @@ export default {
         this.$bus.$emit('analyzeMakeShort', this.analyzeMakeShort({
           targetDate: this.targetDate
         }))
-//        this.$bus.$emit('analyzeMakeShort', this.analyzeMyIdea())
+//        this.analyzeMyIdea()
         this.$nextTick(_ => {
           this.probabilityLoading = false
         })
       })
+    },
+    analyzeMyIdea() {
+      const result = []
+      const threshold = 6
+      for (let stock of this.stockMap.values()) {
+        let continuousMakeShortCount = 0
+        for(let i=0; i<stock.result.length; i++) {
+          if (stock.result[i].isMakeShort) {
+            continuousMakeShortCount++
+          } else {
+            if (continuousMakeShortCount >= threshold) {
+              let historyPercent = []
+              for(let j=continuousMakeShortCount; j>= 1; j--) {
+                historyPercent.push(stock.result[i - j].percent)
+              }
+              let totalHistoryPercent = lodash.round(lodash.sum(historyPercent), 1)
+              result.push({
+                count: continuousMakeShortCount,
+                date: stock.result[i].date,
+                code: stock.code,
+//                percent: stock.result[i].percent,
+//                historyPercent: historyPercent,
+//                totalHistoryPercent,
+//                averageTotalHistoryPercent: lodash.round(totalHistoryPercent / continuousMakeShortCount, 1)
+              })
+            }
+            continuousMakeShortCount = 0
+          }
+        }
+      }
+      window.idea = result
+      console.log(result)
     },
     getTargetStockResultRange(stock, beforeDays = 0) {
       return lodash.slice(stock.result, 0, stock.result.length - beforeDays)

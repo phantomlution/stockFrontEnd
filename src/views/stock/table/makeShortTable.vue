@@ -72,7 +72,7 @@ export default {
       console.log(lodash.round(lodash.mean(dataList.map(item => item.profit)),2))
       console.log('\n1 ')
 
-      this.dataList = dataList
+      this.dataList = lodash.takeRight(dataList, 100)
 
     })
   },

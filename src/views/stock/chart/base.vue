@@ -18,8 +18,12 @@ export default {
     }
   },
   methods: {
-    updateChart(stock, dataCount) {
-      const data = lodash.takeRight(stock.rawData, dataCount)
+    updateChart({stock, dataCount, lastDatePoint}) {
+      let rawData = stock.rawData
+      if (lastDatePoint) {
+        rawData = rawData.filter(item => item.timestamp <= lastDatePoint.getTime())
+      }
+      const data = lodash.takeRight(rawData, dataCount)
       this.title = stock.label
       const closeValueList = data.map(item => item.close)
       const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)

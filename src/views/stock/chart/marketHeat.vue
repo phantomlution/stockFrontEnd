@@ -47,6 +47,7 @@ export default {
         }
       })
 
+
       const makeShortData = data.map(item => {
         return {
           date: item.date,

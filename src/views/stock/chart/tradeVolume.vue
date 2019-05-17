@@ -20,9 +20,13 @@ export default {
     }
   },
   methods: {
-    updateChart(stock, dataCount) {
+    updateChart({stock, dataCount, lastDatePoint}) {
+      let rawData = stock.result
+      if (lastDatePoint) {
+        rawData = rawData.filter(item => item.timestamp <= lastDatePoint.getTime())
+      }
       this.title = stock.label
-      const data = lodash.takeRight(stock.result, dataCount)
+      const data = lodash.takeRight(rawData, dataCount)
       if (this.chart) {
         this.chart.clear()
       } else {
