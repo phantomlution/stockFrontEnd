@@ -5,7 +5,7 @@
         <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
         <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
         <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(false)">快速分析</el-button>
-        <el-button :loading="probabilityLoading" type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
+        <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
         <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
         <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" />
         <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" />
@@ -21,7 +21,6 @@
             {{ progress.finishCount }}/{{ progress.totalCount}},最大并发{{ progress.requestCount }},耗时{{ progress.seconds | inMinutes }}
           </div>
         </div>
-        <market-heat ref="marketHeat" />
       </lr-box>
       <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
         <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
@@ -29,6 +28,21 @@
       <make-short-table />
       <base-chart ref="baseChart" />
       <trade-volume-chart ref="tradeVolumeChart" />
+      <template v-if="stockCode && analyzeModel.base && analyzeModel.base.company">
+        <lr-box>
+          <el-form label-width="100px">
+            <el-form-item label="公司简介" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+              {{ analyzeModel.base.company.org_cn_introduction || '-' }}
+            </el-form-item>
+            <el-form-item label="主营业务" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+              {{ analyzeModel.base.company.main_operation_business || '-' }}
+            </el-form-item>
+            <el-form-item label="省份" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+              {{ analyzeModel.base.company.provincial_name || '-' }}
+            </el-form-item>
+          </el-form>
+        </lr-box>
+      </template>
     </div>
   </div>
 </template>
@@ -42,7 +56,6 @@ import stockUtils from '@/utils/stockUtils'
 import RequestThread from '@/utils/RequestThread'
 import baseChart from './chart/base.vue'
 import tradeVolumeChart from './chart/tradeVolume.vue'
-import marketHeat from './chart/marketHeat.vue'
 import searchStock from './components/searchStock.vue'
 import makeShortTable from './table/makeShortTable.vue'
 //import simulateDate from './components/simulateDate.vue'
@@ -65,16 +78,14 @@ export default {
   components: {
     baseChart,
     tradeVolumeChart,
-    marketHeat,
     searchStock,
-    makeShortTable,
+    makeShortTable
 //    simulateDate
   },
   data() {
     return {
       stockCode: '',
       batchAnalyzeLoading: false,
-      probabilityLoading: false,
       stockMap: new Map(),
       baseMap: new Map(),
       useChart: true,
@@ -194,8 +205,8 @@ export default {
 //              this.simulateIndexMatchRate(result, 'SH000300')
               // 聚合上证50
 //              this.simulateIndexMatchRate(result, 'SH000016')
-
-              this.$refs.marketHeat.updateChart(result)
+              this.$bus.$emit('analyzeMarketHeat', result)
+              this.calculateLowPriceStock()
             }, 300)
           })
         }
@@ -203,7 +214,25 @@ export default {
 
       requestThread.run()
     },
-    simulateIndexMatchRate(stockHistoryResult, code) { // 模拟大盘指数匹配率
+    getTradeDateList() { // 获取交易日期列表
+      return new Promise((resolve, reject) => {
+        this.$http.get('api/stock/index', {
+          code: 'SH000001',
+          count: this.historyDataCount
+        }).then(response => {
+          const timestampIndex = response.column.indexOf('timestamp')
+          const lastDays = 100
+          const lastDataList = lodash.takeRight(response.data, lastDays)
+          const result = lastDataList.map(item => {
+            return item[timestampIndex]
+          })
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
+    },
+    simulateIndexMatchRate(stockHistoryResult, code) { // testCase 模拟大盘指数匹配率
       this.$http.get('/api/stock/index', {
         code,
         count: this.historyDataCount
@@ -292,7 +321,7 @@ export default {
         analyzeModel.base = base
         this.formatData(responseList[0])
         let data = responseList[0].data
-        if (data.length < this.historyDataCount) {
+        if (data.length < this.historyDataCount / 2) {
           throw new Error('数据不足')
         }
         data.forEach(item => {
@@ -325,49 +354,28 @@ export default {
         })
       }
     },
-    startProbabilityModel() {
-      this.probabilityLoading = true
-      this.$nextTick(_ => {
-        this.$bus.$emit('analyzeMakeShort', this.analyzeMakeShort({
-          targetDate: this.targetDate
-        }))
-//        this.analyzeMyIdea()
-        this.$nextTick(_ => {
-          this.probabilityLoading = false
+    calculateLowPriceStock() { // 计算低价股票
+      this.getTradeDateList().then(tradeDateList => {
+        const result = []
+        tradeDateList.forEach(tradeDate => {
+          const dateString = stockUtils.dateFormat(tradeDate)
+          const analyzeResult = this.analyzeMakeShort({
+            targetDate: new Date(tradeDate)
+          })
+          result.push({
+            date: dateString,
+            fivePercentCount: analyzeResult.filter(item => item.targetDate === dateString && item.closeIncrement <= 5).length,
+            tenPercentCount: analyzeResult.filter(item => item.targetDate === dateString && item.closeIncrement <= 10).length
+          })
         })
+
+        this.$bus.$emit('analyzeLowPriceCount', result)
       })
     },
-    analyzeMyIdea() {
-      const result = []
-      const threshold = 6
-      for (let stock of this.stockMap.values()) {
-        let continuousMakeShortCount = 0
-        for(let i=0; i<stock.result.length; i++) {
-          if (stock.result[i].isMakeShort) {
-            continuousMakeShortCount++
-          } else {
-            if (continuousMakeShortCount >= threshold) {
-              let historyPercent = []
-              for(let j=continuousMakeShortCount; j>= 1; j--) {
-                historyPercent.push(stock.result[i - j].percent)
-              }
-              let totalHistoryPercent = lodash.round(lodash.sum(historyPercent), 1)
-              result.push({
-                count: continuousMakeShortCount,
-                date: stock.result[i].date,
-                code: stock.code,
-//                percent: stock.result[i].percent,
-//                historyPercent: historyPercent,
-//                totalHistoryPercent,
-//                averageTotalHistoryPercent: lodash.round(totalHistoryPercent / continuousMakeShortCount, 1)
-              })
-            }
-            continuousMakeShortCount = 0
-          }
-        }
-      }
-      window.idea = result
-      console.log(result)
+    startProbabilityModel() {
+      this.$bus.$emit('analyzeMakeShort', this.analyzeMakeShort({
+        targetDate: this.targetDate
+      }))
     },
     getTargetStockResultRange(stock, beforeDays = 0) {
       return lodash.slice(stock.result, 0, stock.result.length - beforeDays)

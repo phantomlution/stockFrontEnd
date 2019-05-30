@@ -14,6 +14,14 @@ export default {
       chartId: idGenerator.next()
     }
   },
+  mounted() {
+    this.$bus.$on('analyzeMarketHeat', result => {
+      this.updateChart(result)
+    })
+  },
+  beforeDestroy() {
+    this.$bus.$off('analyzeMarketHeat')
+  },
   methods: {
     updateChart(data) {
       if (this.chart) {
@@ -21,14 +29,12 @@ export default {
       } else {
         this.chart = new G2.Chart({
           container: this.chartId,
-          forceFit: true,
           width: window.innerWidth,
           height: window.innerHeight / 2,
           padding: [20, 80, 80, 80]
         })
       }
       const chart = this.chart
-      chart.clear()
       var scale = {
         date: {
           alias: '日期',
@@ -75,12 +81,6 @@ export default {
         }
       });
       chart.line().position('date*value').color('type');
-//      chart.point().position('date*percent').size(4).shape('circle').style({
-//        stroke: '#fff',
-//        lineWidth: 1
-//      });
-
-
       chart.render()
     }
   }
