@@ -191,7 +191,6 @@ export default {
         done: state => { // 任务结束
           this.updateProgress(state)
           this.useChart = true
-          this.batchAnalyzeLoading = false
           this.$nextTick(_ => {
             setTimeout(_ => {
 //              const result = stockUtils.calculateMarketTrendPercentage(this.stockMap, 365)
@@ -207,6 +206,7 @@ export default {
 //              this.simulateIndexMatchRate(result, 'SH000016')
               this.$bus.$emit('analyzeMarketHeat', result)
               this.calculateLowPriceStock()
+              this.batchAnalyzeLoading = false
             }, 300)
           })
         }

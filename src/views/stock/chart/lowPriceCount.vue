@@ -1,11 +1,14 @@
 <template>
-  <div :id="chartId"></div>
+  <lr-box :title="title" v-show="chart">
+    <div :id="chartId"></div>
+  </lr-box>
 </template>
 
 <script>
   import { idGenerator } from '@/utils'
   import G2 from '@antv/g2'
   import lodash from 'lodash'
+  import { RANGE_END_IN_DAYS } from '@/utils/stock'
 
   export default {
     data() {
@@ -18,6 +21,11 @@
       this.$bus.$on('analyzeLowPriceCount', result => {
         this.updateChart(result)
       })
+    },
+    computed: {
+      title() {
+        return `近${ RANGE_END_IN_DAYS }个交易日价格`
+      }
     },
     beforeDestroy() {
       this.$bus.$off('analyzeLowPriceCount')

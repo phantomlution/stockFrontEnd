@@ -1,5 +1,8 @@
 <template>
-  <div :id="chartId"></div>
+  <lr-box title="交易热度与做空，做多数概览" v-show="chart">
+    <div :id="chartId"></div>
+  </lr-box>
+
 </template>
 
 <script>
