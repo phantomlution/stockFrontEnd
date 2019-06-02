@@ -315,10 +315,6 @@ export default {
         }
         let floatShare = base.float_shares
 
-
-        const analyzeModel = {}
-
-        analyzeModel.base = base
         this.formatData(responseList[0])
         let data = responseList[0].data
         if (data.length < this.historyDataCount / 2) {
@@ -327,8 +323,6 @@ export default {
         data.forEach(item => {
           item.waterFrequencyPercent = lodash.round(item.volume / floatShare * 100, 2)
         })
-        analyzeModel.title = base.name
-        Object.assign(this.analyzeModel, analyzeModel)
         this.analyze(data, base, forceUpdate)
       }).catch(_ => {
         console.log(_)
@@ -341,6 +335,12 @@ export default {
     },
     updateStockInfo(stock, forceUpdate) {
       const dataCount = this.analyzeModel.dataCount
+
+      Object.assign(this.analyzeModel, {
+        base: stock.base,
+        title: stock.base.name
+      })
+
       if (forceUpdate || this.useChart) {
         this.$refs.baseChart.updateChart({
           stock,
