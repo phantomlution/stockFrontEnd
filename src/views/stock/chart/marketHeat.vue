@@ -1,5 +1,5 @@
 <template>
-  <lr-box title="交易热度与做空，做多数概览" v-show="chart">
+  <lr-box :title="title">
     <div :id="chartId"></div>
   </lr-box>
 
@@ -17,13 +17,16 @@ export default {
       chartId: idGenerator.next()
     }
   },
+  computed: {
+    title() {
+      return `交易热度与做空，做多数概览`
+    }
+  },
   mounted() {
-    this.$bus.$on('analyzeMarketHeat', result => {
-      this.updateChart(result)
-    })
+    this.updateChart(this.$store.state.data.marketHeat)
   },
   beforeDestroy() {
-    this.$bus.$off('analyzeMarketHeat')
+    // TODO destroy
   },
   methods: {
     updateChart(data) {
@@ -32,6 +35,7 @@ export default {
       } else {
         this.chart = new G2.Chart({
           container: this.chartId,
+          forceFit: true,
           width: window.innerWidth,
           height: window.innerHeight / 2,
           padding: [20, 80, 80, 80]
@@ -55,7 +59,6 @@ export default {
           value: item.positiveCount
         }
       })
-
 
       const makeShortData = data.map(item => {
         return {

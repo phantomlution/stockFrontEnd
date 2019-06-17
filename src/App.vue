@@ -8,7 +8,7 @@
       <div v-show="currentTab === 'detail'">
         <stock-detail />
       </div>
-      <div v-show="currentTab === 'analyze'">
+      <div v-if="currentTab === 'analyze'">
         <stock-analyze />
       </div>
     </div>

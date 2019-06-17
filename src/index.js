@@ -10,7 +10,8 @@ import excel from './utils/excel'
 import api from '@/api'
 import socket from '@/socket'
 import eventBus from '@/plugins/eventBus'
-import VueGoodTablePlugin from 'vue-good-table';
+import VueGoodTablePlugin from 'vue-good-table'
+import store from './store'
 
 import 'vue-good-table/dist/vue-good-table.css'
 
@@ -32,6 +33,7 @@ Vue.use(eventBus)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   components: { App },
   template: '<App/>'
 })
