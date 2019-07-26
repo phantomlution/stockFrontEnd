@@ -101,7 +101,7 @@ export default {
         .filter(item => item.close <= STOCK_PRICE_MAX)
         .filter(item => item.diffIncrement > 0)
         .filter(item => item.secondPhaseCount > 0)
-        .filter(item => item.closeIncrement <= 15)
+        .filter(item => item.closeIncrement <= 3)
 
       // 为了精简点数，进行数据剔除(采用天地人三个数)
       let secondRoundDataList = firstRoundDataList

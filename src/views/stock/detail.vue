@@ -2,15 +2,20 @@
   <div style="overflow: auto">
     <div>
       <lr-box>
-        <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
-        <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
-        <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(false)">快速分析</el-button>
-        <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
-        <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
-        <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" />
-        <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" />
-        <el-button @click.stop="openYearReport">年报</el-button>
-        <el-button @click.stop="refresh">刷新</el-button>
+        <div>
+          <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
+          <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
+          <el-button :loading="batchAnalyzeLoading" @click.stop="startBash(false)">快速分析</el-button>
+          <el-button @click.stop="openYearReport">年报</el-button>
+          <el-button @click.stop="openNotice">公告</el-button>
+          <el-button @click.stop="refresh">刷新</el-button>
+        </div>
+        <div style="margin-top: 16px">
+          <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
+          <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+          <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" />
+          <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" />
+        </div>
       </lr-box>
       <lr-box v-if="progress.totalCount">
         <div style="display: flex">
@@ -204,7 +209,7 @@ export default {
 //              this.simulateIndexMatchRate(result, 'SH000300')
               // 聚合上证50
 //              this.simulateIndexMatchRate(result, 'SH000016')
-              return
+//              return
 
               this.$store.dispatch('updateData', {
                 key: 'marketHeat',
@@ -563,6 +568,9 @@ export default {
     },
     openYearReport() {
       window.open(`https://xueqiu.com/snowman/S/${ this.stockCode }/detail#/ZYCWZB`)
+    },
+    openNotice() {
+      window.open(`http://data.eastmoney.com/notices/stock/${ this.stockCode.substring(2) }.html`)
     }
   }
 }

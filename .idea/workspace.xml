@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="修复页面数据不同步的问题">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/store/data/index.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/store/index.js" />
+    <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index-template.html" afterPath="$PROJECT_DIR$/index-template.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/index.js" afterPath="$PROJECT_DIR$/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/stock.js" afterPath="$PROJECT_DIR$/src/utils/stock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/chart/lowPriceCount.vue" afterPath="$PROJECT_DIR$/src/views/stock/chart/lowPriceCount.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/chart/marketHeat.vue" afterPath="$PROJECT_DIR$/src/views/stock/chart/marketHeat.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/chart/tradeVolume.vue" afterPath="$PROJECT_DIR$/src/views/stock/chart/tradeVolume.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/detail.vue" afterPath="$PROJECT_DIR$/src/views/stock/detail.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/table/makeShortTable.vue" afterPath="$PROJECT_DIR$/src/views/stock/table/makeShortTable.vue" />
     </list>
@@ -35,16 +25,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="detail.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/detail.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="433" column="26" lean-forward="false" selection-start-line="433" selection-start-column="12" selection-end-line="433" selection-end-column="26" />
+            <state relative-caret-position="200">
+              <caret line="572" column="89" lean-forward="false" selection-start-line="572" selection-start-column="89" selection-end-line="572" selection-end-column="89" />
               <folding>
+                <element signature="n#style#0;n#div#1;n#lr-box#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-form-item#1;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-form-item#2;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#2651#2699#0" expanded="true" />
+                <element signature="e#2798#2846#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -53,7 +44,7 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/utils/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="779">
               <caret line="41" column="13" lean-forward="false" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
               <folding />
             </state>
@@ -70,11 +61,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="makeShortTable.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="makeShortTable.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/table/makeShortTable.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="227">
-              <caret line="62" column="46" lean-forward="false" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
+            <state relative-caret-position="190">
+              <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="e#1356#1383#0" expanded="true" />
               </folding>
@@ -97,7 +88,7 @@
       <file leaf-file-name="tradeVolume.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/chart/tradeVolume.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
+            <state relative-caret-position="1596">
               <caret line="87" column="66" lean-forward="true" selection-start-line="87" selection-start-column="66" selection-end-line="87" selection-end-column="66" />
               <folding>
                 <element signature="e#101#138#0" expanded="true" />
@@ -141,7 +132,7 @@
       <file leaf-file-name="lowPriceCount.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/chart/lowPriceCount.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
+            <state relative-caret-position="304">
               <caret line="18" column="4" lean-forward="false" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
               <folding>
                 <element signature="e#101#138#0" expanded="true" />
@@ -161,8 +152,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>startProbabilityModel</find>
-      <find>analyzeMakeShort</find>
       <find>getComputedData</find>
       <find>RANGE_END_IN_DAYS</find>
       <find>analyzeMakeShort(</find>
@@ -191,6 +180,8 @@
       <find>secondPhaseResult</find>
       <find>deepClone</find>
       <find>bounceRate</find>
+      <find>return</find>
+      <find>年报</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -269,8 +260,8 @@
         <option value="$PROJECT_DIR$/src/store/data/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/chart/base.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/chart/tradeVolume.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/detail.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/table/makeShortTable.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/detail.vue" />
       </list>
     </option>
   </component>
@@ -305,7 +296,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -488,7 +479,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -688,7 +679,19 @@
       <workItem from="1559876132846" duration="8891000" />
       <workItem from="1560609463424" duration="226000" />
       <workItem from="1560745189065" duration="1894000" />
-      <workItem from="1560748867100" duration="12456000" />
+      <workItem from="1560748867100" duration="12494000" />
+      <workItem from="1560832951547" duration="246000" />
+      <workItem from="1561020379495" duration="313000" />
+      <workItem from="1561104645471" duration="145000" />
+      <workItem from="1561379210720" duration="148000" />
+      <workItem from="1561625379861" duration="139000" />
+      <workItem from="1562975519335" duration="607000" />
+      <workItem from="1563252858357" duration="157000" />
+      <workItem from="1563324315188" duration="585000" />
+      <workItem from="1563897369015" duration="211000" />
+      <workItem from="1563984366957" duration="162000" />
+      <workItem from="1564033002697" duration="129000" />
+      <workItem from="1564151939519" duration="449000" />
     </task>
     <task id="LOCAL-00001" summary="集成全部的基础功能">
       <created>1552037063327</created>
@@ -1012,11 +1015,18 @@
       <option name="project" value="LOCAL" />
       <updated>1559460299554</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="优化了大量策略，更新至4.0">
+      <created>1560783106920</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1560783106920</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="231786000" />
+    <option name="totallyTimeSpent" value="235115000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1031,7 +1041,7 @@
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20711975" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.197411" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1081,7 +1091,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="修复页面上加载的 bug" />
     <MESSAGE value="对分析出来的数据点进行优化" />
     <MESSAGE value="更新用例" />
     <MESSAGE value="优化模型策略" />
@@ -1106,7 +1115,8 @@
     <MESSAGE value="增加低价股模型分析" />
     <MESSAGE value="优化页面内容展示" />
     <MESSAGE value="修复页面数据不同步的问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复页面数据不同步的问题" />
+    <MESSAGE value="优化了大量策略，更新至4.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化了大量策略，更新至4.0" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1301,7 +1311,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1309,9 +1318,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="8" lean-forward="false" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="8" />
-          <folding>
-            <element signature="e#94#141#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1319,7 +1325,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="760">
           <caret line="41" column="17" lean-forward="false" selection-start-line="41" selection-start-column="2" selection-end-line="41" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1327,7 +1332,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="399">
           <caret line="35" column="8" lean-forward="false" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1335,60 +1339,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="4" column="12" lean-forward="false" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#21#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/chart/lowPriceCount.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="4" lean-forward="false" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
-          <folding>
-            <element signature="e#101#138#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/chart/marketHeat.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="8" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
-          <folding>
-            <element signature="e#102#139#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/table/makeShortPlot.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="38" column="23" lean-forward="false" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/data/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/stockUtils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/table/makeShortPlot.vue" />
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
           <caret line="43" column="14" lean-forward="false" selection-start-line="43" selection-start-column="14" selection-end-line="43" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="779">
+          <caret line="41" column="13" lean-forward="false" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index-template.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
           <folding />
         </state>
       </provider>
@@ -1405,7 +1379,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/chart/tradeVolume.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
+        <state relative-caret-position="1596">
           <caret line="87" column="66" lean-forward="true" selection-start-line="87" selection-start-column="66" selection-end-line="87" selection-end-column="66" />
           <folding>
             <element signature="e#101#138#0" expanded="true" />
@@ -1413,41 +1387,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/index.js">
+    <entry file="file://$PROJECT_DIR$/src/utils/stockUtils.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="41" column="13" lean-forward="false" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+        <state relative-caret-position="19">
+          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index-template.html">
+    <entry file="file://$PROJECT_DIR$/src/views/stock/chart/marketHeat.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="24" lean-forward="false" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/detail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="433" column="26" lean-forward="false" selection-start-line="433" selection-start-column="12" selection-end-line="433" selection-end-column="26" />
+        <state relative-caret-position="133">
+          <caret line="7" column="8" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form-item#1;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#el-form-item#2;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#2651#2699#0" expanded="true" />
+            <element signature="e#102#139#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/data/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/chart/lowPriceCount.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="18" column="4" lean-forward="false" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+          <folding>
+            <element signature="e#101#138#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/table/makeShortTable.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="62" column="46" lean-forward="false" selection-start-line="62" selection-start-column="46" selection-end-line="62" selection-end-column="46" />
+        <state relative-caret-position="190">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
             <element signature="e#1356#1383#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/detail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="572" column="89" lean-forward="false" selection-start-line="572" selection-start-column="89" selection-end-line="572" selection-end-column="89" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#lr-box#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form-item#0;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form-item#1;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#el-form-item#2;n#el-form#0;n#lr-box#0;n#template#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#2798#2846#0" expanded="true" />
           </folding>
         </state>
       </provider>
