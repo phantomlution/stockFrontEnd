@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <el-tabs v-model="currentTab">
-      <el-tab-pane label="detail" name="detail"/>
-      <el-tab-pane label="analyze" name="analyze"/>
+      <el-tab-pane label="个股" name="detail"/>
+      <el-tab-pane label="大盘" name="analyze"/>
+      <el-tab-pane label="消息面板" name="informationCenter" />
     </el-tabs>
     <div>
       <div v-show="currentTab === 'detail'">
@@ -11,6 +12,9 @@
       <div v-if="currentTab === 'analyze'">
         <stock-analyze />
       </div>
+      <div v-if="currentTab === 'informationCenter'">
+        <information-center />
+      </div>
     </div>
   </div>
 </template>
@@ -18,11 +22,13 @@
 <script>
 import stockDetail from '@/views/stock/detail'
 import stockAnalyze from '@/views/stock/analyze'
+import informationCenter from '@/views/stock/information'
 
 export default {
   components: {
     stockDetail,
-    stockAnalyze
+    stockAnalyze,
+    informationCenter
   },
   data() {
     return {
