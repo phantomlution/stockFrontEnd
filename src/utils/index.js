@@ -1,3 +1,5 @@
+import moment from "moment"
+
 /**
  * 获取 DOM 元素尺寸
  * @param element
@@ -41,4 +43,12 @@ export const idGenerator = {
 
 export const deepClone = function(model) {
   return JSON.parse(JSON.stringify(model))
+}
+
+export default {
+  install(Vue) {
+    Vue.filter('date', date => {
+      return moment(date).format('YYYY-MM-DD')
+    })
+  }
 }

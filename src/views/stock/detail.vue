@@ -13,8 +13,8 @@
         <div style="margin-top: 16px">
           <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
           <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
-          <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" />
-          <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" />
+          <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" style="width: 140px" />
+          <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" style="width: 140px"/>
         </div>
       </lr-box>
       <lr-box v-if="progress.totalCount">
@@ -63,6 +63,7 @@ import baseChart from './chart/base.vue'
 import tradeVolumeChart from './chart/tradeVolume.vue'
 import searchStock from './components/searchStock.vue'
 import makeShortTable from './table/makeShortTable.vue'
+import Vue from 'vue'
 //import simulateDate from './components/simulateDate.vue'
 
 const fieldSet = new Set([
@@ -91,7 +92,7 @@ export default {
     return {
       stockCode: '',
       batchAnalyzeLoading: false,
-      stockMap: new Map(),
+      stockMap: this.$store.state.data.stockMap,
       baseMap: new Map(),
       useChart: true,
       historyDataCount: 420,
@@ -145,14 +146,18 @@ export default {
       baseList.forEach(item => {
         this.baseMap.set(item.symbol, item)
       })
-      this.$refs.searchStock.doInit(codeList)
-
+      this.$store.dispatch('updateData', {
+        key: 'codeList',
+        data: codeList
+      })
     }).catch(_ => {
       console.error(_)
     })
     this.$bus.$on('searchStockDetail', ({ code }) => {
       this.stockCode = code
     })
+
+    Vue.prototype.analyzeProbability = this.analyzeProbability.bind(this)
   },
   beforeDestroy() {
     this.$bus.$off('searchStockDetail')
@@ -198,7 +203,6 @@ export default {
           this.updateProgress(state)
           this.useChart = true
           this.$nextTick(_ => {
-            setTimeout(_ => {
                 this.batchAnalyzeLoading = false
               // 以365个自然日计算，四个效果差不多。误差为0时，匹配率为80%, 为0.4时，达到90%
               // 聚合上证指数
@@ -210,37 +214,11 @@ export default {
               // 聚合上证50
 //              this.simulateIndexMatchRate(result, 'SH000016')
 //              return
-
-              this.$store.dispatch('updateData', {
-                key: 'marketHeat',
-                data: stockUtils.calculateMarketTrendPercentage(this.stockMap, 100)
-              })
-
-              this.calculateLowPriceStock()
-            }, 300)
           })
         }
       })
 
       requestThread.run()
-    },
-    getTradeDateList() { // 获取交易日期列表
-      return new Promise((resolve, reject) => {
-        this.$http.get('api/stock/index', {
-          code: 'SH000001',
-          count: this.historyDataCount
-        }).then(response => {
-          const timestampIndex = response.column.indexOf('timestamp')
-          const lastDays = this.analyzeModel.historyTradeDateRange
-          const lastDataList = lodash.takeRight(response.data, lastDays)
-          const result = lastDataList.map(item => {
-            return item[timestampIndex]
-          })
-          resolve(result)
-        }).catch(_ => {
-          reject(_)
-        })
-      })
     },
     simulateIndexMatchRate(stockHistoryResult, code) { // testCase 模拟大盘指数匹配率
       this.$http.get('/api/stock/index', {
@@ -364,28 +342,8 @@ export default {
         })
       }
     },
-    calculateLowPriceStock() { // 计算低价股票
-      this.getTradeDateList().then(tradeDateList => {
-        const result = []
-        tradeDateList.forEach(tradeDate => {
-          const dateString = stockUtils.dateFormat(tradeDate)
-          const analyzeResult = this.analyzeProbability({
-            targetDate: new Date(tradeDate)
-          })
-          result.push({
-            date: dateString,
-            fivePercentCount: analyzeResult.filter(item => item.targetDate === dateString && item.closeIncrement <= 5).length,
-            tenPercentCount: analyzeResult.filter(item => item.targetDate === dateString && item.closeIncrement <= 10).length
-          })
-        })
-
-        this.$store.dispatch('updateData', {
-          key: 'lowPriceCount',
-          data: result
-        })
-      })
-    },
     startProbabilityModel() {
+
       this.$bus.$emit('analyzeMakeShort', this.analyzeProbability({
         targetDate: this.targetDate
       }))
@@ -447,6 +405,7 @@ export default {
           collector.push(model)
         }
       }
+
       return collector
     },
     calculateSecondPhaseResult(data) {

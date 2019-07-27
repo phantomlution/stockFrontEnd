@@ -20,8 +20,12 @@ export default {
     return {
       stockCode: this.value,
       throttleSearch: null,
-      stockList: [],
       filteredStockList: []
+    }
+  },
+  computed: {
+    stockList() {
+      return this.$store.state.data.codeList
     }
   },
   watch: {
@@ -40,9 +44,12 @@ export default {
     this.throttleSearch = null
   },
   methods: {
-    doInit(codeList) {
-      this.stockList = codeList
-      this.searchStockItem()
+    getCurrent() {
+      if (!this.stockCode) {
+        return null
+      } else {
+        return this.stockList.find(item => item.value === this.stockCode)
+      }
     },
     searchStockItem(query) {
       if (!query) {

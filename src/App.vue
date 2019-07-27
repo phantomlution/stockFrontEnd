@@ -2,8 +2,8 @@
   <div id="app">
     <el-tabs v-model="currentTab">
       <el-tab-pane label="个股" name="detail"/>
+      <el-tab-pane label="情报中心" name="informationCenter" />
       <el-tab-pane label="大盘" name="analyze"/>
-      <el-tab-pane label="消息面板" name="informationCenter" />
     </el-tabs>
     <div>
       <div v-show="currentTab === 'detail'">
