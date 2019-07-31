@@ -1,22 +1,21 @@
 <template>
   <lr-box>
-    共{{ dataList.length }}条
-    <vue-good-table :columns="columns" :rows="dataList" :line-numbers="true" maxHeight="300px" :fixedHeader="true" :sortOptions="sortOptions">
+    <div>
+      <el-form :inline="true">
+        <el-form-item label="总记录数">
+          {{ dataList.length }}
+        </el-form-item>
+        <el-form-item label="流量回归">
+          <el-switch v-model="flowReturn"  />
+        </el-form-item>
+      </el-form>
+    </div>
+    <vue-good-table :columns="columns" :rows="dataList" :line-numbers="true" maxHeight="300px" :sortOptions="sortOptions">
       <template slot="table-row" slot-scope="props">
         <template v-if="props.column.field === 'code'">
-          <span>(L{{ props.row.rank}},{{ props.row.diffIncrement }}){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
+          <span>(L{{ props.row.rank}},{{ props.row.diffIncrement }}%){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
           <el-button type="text" @click.stop="showDetail(props.row.code)">查看</el-button>
           <span>{{ props.row.bounceRate }}</span>
-        </template>
-        <template v-else-if="props.column.field === 'secondPhaseCount'">
-          <el-button type="text" @click.stop="showSecondPhaseDetail(props.row)">
-            <template v-if="props.row.secondPhaseCount > 0">
-              是
-            </template>
-            <template v-else>
-              否
-            </template>
-          </el-button>
         </template>
         <template v-else-if="props.column.field === 'closeIncrement'">
           {{ props.row.close}}({{ props.row.closeIncrement}}%)
@@ -42,14 +41,14 @@ export default {
   },
   data() {
     return {
+      flowReturn: false, // 是否考虑流量回归
       columns: [
         { label: 'code', field: 'code' },
-        { label: 'secondPhaseCount', field: 'secondPhaseCount', type: 'number' },
+        { label: 'secondPhaseCount', field: 'secondPhaseCount', type: 'number', hidden: 'true' },
         { label: 'lastDiff', field: 'lastDiff', type: 'number' },
         { label: 'profit', field: 'profit', type: 'number', hidden: 'true' },
         { label: 'closeIncrement', field: 'closeIncrement', type: 'number' },
         { label: 'close', field: 'close', type: 'number', hidden: 'true' },
-        { label: 'minClose', field: 'minClose', type: 'number' },
         { label: 'bounceRate', field: 'bounceRate', type: 'number', hidden: 'true' },
         { label: 'rank', field: 'rank', type: 'number', hidden: 'true' },
         { label: 'diffIncrement', field: 'diffIncrement', type: 'number', hidden: 'true'}
@@ -59,13 +58,18 @@ export default {
         initialSortBy: [
           { field: 'rank', type: 'desc' },
           { field: 'secondPhaseCount', type: 'desc' },
-//          { field: 'profit', type: 'desc' },
-          { field: 'diffIncrement', type: 'desc' },
-          { field: 'closeIncrement', type: 'asc' },
-          { field: 'bounceRate', type: 'asc' }
+          { field: 'close', type: 'desc' },
+//          { field: 'diffIncrement', type: 'desc' },
+//          { field: 'closeIncrement', type: 'asc' },
+//          { field: 'bounceRate', type: 'asc' }
         ]
       },
       dataList: []
+    }
+  },
+  watch: {
+    flowReturn(val) {
+      this.$bus.$emit('restartAnalyzeProbability')
     }
   },
   mounted() {
@@ -75,33 +79,40 @@ export default {
        */
       data.forEach(item => {
         item.rank = 0
-        item.diffIncrement = 0
+
         const recentItemLength = item.recentItemList.length
         let positiveTrendCount = 0
-        if (recentItemLength >= 6) {
-          for(let i = recentItemLength - 1; i > recentItemLength - 6; i--) {
+        let continuousCount = 5
+
+        // 计算热度
+        item.diffIncrement = item.recentItemList[recentItemLength - 1].diff - item.recentItemList[recentItemLength - 6].diff
+        item.diffIncrement = Math.ceil(item.diffIncrement)
+
+        if (recentItemLength >= continuousCount) {
+          for(let i = recentItemLength - 1; i > recentItemLength - continuousCount; i--) {
             let result = item.recentItemList[i].diff - item.recentItemList[i - 1].diff > 0 ? 1 : 0
             if (result === 1) {
               positiveTrendCount++
             }
           }
-          if (positiveTrendCount >= 4) {
+          if (positiveTrendCount >= (continuousCount - 2)) {
             item.rank = 3
-            // 规避热度已经非常高的
-            if (item.recentItemList[recentItemLength - 1].diff <= 25) {
-              item.diffIncrement = item.recentItemList[recentItemLength - 1].diff - item.recentItemList[recentItemLength - 6].diff
-            }
           }
         }
       })
 
 
-      const firstRoundDataList = data
+      let firstRoundDataList = data
         .filter(item => item.close >= STOCK_PRICE_MIN)
         .filter(item => item.close <= STOCK_PRICE_MAX)
         .filter(item => item.diffIncrement > 0)
-        .filter(item => item.secondPhaseCount > 0)
+        .filter(item => item.secondPhaseCount > 0) // 必须存在二阶段的点
         .filter(item => item.closeIncrement <= 3)
+
+      // 考虑流量回归模型
+      if (this.flowReturn) {
+        firstRoundDataList = firstRoundDataList.filter(item => item.rank === 3)
+      }
 
       // 为了精简点数，进行数据剔除(采用天地人三个数)
       let secondRoundDataList = firstRoundDataList
@@ -135,9 +146,6 @@ export default {
       this.$bus.$emit('searchStockDetail', {
         code
       })
-    },
-    showSecondPhaseDetail(row) {
-      console.log(row.secondPhaseResult)
     }
   }
 }

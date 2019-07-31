@@ -157,6 +157,10 @@ export default {
       this.stockCode = code
     })
 
+    this.$bus.$on('restartAnalyzeProbability', _ => {
+      this.startProbabilityModel()
+    })
+
     Vue.prototype.analyzeProbability = this.analyzeProbability.bind(this)
   },
   beforeDestroy() {
@@ -343,7 +347,6 @@ export default {
       }
     },
     startProbabilityModel() {
-
       this.$bus.$emit('analyzeMakeShort', this.analyzeProbability({
         targetDate: this.targetDate
       }))
