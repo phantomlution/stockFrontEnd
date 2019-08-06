@@ -1,13 +1,16 @@
 <template>
   <div>
+    <lr-box >
+      <el-button type="primary" @click.stop="refresh">启动</el-button>
+    </lr-box>
     <market-heat />
     <low-price-count />
   </div>
 </template>
 
 <script>
-import marketHeat from './chart/marketHeat.vue'
-import lowPriceCount from './chart/lowPriceCount.vue'
+import marketHeat from '@/views/stock/chart/marketHeat.vue'
+import lowPriceCount from '@/views/stock/chart/lowPriceCount.vue'
 import stockUtils from '@/utils/stockUtils'
 import lodash from 'lodash'
 
@@ -16,10 +19,10 @@ export default {
     marketHeat,
     lowPriceCount
   },
-  mounted() {
-    this.analyze()
-  },
-  methods: { //
+  methods: {
+    refresh() {
+      this.analyze()
+    },
     analyze() {
       const stockMap = this.$store.state.data.stockMap
       this.$store.dispatch('updateData', {

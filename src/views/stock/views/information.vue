@@ -5,6 +5,7 @@
         <searchStock v-model="stockCode" ref="searchStock" />
         <el-button type="primary" @click.stop="addToPool">添加</el-button>
         <el-button type="primary" @click.stop="getNotice">查看公告</el-button>
+        <el-button type="primary" @click.stop="refresh">启动</el-button>
       </div>
       <div style="margin-top: 16px">
         <el-tag v-for="(tag, tagIndex) of stockPool" :key="tagIndex" size="medium" closable @close="removeTag(tagIndex)">
@@ -27,7 +28,7 @@
 
 <script>
 import noticeList from './noticeList.vue'
-import searchStock from './components/searchStock.vue'
+import searchStock from '@/views/stock/components/searchStock.vue'
 
 export default {
   components: {
@@ -55,10 +56,10 @@ export default {
       this.getNotice()
     }
   },
-  mounted() {
-    this.loadStockPool()
-  },
   methods: {
+    refresh() {
+      this.loadStockPool()
+    },
     loadStockPool() {
       return new Promise((resolve, reject) => {
         this.$http.get(`/api/stock/pool`).then(_ => {

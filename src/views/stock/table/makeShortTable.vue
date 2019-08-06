@@ -8,6 +8,9 @@
         <el-form-item label="流量回归">
           <el-switch v-model="flowReturn"  />
         </el-form-item>
+        <el-form-item label="连续点个数">
+          <el-input-number v-model="continuousCount" :min="3" />
+        </el-form-item>
       </el-form>
     </div>
     <vue-good-table :columns="columns" :rows="dataList" :line-numbers="true" maxHeight="300px" :sortOptions="sortOptions">
@@ -41,7 +44,8 @@ export default {
   },
   data() {
     return {
-      flowReturn: false, // 是否考虑流量回归
+      flowReturn: true, // 是否考虑流量回归
+      continuousCount: 5, // 连续数据点个数
       columns: [
         { label: 'code', field: 'code' },
         { label: 'secondPhaseCount', field: 'secondPhaseCount', type: 'number', hidden: 'true' },
@@ -68,8 +72,11 @@ export default {
     }
   },
   watch: {
-    flowReturn(val) {
-      this.$bus.$emit('restartAnalyzeProbability')
+    flowReturn() {
+      this.refresh()
+    },
+    continuousCount() {
+      this.refresh()
     }
   },
   mounted() {
@@ -82,7 +89,7 @@ export default {
 
         const recentItemLength = item.recentItemList.length
         let positiveTrendCount = 0
-        let continuousCount = 5
+        let continuousCount = this.continuousCount
 
         // 计算热度
         item.diffIncrement = item.recentItemList[recentItemLength - 1].diff - item.recentItemList[recentItemLength - 6].diff
@@ -142,6 +149,9 @@ export default {
     this.$bus.$off('analyzeMakeShort')
   },
   methods: {
+    refresh() {
+      this.$bus.$emit('restartAnalyzeProbability')
+    },
     showDetail(code) {
       this.$bus.$emit('searchStockDetail', {
         code

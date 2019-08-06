@@ -4,6 +4,7 @@
       <el-tab-pane label="个股" name="detail"/>
       <el-tab-pane label="情报中心" name="informationCenter" />
       <el-tab-pane label="大盘" name="analyze"/>
+      <el-tab-pane label="工具箱" name="toolPanel" />
     </el-tabs>
     <div>
       <div v-show="currentTab === 'detail'">
@@ -15,20 +16,25 @@
       <div v-if="currentTab === 'informationCenter'">
         <information-center />
       </div>
+      <div v-if="currentTab === 'toolPanel'">
+        <tool-panel />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import stockDetail from '@/views/stock/detail'
-import stockAnalyze from '@/views/stock/analyze'
-import informationCenter from '@/views/stock/information'
+import stockDetail from '@/views/stock/views/detail'
+import stockAnalyze from '@/views/stock/views/analyze'
+import informationCenter from '@/views/stock/views/information'
+import toolPanel from '@/views/stock/views/tools'
 
 export default {
   components: {
     stockDetail,
     stockAnalyze,
-    informationCenter
+    informationCenter,
+    toolPanel
   },
   data() {
     return {
