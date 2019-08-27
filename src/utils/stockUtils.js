@@ -127,4 +127,15 @@ export default class StockUtils {
   static isMakeLongPoint(yesterday, today) {
     return today.diff < yesterday.diff && today.close > yesterday.close
   }
+
+  static parseRawNoticeList(rawNoticeList) {
+    return rawNoticeList.map(item => {
+      return {
+        title: item.NOTICETITLE,
+        date: new Date(item.NOTICEDATE).getTime(),
+        type: item["ANN_RELCOLUMNS"][0].COLUMNNAME,
+        url: item.Url
+      }
+    })
+  }
 }

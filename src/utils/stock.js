@@ -3,8 +3,8 @@ import stockUtils from './stockUtils'
 const RANGE_START_IN_DAYS = 4
 export const RANGE_END_IN_DAYS = RANGE_START_IN_DAYS * 4
 
-export const STOCK_PRICE_MIN = 4
-export const STOCK_PRICE_MAX = 19
+export const STOCK_PRICE_MIN = 6
+export const STOCK_PRICE_MAX = 99999
 
 const RANGE_RECENT_TRADE_VOLUME = 200 // [基本面]近100日交易量
 

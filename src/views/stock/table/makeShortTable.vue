@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       flowReturn: true, // 是否考虑流量回归
-      continuousCount: 5, // 连续数据点个数
+      continuousCount: 3, // 连续数据点个数
       columns: [
         { label: 'code', field: 'code' },
         { label: 'secondPhaseCount', field: 'secondPhaseCount', type: 'number', hidden: 'true' },
@@ -113,8 +113,9 @@ export default {
         .filter(item => item.close >= STOCK_PRICE_MIN)
         .filter(item => item.close <= STOCK_PRICE_MAX)
         .filter(item => item.diffIncrement > 0)
-        .filter(item => item.secondPhaseCount > 0) // 必须存在二阶段的点
-        .filter(item => item.closeIncrement <= 3)
+//        .filter(item => item.secondPhaseCount > 0) // 必须存在二阶段的点
+        .filter(item => item.closeIncrement <= 20)
+      // 低价的股票可能说明股票没有价值
 
       // 考虑流量回归模型
       if (this.flowReturn) {
@@ -136,7 +137,10 @@ export default {
       }
 
       const finalRoundDataList = secondRoundDataList
-      this.dataList = finalRoundDataList
+      this.dataList = finalRoundDataList.filter(item => { // 暂时剔除创业板
+        return item.code.indexOf('SZ300') === -1
+      })
+      console.log(this.dataList.length)
 
       const secondPhaseMap = this.$store.state.data.secondPhaseMap
       secondPhaseMap.clear()
