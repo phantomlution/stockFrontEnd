@@ -7,6 +7,7 @@
       <el-tab-pane label="工具箱" name="toolPanel" />
       <el-tab-pane label="playground" name="playGround" />
       <el-tab-pane label="公告检索" name="noticeSearch" />
+      <el-tab-pane label="板块筛选器" name="theme" />
     </el-tabs>
     <div>
       <div v-show="currentTab === 'detail'">
@@ -27,6 +28,9 @@
       <div v-if="currentTab === 'noticeSearch'">
         <notice-search />
       </div>
+      <div v-if="currentTab === 'theme'" >
+        <theme />
+      </div>
     </div>
   </div>
 </template>
@@ -38,6 +42,7 @@ import informationCenter from '@/views/stock/views/information'
 import toolPanel from '@/views/stock/views/tools'
 import playGround from '@/views/stock/views/playground'
 import noticeSearch from '@/views/stock/views/noticeSearch'
+import theme from '@/views/stock/views/theme'
 
 export default {
   components: {
@@ -46,7 +51,8 @@ export default {
     informationCenter,
     toolPanel,
     playGround,
-    noticeSearch
+    noticeSearch,
+    theme
   },
   data() {
     return {
