@@ -6,15 +6,11 @@ import ElementUI from 'element-ui'
 import SlothUI from './components'
 import 'element-ui/lib/theme-chalk/index.css'
 import http from './utils/http'
-import excel from './utils/excel'
 import api from '@/api'
 import socket from '@/socket'
 import eventBus from '@/plugins/eventBus'
-import VueGoodTablePlugin from 'vue-good-table'
 import store from './store'
 import utils from './utils'
-
-import 'vue-good-table/dist/vue-good-table.css'
 
 Vue.config.productionTip = false
 
@@ -24,9 +20,7 @@ Vue.use(ElementUI, {
 
 Vue.use(SlothUI)
 Vue.use(http)
-Vue.use(excel)
 Vue.use(api)
-Vue.use(VueGoodTablePlugin)
 Vue.use(utils)
 Vue.use(socket)
 Vue.use(eventBus)

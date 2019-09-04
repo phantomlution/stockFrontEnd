@@ -53,6 +53,10 @@ export default {
 
       for(let i=1; i<data.length; i++) {
         const today = data[i]
+        // 添加涨停提示
+        if (today.percent >= 9.9) {
+          this.addLimitUpPoint(view, [today.timestamp, today.close])
+        }
         if (today.isMakeShort) {
           this.addMakeShortPoint(view, [today.timestamp, today.close])
         } else if (today.isMakeLong){
@@ -111,6 +115,18 @@ export default {
 
       chart.render();
     },
+    addLimitUpPoint(view, start) { // 添加涨停
+      view.guide().dataMarker({
+        top: false,
+        position: start,
+        content: '涨停',
+        style: {
+          point: {
+            stroke: 'orange'
+          }
+        }
+      });
+    },
     addMakeShortPoint(view, start) {
       view.guide().dataMarker({
         position: start,
@@ -120,7 +136,7 @@ export default {
             stroke: 'red'
           }
         }
-      });
+      })
     },
     addMakeLongPoint(view, start) {
       view.guide().dataMarker({

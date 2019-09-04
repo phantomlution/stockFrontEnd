@@ -39,13 +39,10 @@
     "@antv/g2": "^3.4.10",
     "axios": "^0.18.0",
     "element-ui": "^2.6.1",
-    "js-xlsx": "^0.8.22",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "vue": "^2.3.3",
-    "vue-good-table": "^2.16.4",
-    "vuex": "^3.1.1",
-    "xlsx": "^0.14.1"
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

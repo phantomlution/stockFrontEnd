@@ -11,68 +11,61 @@
         <el-form-item label="连续点个数">
           <el-input-number v-model="continuousCount" :min="3" />
         </el-form-item>
+        <el-form-item label="是否历史涨停">
+          <el-switch v-model="hasEverLimitUp" />
+        </el-form-item>
       </el-form>
     </div>
-    <vue-good-table :columns="columns" :rows="dataList" :line-numbers="true" maxHeight="300px" :sortOptions="sortOptions">
-      <template slot="table-row" slot-scope="props">
-        <template v-if="props.column.field === 'code'">
+    <el-table border sortable :data="dataList" :line-numbers="true" :defaultSort="defaultSort" maxHeight="300px">
+      <el-table-column type="index" />
+      <el-table-column label="code">
+        <template slot-scope="props">
           <span>(L{{ props.row.rank}},{{ props.row.diffIncrement }}%){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
           <el-button type="text" @click.stop="showDetail(props.row.code)">查看</el-button>
           <span>{{ props.row.bounceRate }}</span>
         </template>
-        <template v-else-if="props.column.field === 'closeIncrement'">
-          {{ props.row.close}}({{ props.row.closeIncrement}}%)
+      </el-table-column>
+      <el-table-column label="theme">
+        <template slot-scope="props">
+          <el-tag v-for="(theme, themeIndex) of props.row.themeList" :key="themeIndex">{{ theme }}</el-tag>
         </template>
-        <template v-else>
-          {{props.formattedRow[props.column.field]}}
+      </el-table-column>
+      <el-table-column label="最高" prop="closeMaxIncrement">
+        <template slot-scope="props">
+          {{ props.row.closeMaxIncrement}}%
         </template>
-      </template>
-    </vue-good-table>
-
-    <!--<plot ref="plot" />-->
+      </el-table-column>
+      <el-table-column label="最低">
+        <template slot-scope="props">
+          {{ props.row.close }}({{ props.row.closeMinIncrement }}%)
+        </template>
+      </el-table-column>
+    </el-table>
   </lr-box>
 </template>
 
 <script>
 import lodash from 'lodash'
 import { STOCK_PRICE_MIN, STOCK_PRICE_MAX } from '@/utils/stock'
-//import plot from './makeShortPlot.vue'
 
 export default {
-  components: {
-//    plot
-  },
   data() {
     return {
-      flowReturn: true, // 是否考虑流量回归
+      flowReturn: false, // 是否考虑流量回归
       continuousCount: 3, // 连续数据点个数
-      columns: [
-        { label: 'code', field: 'code' },
-        { label: 'secondPhaseCount', field: 'secondPhaseCount', type: 'number', hidden: 'true' },
-        { label: 'lastDiff', field: 'lastDiff', type: 'number' },
-        { label: 'profit', field: 'profit', type: 'number', hidden: 'true' },
-        { label: 'closeIncrement', field: 'closeIncrement', type: 'number' },
-        { label: 'close', field: 'close', type: 'number', hidden: 'true' },
-        { label: 'bounceRate', field: 'bounceRate', type: 'number', hidden: 'true' },
-        { label: 'rank', field: 'rank', type: 'number', hidden: 'true' },
-        { label: 'diffIncrement', field: 'diffIncrement', type: 'number', hidden: 'true'}
-      ],
-      sortOptions: {
-        enabled: true,
-        initialSortBy: [
-          { field: 'rank', type: 'desc' },
-          { field: 'secondPhaseCount', type: 'desc' },
-          { field: 'close', type: 'desc' },
-//          { field: 'diffIncrement', type: 'desc' },
-//          { field: 'closeIncrement', type: 'asc' },
-//          { field: 'bounceRate', type: 'asc' }
-        ]
-      },
-      dataList: []
+      hasEverLimitUp: true,
+      dataList: [],
+      defaultSort: {
+        prop: 'closeMaxIncrement',
+        order: 'ascending'
+      }
     }
   },
   watch: {
     flowReturn() {
+      this.refresh()
+    },
+    hasEverLimitUp() {
       this.refresh()
     },
     continuousCount() {
@@ -112,14 +105,21 @@ export default {
       let firstRoundDataList = data
         .filter(item => item.close >= STOCK_PRICE_MIN)
         .filter(item => item.close <= STOCK_PRICE_MAX)
-        .filter(item => item.diffIncrement > 0)
+        .filter(item => item.closeMaxIncrement <= -20)
+        .filter(item => item.closeMinIncrement <= 5)
+
+//        .filter(item => item.diffIncrement > 0)
 //        .filter(item => item.secondPhaseCount > 0) // 必须存在二阶段的点
-        .filter(item => item.closeIncrement <= 20)
+//
+
       // 低价的股票可能说明股票没有价值
 
       // 考虑流量回归模型
       if (this.flowReturn) {
         firstRoundDataList = firstRoundDataList.filter(item => item.rank === 3)
+      }
+      if (this.hasEverLimitUp) {
+        firstRoundDataList = firstRoundDataList.filter(item => item.limitUpCount > 0) // 发生过涨停，至少证明曾经有游资
       }
 
       // 为了精简点数，进行数据剔除(采用天地人三个数)

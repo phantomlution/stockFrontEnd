@@ -36,6 +36,11 @@
       <template v-if="stockCode && analyzeModel.base && analyzeModel.base.company">
         <lr-box>
           <el-form label-width="100px">
+            <el-form-item label="所属主题" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+              <el-tag v-for="(theme, themeIndex) of analyzeModel.base.themeList" :key="themeIndex">
+                {{ theme }}
+              </el-tag>
+            </el-form-item>
             <el-form-item label="公司简介" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
               {{ analyzeModel.base.company.org_cn_introduction || '-' }}
             </el-form-item>
@@ -141,14 +146,28 @@ export default {
     }
   },
   mounted() {
-    stockUtils.getCodeList().then(({ codeList, baseList }) => {
+    Promise.all([
+      stockUtils.getCodeList(),
+      this.$http.get('/api/stock/theme')
+    ]).then(responseList => {
+      const { codeList, baseList } = responseList[0]
+      const stockThemeList = responseList[1]
+
       this.baseMap.clear()
       baseList.forEach(item => {
+        const themeList = stockThemeList.find(themeItem => themeItem.code === item.symbol)
+        item.themeList = themeList ? themeList.theme : []
         this.baseMap.set(item.symbol, item)
       })
+
       this.$store.dispatch('updateData', {
         key: 'codeList',
         data: codeList
+      })
+
+      this.$store.dispatch('updateData', {
+        key: 'stockThemeList',
+        data: stockThemeList
       })
     }).catch(_ => {
       console.error(_)
@@ -207,55 +226,12 @@ export default {
           this.updateProgress(state)
           this.useChart = true
           this.$nextTick(_ => {
-                this.batchAnalyzeLoading = false
-              // 以365个自然日计算，四个效果差不多。误差为0时，匹配率为80%, 为0.4时，达到90%
-              // 聚合上证指数
-//              this.simulateIndexMatchRate(result, 'SH000001')
-              // 聚合深证成指
-//              this.simulateIndexMatchRate(result, 'SZ399001')
-              // 聚合沪深300
-//              this.simulateIndexMatchRate(result, 'SH000300')
-              // 聚合上证50
-//              this.simulateIndexMatchRate(result, 'SH000016')
-//              return
+            this.batchAnalyzeLoading = false
           })
         }
       })
 
       requestThread.run()
-    },
-    simulateIndexMatchRate(stockHistoryResult, code) { // testCase 模拟大盘指数匹配率
-      this.$http.get('/api/stock/index', {
-        code,
-        count: this.historyDataCount
-      }).then(response => {
-        const timestampIndex = response.column.indexOf('timestamp')
-        const percentIndex = response.column.indexOf('percent')
-        const result = []
-        result.push(['code', code])
-        for(let i=0; i< 20; i++) {
-          const matchDate = []
-          const notMatchDate = []
-          const errorMargin = i * 0.1 // 误差范围
-          stockHistoryResult.forEach(resultItem => {
-            const indexItem = response.data.find(item => stockUtils.dateFormat(item[timestampIndex]) === resultItem.dateString)
-            if (resultItem.makeShortCount >= resultItem.makeLongCount && indexItem[percentIndex] <= errorMargin) {
-              matchDate.push(resultItem.dateString)
-            } else if (resultItem.makeLongCount >= resultItem.makeShortCount && indexItem[percentIndex] >= -1 * errorMargin) {
-              matchDate.push(resultItem.dateString)
-            } else {
-              notMatchDate.push(resultItem.dateString)
-            }
-          })
-          result.push([
-            `error margin: ${ lodash.round(errorMargin, 1) }`,
-            `${ lodash.round(matchDate.length / (matchDate.length + notMatchDate.length) * 100 ,1)}%`
-          ])
-        }
-        console.log(result)
-      }).catch(_ => {
-        console.error(_)
-      })
     },
     formatData(stockDetail) {
       const dataList = stockDetail.data.map(item => {
@@ -272,9 +248,7 @@ export default {
       stockDetail.data = dataList
     },
     getStockDetailRequest(code) {
-      const data = { code: code }
-//      return this.$http.post('/api/stock/detail', data)
-      return this.$http.socket('stockDetail', data)
+      return this.$http.socket('stockDetail', { code: code })
     },
     loadData(code, forceUpdate = false) {
       if (!code) {
@@ -294,6 +268,7 @@ export default {
         if (!responseList[0] || !base) {
           throw new Error('找不到该数据')
         }
+
 
         if (!base.float_shares) {
           throw new Error('不考虑非股票产品')
@@ -333,6 +308,7 @@ export default {
         title: stock.base.name
       })
 
+
       if (forceUpdate || this.useChart) {
         this.$refs.baseChart.updateChart({
           stock,
@@ -353,11 +329,6 @@ export default {
     },
     getTargetStockResultRange(stock, beforeDays = 0) {
       return lodash.slice(stock.result, 0, stock.result.length - beforeDays)
-    },
-    getTargetStockResultMinValueInRecentDays(stockResult, days = 60) {
-      const recentCalculateItemList = lodash.takeRight(stockResult, days)
-      const minCloseList = recentCalculateItemList.map(item => item.close)
-      return lodash.min(minCloseList)
     },
     analyzeProbability({ targetDate }) {
       const collector = []
@@ -389,22 +360,31 @@ export default {
           }
 
           const secondPhaseResult = this.calculateSecondPhaseResult(lodash.takeRight(targetStockResult, 45))
+
+          const targetStockResultData = lodash.takeRight(targetStockResult, 120)
+          const closePriceList = targetStockResultData.map(item => item.close)
+          const limitUpCount = targetStockResultData.filter(item => item.percent >= 9.9).length
+
           const model = {
             code: stock.code,
             name: stock.name,
             targetDate: today.date,
+            themeList: stock.base.themeList,
             profit: lodash.round((mostRecentDay.close - today.close) / today.close * 100, 1),
             lastDiff: today.diff,
             close: today.close,
-            minClose: this.getTargetStockResultMinValueInRecentDays(targetStockResult),
+            minClose: lodash.min(closePriceList),
+            maxClose: lodash.max(closePriceList),
             recentItemList: deepClone(recentCalculateItemList),
             secondPhaseResult,
+            limitUpCount,
             secondPhaseCount: secondPhaseResult.length
           }
           if (secondPhaseResult.length > 0) {
             model.bounceRate = secondPhaseResult[secondPhaseResult.length - 1].bounceRate
           }
-          model.closeIncrement = lodash.round((model.close / model.minClose - 1) * 100)
+          model.closeMinIncrement = lodash.round((model.close / model.minClose - 1) * 100)
+          model.closeMaxIncrement = lodash.round((model.close / model.maxClose - 1) * 100)
           collector.push(model)
         }
       }

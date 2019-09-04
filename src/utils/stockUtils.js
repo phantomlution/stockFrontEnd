@@ -138,4 +138,9 @@ export default class StockUtils {
       }
     })
   }
+
+  static getStockThemeList(vueContext, stockCode) { // 获取主题列表
+    const themeMap = vueContext.$store.state.data.themeMap
+    return themeMap.get(stockCode)
+  }
 }
