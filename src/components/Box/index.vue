@@ -1,7 +1,12 @@
 <template>
   <div class="lr-box lr-disable-select">
     <div class="lr-box__title" v-if="title">
-      {{ title }}
+      <div style="display: flex">
+        <div style="flex: 1">
+          {{ title }}
+        </div>
+        <slot name="right" v-if="$slots.right"></slot>
+      </div>
     </div>
     <div class="lr-box__content">
       <slot />

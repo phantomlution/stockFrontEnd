@@ -1,5 +1,8 @@
 <template>
   <div class="lr-frame-container" v-loading="loading">
+    <div v-if="title" style="text-align: center">
+      <el-tag size="large">{{ title }}</el-tag>
+    </div>
     <div class="lr-frame-action">
       <el-button circle type="primary" @click.stop="reload" icon="el-icon-refresh"></el-button>
     </div>
@@ -11,6 +14,10 @@
 import { idGenerator } from '@/utils'
 
 const props = {
+  title: {
+    type: String,
+    default: ''
+  },
   src: {
     type: String,
     required: true
@@ -27,13 +34,16 @@ export default {
     }
   },
   mounted() {
-    const frame = document.getElementById(this.frameId)
+    const frame = this.getFrame()
     frame.onload = _ => {
       this.loaded()
     }
     this.reload()
   },
   methods: {
+    getFrame() {
+      return document.getElementById(this.frameId)
+    },
     reload() {
       if (!this.src) {
         return
