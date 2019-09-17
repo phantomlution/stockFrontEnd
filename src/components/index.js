@@ -8,6 +8,9 @@ export default {
       const componentConfig = context(fileName)
       const component = componentConfig.default || componentConfig
 
+      if (!component.name) {
+        return
+      }
       const componentName = upperFirst(
         camelCase(
           component.name.replace(/^\.\/(.*)\.\w+$/, '$1')

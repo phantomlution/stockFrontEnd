@@ -3,6 +3,7 @@
     <el-tabs v-model="currentTab" style="margin-left: 8px">
       <el-tab-pane label="个股" name="detail"/>
       <el-tab-pane label="资金流向" name="capitalFlow" />
+      <el-tab-pane label="重大事件" name="bigEvents" />
       <el-tab-pane label="复盘" name="replay" />
       <el-tab-pane label="情报中心" name="informationCenter" />
       <el-tab-pane label="大盘" name="analyze"/>
@@ -43,6 +44,9 @@
       <div v-if="currentTab === 'replay'">
         <replay />
       </div>
+      <div v-if="currentTab === 'bigEvents'">
+        <big-events />
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +62,7 @@ import theme from '@/views/stock/views/theme'
 import marketPrice from '@/views/stock/views/marketPrice'
 import capitalFlow from '@/views/stock/views/capitalFlow'
 import replay from '@/views/stock/views/replay'
+import bigEvents from '@/views/stock/views/bigEvents'
 
 export default {
   components: {
@@ -70,7 +75,8 @@ export default {
     theme,
     marketPrice,
     capitalFlow,
-    replay
+    replay,
+    bigEvents
   },
   data() {
     return {
