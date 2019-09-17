@@ -1,6 +1,6 @@
 <template>
   <lr-box>
-    <full-calendar :events="calendarEvents" style="width: 100%">
+    <full-calendar :events="calendarEvents" style="max-width: 100%">
       <template slot="fc-event-card" slot-scope="scope">
         <el-popover popper-class="lr-calendar-popover" trigger="hover" placement="right">
           <template slot="reference">
