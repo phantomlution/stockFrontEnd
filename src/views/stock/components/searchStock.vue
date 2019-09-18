@@ -56,6 +56,14 @@ export default {
         this.filteredStockList = lodash.take(this.stockList, 10)
         return
       }
+
+      console.log(this.stockList)
+      this.stockList.forEach(item => {
+        if (!item.label) {
+          console.error(item)
+        }
+      })
+
       this.filteredStockList = lodash.take(this.stockList.filter(item => {
         return item.label.indexOf(query) !== -1 || item.value.indexOf(query) !== -1
       }), 10)

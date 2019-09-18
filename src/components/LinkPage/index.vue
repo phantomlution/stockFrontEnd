@@ -25,6 +25,7 @@ const props = {
 }
 
 export default {
+  name: 'linkPage',
   props,
   data() {
     return {

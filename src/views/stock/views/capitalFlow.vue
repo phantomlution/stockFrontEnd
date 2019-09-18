@@ -17,12 +17,7 @@
 </template>
 
 <script>
-import linkPage from '@/views/stock/components/linkPage'
-
 export default {
-  components: {
-    linkPage
-  },
   data() {
     return {
       capitalType: 'hotmoney'

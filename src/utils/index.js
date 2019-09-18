@@ -1,4 +1,7 @@
 import moment from "moment"
+import 'moment/locale/zh-cn'
+
+moment.locale('zh-cn')
 
 /**
  * 获取 DOM 元素尺寸
@@ -50,5 +53,7 @@ export default {
     Vue.filter('date', date => {
       return moment(date).format('YYYY-MM-DD')
     })
+
+    Vue.prototype.$moment = moment
   }
 }

@@ -62,7 +62,7 @@ import theme from '@/views/stock/views/theme'
 import marketPrice from '@/views/stock/views/marketPrice'
 import capitalFlow from '@/views/stock/views/capitalFlow'
 import replay from '@/views/stock/views/replay'
-import bigEvents from '@/views/stock/views/bigEvents'
+import bigEvents from '@/views/stock/views/bigEvents/index'
 
 export default {
   components: {

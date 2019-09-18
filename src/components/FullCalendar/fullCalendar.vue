@@ -85,7 +85,6 @@
 <script type="text/babel">
 import dateFunc from './components/dateFunc'
 import moment from 'moment'
-import 'moment/locale/zh-cn'
 import eventCard from './components/eventCard.vue'
 import fcHeader from './components/header.vue'
 
