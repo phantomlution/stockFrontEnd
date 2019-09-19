@@ -1,5 +1,5 @@
 <template>
-  <lr-box>
+  <lr-box v-loading="loading">
     <full-calendar :events="calendarEvents" style="max-width: 100%">
       <template slot="fc-event-card" slot-scope="scope">
         <el-popover popper-class="lr-calendar-popover" trigger="hover" placement="bottom">
@@ -39,40 +39,67 @@ export default {
   },
   data() {
     return {
+      loading: true,
       calendarEvents: []
     }
   },
   mounted() {
-    const calendarList = []
-
-    // 追加资讯
-//    for (let i=-2; i<3; i++) {
-//      const date = this.$moment().add(i, 'days')
-//      const dateString = date.format('YYYY-MM-DD')
-//      calendarList.push({
-//        title: '财经资讯',
-//        start: dateString,
-//        end: dateString
-//      })
-//    }
-
-
-    // 追加自定义事件
-    Array.prototype.push.apply(calendarList, customEvent)
-
-    // 追加国家统计局数据
-    chineseCalendar.forEach(item => {
-      calendarList.push({
-        title: `${ item.eventName }`,
-        start: item.date,
-        end: item.date,
-        raw: item
-      })
-    })
-
-    this.calendarEvents = calendarList
+    this.loadData()
   },
   methods: {
+    loadData() {
+      this.loading = true
+      const calendarList = []
+
+      Promise.all([
+        this.loadCentralBankEvent(),
+        this.loadCustomEvent(),
+        this.loadOtherEvent()
+      ]).then(allEventList => {
+        allEventList.forEach(event => {
+          Array.prototype.push.apply(calendarList, event)
+          this.calendarEvents = calendarList
+        })
+        this.$nextTick(_ => {
+          this.loading = false
+        })
+      }).catch(_ => {
+        console.error(_)
+        this.loading = false
+      })
+    },
+    loadCustomEvent() { // 加载自定义事件
+      return Promise.resolve(customEvent)
+    },
+    loadOtherEvent() { // 追加国家统计局数据
+      const eventList = []
+      chineseCalendar.forEach(item => {
+        eventList.push({
+          title: `${ item.eventName }`,
+          start: item.date,
+          end: item.date,
+          raw: item
+        })
+      })
+      return Promise.resolve(eventList)
+    },
+    loadCentralBankEvent() {
+      return new Promise((resolve, reject) => {
+        this.$http.get(`/api/financial/centralBank`).then(response => {
+          const result = response.data.map(item => {
+            return {
+              start: item.date,
+              end: item.date,
+              title: `[央行会议] ${ item.bankList.join(',')}`
+            }
+          })
+
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
+    }
   }
 }
 </script>
