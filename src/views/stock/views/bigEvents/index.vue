@@ -3,9 +3,9 @@
     <!--<financial-information />-->
     <el-radio-group v-model="eventTab" style="width: 100%;text-align: center;margin-bottom: 16px">
       <el-radio-button label="mine">我的日历</el-radio-button>
-      <el-radio-button label="official">日历</el-radio-button>
+      <el-radio-button label="official">财经事件数据源</el-radio-button>
       <el-radio-button label="fastNews">7*24</el-radio-button>
-      <el-radio-button label="centralBank">央行日程</el-radio-button>
+      <!--<el-radio-button label="centralBank">央行日程</el-radio-button>-->
       <el-radio-button label="test">老伙计</el-radio-button>
     </el-radio-group>
 
@@ -15,9 +15,9 @@
       </div>
       <link-page v-show="eventTab === 'official'" :src="officialSrc"/>
       <link-page v-show="eventTab === 'fastNews'" src="https://kx.fx678.com" />
-      <div v-show="eventTab === 'centralBank'">
-        <central-bank />
-      </div>
+      <!--<div v-show="eventTab === 'centralBank'">-->
+        <!--<central-bank />-->
+      <!--</div>-->
       <div v-show="eventTab === 'test'">
         <link-page src="http://www.gov.cn/xinwen/index.htm" />
       </div>
