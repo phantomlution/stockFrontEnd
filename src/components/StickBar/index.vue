@@ -25,7 +25,7 @@ const props = {
   }
 }
 export default {
-  name: 'StickBar',
+  name: 'LrStickBar',
   props,
   data() {
     return {

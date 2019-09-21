@@ -34,6 +34,9 @@ export default {
   background: #FFFFFF;
   box-shadow: 0 0 4px 0 rgba(0,0,0,0.10);
   border-radius: 3px;
+  & + .lr-box{
+    margin-top: 16px;
+  }
   .lr-box__title{
     padding: 12px 16px;
     font-size: 16px;

@@ -2,10 +2,10 @@
   <lr-box v-loading="loading">
     <full-calendar :events="calendarEvents" style="max-width: 100%">
       <template slot="fc-event-card" slot-scope="scope">
-        <el-popover popper-class="lr-calendar-popover" trigger="hover" placement="bottom">
+        <el-popover popper-class="lr-calendar-popover" trigger="hover" placement="right">
           <template slot="reference">
             <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
-              {{ scope.event.title }}
+              <span :class="{ 'lr-calendar-important': scope.event.isImportant }">{{ scope.event.title }}</span>
             </div>
           </template>
           <div>
@@ -14,7 +14,7 @@
             </template>
             <template v-else>
               <el-card>
-                <h4>{{ scope.event.title }}</h4>
+                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant }">{{ scope.event.title }}</h4>
                 <p v-if="scope.event.raw">{{ scope.event.raw.time }}</p>
               </el-card>
             </template>
@@ -90,7 +90,9 @@ export default {
             return {
               start: item.date,
               end: item.date,
-              title: `[央行会议] ${ item.bankList.join(',')}`
+              title: `[央行会议] ${ item.bankList.join(',')}`,
+              isImportant: item.bankList.indexOf('美联储') !== -1,
+              raw: item
             }
           })
 
@@ -107,5 +109,10 @@ export default {
 <style lang="scss">
 .lr-calendar-popover{
   padding: 0 !important;
+}
+
+.lr-calendar-important{
+  color: red;
+  font-weight: bold;
 }
 </style>

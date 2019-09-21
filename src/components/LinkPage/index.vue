@@ -21,11 +21,15 @@ const props = {
   src: {
     type: String,
     required: true
+  },
+  skipLoading: {
+    type: Boolean,
+    default: false
   }
 }
 
 export default {
-  name: 'linkPage',
+  name: 'LrLinkPage',
   props,
   data() {
     return {
@@ -49,7 +53,10 @@ export default {
       if (!this.src) {
         return
       }
-      this.loading = true
+      if (!this.skipLoading) {
+        this.loading = true
+      }
+
       this.localSrc = ''
       this.$nextTick(_ => {
         this.localSrc = this.src

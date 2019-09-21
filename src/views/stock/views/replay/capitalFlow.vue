@@ -1,80 +1,74 @@
 <template>
-  <lr-box :title="title">
-    <div slot="right">
-      <el-date-picker v-model="date" type="date" placeholder="选择日期" @change="loadData"></el-date-picker>
-    </div>
-    <div :id="chartId"></div>
+  <lr-box title="大盘资金流向">
+    <lr-chart ref="chart" :height="0.5" />
   </lr-box>
 </template>
 
 <script>
-import { idGenerator } from '@/utils'
-import G2 from '@antv/g2'
 import lodash from 'lodash'
 import moment from 'moment'
 
+const props = {
+  date: {
+    type: String,
+    required: true
+  }
+}
+
 export default {
-  data() {
-    return {
-      chart: null,
-      chartId: idGenerator.next(),
-      date: moment().toDate()
+  props,
+  mounted() {
+    this.loadData()
+  },
+  watch: {
+    date() {
+      this.loadData()
     }
   },
   computed: {
-    title() {
-      return `${ this.formatDate(this.date)  }日资金流向`
+    chart() {
+      return this.$refs.chart.getChart()
     }
-  },
-  mounted() {
-    this.loadData()
   },
   methods: {
     formatDate(date) {
       return moment(date).format('YYYY-MM-DD')
     },
     loadData() {
+      if (!this.date) {
+        return
+      }
       this.$http.get(`/api/stock/capital/flow`, {
         date: this.formatDate(this.date)
       }).then(result => {
-        if (!result && this.chart) {
-          this.chart.clear()
-        }
         // 生成数据
         const chartData = []
-        result.data['xa'].split(',').forEach((timePoint, timeIndex) => {
-          if (timePoint) { // 多出了一个空数据
-            result.data['ya'][timeIndex].split(',').forEach((amount, amountIndex) => {
-              chartData.push({
-                time: this.appendDate(timePoint),
-                type: amountIndex + '',
-                value: Number(amount)
+        if (result) {
+          result.data['xa'].split(',').forEach((timePoint, timeIndex) => {
+            if (timePoint) { // 多出了一个空数据
+              result.data['ya'][timeIndex].split(',').forEach((amount, amountIndex) => {
+                chartData.push({
+                  time: this.appendDate(timePoint),
+                  type: amountIndex + '',
+                  value: Number(amount)
+                })
               })
-            })
-          }
-        })
-
+            }
+          })
+        }
         this.renderChart(chartData)
       }).catch(_ => {
         console.error(_)
       })
     },
-    appendDate(timePoint) {
+    appendDate(timePoint) { // 补齐日期格式
       return `2019-06-19 ${ timePoint }:00`
     },
     renderChart(chartData) {
-      if (this.chart) {
-        this.chart.clear()
-      } else {
-        this.chart = new G2.Chart({
-          container: this.chartId,
-          forceFit: true,
-          width: window.innerWidth,
-          height: window.innerHeight * 0.8,
-          padding: [20, 80, 80, 80]
-        })
+      const chart = this.$refs.chart.getChart()
+      if (chartData.length === 0) {
+        return
       }
-      const chart = this.chart
       const capitalLegend = [
         '主力净流入',
         '超大单净流入',

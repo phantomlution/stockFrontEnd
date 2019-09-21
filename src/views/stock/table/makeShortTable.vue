@@ -1,7 +1,7 @@
 <template>
   <lr-box style="position: relative">
     <!-- 工具条 -->
-    <stick-bar title="选股助手" width="600" top="64px" v-show="dataList.length > 0">
+    <lr-stick-bar title="选股助手" width="600" top="64px" v-show="dataList.length > 0">
       <div>
         <div style="display: flex">
           <template v-if="currentRowModel">
@@ -35,7 +35,7 @@
           </template>
         </div>
       </div>
-    </stick-bar>
+    </lr-stick-bar>
     <div>
       <el-form :inline="true">
         <el-form-item label="总记录数">

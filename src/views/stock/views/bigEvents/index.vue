@@ -5,6 +5,7 @@
       <el-radio-button label="mine">我的日历</el-radio-button>
       <el-radio-button label="official">财经事件数据源</el-radio-button>
       <el-radio-button label="fastNews">7*24</el-radio-button>
+      <el-radio-button label="CNBC">CNBC</el-radio-button>
       <!--<el-radio-button label="centralBank">央行日程</el-radio-button>-->
       <el-radio-button label="test">老伙计</el-radio-button>
     </el-radio-group>
@@ -13,13 +14,16 @@
       <div v-show="eventTab === 'mine'">
         <eventCalendar />
       </div>
-      <link-page v-show="eventTab === 'official'" :src="officialSrc"/>
-      <link-page v-show="eventTab === 'fastNews'" src="https://kx.fx678.com" />
+      <lr-link-page v-show="eventTab === 'official'" :src="officialSrc"/>
+      <lr-link-page v-show="eventTab === 'fastNews'" src="https://kx.fx678.com" />
+      <div v-show="eventTab === 'CNBC'">
+        <lr-link-page src="https://www.cnbc.com" :skipLoading="true" />
+      </div>
       <!--<div v-show="eventTab === 'centralBank'">-->
         <!--<central-bank />-->
       <!--</div>-->
       <div v-show="eventTab === 'test'">
-        <link-page src="http://www.gov.cn/xinwen/index.htm" />
+        <lr-link-page src="http://www.xinhuanet.com" />
       </div>
     </div>
   </div>
