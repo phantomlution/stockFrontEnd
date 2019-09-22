@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <lr-motto />
     <el-tabs v-model="currentTab" style="margin-left: 8px">
       <el-tab-pane label="重大事件" name="bigEvents" />
       <el-tab-pane label="个股" name="detail"/>
