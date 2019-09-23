@@ -1,14 +1,21 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <lr-box title="主题列表">
-      <el-badge class="lr-theme-badge" :value="item.stockCodeList.length" v-for="(item, itemIndex) of displayThemeTagList" :key="itemIndex">
-        <el-button size="small" @click.stop="showTheme(item)">{{ item.themeName }}</el-button>
-      </el-badge>
+      <el-table :data="displayThemeTagList" max-height="300">
+        <el-table-column label="主题名称" prop="themeName">
+          <template slot-scope="scope">
+            <el-button size="small" type="text" @click.stop="showTheme(scope.row)">{{ scope.row.themeName }}</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="包含股票数">
+          <template slot-scope="scope">
+            {{ scope.row.stockCodeList.length }}
+          </template>
+        </el-table-column>
+      </el-table>
     </lr-box>
-    <lr-box title="主题趋势">
-      <theme-trend ref="themeTrend"/>
-    </lr-box>
-    <lr-box :title="currentTheme" v-if="currentTheme" style="margin-top: 8px">
+    <theme-trend ref="themeTrend"/>
+    <lr-box :title="currentTheme + '股票列表'" v-if="currentTheme" style="margin-top: 8px">
       <el-table :data="codeList">
         <el-table-column label="name" prop="label" />
         <el-table-column label="code" prop="value" />
@@ -29,6 +36,7 @@ export default {
     return {
       totalThemeTagList: [],
       displayThemeTagList: [],
+      loading: true,
       currentTheme: '',
       codeList: [],
       themeRuleList: [{ // 概念分片
@@ -92,10 +100,13 @@ export default {
     }
   },
   mounted() {
-    this.loadTheme()
+    setTimeout(_ => {
+      this.loadTheme()
+    }, 1000)
   },
   methods: {
     loadTheme() {
+      this.loading = true
       const themeMap = this.themeMap
       themeMap.clear()
       const raw = this.$store.state.data.stockThemeList
@@ -111,7 +122,9 @@ export default {
           }
         })
       })
+      this.generateTotalThemeTagList()
       this.generateThemeTagList()
+      this.loading = false
     },
     generateTotalThemeTagList() { // 生成所有的主题列表
       const codeList = this.$store.state.data.codeList
@@ -135,7 +148,6 @@ export default {
     },
     generateThemeTagList() {
       const themeMap = this.themeMap
-      this.generateTotalThemeTagList()
       const defaultThemeList = []
       for (let themeName of themeMap.keys()) {
         let gotcha = false
@@ -149,8 +161,7 @@ export default {
           }
         }
       }
-      console.log(defaultThemeList.join(','))
-      this.displayThemeTagList = defaultThemeList.map(themeName => this.totalThemeTagList.find(item => item.themeName === themeName))
+       this.displayThemeTagList = defaultThemeList.map(themeName => this.totalThemeTagList.find(item => item.themeName === themeName))
     },
     showTheme(themeItem) {
       const themeName = themeItem.themeName

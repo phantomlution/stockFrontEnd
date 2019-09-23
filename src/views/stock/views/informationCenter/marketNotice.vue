@@ -2,7 +2,7 @@
   <lr-box>
     <el-form :inline="true">
       <el-form-item label="关键字">
-        <el-input v-model="searchForm.keyword" style="width: 200px" readOnly/>
+        <el-input v-model="searchForm.keyword" style="width: 200px"/>
         <el-button type="primary" @click.stop="doSearch">搜索</el-button>
       </el-form-item>
     </el-form>

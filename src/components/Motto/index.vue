@@ -15,10 +15,6 @@ export default {
 </script>
 
 <style lang="scss">
-.lr-motto__wrapper {
-  padding: 8px;
-}
-
 .lr-motto__content{
   box-sizing: border-box;
   border-width: 1px;

@@ -1,5 +1,5 @@
 <template>
-  <lr-box :title="themeName">
+  <lr-box :title="title">
     <div :id="chartId"></div>
   </lr-box>
 </template>
@@ -18,6 +18,11 @@ export default {
       startDaysDiff: -1 * 60,
       chart: null,
       chartId: idGenerator.next()
+    }
+  },
+  computed: {
+    title() {
+      return `${ this.themeName }-主题趋势`
     }
   },
   methods: {
