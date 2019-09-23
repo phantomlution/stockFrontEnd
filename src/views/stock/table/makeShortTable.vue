@@ -1,7 +1,7 @@
 <template>
   <lr-box style="position: relative">
     <!-- 工具条 -->
-    <lr-stick-bar title="选股助手" width="600" top="64px" v-show="dataList.length > 0">
+    <lr-stick-bar title="选股助手" width="600" top="128px">
       <div>
         <div style="display: flex">
           <template v-if="currentRowModel">

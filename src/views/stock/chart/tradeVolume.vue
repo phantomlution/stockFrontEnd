@@ -1,5 +1,5 @@
 <template>
-  <lr-box :title="title">
+  <lr-box :title="title" v-show="stock">
     <div :id="chartId"></div>
   </lr-box>
 </template>
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       title: '',
+      stock: null,
       chart: null,
       chartId: idGenerator.next()
     }
@@ -23,6 +24,7 @@ export default {
   methods: {
     updateChart({stock, dataCount, lastDatePoint}) {
       let rawData = stock.result
+      this.stock = stock
       if (lastDatePoint) {
         rawData = rawData.filter(item => item.timestamp <= lastDatePoint.getTime())
       }
