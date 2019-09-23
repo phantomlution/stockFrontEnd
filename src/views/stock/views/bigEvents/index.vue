@@ -5,23 +5,32 @@
       <el-radio-button label="mine">我的日历</el-radio-button>
       <el-radio-button label="official">财经事件数据源</el-radio-button>
       <el-radio-button label="fastNews">7*24</el-radio-button>
+      <el-radio-button label="centralBankOperation">央行操作</el-radio-button>
+      <el-radio-button label="loanPrimeRate">LPR</el-radio-button>
       <el-radio-button label="CNBC">CNBC</el-radio-button>
-      <!--<el-radio-button label="centralBank">央行日程</el-radio-button>-->
       <el-radio-button label="test">老伙计</el-radio-button>
+
     </el-radio-group>
 
     <div>
       <div v-show="eventTab === 'mine'">
         <eventCalendar />
       </div>
-      <lr-link-page v-show="eventTab === 'official'" :src="officialSrc"/>
-      <lr-link-page v-show="eventTab === 'fastNews'" src="https://kx.fx678.com" />
+      <div v-show="eventTab === 'official'">
+        <lr-link-page :src="officialSrc"/>
+      </div>
+      <div v-show="eventTab === 'fastNews'">
+        <lr-link-page src="http://kx.fx678.com" />
+      </div>
+      <div v-show="eventTab === 'centralBankOperation'">
+        <lr-link-page src="http://www.chinamoney.com.cn/chinese/scggyhywgg/" />
+      </div>
+      <div v-show="eventTab === 'loanPrimeRate'">
+        <lr-link-page src="http://www.shibor.org/shibor/web/html/index.html" />
+      </div>
       <div v-show="eventTab === 'CNBC'">
         <lr-link-page src="https://www.cnbc.com" :skipLoading="true" />
       </div>
-      <!--<div v-show="eventTab === 'centralBank'">-->
-        <!--<central-bank />-->
-      <!--</div>-->
       <div v-show="eventTab === 'test'">
         <lr-link-page src="http://www.xinhuanet.com" />
       </div>

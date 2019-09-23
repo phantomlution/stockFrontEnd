@@ -79,7 +79,7 @@ export default {
 
 .lr-frame-action{
   position: absolute;
-  right: 8px;
+  right: 24px;
   top: 8px;
 }
 
