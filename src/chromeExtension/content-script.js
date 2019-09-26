@@ -1,5 +1,3 @@
-console.log('start trial')
-
 document.addEventListener('DOMContentLoaded', function() {
   let host = location.hostname
   if (/fx678\.com/.test(host)) {

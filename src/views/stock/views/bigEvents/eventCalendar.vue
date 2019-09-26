@@ -14,8 +14,10 @@
             </template>
             <template v-else>
               <el-card>
-                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant }">{{ scope.event.title }}</h4>
-                <p v-if="scope.event.raw">{{ scope.event.raw.time }}</p>
+                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant, 'lr-hover': scope.event.display === 'column' }" @click.stop="showColumnDetail(scope.event.raw)">
+                  {{ scope.event.title }}
+                </h4>
+                <p v-if="scope.event.raw && scope.event.raw.time">{{ scope.event.raw.time }}</p>
               </el-card>
             </template>
           </div>
@@ -31,6 +33,7 @@ import customEvent from '@/data/customEvent'
 import fullCalendar from '@/components/FullCalendar'
 import moment from 'moment'
 import financialInformation from './financialInformation.vue'
+import columnList from '@/data/columnList'
 
 export default {
   components: {
@@ -47,12 +50,17 @@ export default {
     this.loadData()
   },
   methods: {
+    showColumnDetail(column) { // 展示专栏
+      console.log(column)
+      this.$bus.$emit('openGlobalColumn', column)
+    },
     loadData() {
       this.loading = true
       const calendarList = []
 
       Promise.all([
         this.loadCentralBankEvent(),
+        this.loadColumnList(),
         this.loadCustomEvent(),
         this.loadOtherEvent()
       ]).then(allEventList => {
@@ -83,7 +91,7 @@ export default {
       })
       return Promise.resolve(eventList)
     },
-    loadCentralBankEvent() {
+    loadCentralBankEvent() { // 加载央行会议
       return new Promise((resolve, reject) => {
         this.$http.get(`/api/financial/centralBank`).then(response => {
           const result = response.data.map(item => {
@@ -100,6 +108,23 @@ export default {
         }).catch(_ => {
           reject(_)
         })
+      })
+    },
+    loadColumnList() { // 加载未完成的专栏
+      return new Promise((resolve, reject) => {
+        const result = []
+        columnList.filter(column => !column.finish).forEach(column => {
+          // 为了让信息出现在日历中，每次未最近几天
+          result.push({
+            start: this.$moment().add('days', -3).format('YYYY-MM-DD'),
+            end: this.$moment().add('days', 9).format('YYYY-MM-DD'),
+            title: column.title,
+            isImportant: true,
+            display: 'column',
+            raw: column
+          })
+        })
+        resolve(result)
       })
     }
   }

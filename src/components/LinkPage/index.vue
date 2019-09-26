@@ -45,9 +45,6 @@ export default {
       style: null
     }
   },
-  computed() {
-
-  },
   mounted() {
     const frame = this.getFrame()
     frame.onload = _ => {
