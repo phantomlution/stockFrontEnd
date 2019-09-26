@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "custom stock extension",
+  "version": "1.0",
+  "description": "custom stock extension",
+  "icons":
+  {
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["style.css"],
+      "js": ["content-script.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ]
+}
