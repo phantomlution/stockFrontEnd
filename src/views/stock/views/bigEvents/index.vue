@@ -6,9 +6,11 @@
       <el-radio-button label="official">财经事件数据源</el-radio-button>
       <el-radio-button label="fastNews">7*24</el-radio-button>
       <el-radio-button label="centralBankOperation">央行操作</el-radio-button>
+      <el-radio-button label="shibor">shibor</el-radio-button>
       <el-radio-button label="loanPrimeRate">LPR</el-radio-button>
       <el-radio-button label="CNBC">CNBC</el-radio-button>
       <el-radio-button label="test">老伙计</el-radio-button>
+      <el-radio-button label="外交部">外交部</el-radio-button>
 
     </el-radio-group>
 
@@ -25,14 +27,20 @@
       <div v-show="eventTab === 'centralBankOperation'">
         <lr-link-page src="http://www.chinamoney.com.cn/chinese/scggyhywgg/" />
       </div>
+      <div v-show="eventTab === 'shibor'">
+        <lr-link-page src="http://www.chinamoney.com.cn/chinese/bkshibor/" />
+      </div>
       <div v-show="eventTab === 'loanPrimeRate'">
-        <lr-link-page src="http://www.shibor.org/shibor/web/html/index.html" />
+        <lr-link-page src="http://www.chinamoney.com.cn/chinese/bklpr/" />
       </div>
       <div v-show="eventTab === 'CNBC'">
         <lr-link-page src="https://www.cnbc.com" :skipLoading="true" />
       </div>
       <div v-show="eventTab === 'test'">
         <lr-link-page src="http://www.xinhuanet.com" />
+      </div>
+      <div v-show="eventTab === '外交部'">
+        <lr-link-page :redirect="true" src="https://www.fmprc.gov.cn/web/fyrbt_673021/dhdw_673027/" />
       </div>
     </div>
   </div>

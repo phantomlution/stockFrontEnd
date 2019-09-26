@@ -5,6 +5,7 @@
       <el-radio-button label="noticeSearch">公告检索</el-radio-button>
       <el-radio-button label="marketTheme">主题筛选器</el-radio-button>
       <el-radio-button label="economicData">经济数据</el-radio-button>
+      <el-radio-button label="goldTrend">黄金价格走势</el-radio-button>
       <el-radio-button label="stockMarketHeat" >大盘热度分析</el-radio-button>
       <el-radio-button label="openAccountIndex">股票开户指数</el-radio-button>
       <el-radio-button label="farmProductIndex">农场品指数</el-radio-button>
@@ -21,6 +22,9 @@
       </div>
       <div v-show="currentTab === 'economicData'">
         <lr-link-page src="http://data.eastmoney.com/center/macro.html"/>
+      </div>
+      <div v-show="currentTab === 'goldTrend'">
+        <lr-link-page src="http://quote.eastmoney.com/center/hjsc.html" />
       </div>
       <div v-show="currentTab === 'stockMarketHeat'">
         <stock-market-heat />

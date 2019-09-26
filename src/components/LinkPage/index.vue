@@ -1,12 +1,12 @@
 <template>
-  <div class="lr-frame-container" v-loading="loading">
+  <div class="lr-frame-container" :id="containerId" :style="style" v-loading="loading">
     <div v-if="title" style="text-align: center">
       <el-tag size="large">{{ title }}</el-tag>
     </div>
     <div class="lr-frame-action">
       <el-button circle type="primary" @click.stop="reload" icon="el-icon-refresh"></el-button>
     </div>
-    <iframe :id="frameId" :src="localSrc" style="width: 100%;height: 100%;border: none" />
+    <iframe :id="frameId" :src="localSrc" style="width: 100%;height: inherit;border: none" />
   </div>
 </template>
 
@@ -25,6 +25,10 @@ const props = {
   skipLoading: {
     type: Boolean,
     default: false
+  },
+  redirect: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -32,11 +36,17 @@ export default {
   name: 'LrLinkPage',
   props,
   data() {
+    const frameId = idGenerator.next()
     return {
       loading: false,
       localSrc: '',
-      frameId: idGenerator.next()
+      frameId,
+      containerId: `container_${ frameId }`,
+      style: null
     }
+  },
+  computed() {
+
   },
   mounted() {
     const frame = this.getFrame()
@@ -44,12 +54,14 @@ export default {
       this.loaded()
     }
     this.reload()
+
   },
   methods: {
     getFrame() {
       return document.getElementById(this.frameId)
     },
     reload() {
+      this.calculateStyle()
       if (!this.src) {
         return
       }
@@ -59,12 +71,19 @@ export default {
 
       this.localSrc = ''
       this.$nextTick(_ => {
-        this.localSrc = this.src
+        this.localSrc = `${ this.redirect ? '/api/redirect?url=' : '' }${ this.src }`
       })
 
     },
     loaded() {
       this.loading = false
+    },
+    calculateStyle() {
+      const container = document.getElementById(this.containerId)
+      const offsetHeight = container.offsetTop
+      this.style = {
+        height: `calc(100vh - ${ offsetHeight }px)`
+      }
     }
   }
 }
