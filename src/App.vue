@@ -4,9 +4,9 @@
       <lr-motto style="margin-bottom: 8px"></lr-motto>
       <el-tabs v-model="currentTab" type="card">
         <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
-        <el-tab-pane label="个股" name="detail" ></el-tab-pane>
-        <el-tab-pane label="资金流向" name="capitalFlow" ></el-tab-pane>
         <el-tab-pane label="情报中心" name="informationCenter"></el-tab-pane>
+        <el-tab-pane label="资金流向" name="capitalFlow" ></el-tab-pane>
+        <el-tab-pane label="个股" name="detail" ></el-tab-pane>
         <el-tab-pane label="工具箱" name="toolPanel"></el-tab-pane>
         <el-tab-pane label="playground" name="playGround"></el-tab-pane>
       </el-tabs>

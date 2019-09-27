@@ -14,7 +14,7 @@
             </template>
             <template v-else>
               <el-card>
-                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant, 'lr-hover': scope.event.display === 'column' }" @click.stop="showColumnDetail(scope.event.raw)">
+                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant, 'lr-hover': scope.event.display === 'column' }" @click.stop="showColumnDetail(scope.event)">
                   {{ scope.event.title }}
                 </h4>
                 <el-button type="text" v-if="scope.event.source" @click.stop="toSource(scope.event.source)">信息来源</el-button>
@@ -50,9 +50,11 @@ export default {
     this.loadData()
   },
   methods: {
-    showColumnDetail(column) { // 展示专栏
-      console.log(column)
-      this.$bus.$emit('openGlobalColumn', column)
+    showColumnDetail(event) { // 展示专栏
+      if (event.display === 'column') {
+        let column = event['raw']
+        this.$bus.$emit('openGlobalColumn', column)
+      }
     },
     toSource(source) {
       window.open(source, '_blank')

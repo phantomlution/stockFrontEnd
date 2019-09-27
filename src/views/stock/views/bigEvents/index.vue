@@ -21,7 +21,7 @@
       <div v-show="eventTab === 'official'">
         <lr-link-page :src="officialSrc"/>
       </div>
-      <div v-show="eventTab === 'fastNews'">
+      <div v-if="eventTab === 'fastNews'">
         <lr-link-page src="http://kx.fx678.com" />
       </div>
       <div v-show="eventTab === 'centralBankOperation'">

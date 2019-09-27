@@ -5,6 +5,7 @@
     </div>
     <div class="lr-frame-action">
       <el-button circle type="primary" @click.stop="reload" icon="el-icon-refresh"></el-button>
+      <el-button circle type="primary" @click.stop="openInWindow" icon="el-icon-document-add"></el-button>
     </div>
     <iframe :id="frameId" :src="localSrc" style="width: 100%;height: inherit;border: none" />
   </div>
@@ -54,6 +55,12 @@ export default {
 
   },
   methods: {
+    openInWindow() {
+      const src = this.src
+      if (src) {
+        window.open(src, '_blank')
+      }
+    },
     getFrame() {
       return document.getElementById(this.frameId)
     },
@@ -86,7 +93,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .lr-frame-container{
   width: 100vw;
   height: 100vh;
@@ -95,8 +102,12 @@ export default {
 
 .lr-frame-action{
   position: absolute;
-  right: 24px;
-  top: 8px;
+  right: 8px;
+  top: 32px;
+  transform: rotate(90deg);
+  .el-button{
+    transform: rotate(-90deg);
+  }
 }
 
 </style>
