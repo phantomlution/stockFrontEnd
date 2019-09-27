@@ -4,7 +4,7 @@
       <el-timeline>
         <el-timeline-item :timestamp="item.date" placement="top" :key="itemIndex" v-for="(item, itemIndex) of column.eventList">
           <el-card class="lr-column-card" :key="eventIndex" v-for="(event, eventIndex) of item.eventList">
-            <h4>{{ event.event }}</h4>
+            <h4 v-html="event.event"></h4>
             <p>{{ event.time }}</p>
           </el-card>
         </el-timeline-item>

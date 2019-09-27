@@ -26,5 +26,9 @@
     "storage",
     "http://*/*",
     "https://*/*"
-  ]
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  }
 }

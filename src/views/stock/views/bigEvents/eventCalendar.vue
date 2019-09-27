@@ -17,7 +17,7 @@
                 <h4 :class="{ 'lr-calendar-important': scope.event.isImportant, 'lr-hover': scope.event.display === 'column' }" @click.stop="showColumnDetail(scope.event.raw)">
                   {{ scope.event.title }}
                 </h4>
-                <p v-if="scope.event.raw && scope.event.raw.time">{{ scope.event.raw.time }}</p>
+                <el-button type="text" v-if="scope.event.source" @click.stop="toSource(scope.event.source)">信息来源</el-button>
               </el-card>
             </template>
           </div>
@@ -53,6 +53,9 @@ export default {
     showColumnDetail(column) { // 展示专栏
       console.log(column)
       this.$bus.$emit('openGlobalColumn', column)
+    },
+    toSource(source) {
+      window.open(source, '_blank')
     },
     loadData() {
       this.loading = true
@@ -116,9 +119,9 @@ export default {
         columnList.filter(column => !column.finish).forEach(column => {
           // 为了让信息出现在日历中，每次未最近几天
           result.push({
-            start: this.$moment().add('days', -3).format('YYYY-MM-DD'),
-            end: this.$moment().add('days', 9).format('YYYY-MM-DD'),
-            title: column.title,
+            start: this.$moment().add('days', 0).format('YYYY-MM-DD'),
+            end: this.$moment().add('days', 0).format('YYYY-MM-DD'),
+            title: `[进行中] ${ column.title }`,
             isImportant: true,
             display: 'column',
             raw: column

@@ -42,6 +42,25 @@
 #eastmoney [class^='adFrame'], #eastmoney .advert{
   display: none;
 }
-
-
 /* 东方财富 end */
+
+/* 字幕组 start */
+#zmz .adsbygoogle, #zmz .lx167, #zmz .chat-enterbox{
+  display: none !important;
+}
+/* 字幕组 end */
+
+/* extra end */
+#teddy .headed, #teddy .ed-content, #teddy #videoEdDiv,
+#teddy .adwrap_bm{
+  display: none !important;
+}
+
+#clang .advbox, #clang .left_link, #clang .right_link, #clang [class^='ads_'],
+#clang #qq_box, #clang #top_box, #clang .notice{
+  display: none !important;
+}
+#clang {
+  background: none !important;
+}
+/* extra end */
