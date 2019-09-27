@@ -57,7 +57,6 @@ export default {
         return
       }
 
-      console.log(this.stockList)
       this.stockList.forEach(item => {
         if (!item.label) {
           console.error(item)

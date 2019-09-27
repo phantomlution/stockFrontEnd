@@ -69,21 +69,7 @@ import tradeVolumeChart from '@/views/stock/chart/tradeVolume.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
 import makeShortTable from '@/views/stock/table/makeShortTable.vue'
 import Vue from 'vue'
-//import simulateDate from './components/simulateDate.vue'
-
-const fieldSet = new Set([
-  'amount',
-  'chg',
-  'close',
-  'high',
-  'low',
-  'market_capital',
-  'open',
-  'percent',
-  'timestamp',
-  'volume'
-])
-
+import moment from 'moment'
 
 export default {
   components: {
@@ -238,10 +224,11 @@ export default {
         let model = Object.create(null)
         for(let i=0; i<stockDetail.column.length; i++) {
           let column = stockDetail.column[i]
-          if (fieldSet.has(column)) {
-            model[column] = item[i]
-          }
+          model[column] = item[i]
         }
+        // 强制转换日期格式
+        model.timestamp = moment(model.date).toDate().getTime()
+
         return model
       })
       stockDetail.data = null
@@ -287,9 +274,7 @@ export default {
         if (data.length < this.historyDataCount / 2) {
           throw new Error('数据不足')
         }
-        data.forEach(item => {
-          item.waterFrequencyPercent = lodash.round(item.volume / floatShare * 100, 2)
-        })
+
         this.analyze(data, base, forceUpdate)
       }).catch(_ => {
         console.log(_)

@@ -9,9 +9,9 @@ const TRADE_COUNT_ONE_YEAR = 210 // 每年的交易日数量
 
 export default class StockUtils {
 
-  static getWaterFrequencyPercentInDays(data, lastDays) { // 获取指定时间的水流率
+  static getTurnoverRateInDays(data, lastDays) { // 获取指定时间的水流率
     const calculateDataList = lodash.takeRight(data, lastDays)
-    const waterList = calculateDataList.map(item => item.waterFrequencyPercent).filter(item => item !== null)
+    const waterList = calculateDataList.map(item => item.turnoverRate).filter(item => item !== null)
     return lodash.round(lodash.mean(waterList), 2)
   }
 
@@ -62,7 +62,7 @@ export default class StockUtils {
           label: codeNameMap.get(item.symbol)
         }))
         resolve({
-          codeList,
+          codeList: codeList.filter(item => item.label),
           baseList: response.idList
         })
       }).catch(_ => {

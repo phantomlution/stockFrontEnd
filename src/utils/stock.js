@@ -1,8 +1,9 @@
 import lodash from 'lodash'
 import stockUtils from './stockUtils'
+import moment from 'moment'
+
 const RANGE_START_IN_DAYS = 4
 export const RANGE_END_IN_DAYS = RANGE_START_IN_DAYS * 4
-
 export const STOCK_PRICE_MIN = 6
 export const STOCK_PRICE_MAX = 99999
 
@@ -19,6 +20,8 @@ export default class Stock {
     this.options = {}
     this.result = this.getComputedData()
     this.calculateOptions()
+
+    console.log(this)
   }
 
   calculateOptions() { // 手动计算额外的数据
@@ -56,22 +59,21 @@ export default class Stock {
         continue
       }
 
-      const waterFrequencyPercentStart = stockUtils.getWaterFrequencyPercentInDays(data, startDays)
-      const waterFrequencyPercentEnd = stockUtils.getWaterFrequencyPercentInDays(data, endDays)
+      const turnoverRateStart = stockUtils.getTurnoverRateInDays(data, startDays)
+      const turnoverRateEnd = stockUtils.getTurnoverRateInDays(data, endDays)
       const timestamp = data[data.length - 1].timestamp
       const todayData = data[data.length - 1]
       result.push({
         code: this.code,
         timestamp,
         close: todayData.close,
-        volume: todayData.volume,
         percent: todayData.percent,
         totalDataCount: this.rawData.length,
         date: stockUtils.dateFormat(timestamp),
         lastDataTimestamp: timestamp,
-        diff: lodash.round((waterFrequencyPercentStart - waterFrequencyPercentEnd) / waterFrequencyPercentEnd * 100, 2),
-        lastStartDuration: waterFrequencyPercentStart,
-        lastEndDuration: waterFrequencyPercentEnd
+        diff: lodash.round((turnoverRateStart - turnoverRateEnd) / turnoverRateEnd * 100, 2),
+        lastStartDuration: turnoverRateStart,
+        lastEndDuration: turnoverRateEnd
       })
     }
 

@@ -28,9 +28,9 @@ export default {
       const data = lodash.takeRight(rawData, dataCount)
       this.title = stock.label
       const closeValueList = data.map(item => item.close)
-      const waterList = data.map(item => item.waterFrequencyPercent).filter(item => item !== null)
+      const waterList = data.map(item => item.turnoverRate).filter(item => item !== null)
 
-      const waterFrequencyPercent = lodash.round(lodash.mean(waterList), 2)
+      const turnoverRate = lodash.round(lodash.mean(waterList), 2)
       const average = lodash.round(lodash.mean(closeValueList), 2)
 
       if (this.chart) {
@@ -57,8 +57,8 @@ export default {
           alias: 'close',
           min: 0
         },
-        waterFrequencyPercent: {
-          alias: 'waterFrequencyPercent',
+        turnoverRate: {
+          alias: 'turnoverRate',
           formatter: function formatter(value) {
             return value
           }
@@ -67,19 +67,19 @@ export default {
       var view1 = chart.view();
       view1.source(data, scale);
       view1.line().position('timestamp*close').tooltip('timestamp*close*percent').color('#4FAAEB').size(2);
-      view1.line().position('timestamp*waterFrequencyPercent').color('#9AD681').size(2);
+      view1.line().position('timestamp*turnoverRate').color('#9AD681').size(2);
 
       view1.guide().line({
         start: {
           timestamp: 'min',
-          waterFrequencyPercent: waterFrequencyPercent
+          turnoverRate: turnoverRate
         },
         end: {
           timestamp: 'max',
-          waterFrequencyPercent: waterFrequencyPercent
+          turnoverRate: turnoverRate
         },
         text: {
-          content: `${ waterFrequencyPercent }%`
+          content: `${ turnoverRate }%`
         }
       })
 
