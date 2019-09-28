@@ -7,7 +7,7 @@
       <el-button circle type="primary" @click.stop="reload" icon="el-icon-refresh"></el-button>
       <el-button circle type="primary" @click.stop="openInWindow" icon="el-icon-document-add"></el-button>
     </div>
-    <!--<iframe :id="frameId" :src="localSrc" style="width: 100%;height: inherit;border: none" />-->
+    <iframe :id="frameId" :src="localSrc" style="width: 100%;height: inherit;border: none" />
   </div>
 </template>
 
