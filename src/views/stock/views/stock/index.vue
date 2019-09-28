@@ -27,30 +27,12 @@
           </div>
         </div>
       </lr-box>
-      <lr-box style="margin-top: 8px" v-show="choiceList.length > 0">
-        <el-tag class="lr-stock-tag" size="medium" closable @close="removeChoice(itemIndex)" v-for="(item, itemIndex) of choiceList" :key="itemIndex" @click.stop="analyzeChoice(item.value)">{{ item.label }}</el-tag>
-      </lr-box>
       <make-short-table />
-      <trade-volume-chart ref="tradeVolumeChart" />
-      <base-chart ref="baseChart" />
+      <trade-trend-chart ref="tradeTrendChart" />
+      <trade-data-chart ref="tradeDataChart" />
       <template v-if="stockCode && analyzeModel.base && analyzeModel.base.company">
-        <lr-box>
-          <el-form label-width="100px">
-            <el-form-item label="所属主题" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-              <el-tag v-for="(theme, themeIndex) of analyzeModel.base.themeList" :key="themeIndex">
-                {{ theme }}
-              </el-tag>
-            </el-form-item>
-            <el-form-item label="公司简介" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-              {{ analyzeModel.base.company.org_cn_introduction || '-' }}
-            </el-form-item>
-            <el-form-item label="主营业务" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-              {{ analyzeModel.base.company.main_operation_business || '-' }}
-            </el-form-item>
-            <el-form-item label="省份" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-              {{ analyzeModel.base.company.provincial_name || '-' }}
-            </el-form-item>
-          </el-form>
+        <lr-box title="基础信息">
+          <base-info :base="analyzeModel.base" />
         </lr-box>
       </template>
     </div>
@@ -64,20 +46,20 @@ import Stock from '@/utils/stock'
 import { RANGE_END_IN_DAYS } from '@/utils/stock'
 import stockUtils from '@/utils/stockUtils'
 import RequestThread from '@/utils/RequestThread'
-import baseChart from '@/views/stock/chart/base.vue'
-import tradeVolumeChart from '@/views/stock/chart/tradeVolume.vue'
+import tradeDataChart from './tradeDataChart.vue'
+import tradeTrendChart from './tradeTrendChart.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
-import makeShortTable from '@/views/stock/table/makeShortTable.vue'
-import Vue from 'vue'
+import makeShortTable from './makeShortTable.vue'
+import baseInfo from './baseInfo.vue'
 import moment from 'moment'
 
 export default {
   components: {
-    baseChart,
-    tradeVolumeChart,
+    tradeDataChart,
+    tradeTrendChart,
     searchStock,
     makeShortTable,
-//    simulateDate
+    baseInfo
   },
   data() {
     return {
@@ -89,7 +71,6 @@ export default {
       historyDataCount: 420,
       targetDate: new Date(), // 模拟N日前的数据
       lastDatePoint: '',
-      choiceList: [], // 待选择列表
       progress: {
         finishCount: 0,
         totalCount: 0,
@@ -165,8 +146,6 @@ export default {
     this.$bus.$on('restartAnalyzeProbability', _ => {
       this.startProbabilityModel()
     })
-
-    Vue.prototype.analyzeProbability = this.analyzeProbability.bind(this)
   },
   beforeDestroy() {
     this.$bus.$off('searchStockDetail')
@@ -179,12 +158,6 @@ export default {
     },
     searchStock(code) {
       this.loadData(code, true)
-    },
-    analyzeChoice(code) {
-      this.analyzeModel.code = code
-    },
-    removeChoice(index) {
-      this.choiceList.splice(index, 1)
     },
     updateProgress(model) {
       Object.assign(this.progress, model)
@@ -267,8 +240,6 @@ export default {
         if (stockName.indexOf('债') !== -1) {
           throw new Error('跳过债券')
         }
-        let floatShare = base.float_shares
-
         this.formatData(responseList[0])
         let data = responseList[0].data
         if (data.length < this.historyDataCount / 2) {
@@ -295,12 +266,12 @@ export default {
 
 
       if (forceUpdate || this.useChart) {
-        this.$refs.baseChart.updateChart({
+        this.$refs.tradeDataChart.updateChart({
           stock,
           dataCount,
           lastDatePoint: this.lastDatePoint
         })
-        this.$refs.tradeVolumeChart.updateChart({
+        this.$refs.tradeTrendChart.updateChart({
           stock,
           dataCount,
           lastDatePoint: this.lastDatePoint

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <product-price-chart ref="chart" />
+    <lr-chart ref="chart" />
   </div>
 </template>
 
 <script>
-import productPriceChart from '@/views/stock/chart/productPrice'
 
 const props = {
   goodsId: {
@@ -16,14 +15,6 @@ const props = {
 
 export default {
   props,
-  components: {
-    productPriceChart
-  },
-  data() {
-    return {
-
-    }
-  },
   watch: {
     goodsId(val) {
       if (!isNaN(val)) {
@@ -72,7 +63,18 @@ export default {
           type: 'month'
         })
       })
-      this.$refs.chart.updateChart(chartData)
+
+      const chart = this.$refs.chart.getChart()
+      chart.clear()
+
+      chart.source(chartData);
+      chart.tooltip({
+        crosshairs: {
+          type: 'line'
+        }
+      });
+      chart.line().position('date*value').color('type');
+      chart.render()
     }
   }
 }

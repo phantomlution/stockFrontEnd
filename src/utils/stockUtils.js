@@ -72,54 +72,6 @@ export default class StockUtils {
     })
   }
 
-  static calculateMarketTrendPercentage(stockMap, days) {
-    const result = []
-    for(let i=1; i<=days; i++) {
-      const startDate = moment().add('days', -1 * days + i).toDate()
-      const startDateString = this.dateFormat(startDate.getTime())
-      let usedStockCount = 0
-      let halfNegativeCount = 0
-      let positiveCount = 0
-      let makeShortCount = 0
-      let makeLongCount = 0
-      for(let stock of stockMap.values()) {
-        const currentDayStock = stock.result.find(item => item.date === startDateString)
-        if (!currentDayStock) {
-          continue
-        }
-        usedStockCount++
-
-        if (currentDayStock.isMakeShort) {
-          makeShortCount++
-        }
-        if (currentDayStock.isMakeLong) {
-          makeLongCount++
-        }
-        if (currentDayStock.diff !== undefined) {
-          if (currentDayStock.diff < -1 * 50) {
-            halfNegativeCount++
-          }
-          if (currentDayStock.diff > 0) {
-            positiveCount++
-          }
-        }
-      }
-
-      if (usedStockCount > 0) { // 排除非交易数据
-        result.push({
-          date: startDate.getTime(),
-          dateString: startDateString,
-          halfNegativeCount,
-          positiveCount,
-          makeShortCount,
-          makeLongCount
-        })
-      }
-    }
-
-    return result
-  }
-
   static isMakeShortPoint(yesterday, today) { // 是否当日交易量上升且价格下跌
     return today.diff > yesterday.diff && today.close < yesterday.close
   }

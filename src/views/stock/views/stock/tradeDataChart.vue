@@ -1,21 +1,17 @@
 <template>
-  <lr-box :title="title" v-show="stock">
-    <div :id="chartId"></div>
+  <lr-box :title="title">
+    <lr-chart ref="chart" />
   </lr-box>
 </template>
 
 <script>
-import { idGenerator } from '@/utils'
 import lodash from 'lodash'
-import G2 from '@antv/g2'
 
 export default {
   data() {
     return {
       title: '',
-      stock: null,
-      chart: null,
-      chartId: idGenerator.next()
+      stock: null
     }
   },
   methods: {
@@ -33,19 +29,8 @@ export default {
       const turnoverRate = lodash.round(lodash.mean(waterList), 2)
       const average = lodash.round(lodash.mean(closeValueList), 2)
 
-      if (this.chart) {
-        this.chart.clear()
-      } else {
-        this.chart = new G2.Chart({
-          container: this.chartId,
-          forceFit: true,
-          width: window.innerWidth,
-          height: window.innerHeight,
-          padding: [20, 80, 80, 80]
-        })
-      }
-
-      const chart = this.chart
+      const chart = this.$refs.chart.getChart()
+      chart.clear()
 
       var scale = {
         timestamp: {
@@ -97,7 +82,7 @@ export default {
         }
       })
 
-      chart.render();
+      chart.render()
     }
   }
 }

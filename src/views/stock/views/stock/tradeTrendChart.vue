@@ -1,13 +1,11 @@
 <template>
-  <lr-box :title="title" v-show="stock">
-    <div :id="chartId"></div>
+  <lr-box :title="title">
+    <lr-chart ref="chart" />
   </lr-box>
 </template>
 
 <script>
-import { idGenerator } from '@/utils'
 import lodash from 'lodash'
-import G2 from '@antv/g2'
 import moment from 'moment'
 
 const THRESHOLD_WATER_PERCENT = 50
@@ -17,8 +15,6 @@ export default {
     return {
       title: '',
       stock: null,
-      chart: null,
-      chartId: idGenerator.next()
     }
   },
   methods: {
@@ -30,16 +26,10 @@ export default {
       }
       this.title = stock.label
       const data = lodash.takeRight(rawData, dataCount)
-      if (this.chart) {
-        this.chart.clear()
-      } else {
-        this.chart = new G2.Chart({
-          container: this.chartId,
-          forceFit: true,
-          height: window.innerHeight
-        })
-      }
-      const chart = this.chart
+
+      const chart = this.$refs.chart.getChart()
+      chart.clear()
+
       const view = chart.view()
       var scale = {
         timestamp: {
