@@ -64,6 +64,33 @@ export default [
           {
             time: '-',
             event: '<span style="color: red">特朗普周四一早发推文称:如果他们真这样做，市场将崩盘。</span>'
+          },
+          {
+            time: '23:03:49',
+            event: '消息人士：美国众议院投票通过撤销特朗普边境紧急状态的法案'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    title: '中东',
+    eventList: [
+      {
+        date: '2019-09-14',
+        eventList: [
+          {
+            time: '-',
+            event: '沙特油田被袭击'
+          }
+        ]
+      },
+      {
+        date: '2019-09-27',
+        eventList: [
+          {
+            time: '20:26:04',
+            event: '伊朗总统鲁哈尼：美国提出移除对伊朗的全部制裁以换取谈判'
           }
         ]
       }
