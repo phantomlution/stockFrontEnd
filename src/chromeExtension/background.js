@@ -5,4 +5,5 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
       cancel: true
     }
   }
+  console.warn(details)
 }, {urls: ["<all_urls>"]}, ["blocking"]);

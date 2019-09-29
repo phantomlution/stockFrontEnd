@@ -15,6 +15,13 @@ export default [
     isImportant: true
   },
   {
+    title: '新时代的中国与世界白皮书',
+    start: '2019-09-27',
+    end: '2019-09-27',
+    isImportant: true,
+    source: 'http://www.xinhuanet.com/politics/2019-09/27/c_1125047331.htm'
+  },
+  {
     start: '2019-10-19',
     end: '2019-10-19',
     isImportant: true,

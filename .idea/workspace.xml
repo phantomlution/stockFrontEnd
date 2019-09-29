@@ -3,7 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/background.js" afterPath="$PROJECT_DIR$/src/chromeExtension/background.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/content-script.js" afterPath="$PROJECT_DIR$/src/chromeExtension/content-script.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/manifest.json" afterPath="$PROJECT_DIR$/src/chromeExtension/manifest.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/style.css" afterPath="$PROJECT_DIR$/src/chromeExtension/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/columnList/index.js" afterPath="$PROJECT_DIR$/src/data/columnList/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/customEvent/index.js" afterPath="$PROJECT_DIR$/src/data/customEvent/index.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -24,25 +29,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/App.vue">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/data/customEvent/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="42" column="55" lean-forward="false" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+            <state relative-caret-position="399">
+              <caret line="21" column="74" lean-forward="false" selection-start-line="21" selection-start-column="74" selection-end-line="21" selection-end-column="74" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/index.vue">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chromeExtension/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="48" column="49" lean-forward="true" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#lr-box#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#lr-box#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="209">
+              <caret line="11" column="56" lean-forward="false" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="content-script.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chromeExtension/content-script.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,16 +62,37 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1603">
-              <caret line="88" column="22" lean-forward="false" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+            <state relative-caret-position="589">
+              <caret line="57" column="11" lean-forward="true" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
               <folding>
-                <marker date="1569639714000" expanded="true" signature="379:389" ph="..." />
-                <marker date="1569639714000" expanded="true" signature="433:444" ph="..." />
-                <marker date="1569639714000" expanded="true" signature="567:576" ph="..." />
-                <marker date="1569639714000" expanded="true" signature="1371:1381" ph="..." />
-                <marker date="1569639714000" expanded="true" signature="1424:1434" ph="..." />
-                <marker date="1569639714000" expanded="true" signature="1583:1593" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="379:389" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="433:444" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="567:576" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="1230:1241" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="1681:1691" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="1734:1744" ph="..." />
+                <marker date="1569731828000" expanded="true" signature="1893:1903" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chromeExtension/background.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="171">
+              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="manifest.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chromeExtension/manifest.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="19">
+              <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,26 +129,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="columnPanel.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/columnPanel.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="16" column="32" lean-forward="true" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/capitalFlow/index.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="18" column="11" lean-forward="true" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/LinkPage/index.vue">
           <provider selected="true" editor-type-id="text-editor">
@@ -124,16 +137,6 @@
               <folding>
                 <marker date="1569638990000" expanded="false" signature="505:545" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/capitalFlow/replay/index.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="13" column="23" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="23" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -150,7 +153,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>WaterFrequencyPercent</find>
       <find>closePriceList</find>
       <find>.volume</find>
       <find>恐慌指数</find>
@@ -180,6 +182,7 @@
       <find>tradeVolumeChart</find>
       <find>stock</find>
       <find>updateChart</find>
+      <find>adv-cont</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -209,6 +212,7 @@
       <replace>TurnoverRate</replace>
       <replace>#teddy</replace>
       <replace>tradeTrendChart</replace>
+      <replace>body.fx678</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/components/StickBar</dir>
@@ -248,11 +252,6 @@
         <option value="$PROJECT_DIR$/src/chromeExtension/fx678/style.css" />
         <option value="$PROJECT_DIR$/src/chromeExtension/fx678/script.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/columnPanel.vue" />
-        <option value="$PROJECT_DIR$/src/chromeExtension/manifest.json" />
-        <option value="$PROJECT_DIR$/src/chromeExtension/background.js" />
-        <option value="$PROJECT_DIR$/src/chromeExtension/content-script.js" />
-        <option value="$PROJECT_DIR$/src/chromeExtension/style.css" />
-        <option value="$PROJECT_DIR$/src/data/customEvent/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/bigEvents/eventCalendar.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/bigEvents/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/chart/base.vue" />
@@ -270,6 +269,11 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/tradeTrendChart.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/tradeDataChart.vue" />
         <option value="$PROJECT_DIR$/src/components/LinkPage/index.vue" />
+        <option value="$PROJECT_DIR$/src/chromeExtension/manifest.json" />
+        <option value="$PROJECT_DIR$/src/data/customEvent/index.js" />
+        <option value="$PROJECT_DIR$/src/chromeExtension/content-script.js" />
+        <option value="$PROJECT_DIR$/src/chromeExtension/style.css" />
+        <option value="$PROJECT_DIR$/src/chromeExtension/background.js" />
         <option value="$PROJECT_DIR$/src/data/columnList/index.js" />
       </list>
     </option>
@@ -422,6 +426,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="columnList" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chromeExtension" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -666,14 +688,7 @@
       <workItem from="1568771980567" duration="18655000" />
       <workItem from="1568902280632" duration="9279000" />
       <workItem from="1569160902067" duration="11714000" />
-      <workItem from="1569482994949" duration="25103000" />
-    </task>
-    <task id="LOCAL-00030" summary="增加疑似做空点检测">
-      <created>1557027686624</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1557027686624</updated>
+      <workItem from="1569482994949" duration="27084000" />
     </task>
     <task id="LOCAL-00031" summary="集成做空点">
       <created>1557036064162</created>
@@ -1011,11 +1026,18 @@
       <option name="project" value="LOCAL" />
       <updated>1569638993382</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="前端重构">
+      <created>1569640140298</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1569640140298</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="375062000" />
+    <option name="totallyTimeSpent" value="377043000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1038,7 +1060,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5726496" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2735043" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2735043" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Plugins" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1282,46 +1304,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chromeExtension/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="54" column="17" lean-forward="false" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chromeExtension/content-script.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="3" lean-forward="true" selection-start-line="15" selection-start-column="3" selection-end-line="15" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/customEvent/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="15" column="4" lean-forward="true" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chromeExtension/manifest.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="31" column="22" lean-forward="false" selection-start-line="31" selection-start-column="22" selection-end-line="31" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chromeExtension/background.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="10" lean-forward="false" selection-start-line="7" selection-start-column="10" selection-end-line="7" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/FullCalendar/fullCalendar.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="508">
@@ -1533,17 +1515,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/customEvent/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" column="74" lean-forward="false" selection-start-line="21" selection-start-column="74" selection-end-line="21" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chromeExtension/content-script.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chromeExtension/manifest.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="23" lean-forward="false" selection-start-line="1" selection-start-column="23" selection-end-line="1" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chromeExtension/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="11" column="56" lean-forward="false" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chromeExtension/background.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1603">
-          <caret line="88" column="22" lean-forward="false" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+        <state relative-caret-position="589">
+          <caret line="57" column="11" lean-forward="true" selection-start-line="57" selection-start-column="11" selection-end-line="57" selection-end-column="11" />
           <folding>
-            <marker date="1569639714000" expanded="true" signature="379:389" ph="..." />
-            <marker date="1569639714000" expanded="true" signature="433:444" ph="..." />
-            <marker date="1569639714000" expanded="true" signature="567:576" ph="..." />
-            <marker date="1569639714000" expanded="true" signature="1371:1381" ph="..." />
-            <marker date="1569639714000" expanded="true" signature="1424:1434" ph="..." />
-            <marker date="1569639714000" expanded="true" signature="1583:1593" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="379:389" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="433:444" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="567:576" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="1230:1241" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="1681:1691" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="1734:1744" ph="..." />
+            <marker date="1569731828000" expanded="true" signature="1893:1903" ph="..." />
           </folding>
         </state>
       </provider>

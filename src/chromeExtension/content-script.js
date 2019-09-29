@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   let host = location.hostname
   if (/fx678\.com/.test(host)) {
-    document.body.id = 'fx678'
+    let classList = ['fx678']
+    Array.prototype.push.apply(classList, document.body.className.split(' '))
+    document.body.className = classList.join(' ')
+    console.log(document)
   } else if (/eastmoney\.com/.test(host)) {
     document.body.id = 'eastmoney'
   } else if (/zmz2019\.com/.test(host)) {

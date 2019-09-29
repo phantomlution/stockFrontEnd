@@ -1,39 +1,40 @@
 /* fx678 start */
 
-#fx678 [id^='lf_small'], #fx678 .cs_top, #fx678 .tz_mar{
+body.fx678 [id^='lf_small'], body.fx678 .cs_top, body.fx678 .tz_mar{
   display: none;
 }
 
-#fx678 .hc_top_area, #fx678 .hc_logo_area, #fx678 .menu_ads{
+body.fx678 .hc_top_area, body.fx678 .hc_logo_area, body.fx678 .menu_ads{
   display: none;
 }
 
-#fx678 [id^='cl_ad'], #fx678 .ad-cont{
+body.fx678 [id^='cl_ad'], body.fx678 .ad-cont, body.fx678 .adv-cont,
+body.fx678 [class^='aside-adv'], body.fx678 .aside-store {
   display: none;
 }
 
-#fx678 [class^='cl_ad'], #fx678 .box{
+body.fx678 [class^='cl_ad'], body.fx678 .box{
   visibility: hidden;
 }
 
-#fx678 .quoteIdx_ads + .quoteIdx_area{
+body.fx678 .quoteIdx_ads + .quoteIdx_area{
   display: none;
 }
 
-#fx678 [id^='lf_big'], #fx678 [id^='lf_small'] {
+body.fx678 [id^='lf_big'], body.fx678 [id^='lf_small'] {
   display: none !important;
 }
 
-#fx678 .quoteIdx_ads{
+body.fx678 .quoteIdx_ads{
   visibility: hidden;
 }
 
-#fx678 .zr-chart--container .zr-2{
+body.fx678 .zr-chart--container .zr-2{
   /*height: 0 !important;*/
   display: none;
 }
 
-#fx678 [id^='flow-ad'] {
+body.fx678 [id^='flow-ad'] {
   display: none;
 }
 /* fx678 end */
