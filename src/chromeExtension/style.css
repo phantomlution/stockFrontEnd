@@ -40,7 +40,8 @@ body.fx678 [id^='flow-ad'] {
 /* fx678 end */
 
 /* 东方财富 start */
-#eastmoney [class^='adFrame'], #eastmoney .advert{
+#eastmoney [class^='adFrame'], #eastmoney .advert, #eastmoney .emfloat_wrapper iframe,
+#eastmoney iframe.lyad, #eastmoney #emFloat_rd{
   display: none;
 }
 /* 东方财富 end */
@@ -65,3 +66,13 @@ body.fx678 [id^='flow-ad'] {
   background: none !important;
 }
 /* extra end */
+
+/* common */
+iframe[id^='google_ads'] {
+  display: none;
+}
+
+#tianya iframe, #tianya [class^='ads']{
+  display: none;
+}
+/* common */

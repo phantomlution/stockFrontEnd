@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let classList = ['fx678']
     Array.prototype.push.apply(classList, document.body.className.split(' '))
     document.body.className = classList.join(' ')
-    console.log(document)
   } else if (/eastmoney\.com/.test(host)) {
     document.body.id = 'eastmoney'
   } else if (/zmz2019\.com/.test(host)) {
@@ -16,5 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.id = 'clang'
   } else if (/taidi\d*.com/.test(host)) {
     document.body.id = 'teddy'
+  } else if (/tianya\.cn/.test(host)) {
+    document.body.id = 'tianya'
   }
 })

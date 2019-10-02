@@ -6,6 +6,7 @@
         <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
         <el-tab-pane label="情报中心" name="informationCenter"></el-tab-pane>
         <el-tab-pane label="资金流向" name="capitalFlow" ></el-tab-pane>
+        <el-tab-pane label="人物" name="figure"></el-tab-pane>
         <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
         <el-tab-pane label="工具箱" name="toolPanel"></el-tab-pane>
         <el-tab-pane label="playground" name="playGround"></el-tab-pane>
@@ -19,6 +20,9 @@
       </div>
       <div v-show="currentTab === 'capitalFlow'">
         <capital-flow />
+      </div>
+      <div v-show="currentTab === 'figure'" >
+        <person-figure />
       </div>
       <div v-if="currentTab === 'informationCenter'">
         <information-center />
@@ -45,6 +49,7 @@ import playGround from '@/views/stock/views/playground/index'
 import capitalFlow from '@/views/stock/views/capitalFlow/index'
 import bigEvents from '@/views/stock/views/bigEvents/index'
 import columnPanel from '@/views/stock/views/global/columnPanel'
+import personFigure from '@/views/stock/views/figure/index'
 
 export default {
   components: {
@@ -54,7 +59,8 @@ export default {
     playGround,
     capitalFlow,
     bigEvents,
-    columnPanel
+    columnPanel,
+    personFigure
   },
   data() {
     return {

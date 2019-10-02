@@ -6,6 +6,9 @@
           <el-card class="lr-column-card" :key="eventIndex" v-for="(event, eventIndex) of item.eventList">
             <h4 v-html="event.event"></h4>
             <p>{{ event.time }}</p>
+            <div v-show="event.source">
+              <el-button type="text" @click.stop="showSource(event.source)">信息源</el-button>
+            </div>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -36,6 +39,9 @@ export default {
   methods: {
     open() {
       this.drawerVisible = true
+    },
+    showSource(src) {
+      window.open(src, '_blank')
     }
   }
 }

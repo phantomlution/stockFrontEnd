@@ -67,6 +67,15 @@ export default [
             event: '英国首相约翰逊：十分有机会达成脱欧协议'
           }
         ]
+      },
+      {
+        date: '2019-10-01',
+        eventList: [
+          {
+            time: '09-13-12',
+            event: '<span color="red">电讯报：约翰逊将在24小时内公布其最终的脱欧计划</span>'
+          }
+        ]
       }
     ]
   },
@@ -114,6 +123,34 @@ export default [
           {
             time: '20:26:04',
             event: '伊朗总统鲁哈尼：美国提出移除对伊朗的全部制裁以换取谈判'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    title: '中美贸易战',
+    eventList: [
+      {
+        date: '2019-09-26',
+        eventList: [
+          {
+            time: '-',
+            event: '<span>中远海运被美国制裁，VLCC（超大型邮轮）运费翻倍</span>',
+            source: 'https://mp.weixin.qq.com/s/wI8fg2fh2nNaj4c49eWp-A'
+          }
+        ]
+      },
+      {
+        date: '2019-09-28',
+        eventList: [
+          {
+            time: '-',
+            event: '<span style="color: red">美国白宫故意放出消息称：中概股从美国退市</span>'
+          },
+          {
+            time: '-',
+            event: '<span style="color:red;">美国白宫故意放出消息称：限制美国养老金进入红方股市</span>'
           }
         ]
       }
