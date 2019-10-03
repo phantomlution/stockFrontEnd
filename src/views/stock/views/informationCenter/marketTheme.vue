@@ -122,8 +122,11 @@ export default {
           }
         })
       })
-      this.generateTotalThemeTagList()
-      this.generateThemeTagList()
+      if (raw.length > 0) {
+        this.generateTotalThemeTagList()
+        this.generateThemeTagList()
+      }
+
       this.loading = false
     },
     generateTotalThemeTagList() { // 生成所有的主题列表

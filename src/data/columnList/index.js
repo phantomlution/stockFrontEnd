@@ -129,7 +129,7 @@ export default [
     ]
   },
   {
-    title: '中美贸易战',
+    title: '美国贸易战',
     eventList: [
       {
         date: '2019-09-26',
@@ -153,6 +153,14 @@ export default [
             event: '<span style="color:red;">美国白宫故意放出消息称：限制美国养老金进入红方股市</span>'
           }
         ]
+      },
+      {
+        date: '2019-10-02',
+        eventList: {
+          time: '14:54:00',
+          event: '<span style="color: red">美国打算对欧盟征收100%报复性关税</span>',
+          source: 'https://www.cnbc.com/2019/10/02/malmstrom-retaliatory-tariffs-on-us-possible-before-boeing-ruling.html'
+        }
       }
     ]
   }

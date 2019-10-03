@@ -46,6 +46,11 @@ export default {
       style: null
     }
   },
+  watch: {
+    src() {
+      this.reload()
+    }
+  },
   mounted() {
     const frame = this.getFrame()
     frame.onload = _ => {

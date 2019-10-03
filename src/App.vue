@@ -64,7 +64,7 @@ export default {
   },
   data() {
     return {
-      currentTab: 'detail'
+      currentTab: 'bigEvents'
     }
   }
 }

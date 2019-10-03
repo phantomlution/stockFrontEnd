@@ -3,6 +3,7 @@
     <el-radio-group v-model="currentTab" style="width: 100%;text-align: center;margin-bottom: 16px">
       <el-radio-button label="vix">恐慌指数</el-radio-button>
       <el-radio-button label="goldTrend">黄金现货走势</el-radio-button>
+      <el-radio-button label="shiborHistory">shibor历史数据</el-radio-button>
       <el-radio-button label="singleStockNotice">个股公告</el-radio-button>
       <el-radio-button label="noticeSearch">公告检索</el-radio-button>
       <el-radio-button label="marketTheme">主题筛选器</el-radio-button>
@@ -16,6 +17,9 @@
       </div>
       <div v-show="currentTab === 'goldTrend'">
         <lr-link-page src="https://quote.fx678.com/symbol/XAU" />
+      </div>
+      <div v-if="currentTab === 'shiborHistory'">
+        <shibor-history />
       </div>
       <div v-show="currentTab === 'singleStockNotice'">
         <single-stock-notice />
@@ -44,12 +48,14 @@ import singleStockNotice from './singleStockNotice.vue'
 import marketNotice from './marketNotice.vue'
 import farmProductIndex from './farmProductIndex.vue'
 import marketTheme from './marketTheme.vue'
+import shiborHistory from './shiborHistory.vue'
 
 export default {
   components: {
     singleStockNotice,
     marketNotice,
     farmProductIndex,
+    shiborHistory,
     marketTheme
   },
   data() {
