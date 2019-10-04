@@ -18,7 +18,7 @@
       <div v-show="eventTab === 'mine'">
         <eventCalendar />
       </div>
-      <div v-show="eventTab === 'official'">
+      <div v-if="eventTab === 'official'">
         <lr-link-page :src="officialSrc"/>
       </div>
       <div v-if="eventTab === 'fastNews'">
@@ -33,7 +33,7 @@
       <div v-show="eventTab === 'loanPrimeRate'">
         <lr-link-page src="http://www.chinamoney.com.cn/chinese/bklpr/" />
       </div>
-      <div v-show="eventTab === 'CNBC'">
+      <div v-if="eventTab === 'CNBC'">
         <lr-link-page src="https://www.cnbc.com" :skipLoading="true" />
       </div>
       <div v-show="eventTab === 'test'">

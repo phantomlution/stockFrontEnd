@@ -1,6 +1,9 @@
 <template>
   <div style="overflow: auto">
-    <div>
+    <div v-if="loadingState === 2">
+      <el-button @click.stop="doInit">重新加载</el-button>
+    </div>
+    <div v-loading="loading" v-show="loadingState !== 2">
       <lr-box>
         <div>
           <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
@@ -64,8 +67,10 @@ export default {
   data() {
     return {
       stockCode: '',
+      loadingState: 0,
       batchAnalyzeLoading: false,
       stockMap: this.$store.state.data.stockMap,
+      bondMap: this.$store.state.data.bondMap,
       baseMap: new Map(),
       useChart: true,
       historyDataCount: 420,
@@ -97,6 +102,9 @@ export default {
     }
   },
   computed: {
+    loading() {
+      return this.loadingState === 0
+    },
     progressPercent() {
       if (this.progress.totalCount === 0) {
         return 0
@@ -113,32 +121,8 @@ export default {
     }
   },
   mounted() {
-    Promise.all([
-      stockUtils.getCodeList(),
-      this.$http.get('/api/stock/theme')
-    ]).then(responseList => {
-      const { codeList, baseList } = responseList[0]
-      const stockThemeList = responseList[1]
+    this.doInit()
 
-      this.baseMap.clear()
-      baseList.forEach(item => {
-        const themeList = stockThemeList.find(themeItem => themeItem.code === item.symbol)
-        item.themeList = themeList ? themeList.theme : []
-        this.baseMap.set(item.symbol, item)
-      })
-
-      this.$store.dispatch('updateData', {
-        key: 'codeList',
-        data: codeList
-      })
-
-      this.$store.dispatch('updateData', {
-        key: 'stockThemeList',
-        data: stockThemeList
-      })
-    }).catch(_ => {
-      console.error(_)
-    })
     this.$bus.$on('searchStockDetail', ({ code }) => {
       this.stockCode = code
     })
@@ -151,6 +135,45 @@ export default {
     this.$bus.$off('searchStockDetail')
   },
   methods: {
+    doInit() {
+      this.loadingState = 0
+      Promise.all([
+        stockUtils.getCodeList(),
+        this.$http.get('/api/stock/theme'),
+        this.$http.get('/api/financial/bond/list')
+      ]).then(responseList => {
+        const { codeList, baseList } = responseList[0]
+        const stockThemeList = responseList[1]
+        const bondList = responseList[2]
+        console.warn(bondList)
+
+        this.baseMap.clear()
+        baseList.forEach(item => {
+          const themeList = stockThemeList.find(themeItem => themeItem.code === item.symbol)
+          item.themeList = themeList ? themeList.theme : []
+          this.baseMap.set(item.symbol, item)
+        })
+
+        this.$store.dispatch('updateData', {
+          key: 'codeList',
+          data: codeList
+        })
+
+        this.$store.dispatch('updateData', {
+          key: 'stockThemeList',
+          data: stockThemeList
+        })
+
+        bondList.forEach(bond => {
+          this.bondMap.set(bond['symbol'], bond['bondList'])
+        })
+
+        this.loadingState = 1
+      }).catch(_ => {
+        this.loadingState = 2
+        console.error(_)
+      })
+    },
     refresh() {
       this.$nextTick(_ => {
         this.searchStock(this.stockCode)
@@ -208,7 +231,8 @@ export default {
       stockDetail.data = dataList
     },
     getStockDetailRequest(code) {
-      return this.$http.socket('stockDetail', { code: code })
+      return this.$http.post(`/api/stock/detail`, { code })
+//      return this.$http.socket('stockDetail', { code: code })
     },
     loadData(code, forceUpdate = false) {
       if (!code) {
@@ -244,6 +268,13 @@ export default {
         let data = responseList[0].data
         if (data.length < this.historyDataCount / 2) {
           throw new Error('数据不足')
+        }
+
+        // 追加债券信息
+        if (this.bondMap.has(base.symbol)) {
+          base.bondList = this.bondMap.get(base.symbol)
+        } else {
+          base.bondList = []
         }
 
         this.analyze(data, base, forceUpdate)
