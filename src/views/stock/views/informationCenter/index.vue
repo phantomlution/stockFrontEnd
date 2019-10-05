@@ -10,6 +10,7 @@
       <el-radio-button label="economicData">经济数据</el-radio-button>
       <el-radio-button label="openAccountIndex">股票开户指数</el-radio-button>
       <el-radio-button label="farmProductIndex">农场品指数</el-radio-button>
+      <el-radio-button label="estateMarketHeat">房地产热度</el-radio-button>
     </el-radio-group>
     <div>
       <div v-show="currentTab === 'vix'">
@@ -39,6 +40,9 @@
       <div v-if="currentTab === 'farmProductIndex'">
         <farm-product-index />
       </div>
+      <div v-if="currentTab === 'estateMarketHeat'">
+        <estate />
+      </div>
     </div>
   </div>
 </template>
@@ -49,6 +53,7 @@ import marketNotice from './marketNotice.vue'
 import farmProductIndex from './farmProductIndex.vue'
 import marketTheme from './marketTheme.vue'
 import shiborHistory from './shiborHistory.vue'
+import estate from './estate.vue'
 
 export default {
   components: {
@@ -56,7 +61,8 @@ export default {
     marketNotice,
     farmProductIndex,
     shiborHistory,
-    marketTheme
+    marketTheme,
+    estate
   },
   data() {
     return {

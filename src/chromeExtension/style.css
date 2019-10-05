@@ -75,4 +75,8 @@ iframe[id^='google_ads'] {
 #tianya iframe, #tianya [class^='ads']{
   display: none;
 }
+
+#video-ad{
+  display: none;
+}
 /* common */

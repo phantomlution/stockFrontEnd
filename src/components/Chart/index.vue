@@ -22,6 +22,11 @@ export default {
       chartId: idGenerator.next()
     }
   },
+  beforeDestroy() {
+    if (this._chart) {
+      this._chart.destroy()
+    }
+  },
   methods: {
     getChart() {
       if (this._chart) {
