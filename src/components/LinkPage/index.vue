@@ -70,7 +70,6 @@ export default {
       return document.getElementById(this.frameId)
     },
     reload() {
-      this.calculateStyle()
       if (!this.src) {
         return
       }
@@ -78,14 +77,19 @@ export default {
         this.loading = true
       }
 
-      this.localSrc = ''
       this.$nextTick(_ => {
-        this.localSrc = `${ this.redirect ? '/api/redirect?url=' : '' }${ this.src }`
+        this.localSrc = ''
+        setTimeout(_ => {
+          this.localSrc = `${ this.redirect ? '/api/redirect?url=' : '' }${ this.src }`
+          console.warn(this.localSrc)
+        }, 100)
       })
 
     },
     loaded() {
+      console.log('loaded')
       this.loading = false
+      this.calculateStyle()
     },
     calculateStyle() {
       const container = document.getElementById(this.containerId)

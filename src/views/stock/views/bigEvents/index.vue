@@ -7,8 +7,8 @@
       <el-radio-button label="fastNews">7*24</el-radio-button>
       <el-radio-button label="centralBankOperation">央行操作</el-radio-button>
       <el-radio-button label="shibor">shibor</el-radio-button>
-      <el-radio-button label="央行官方新闻">央行官方新闻</el-radio-button>
       <el-radio-button label="loanPrimeRate">LPR</el-radio-button>
+      <el-radio-button label="央行官方新闻">央行官方新闻</el-radio-button>
       <el-radio-button label="CNBC">CNBC</el-radio-button>
       <el-radio-button label="新华网">新华网</el-radio-button>
       <el-radio-button label="外交部">外交部</el-radio-button>

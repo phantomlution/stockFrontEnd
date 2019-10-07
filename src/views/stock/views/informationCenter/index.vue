@@ -32,7 +32,7 @@
         <market-theme />
       </div>
       <div v-if="currentTab === 'economicData'">
-        <lr-link-page src="http://data.eastmoney.com/center/macro.html"/>
+        <lr-link-page src="http://data.eastmoney.com/cjsj/hbgyl.html"/>
       </div>
       <div v-if="currentTab === 'openAccountIndex'">
         <lr-link-page title="2019.03.19指数(17699)" src="http://index.baidu.com/v2/main/index.html#/trend/股票开户?words=股票开户" />
