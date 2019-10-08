@@ -7,7 +7,7 @@
         <el-tab-pane label="情报中心" name="informationCenter"></el-tab-pane>
         <el-tab-pane label="资金流向" name="capitalFlow" ></el-tab-pane>
         <el-tab-pane label="未来经济预测" name="未来经济预测"></el-tab-pane>
-        <el-tab-pane label="人物" name="figure"></el-tab-pane>
+        <el-tab-pane label="关注" name="figure"></el-tab-pane>
         <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
         <el-tab-pane label="工具箱" name="toolPanel"></el-tab-pane>
         <el-tab-pane label="playground" name="playGround"></el-tab-pane>
@@ -19,7 +19,7 @@
       <div v-show="currentTab === 'stockDetail'">
         <stock-detail />
       </div>
-      <div v-show="currentTab === 'capitalFlow'">
+      <div v-if="currentTab === 'capitalFlow'">
         <capital-flow />
       </div>
       <div v-show="currentTab === 'figure'" >

@@ -41,8 +41,9 @@ body.fx678 [id^='flow-ad'] {
 
 /* 东方财富 start */
 #eastmoney [class^='adFrame'], #eastmoney .advert, #eastmoney .emfloat_wrapper iframe,
-#eastmoney iframe.lyad, #eastmoney #emFloat_rd{
-  display: none;
+#eastmoney iframe.lyad, #eastmoney #emFloat_rd, #eastmoney [id^='flow-ad'],
+#eastmoney #rightAD{
+  display: none !important;
 }
 /* 东方财富 end */
 

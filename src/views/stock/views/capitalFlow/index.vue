@@ -7,13 +7,13 @@
     </el-radio-group>
 
     <div>
-      <div v-if="capitalType === 'hotMoney'">
+      <div v-show="capitalType === 'hotMoney'">
         <lr-link-page src="http://data.eastmoney.com/hsgt/index.html"/>
       </div>
-      <div v-if="capitalType === 'overall'">
+      <div v-show="capitalType === 'overall'">
         <lr-link-page src="http://data.eastmoney.com/zjlx/dpzjlx.html"/>
       </div>
-      <div v-if="capitalType === 'hotMoneyReplay'">
+      <div v-show="capitalType === 'hotMoneyReplay'">
         <replay />
       </div>
      </div>
