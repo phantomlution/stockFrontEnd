@@ -10,7 +10,6 @@ export default {
     secondPhaseMap: new Map(),
     marketPriceMap: new Map(), // 市场价格
     stockThemeList: [], // 股票 -> 主题
-    bondMap: new Map(), // 债券列表
     themeMap: new Map() // 主题 -> 股票
   },
   mutations: {

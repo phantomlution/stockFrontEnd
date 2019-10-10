@@ -17,6 +17,7 @@
 
     <div>
       <div v-show="eventTab === 'mine'">
+        <ongoing />
         <eventCalendar />
       </div>
       <div v-if="eventTab === 'official'">
@@ -25,28 +26,28 @@
       <div v-if="eventTab === 'fastNews'">
         <lr-link-page src="http://kx.fx678.com" />
       </div>
-      <div v-show="eventTab === 'centralBankOperation'">
+      <div v-if="eventTab === 'centralBankOperation'">
         <lr-link-page src="http://www.chinamoney.com.cn/chinese/scggyhywgg/" />
       </div>
-      <div v-show="eventTab === 'shibor'">
+      <div v-if="eventTab === 'shibor'">
         <lr-link-page src="http://www.chinamoney.com.cn/chinese/bkshibor/" />
       </div>
-      <div v-show="eventTab === 'loanPrimeRate'">
+      <div v-if="eventTab === 'loanPrimeRate'">
         <lr-link-page src="http://www.chinamoney.com.cn/chinese/bklpr/" />
       </div>
       <div v-if="eventTab === 'CNBC'">
         <lr-link-page src="https://www.cnbc.com" :skipLoading="true" />
       </div>
-      <div v-show="eventTab === '新华网'">
+      <div v-if="eventTab === '新华网'">
         <lr-link-page src="http://www.xinhuanet.com" />
       </div>
-      <div v-show="eventTab === '外交部'">
+      <div v-if="eventTab === '外交部'">
         <lr-link-page :redirect="true" src="https://www.fmprc.gov.cn/web/fyrbt_673021/dhdw_673027/" />
       </div>
-      <div v-show="eventTab === '央行官方新闻'">
+      <div v-if="eventTab === '央行官方新闻'">
         <lr-link-page src="http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/11040/index1.html" />
       </div>
-      <div v-show="eventTab === '发改委'">
+      <div v-if="eventTab === '发改委'">
         <lr-link-page src="http://www.ndrc.gov.cn/" />
       </div>
     </div>
@@ -57,13 +58,15 @@
 import eventCalendar from './eventCalendar.vue'
 import financialInformation from './financialInformation.vue'
 import centralBank from './centralBank.vue'
+import ongoing from './ongoing.vue'
 import moment from 'moment'
 
 export default {
   components: {
     eventCalendar,
     financialInformation,
-    centralBank
+    centralBank,
+    ongoing
   },
   data() {
     const today = moment().format('YYYYMMDD')

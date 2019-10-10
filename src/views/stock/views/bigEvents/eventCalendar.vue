@@ -14,7 +14,7 @@
             </template>
             <template v-else>
               <el-card>
-                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant, 'lr-hover': scope.event.display === 'column' }" @click.stop="showColumnDetail(scope.event)">
+                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant }" >
                   {{ scope.event.title }}
                 </h4>
                 <el-button type="text" v-if="scope.event.source" @click.stop="toSource(scope.event.source)">信息来源</el-button>
@@ -33,7 +33,7 @@ import customEvent from '@/data/customEvent'
 import fullCalendar from '@/components/FullCalendar'
 import moment from 'moment'
 import financialInformation from './financialInformation.vue'
-import columnList from '@/data/columnList'
+
 
 export default {
   components: {
@@ -50,12 +50,6 @@ export default {
     this.loadData()
   },
   methods: {
-    showColumnDetail(event) { // 展示专栏
-      if (event.display === 'column') {
-        let column = event['raw']
-        this.$bus.$emit('openGlobalColumn', column)
-      }
-    },
     toSource(source) {
       window.open(source, '_blank')
     },
@@ -64,8 +58,8 @@ export default {
       const calendarList = []
 
       Promise.all([
+        this.loadStockPreReleaseNotice(),
         this.loadCentralBankEvent(),
-        this.loadColumnList(),
         this.loadCustomEvent(),
         this.loadOtherEvent()
       ]).then(allEventList => {
@@ -79,6 +73,27 @@ export default {
       }).catch(_ => {
         console.error(_)
         this.loading = false
+      })
+    },
+    loadStockPreReleaseNotice() { // 加载股票预发布信息
+      return new Promise((resolve, reject) => {
+        this.$http.get(`/api/stock/pool/prerelease/calendar`).then(response => {
+          const result = []
+          response.forEach(stock => {
+            stock.list.forEach(releaseItem => {
+              result.push({
+                "title": `[股票][${ stock.name}] ${ releaseItem.title }`,
+                "start": releaseItem.date,
+                "end": releaseItem.date,
+                "raw": releaseItem,
+                "isImportant": true
+              })
+            })
+          })
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
       })
     },
     loadCustomEvent() { // 加载自定义事件
@@ -115,23 +130,6 @@ export default {
         })
       })
     },
-    loadColumnList() { // 加载未完成的专栏
-      return new Promise((resolve, reject) => {
-        const result = []
-        columnList.filter(column => !column.finish).forEach(column => {
-          // 为了让信息出现在日历中，每次未最近几天
-          result.push({
-            start: this.$moment().add('days', 0).format('YYYY-MM-DD'),
-            end: this.$moment().add('days', 0).format('YYYY-MM-DD'),
-            title: `[进行中] ${ column.title }`,
-            isImportant: true,
-            display: 'column',
-            raw: column
-          })
-        })
-        resolve(result)
-      })
-    }
   }
 }
 </script>

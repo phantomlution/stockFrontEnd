@@ -89,7 +89,7 @@ const httpInstance = {
   put(url, data, options) {
     return this.handleResponse(axiosInstance.put(url, data, options), options)
   },
-  delete(url, data, options) {
+  delete(url, data, options = {}) {
     let fullOption = Object.assign(options, {
       params: data
     })

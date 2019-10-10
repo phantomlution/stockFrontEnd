@@ -17,12 +17,13 @@
         <big-events />
       </div>
       <div v-show="currentTab === 'stockDetail'">
+        <!-- 初始化数据 -->
         <stock-detail />
       </div>
       <div v-if="currentTab === 'capitalFlow'">
         <capital-flow />
       </div>
-      <div v-show="currentTab === 'figure'" >
+      <div v-if="currentTab === 'figure'" >
         <person-figure />
       </div>
       <div v-if="currentTab === 'informationCenter'">

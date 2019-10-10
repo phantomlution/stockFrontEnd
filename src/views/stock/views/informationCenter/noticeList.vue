@@ -1,8 +1,13 @@
 <template>
   <el-table :data="list" :default-sort="{prop: 'date', order: 'descending'}">
+    <el-table-column label="名称" width="100px">
+      <template slot-scope="scope">
+        {{ scope.row.stockName }}
+      </template>
+    </el-table-column>
     <el-table-column label="公告标题">
       <template slot-scope="scope">
-        {{ scope.row.title }}
+        <el-link :type="scope.row.important ? 'danger' : ''" :underline="false">{{ scope.row.title }}</el-link>
       </template>
     </el-table-column>
     <el-table-column label="操作" width="64px">

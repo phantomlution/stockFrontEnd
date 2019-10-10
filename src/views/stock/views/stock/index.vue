@@ -140,12 +140,10 @@ export default {
       Promise.all([
         stockUtils.getCodeList(),
         this.$http.get('/api/stock/theme'),
-        this.$http.get('/api/financial/bond/list')
       ]).then(responseList => {
         const { codeList, baseList } = responseList[0]
+        debugger
         const stockThemeList = responseList[1]
-        const bondList = responseList[2]
-        console.warn(bondList)
 
         this.baseMap.clear()
         baseList.forEach(item => {
@@ -162,10 +160,6 @@ export default {
         this.$store.dispatch('updateData', {
           key: 'stockThemeList',
           data: stockThemeList
-        })
-
-        bondList.forEach(bond => {
-          this.bondMap.set(bond['symbol'], bond['bondList'])
         })
 
         this.loadingState = 1
@@ -270,13 +264,6 @@ export default {
           throw new Error('数据不足')
         }
 
-        // 追加债券信息
-        if (this.bondMap.has(base.symbol)) {
-          base.bondList = this.bondMap.get(base.symbol)
-        } else {
-          base.bondList = []
-        }
-
         this.analyze(data, base, forceUpdate)
       }).catch(_ => {
         console.log(_)
@@ -290,13 +277,12 @@ export default {
     updateStockInfo(stock, forceUpdate) {
       const dataCount = this.analyzeModel.dataCount
 
-      Object.assign(this.analyzeModel, {
-        base: stock.base,
-        title: stock.base.name
-      })
-
-
       if (forceUpdate || this.useChart) {
+        Object.assign(this.analyzeModel, {
+          base: stock.base,
+          title: stock.base.name
+        })
+
         this.$refs.tradeDataChart.updateChart({
           stock,
           dataCount,
