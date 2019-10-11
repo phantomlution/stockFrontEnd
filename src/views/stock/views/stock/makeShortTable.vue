@@ -9,8 +9,8 @@
               <div style="margin-bottom: 8px">
                 <span style="font-weight: bold;font-size: 16px">{{ currentRowModel.name }}</span>
               </div>
-              <div v-if="currentRowModel.themeList.length > 0">
-                <el-tag v-for="(theme, themeIndex) of currentRowModel.themeList" :key="themeIndex">
+              <div v-if="currentRowModel.theme_list.length > 0">
+                <el-tag v-for="(theme, themeIndex) of currentRowModel.theme_list" :key="themeIndex">
                   {{ theme }}
                 </el-tag>
               </div>
@@ -197,7 +197,6 @@ export default {
       this.dataList = finalRoundDataList.filter(item => { // 暂时剔除创业板
         return item.code.indexOf('SZ300') === -1
       })
-      console.log(this.dataList.length)
 
       const secondPhaseMap = this.$store.state.data.secondPhaseMap
       secondPhaseMap.clear()

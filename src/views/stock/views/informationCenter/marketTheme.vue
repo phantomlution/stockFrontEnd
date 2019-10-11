@@ -1,24 +1,23 @@
 <template>
   <div v-loading="loading">
     <lr-box title="主题列表">
-      <el-table :data="displayThemeTagList" max-height="300">
-        <el-table-column label="主题名称" prop="themeName">
+      <el-table :data="defaultThemeList" max-height="300">
+        <el-table-column label="主题名称" prop="name">
           <template slot-scope="scope">
-            <el-button size="small" type="text" @click.stop="showTheme(scope.row)">{{ scope.row.themeName }}</el-button>
+            <el-button size="small" type="text" @click.stop="showTheme(scope.row)">{{ scope.row.name }}</el-button>
           </template>
         </el-table-column>
         <el-table-column label="包含股票数">
           <template slot-scope="scope">
-            {{ scope.row.stockCodeList.length }}
+            {{ scope.row.list.length }}
           </template>
         </el-table-column>
       </el-table>
     </lr-box>
-    <theme-trend ref="themeTrend"/>
-    <lr-box :title="currentTheme + '股票列表'" v-if="currentTheme" style="margin-top: 8px">
-      <el-table :data="codeList">
-        <el-table-column label="name" prop="label" />
-        <el-table-column label="code" prop="value" />
+    <lr-box :title="currentTheme.name + '股票列表'" v-if="currentTheme" style="margin-top: 8px">
+      <el-table :data="currentTheme.list">
+        <el-table-column label="name" prop="name" />
+        <el-table-column label="code" prop="code" />
       </el-table>
     </lr-box>
   </div>
@@ -26,19 +25,13 @@
 </template>
 
 <script>
-import themeTrend from './themeTrend.vue'
 
 export default {
-  components: {
-    themeTrend
-  },
   data() {
     return {
-      totalThemeTagList: [],
-      displayThemeTagList: [],
       loading: true,
-      currentTheme: '',
-      codeList: [],
+      currentTheme: null,
+      defaultThemeList: [], // 展示的主题
       themeRuleList: [{ // 概念分片
         ruleName: '指数类',
         ruleThemeList: [
@@ -94,86 +87,38 @@ export default {
       }]
     }
   },
-  computed: {
-    themeMap() {
-      return this.$store.state.data.themeMap
-    }
-  },
   mounted() {
-    setTimeout(_ => {
-      this.loadTheme()
-    }, 1000)
+     this.loadMarketTheme()
   },
   methods: {
-    loadTheme() {
-      this.loading = true
-      const themeMap = this.themeMap
-      themeMap.clear()
-      const raw = this.$store.state.data.stockThemeList
-      raw.forEach(theme => {
-        const stockCode = theme.code
-        theme.theme.forEach(themeName => {
-          if (!themeMap.has(themeName)) {
-            themeMap.set(themeName, [])
-          }
-          const themeStockList = themeMap.get(themeName)
-          if (themeStockList.indexOf(stockCode) === -1) {
-            themeStockList.push(stockCode)
-          }
-        })
-      })
-      if (raw.length > 0) {
-        this.generateTotalThemeTagList()
-        this.generateThemeTagList()
-      }
+    loadMarketTheme() {
+      this.$http.get(`/api/stock/theme/market`).then(themeMarketList => {
+        const defaultThemeList = []
+        themeMarketList.forEach(themeMarketItem => {
+          let themeName = themeMarketItem['name']
 
-      this.loading = false
-    },
-    generateTotalThemeTagList() { // 生成所有的主题列表
-      const codeList = this.$store.state.data.codeList
-      const totalThemeTagList = []
-      for(let themeName of this.themeMap.keys()) {
-        totalThemeTagList.push({
-          themeName,
-          stockCodeList: this.themeMap.get(themeName).map(item => {
-            const findItem = codeList.find(code => code.value === item)
-            if (!findItem) {
-              return {
-                label: '',
-                value: item
-              }
+          // 匹配对应的规则项
+          let gotcha = false
+          for(let i=0; i<this.themeRuleList.length; i++) {
+            const currentThemeRule = this.themeRuleList[i]
+            if (currentThemeRule.ruleThemeList.indexOf(themeName) !== -1) {
+              gotcha = true
             }
-            return findItem
-          }).filter(item => item.label)
-        })
-      }
-      this.totalThemeTagList = totalThemeTagList
-    },
-    generateThemeTagList() {
-      const themeMap = this.themeMap
-      const defaultThemeList = []
-      for (let themeName of themeMap.keys()) {
-        let gotcha = false
-        for(let i=0; i<this.themeRuleList.length; i++) {
-          const currentThemeRule = this.themeRuleList[i]
-          if (currentThemeRule.ruleThemeList.indexOf(themeName) !== -1) {
-            gotcha = true
-            currentThemeRule.itemList.push(themeName)
-          } else if (!gotcha && i === this.themeRuleList.length - 1) {
-            defaultThemeList.push(themeName)
           }
-        }
-      }
-       this.displayThemeTagList = defaultThemeList.map(themeName => this.totalThemeTagList.find(item => item.themeName === themeName))
+
+          if (!gotcha) {
+            defaultThemeList.push(themeMarketItem)
+          }
+        })
+
+        this.defaultThemeList = defaultThemeList
+        this.loading = false
+      }).catch(_ => {
+        console.error(_)
+      })
     },
     showTheme(themeItem) {
-      const themeName = themeItem.themeName
-      const stockCodeList = themeItem.stockCodeList
-
-      this.currentTheme = themeName
-      this.codeList = stockCodeList
-
-      this.$refs.themeTrend.loadTrend(themeName, stockCodeList)
+      this.currentTheme = themeItem
     }
   }
 }

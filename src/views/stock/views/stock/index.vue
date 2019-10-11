@@ -16,6 +16,7 @@
         <div style="margin-top: 16px">
           <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
           <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+          <el-button type="primary" @click.stop="showDetail">详情</el-button>
           <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" style="width: 140px" />
           <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" style="width: 140px"/>
         </div>
@@ -33,11 +34,6 @@
       <make-short-table />
       <trade-trend-chart ref="tradeTrendChart" />
       <trade-data-chart ref="tradeDataChart" />
-      <template v-if="stockCode && analyzeModel.base && analyzeModel.base.company">
-        <lr-box title="基础信息">
-          <base-info :base="analyzeModel.base" />
-        </lr-box>
-      </template>
     </div>
   </div>
 </template>
@@ -53,7 +49,6 @@ import tradeDataChart from './tradeDataChart.vue'
 import tradeTrendChart from './tradeTrendChart.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
 import makeShortTable from './makeShortTable.vue'
-import baseInfo from './baseInfo.vue'
 import moment from 'moment'
 
 export default {
@@ -62,7 +57,6 @@ export default {
     tradeTrendChart,
     searchStock,
     makeShortTable,
-    baseInfo
   },
   data() {
     return {
@@ -139,16 +133,11 @@ export default {
       this.loadingState = 0
       Promise.all([
         stockUtils.getCodeList(),
-        this.$http.get('/api/stock/theme'),
       ]).then(responseList => {
         const { codeList, baseList } = responseList[0]
-        debugger
-        const stockThemeList = responseList[1]
 
         this.baseMap.clear()
         baseList.forEach(item => {
-          const themeList = stockThemeList.find(themeItem => themeItem.code === item.symbol)
-          item.themeList = themeList ? themeList.theme : []
           this.baseMap.set(item.symbol, item)
         })
 
@@ -157,16 +146,14 @@ export default {
           data: codeList
         })
 
-        this.$store.dispatch('updateData', {
-          key: 'stockThemeList',
-          data: stockThemeList
-        })
-
         this.loadingState = 1
       }).catch(_ => {
         this.loadingState = 2
         console.error(_)
       })
+    },
+    showDetail() {
+      this.$bus.$emit('showStockDetail', this.stockCode)
     },
     refresh() {
       this.$nextTick(_ => {
@@ -342,7 +329,7 @@ export default {
             code: stock.code,
             name: stock.name,
             targetDate: today.date,
-            themeList: stock.base.themeList,
+            themeList: stock.base.theme_list,
             profit: lodash.round((mostRecentDay.close - today.close) / today.close * 100, 1),
             lastDiff: today.diff,
             close: today.close,

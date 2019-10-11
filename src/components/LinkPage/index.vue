@@ -104,6 +104,7 @@ export default {
 
 <style lang="scss">
 .lr-frame-container{
+  max-width: 100%;
   width: 100vw;
   height: 100vh;
   position: relative;

@@ -42,6 +42,7 @@
     <!--全局使用的组件-->
     <div>
       <column-panel />
+      <stock-detail-panel />
     </div>
   </div>
 </template>
@@ -56,6 +57,7 @@ import bigEvents from '@/views/stock/views/bigEvents/index'
 import columnPanel from '@/views/stock/views/global/columnPanel'
 import personFigure from '@/views/stock/views/figure/index'
 import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
+import stockDetailPanel from '@/views/stock/views/global/stockDetailPanel'
 
 export default {
   components: {
@@ -67,12 +69,16 @@ export default {
     bigEvents,
     columnPanel,
     personFigure,
-    futurePredict
+    futurePredict,
+    stockDetailPanel
   },
   data() {
     return {
       currentTab: 'bigEvents'
     }
+  },
+  mounted() {
+
   }
 }
 </script>

@@ -9,7 +9,7 @@
       </div>
       <div style="margin-top: 16px">
         <el-tag v-for="(tag, tagIndex) of stockPool" :key="tagIndex" size="medium" closable @close="removeTag(tagIndex)">
-          {{ tag.name }}({{ tag.code }})
+          <span @click.stop="showStockDetail(tag.code)">{{ tag.name }}({{ tag.code }})</span>
         </el-tag>
       </div>
     </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import noticeList from './noticeList.vue'
+import noticeList from '@/views/stock/components/noticeList.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
 import stockUtils from '@/utils/stockUtils'
 
@@ -116,10 +116,6 @@ export default {
       return new Promise((resolve, reject) => {
         const code = item.code
         this.$http.get(`/api/stock/notice?code=${code}`).then(res => {
-          res.forEach(resItem => {
-            resItem.stockName = item['name']
-            resItem.stockCode = item['code']
-          })
           resolve({
             ...item,
             list: res
@@ -128,6 +124,9 @@ export default {
           reject(_)
         })
       })
+    },
+    showStockDetail(code) {
+      this.$bus.$emit('showStockDetail', code)
     }
   }
 }

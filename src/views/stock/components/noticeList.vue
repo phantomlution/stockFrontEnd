@@ -1,8 +1,8 @@
 <template>
-  <el-table :data="list" :default-sort="{prop: 'date', order: 'descending'}">
+  <el-table :data="list" :height="height" :default-sort="{prop: 'date', order: 'descending'}">
     <el-table-column label="名称" width="100px">
       <template slot-scope="scope">
-        {{ scope.row.stockName }}
+        {{ scope.row.stock_name }}
       </template>
     </el-table-column>
     <el-table-column label="公告标题">
@@ -33,6 +33,10 @@ const props = {
   list: {
     type: Array,
     required: true
+  },
+  height: {
+    type: String,
+    default: ''
   }
 }
 export default {

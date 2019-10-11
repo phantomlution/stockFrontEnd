@@ -9,8 +9,6 @@ export default {
     lowPriceCount: [],
     secondPhaseMap: new Map(),
     marketPriceMap: new Map(), // 市场价格
-    stockThemeList: [], // 股票 -> 主题
-    themeMap: new Map() // 主题 -> 股票
   },
   mutations: {
     updateData(state, { key, data }) {
