@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div>
     <div style="text-align: center;margin-top: -16px">
       <el-radio-group v-model="currentTab">
         <el-radio-button label="base">基础信息</el-radio-button>

@@ -81,3 +81,9 @@ iframe[id^='google_ads'] {
   display: none;
 }
 /* common */
+
+/* 微信 start */
+body.appmsg_skin_default em{
+  font-style: normal !important;
+}
+/* 微信 end */

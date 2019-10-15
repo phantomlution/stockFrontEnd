@@ -43,7 +43,9 @@ export default {
   props,
   methods: {
     openNotice(row) {
-      window.open(row.url)
+      const code = row.stock_code.substring(2)
+      const url = `http://data.eastmoney.com/notices/stock/${ code }.html`
+      window.open(url, '_blank')
     }
   }
 }

@@ -7,10 +7,16 @@
           <template v-if="currentRowModel">
             <div style="flex: 1">
               <div style="margin-bottom: 8px">
-                <span style="font-weight: bold;font-size: 16px">{{ currentRowModel.name }}</span>
+                <span style="font-weight: bold;font-size: 16px">
+                  <el-link type="primary" @click.stop="showStockDetail(currentRowModel.code)">{{ currentRowModel.name }}</el-link>
+                  &nbsp;
+                  <template v-if="currentRowIndex !== -1">
+                    {{ currentRowIndex + 1 }}/{{ dataList.length }}
+                  </template>
+                </span>
               </div>
-              <div v-if="currentRowModel.theme_list.length > 0">
-                <el-tag v-for="(theme, themeIndex) of currentRowModel.theme_list" :key="themeIndex">
+              <div v-if="currentRowModel.themeList.length > 0">
+                <el-tag v-for="(theme, themeIndex) of currentRowModel.themeList" :key="themeIndex">
                   {{ theme }}
                 </el-tag>
               </div>
@@ -233,6 +239,9 @@ export default {
       this.$bus.$emit('searchStockDetail', {
         code
       })
+    },
+    showStockDetail(code) {
+      this.$bus.$emit('showStockDetail', code)
     }
   }
 }

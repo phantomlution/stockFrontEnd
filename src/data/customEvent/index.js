@@ -33,5 +33,11 @@ export default [
     end: '2019-10-11',
     isImportant: true,
     source: 'https://www.cnbc.com/2019/09/26/china-trade-talks-set-to-resume-oct-10.html'
+  },
+  {
+    title: '四中全会',
+    start: '2019-10-14',
+    end: '2019-11-01',
+    isImportant: true
   }
 ]
