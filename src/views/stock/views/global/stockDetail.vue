@@ -10,65 +10,84 @@
     </div>
     <div style="padding: 16px" v-if="base">
       <div v-show="currentTab === 'base'">
-        <el-form :inline="true">
-          <el-row>
-            <el-col :span="5">
-              <el-form-item label="股票名称">{{ base.name }}</el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item label="股票代码">{{ base.symbol }}</el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="5">
-              <el-form-item label="总市值">{{ base.market_capital | capital}}</el-form-item>
-            </el-col>
-            <el-col :span="4">
-              <el-form-item label="流动市值">{{ base.float_market_capital | capital }}</el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="5">
-              <el-form-item label="质押比例(≤60%)">{{ pledgeRate }}%</el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="警戒线算法">质押市值/贷款 ≥ 1.35</el-form-item>
-            </el-col>
-            <el-col :span="6">
-              <el-form-item label="平仓线算法">质押市值/贷款 ≥ 1.2</el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="所属主题" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-                <el-tag v-for="(theme, themeIndex) of base.theme_list" :key="themeIndex">
-                  {{ theme }}
-                </el-tag>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="公司简介" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-                {{ base.company.org_cn_introduction || '-' }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="主营业务" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-                {{ base.company.main_operation_business || '-' }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="省份" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-                {{ base.company.provincial_name || '-' }}
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
+        <el-row>
+          <el-col :span="18">
+            <el-form :inline="true">
+              <el-row>
+                <el-col :span="6">
+                  <el-form-item label="股票名称">{{ base.name }}</el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item label="股票代码">{{ base.symbol }}</el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <el-form-item label="总市值">{{ base.market_capital | capital}}</el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item label="流动市值">{{ base.float_market_capital | capital }}</el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="6">
+                  <el-form-item label="质押比例(≤60%)">{{ pledgeRate }}%</el-form-item>
+                </el-col>
+                <el-col :span="9">
+                  <el-form-item label="警戒线算法">质押市值/贷款 ≥ 1.35</el-form-item>
+                </el-col>
+                <el-col :span="9">
+                  <el-form-item label="平仓线算法">质押市值/贷款 ≥ 1.2</el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="所属主题" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+                    <el-tag v-for="(theme, themeIndex) of base.theme_list" :key="themeIndex">
+                      {{ theme }}
+                    </el-tag>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="公司简介" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+                    {{ base.company.org_cn_introduction || '-' }}
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="主营业务" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+                    {{ base.company.main_operation_business || '-' }}
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
+                  <el-form-item label="省份" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+                    {{ base.company.provincial_name || '-' }}
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-col>
+          <el-col :span="6">
+            <el-card>
+              <span slot="header">行情报价</span>
+              <div v-for="(biding, $index) in bidingList" :key="$index">
+                <div v-if="$index === 5">
+                  &nbsp;
+                </div>
+                <el-row style="font-size: 14px; color: rgba(0, 0, 0, 0.65);line-height: 1.5">
+                  <el-col :span="8">{{ biding[0] }} </el-col>
+                  <el-col :span="8">{{ biding[1] }}</el-col>
+                  <el-col :span="8">{{ biding[2] }}</el-col>
+                </el-row>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
       </div>
       <div v-show="currentTab === 'noticeChange'">
         <notice-list :list="noticeChangeList" height="calc(100vh - 120px)"/>
@@ -105,6 +124,7 @@ export default {
       currentTab: 'base',
       loading: true,
       noticeChangeList: [],
+      bidingList: [],
       base: null,
       pledgeRate: ''
     }
@@ -118,6 +138,7 @@ export default {
     Promise.all([
       this.loadBase(),
       this.loadPledgeRate(),
+      this.loadBiding(),
       this.loadChangeNoticeList()
     ]).then(_ => {
       this.loading = false
@@ -154,6 +175,12 @@ export default {
         this.noticeChangeList = list
       }).catch(_ => {
         console.error(_)
+      })
+    },
+    loadBiding() {
+      const code = this.code
+      return this.$http.get(`/api/stock/detail/biding`, { code }).then(bidingList => {
+        this.bidingList = bidingList
       })
     }
   }
