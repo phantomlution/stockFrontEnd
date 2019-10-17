@@ -3,13 +3,13 @@
     <div style="text-align: center;margin-top: -16px">
       <el-radio-group v-model="currentTab">
         <el-radio-button label="base">基础信息</el-radio-button>
-        <el-radio-button label="noticeChange">增减持</el-radio-button>
+        <el-radio-button label="noticeChange">公告列表</el-radio-button>
         <el-radio-button label="pledge">股票质押</el-radio-button>
         <el-radio-button label="deep">深度数据</el-radio-button>
       </el-radio-group>
     </div>
     <div style="padding: 16px" v-if="base">
-      <div v-show="currentTab === 'base'">
+      <div v-show="currentTab === 'base'" style="height: calc(100vh - 110px);overflow: auto">
         <el-row>
           <el-col :span="18">
             <el-form :inline="true">
@@ -17,16 +17,25 @@
                 <el-col :span="6">
                   <el-form-item label="股票名称">{{ base.name }}</el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="9">
                   <el-form-item label="股票代码">{{ base.symbol }}</el-form-item>
                 </el-col>
+                <el-col :span="9">
+                  <el-form-item label="省份">{{ base.company.provincial_name || '—' }}</el-form-item>
+                </el-col>
+
               </el-row>
               <el-row>
                 <el-col :span="6">
                   <el-form-item label="总市值">{{ base.market_capital | capital}}</el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="9">
                   <el-form-item label="流动市值">{{ base.float_market_capital | capital }}</el-form-item>
+                </el-col>
+                <el-col :span="9">
+                  <el-form-item label="工商信息">
+                    <el-link type="warning" target="_blank" :href="base.qichacha_url">立即查看</el-link>
+                  </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
@@ -63,13 +72,6 @@
                   </el-form-item>
                 </el-col>
               </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-form-item label="省份" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
-                    {{ base.company.provincial_name || '-' }}
-                  </el-form-item>
-                </el-col>
-              </el-row>
             </el-form>
           </el-col>
           <el-col :span="6">
@@ -88,14 +90,60 @@
             </el-card>
           </el-col>
         </el-row>
+        <el-row :gutter="16">
+          <el-col :span="12">
+            <lr-box title="十大股东">
+              <el-table :data="base.stock_holder_list">
+                <el-table-column label="股东名称" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <template v-if="scope.row.company_href">
+                      <el-link type="primary" target="_blank" :href="`https://www.qichacha.com${scope.row.company_href}`">{{ scope.row.company_name }}</el-link>
+                    </template>
+                    <template v-else>
+                      {{ scope.row.company_name }}
+                    </template>
+                  </template>
+                </el-table-column>
+                <el-table-column width="120px" label="持股比例" prop="stock_percent">
+                  <template slot-scope="scope">
+                    {{ scope.row.stock_percent }}%
+                  </template>
+                </el-table-column>
+              </el-table>
+            </lr-box>
+          </el-col>
+          <el-col :span="12">
+            <lr-box title="子公司">
+              <el-table :data="base.sub_company_list">
+                <el-table-column label="公司名称" show-overflow-tooltip>
+                  <template slot-scope="scope">
+                    <template v-if="scope.row.company_href">
+                      <el-link type="primary" target="_blank" :href="`https://www.qichacha.com${scope.row.company_href}`">{{ scope.row.company_name }}</el-link>
+                    </template>
+                    <template v-else>
+                      {{ scope.row.company_name }}
+                    </template>
+                  </template>
+                </el-table-column>
+                <el-table-column label="关系" prop="relation" width="100px"></el-table-column>
+                <el-table-column width="80px" label="投资比例">
+                  <template slot-scope="scope">
+                    {{ scope.row.stock_share }}
+                  </template>
+                </el-table-column>
+                <el-table-column label="主营业务" prop="main_business" width="100px"></el-table-column>
+              </el-table>
+            </lr-box>
+          </el-col>
+        </el-row>
       </div>
       <div v-show="currentTab === 'noticeChange'">
         <notice-list :list="noticeChangeList" height="calc(100vh - 120px)"/>
       </div>
-      <div v-show="currentTab === 'pledge'">
+      <div v-if="currentTab === 'pledge'">
         <lr-link-page :src="`http://data.eastmoney.com/gpzy/detail/${rawCode}.html`" />
       </div>
-      <div v-show="currentTab === 'deep'">
+      <div v-if="currentTab === 'deep'">
         <lr-link-page :src="`http://data.eastmoney.com/stockdata/${rawCode}.html`" />
       </div>
     </div>
@@ -171,7 +219,7 @@ export default {
     },
     loadChangeNoticeList() {
       const code = this.code
-      return this.$http.get(`/api/stock/notice/change`, { code }).then(list => {
+      return this.$http.get(`/api/stock/notice`, { code }).then(list => {
         this.noticeChangeList = list
       }).catch(_ => {
         console.error(_)

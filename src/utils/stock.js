@@ -20,8 +20,6 @@ export default class Stock {
     this.options = {}
     this.result = this.getComputedData()
     this.calculateOptions()
-
-    console.log(this)
   }
 
   calculateOptions() { // 手动计算额外的数据
