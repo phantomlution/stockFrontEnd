@@ -138,7 +138,7 @@
         </el-row>
       </div>
       <div v-show="currentTab === 'noticeChange'">
-        <notice-list :list="noticeChangeList" height="calc(100vh - 120px)"/>
+        <notice-list :list="noticeChangeList" height="calc(100vh - 130px)"/>
       </div>
       <div v-if="currentTab === 'pledge'">
         <lr-link-page :src="`http://data.eastmoney.com/gpzy/detail/${rawCode}.html`" />
