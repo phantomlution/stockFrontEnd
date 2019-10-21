@@ -13,7 +13,7 @@
       <div v-show="capitalType === 'overall'">
         <lr-link-page src="http://data.eastmoney.com/zjlx/dpzjlx.html"/>
       </div>
-      <div v-show="capitalType === 'hotMoneyReplay'">
+      <div v-if="capitalType === 'hotMoneyReplay'">
         <replay />
       </div>
      </div>

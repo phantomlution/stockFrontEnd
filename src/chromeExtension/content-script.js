@@ -17,5 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.id = 'teddy'
   } else if (/tianya\.cn/.test(host)) {
     document.body.id = 'tianya'
+  } else if (/sina\.com/.test(host)) {
+    document.body.id = 'sina'
   }
 })

@@ -87,3 +87,13 @@ body.appmsg_skin_default em{
   font-style: normal !important;
 }
 /* 微信 end */
+
+/* sina start */
+body#sina .sinaad-toolkit-box, body#sina .fc_sidebar,
+body#sina .top-banner, body#sina .ad, body#sina .right-side-ad,
+body#sina [id^='ad_'], body#sina [data-sudaclick^='ad_'],
+body#sina .sinaads, body#sina [class^='ny-link-r']{
+  display: none !important;
+}
+
+/* sina end */
