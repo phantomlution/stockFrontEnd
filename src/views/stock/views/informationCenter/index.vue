@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-radio-group v-model="currentTab" style="width: 100%;text-align: center;margin-bottom: 16px">
+      <el-radio-button label="美债收益率">美债收益率</el-radio-button>
       <el-radio-button label="vix">恐慌指数</el-radio-button>
       <el-radio-button label="goldTrend">黄金现货走势</el-radio-button>
       <el-radio-button label="shiborHistory">shibor历史数据</el-radio-button>
@@ -12,10 +13,16 @@
       <el-radio-button label="estateMarketHeat">房地产热度</el-radio-button>
     </el-radio-group>
     <div>
-      <div v-show="currentTab === 'vix'">
+      <div v-if="currentTab === '美债收益率'">
+        <div style="font-size: 16px;color: rgba(0, 0, 0, 0.65);margin-bottom: 8px">
+          倒挂算法：3M>10Y
+        </div>
+        <lr-link-page :redirect="true" src="https://cn.investing.com/rates-bonds/usa-government-bonds?maturity_from=40&maturity_to=290" />
+      </div>
+      <div v-if="currentTab === 'vix'">
         <lr-link-page src="https://quote.fx678.com/symbol/VIXDX" />
       </div>
-      <div v-show="currentTab === 'goldTrend'">
+      <div v-if="currentTab === 'goldTrend'">
         <lr-link-page src="https://quote.fx678.com/symbol/XAU" />
       </div>
       <div v-if="currentTab === 'shiborHistory'">
@@ -60,7 +67,7 @@ export default {
   },
   data() {
     return {
-      currentTab: 'singleStockNotice'
+      currentTab: '美债收益率'
     }
   }
 }

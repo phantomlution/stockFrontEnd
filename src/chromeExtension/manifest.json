@@ -25,10 +25,10 @@
     "tabs",
     "notifications",
     "webRequest",
+    "webNavigation",
     "webRequestBlocking",
     "storage",
-    "http://*/*",
-    "https://*/*"
+    "<all_urls>"
   ],
   "background": {
     "scripts": ["background.js"],

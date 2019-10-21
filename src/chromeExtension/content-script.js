@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   let host = location.hostname
+  let href = location.href
   if (/fx678\.com/.test(host)) {
     let classList = ['fx678']
     Array.prototype.push.apply(classList, document.body.className.split(' '))
@@ -19,5 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.body.id = 'tianya'
   } else if (/sina\.com/.test(host)) {
     document.body.id = 'sina'
+  } else if (/investing\.com/.test(href)) {
+    document.body.id = 'investing'
   }
 })

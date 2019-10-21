@@ -1,3 +1,4 @@
+
 chrome.webRequest.onBeforeRequest.addListener(function(details) {
   let url = details.url
   if (/https?:\/\/ad\.wang502\.com/.test(url)) {
@@ -5,4 +6,5 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
       cancel: true
     }
   }
+
 }, {urls: ["<all_urls>"]}, ["blocking"]);

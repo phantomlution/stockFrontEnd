@@ -97,3 +97,9 @@ body#sina .sinaads, body#sina [class^='ny-link-r']{
 }
 
 /* sina end */
+
+/* 英为才情 start */
+#investing .midHeader{
+  display: none !important;
+}
+/* 英为才情 end */
