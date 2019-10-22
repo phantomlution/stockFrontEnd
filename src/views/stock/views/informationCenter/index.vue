@@ -2,6 +2,7 @@
   <div>
     <el-radio-group v-model="currentTab" style="width: 100%;text-align: center;margin-bottom: 16px">
       <el-radio-button label="美债收益率">美债收益率</el-radio-button>
+      <el-radio-button label="宏观杠杆率">宏观杠杆率</el-radio-button>
       <el-radio-button label="vix">恐慌指数</el-radio-button>
       <el-radio-button label="goldTrend">黄金现货走势</el-radio-button>
       <el-radio-button label="shiborHistory">shibor历史数据</el-radio-button>
@@ -18,6 +19,9 @@
           倒挂算法：3M>10Y
         </div>
         <lr-link-page :redirect="true" src="https://cn.investing.com/rates-bonds/usa-government-bonds?maturity_from=40&maturity_to=290" />
+      </div>
+      <div v-if="currentTab === '宏观杠杆率'">
+        <lr-link-page src="http://114.115.232.154:8080/" />
       </div>
       <div v-if="currentTab === 'vix'">
         <lr-link-page src="https://quote.fx678.com/symbol/VIXDX" />

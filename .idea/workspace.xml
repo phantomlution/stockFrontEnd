@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/background.js" afterPath="$PROJECT_DIR$/src/chromeExtension/background.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/content-script.js" afterPath="$PROJECT_DIR$/src/chromeExtension/content-script.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/manifest.json" afterPath="$PROJECT_DIR$/src/chromeExtension/manifest.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/chromeExtension/style.css" afterPath="$PROJECT_DIR$/src/chromeExtension/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -41,8 +37,8 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+            <state relative-caret-position="285">
+              <caret line="23" column="59" lean-forward="false" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="59" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -692,14 +688,7 @@
       <workItem from="1571234415262" duration="1323000" />
       <workItem from="1571295094343" duration="6617000" />
       <workItem from="1571555893752" duration="2000" />
-      <workItem from="1571620831687" duration="11362000" />
-    </task>
-    <task id="LOCAL-00047" summary="优化了大量策略，更新至4.0">
-      <created>1560783106920</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1560783106920</updated>
+      <workItem from="1571620831687" duration="11592000" />
     </task>
     <task id="LOCAL-00048" summary="新增公告查询">
       <created>1564152443903</created>
@@ -1037,11 +1026,18 @@
       <option name="project" value="LOCAL" />
       <updated>1571620875082</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="更新美债倒挂">
+      <created>1571648669497</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1571648669497</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="452773000" />
+    <option name="totallyTimeSpent" value="453003000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1106,7 +1102,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="新增其他国家央行相关数据" />
     <MESSAGE value="更新" />
     <MESSAGE value="集成选股助手：用于快速查看走势" />
     <MESSAGE value="优化" />
@@ -1131,7 +1126,8 @@
     <MESSAGE value="bug fix" />
     <MESSAGE value="集成报价数据" />
     <MESSAGE value="优化基础信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化基础信息" />
+    <MESSAGE value="更新美债倒挂" />
+    <option name="LAST_COMMIT_MESSAGE" value="更新美债倒挂" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1502,8 +1498,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="17" column="21" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
+        <state relative-caret-position="285">
+          <caret line="23" column="59" lean-forward="false" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="59" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
