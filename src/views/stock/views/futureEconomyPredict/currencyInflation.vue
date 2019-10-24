@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="margin-bottom: 16px;font-size: 14px;color: rgba(0, 0, 0, 0.65)">
-      计算公式：通货膨胀率 = M2 - GDP
+      计算公式：通货膨胀率 = M2 - GDP，M2/GDP = 资金效率(单位GDP需要的资金量，越小越好)
     </div>
     <div>
       <el-table :data="itemList" border>
@@ -9,15 +9,18 @@
         <el-table-column label="M2" prop="m2" />
         <el-table-column label="GDP" prop="gdp" />
         <el-table-column label="通胀率" prop="inflation" />
+        <el-table-column label="M2/GDP" prop="capitalEfficient" />
       </el-table>
     </div>
   </div>
 </template>
 
 <script>
+import lodash from 'lodash'
+
 const rawData = [
-  ['2019年第1-3季度', '8.4', '6'],
-  ['2019年第1-2季度', '8.5', '6.2'],
+  ['2019年第3季度', '8.4', '6'],
+  ['2019年第2季度', '8.5', '6.2'],
   ['2019年第1季度', '8.2', '6.3'],
   ['2018', '8.10', '6.6'],
   ["2017", "8.11", "6.9"],
@@ -50,6 +53,7 @@ export default {
           year: item[0],
           m2: `${ item[1] }%`,
           gdp: `${ item[2] }%`,
+          capitalEfficient: lodash.round(item[1] / item[2], 2),
           inflation: `${(Number(item[1]) - Number(item[2])).toFixed(2) }%`
         }
       })

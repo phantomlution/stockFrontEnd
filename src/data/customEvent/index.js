@@ -36,8 +36,8 @@ export default [
   },
   {
     title: '四中全会',
-    start: '2019-10-14',
-    end: '2019-11-01',
+    start: '2019-10-28',
+    end: '2019-10-31',
     isImportant: true
   }
 ]

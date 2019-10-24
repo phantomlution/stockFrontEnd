@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/index.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/stat.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/customEvent/index.js" afterPath="$PROJECT_DIR$/src/data/customEvent/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="23" column="59" lean-forward="false" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="59" />
+            <state relative-caret-position="323">
+              <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -46,43 +50,84 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/LinkPage/index.vue">
+      <file leaf-file-name="currencyInflation.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="83" column="37" lean-forward="true" selection-start-line="83" selection-start-column="37" selection-end-line="83" selection-end-column="37" />
+            <state relative-caret-position="304">
+              <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="244">
+              <caret line="50" column="15" lean-forward="false" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
               <folding>
-                <element signature="n#style#0;n#iframe#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#1499#1542#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="111">
+              <caret line="12" column="4" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stat.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/stat.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="266">
+              <caret line="26" column="32" lean-forward="false" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="capitalFlow.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/capitalFlow/replay/capitalFlow.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="98" column="41" lean-forward="false" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="63">
+              <caret line="154" column="9" lean-forward="false" selection-start-line="154" selection-start-column="9" selection-end-line="154" selection-end-column="9" />
+              <folding>
+                <marker date="1570668533000" expanded="true" signature="379:389" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="433:444" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="567:576" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="1230:1241" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="2053:2063" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="2106:2116" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="2265:2275" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="3260:3270" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="3382:3392" ph="..." />
+                <marker date="1570668533000" expanded="true" signature="3591:3601" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/index.js">
+        <entry file="file://$PROJECT_DIR$/src/data/customEvent/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-57">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dev.env.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/dev.env.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="prod.env.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/prod.env.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+            <state relative-caret-position="386">
+              <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -93,33 +138,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="282">
               <caret line="101" column="21" lean-forward="false" selection-start-line="101" selection-start-column="21" selection-end-line="101" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="icon.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chromeExtension/icon.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="background.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chromeExtension/background.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="manifest.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chromeExtension/manifest.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="25" column="20" lean-forward="true" selection-start-line="25" selection-start-column="20" selection-end-line="25" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -137,9 +155,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>themeList</find>
-      <find>baseInfo</find>
-      <find>主题筛选</find>
       <find>console.log</find>
       <find>themeRuleList</find>
       <find>defaultThemeList</find>
@@ -167,6 +182,9 @@
       <find>第一季度</find>
       <find>2019年第</find>
       <find>情报中心</find>
+      <find>通货膨胀率</find>
+      <find>各国美债持有</find>
+      <find>chart.render</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -210,8 +228,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/farmProduct.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/stock/tradeTrendChart.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/tradeDataChart.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/columnPanel.vue" />
         <option value="$PROJECT_DIR$/src/data/chance.js" />
@@ -228,7 +244,6 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/selfService.vue" />
         <option value="$PROJECT_DIR$/src/data/americanTreasurySecurities/2019_07_in_billions.json.js" />
         <option value="$PROJECT_DIR$/src/data/americanTreasurySecurities/2019_07_in_billion_dollar.js" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/treasurySecurity.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/figure/index.vue" />
         <option value="$PROJECT_DIR$/src/data/statisticData/residencialElectricity.js" />
@@ -248,19 +263,22 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/singleStockNotice.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/marketTheme.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" />
-        <option value="$PROJECT_DIR$/src/data/customEvent/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/components/noticeList.vue" />
         <option value="$PROJECT_DIR$/src/utils/stock.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/capitalFlow/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue" />
         <option value="$PROJECT_DIR$/src/components/LinkPage/index.vue" />
         <option value="$PROJECT_DIR$/src/chromeExtension/manifest.json" />
         <option value="$PROJECT_DIR$/src/chromeExtension/background.js" />
         <option value="$PROJECT_DIR$/src/chromeExtension/style.css" />
         <option value="$PROJECT_DIR$/src/chromeExtension/content-script.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue" />
+        <option value="$PROJECT_DIR$/src/data/customEvent/index.js" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/stat.vue" />
       </list>
     </option>
   </component>
@@ -373,7 +391,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="informationCenter" />
+              <option name="myItemId" value="futureEconomyPredict" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -398,6 +416,18 @@
               <option name="myItemId" value="stock" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="futureEconomyPredict" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="countryStat" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -413,7 +443,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="chromeExtension" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stock" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -688,14 +722,7 @@
       <workItem from="1571234415262" duration="1323000" />
       <workItem from="1571295094343" duration="6617000" />
       <workItem from="1571555893752" duration="2000" />
-      <workItem from="1571620831687" duration="11592000" />
-    </task>
-    <task id="LOCAL-00048" summary="新增公告查询">
-      <created>1564152443903</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1564152443903</updated>
+      <workItem from="1571620831687" duration="13304000" />
     </task>
     <task id="LOCAL-00049" summary="新增公告查询">
       <created>1564153179534</created>
@@ -1033,11 +1060,18 @@
       <option name="project" value="LOCAL" />
       <updated>1571648669497</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="宏观杠杆率">
+      <created>1571708085135</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1571708085140</updated>
+    </task>
+    <option name="localTasksCounter" value="98" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="453003000" />
+    <option name="totallyTimeSpent" value="454715000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1102,7 +1136,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="更新" />
     <MESSAGE value="集成选股助手：用于快速查看走势" />
     <MESSAGE value="优化" />
     <MESSAGE value="增加资金流查看，优化排版" />
@@ -1127,27 +1160,14 @@
     <MESSAGE value="集成报价数据" />
     <MESSAGE value="优化基础信息" />
     <MESSAGE value="更新美债倒挂" />
-    <option name="LAST_COMMIT_MESSAGE" value="更新美债倒挂" />
+    <MESSAGE value="宏观杠杆率" />
+    <option name="LAST_COMMIT_MESSAGE" value="宏观杠杆率" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/figure/elonMusk.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/Chart/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="477">
-          <caret line="28" column="4" lean-forward="false" selection-start-line="28" selection-start-column="4" selection-end-line="28" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/tradeDataChart.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="781">
@@ -1159,13 +1179,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1319">
           <caret line="22" column="21" lean-forward="false" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/capitalFlow/replay/capitalFlow.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-81">
-          <caret line="78" column="6" lean-forward="false" selection-start-line="78" selection-start-column="6" selection-end-line="78" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -1201,13 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1319,20 +1325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2926">
-          <caret line="154" column="9" lean-forward="false" selection-start-line="154" selection-start-column="9" selection-end-line="154" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/data/customEvent/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="39" column="22" lean-forward="false" selection-start-line="39" selection-start-column="22" selection-end-line="39" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetailPanel.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -1389,14 +1381,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
           <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="30" lean-forward="false" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding />
         </state>
       </provider>
@@ -1498,11 +1482,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="23" column="59" lean-forward="false" selection-start-line="23" selection-start-column="59" selection-end-line="23" selection-end-column="59" />
+        <state relative-caret-position="323">
+          <caret line="25" column="35" lean-forward="false" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="154" column="9" lean-forward="false" selection-start-line="154" selection-start-column="9" selection-end-line="154" selection-end-column="9" />
+          <folding>
+            <marker date="1570668533000" expanded="true" signature="379:389" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="433:444" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="567:576" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="1230:1241" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="2053:2063" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="2106:2116" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="2265:2275" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="3260:3270" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="3382:3392" ph="..." />
+            <marker date="1570668533000" expanded="true" signature="3591:3601" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/data/customEvent/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="43" column="0" lean-forward="true" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="50" column="15" lean-forward="false" selection-start-line="50" selection-start-column="15" selection-end-line="50" selection-end-column="15" />
+          <folding>
+            <element signature="e#1499#1542#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/capitalFlow/replay/capitalFlow.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="98" column="41" lean-forward="false" selection-start-line="98" selection-start-column="5" selection-end-line="98" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" column="0" lean-forward="true" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="12" column="4" lean-forward="false" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/stat.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="26" column="32" lean-forward="false" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
