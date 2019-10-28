@@ -112,6 +112,20 @@
                     {{ scope.row.stock_percent }}%
                   </template>
                 </el-table-column>
+                <el-table-column label="A股持股公司" width="120px">
+                  <template slot-scope="scope">
+                    <template v-if="scope.row.stock_list">
+                      <el-popover>
+                        <el-table :data="scope.row.stock_list">
+                          <el-table-column label="名称" prop="name"></el-table-column>
+                          <el-table-column label="代码" prop="code"></el-table-column>
+                        </el-table>
+                        <el-button type="text" slot="reference">共{{ scope.row.stock_list.length }}个</el-button>
+                      </el-popover>
+                    </template>
+                    <template v-else>-</template>
+                  </template>
+                </el-table-column>
               </el-table>
             </lr-box>
           </el-col>
@@ -207,6 +221,19 @@ export default {
       const code = this.code
       return this.$http.get(`/api/stock/base`, { code }).then(base => {
         this.base = base
+        // 异步加载各个股东，其他持股的公司
+        base.stock_holder_list.forEach(holder => {
+          let url = holder.company_href
+          if (!url) {
+            return
+          }
+          this.$http.get('/api/stock/share/all', { url }).then(_ => {
+            this.$set(holder, 'stock_list', _)
+            console.log(_)
+          }).catch(_ => {
+            console.error(_)
+          })
+        })
       }).catch(_ => {
         console.error(_)
       })

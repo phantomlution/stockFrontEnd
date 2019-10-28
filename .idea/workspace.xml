@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/data/columnList/index.js" afterPath="$PROJECT_DIR$/src/data/columnList/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,16 +24,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/index.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4560">
-              <caret line="250" column="0" lean-forward="false" selection-start-line="250" selection-start-column="0" selection-end-line="250" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue">
           <provider selected="true" editor-type-id="text-editor">
@@ -94,11 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="125" column="22" lean-forward="true" selection-start-line="125" selection-start-column="22" selection-end-line="125" selection-end-column="22" />
+            <state relative-caret-position="312">
+              <caret line="123" column="4" lean-forward="false" selection-start-line="123" selection-start-column="4" selection-end-line="123" selection-end-column="4" />
               <folding>
                 <element signature="n#style#0;n#span#1;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -110,12 +98,25 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="stockDetail.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="388">
+              <caret line="127" column="34" lean-forward="true" selection-start-line="127" selection-start-column="34" selection-end-line="127" selection-end-column="34" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="329">
-              <caret line="81" column="20" lean-forward="true" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
+              <caret line="81" column="20" lean-forward="false" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
               <folding>
+                <marker date="1572260991000" expanded="true" signature="96:3988" ph="[...]" />
+                <marker date="1572260991000" expanded="true" signature="100:1977" ph="{&quot;title&quot;: '英国脱欧'...}" />
+                <marker date="1572260991000" expanded="true" signature="136:1973" ph="[...]" />
                 <marker date="1572260991000" expanded="true" signature="379:389" ph="..." />
                 <marker date="1572260991000" expanded="true" signature="433:444" ph="..." />
                 <marker date="1572260991000" expanded="true" signature="567:576" ph="..." />
@@ -163,8 +164,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>历史资金走势</find>
-      <find>资金历史走势</find>
       <find>loadChangeNoticeList</find>
       <find>第一季度</find>
       <find>2019年第</find>
@@ -193,6 +192,8 @@
       <find>个股公告</find>
       <find>removeItem</find>
       <find>美债收益率</find>
+      <find>十大股东</find>
+      <find>stock_holder_list</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -275,7 +276,6 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/stat.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
         <option value="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/allStockList.vue" />
@@ -287,6 +287,7 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
         <option value="$PROJECT_DIR$/src/data/columnList/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
       </list>
     </option>
   </component>
@@ -773,14 +774,7 @@
       <workItem from="1571620831687" duration="13745000" />
       <workItem from="1572073213489" duration="85000" />
       <workItem from="1572173947774" duration="7824000" />
-      <workItem from="1572259412129" duration="784000" />
-    </task>
-    <task id="LOCAL-00051" summary="优化流量回归逻辑">
-      <created>1564563499986</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1564563499987</updated>
+      <workItem from="1572259412129" duration="1662000" />
     </task>
     <task id="LOCAL-00052" summary="集成第一个工具箱">
       <created>1565082508489</created>
@@ -1118,11 +1112,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572249428882</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="同步数据">
+      <created>1572269096392</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1572269096393</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="463849000" />
+    <option name="totallyTimeSpent" value="464727000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1169,7 +1170,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5726496" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24786325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2435275" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24271844" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1187,7 +1188,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="增加资金流查看，优化排版" />
     <MESSAGE value="页面重新排版" />
     <MESSAGE value="汇通网的消息是真的牛皮" />
     <MESSAGE value="绕过有x-frame-option deny 的页面" />
@@ -1212,7 +1212,8 @@
     <MESSAGE value="宏观杠杆率" />
     <MESSAGE value="新增国家统计局数据" />
     <MESSAGE value="前端集成交易期间，股票相关数据轮询" />
-    <option name="LAST_COMMIT_MESSAGE" value="前端集成交易期间，股票相关数据轮询" />
+    <MESSAGE value="同步数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="同步数据" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1444,16 +1445,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="230" column="18" lean-forward="true" selection-start-line="230" selection-start-column="18" selection-end-line="230" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#el-button#0;n#div#0;n#el-card#0;n#el-col#1;n#el-row#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -1564,8 +1555,11 @@
     <entry file="file://$PROJECT_DIR$/src/data/columnList/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="329">
-          <caret line="81" column="20" lean-forward="true" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
+          <caret line="81" column="20" lean-forward="false" selection-start-line="81" selection-start-column="20" selection-end-line="81" selection-end-column="20" />
           <folding>
+            <marker date="1572260991000" expanded="true" signature="96:3988" ph="[...]" />
+            <marker date="1572260991000" expanded="true" signature="100:1977" ph="{&quot;title&quot;: '英国脱欧'...}" />
+            <marker date="1572260991000" expanded="true" signature="136:1973" ph="[...]" />
             <marker date="1572260991000" expanded="true" signature="379:389" ph="..." />
             <marker date="1572260991000" expanded="true" signature="433:444" ph="..." />
             <marker date="1572260991000" expanded="true" signature="567:576" ph="..." />
@@ -1592,8 +1586,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="125" column="22" lean-forward="true" selection-start-line="125" selection-start-column="22" selection-end-line="125" selection-end-column="22" />
+        <state relative-caret-position="312">
+          <caret line="123" column="4" lean-forward="false" selection-start-line="123" selection-start-column="4" selection-end-line="123" selection-end-column="4" />
           <folding>
             <element signature="n#style#0;n#span#1;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -1601,6 +1595,14 @@
             <element signature="e#419#425#0" expanded="true" />
             <element signature="e#425#431#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="127" column="34" lean-forward="true" selection-start-line="127" selection-start-column="34" selection-end-line="127" selection-end-column="34" />
+          <folding />
         </state>
       </provider>
     </entry>
