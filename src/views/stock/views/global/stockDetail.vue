@@ -76,7 +76,10 @@
           </el-col>
           <el-col :span="6">
             <el-card>
-              <span slot="header">行情报价</span>
+              <div slot="header">
+                <span>行情报价</span>
+                <el-button style="float: right; padding: 3px 0" type="text" @click.stop="loadBiding">刷新</el-button>
+              </div>
               <div v-for="(biding, $index) in bidingList" :key="$index">
                 <div v-if="$index === 5">
                   &nbsp;
@@ -227,8 +230,8 @@ export default {
     },
     loadBiding() {
       const code = this.code
-      return this.$http.get(`/api/stock/detail/biding`, { code }).then(bidingList => {
-        this.bidingList = bidingList
+      return this.$http.get(`/api/stock/detail/biding`, { code }).then(response => {
+        this.bidingList = response['biding']
       })
     }
   }

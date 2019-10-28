@@ -1,5 +1,6 @@
 import moment from "moment"
 import 'moment/locale/zh-cn'
+import { MessageBox } from 'element-ui'
 
 moment.locale('zh-cn')
 
@@ -55,5 +56,13 @@ export default {
     })
 
     Vue.prototype.$moment = moment
+
+    Vue.prototype.$fastConfirm = function() {
+      return MessageBox.confirm('是否确认删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+    }
   }
 }

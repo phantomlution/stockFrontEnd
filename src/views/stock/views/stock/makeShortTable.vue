@@ -8,7 +8,7 @@
             <div style="flex: 1">
               <div style="margin-bottom: 8px">
                 <span style="font-weight: bold;font-size: 16px">
-                  <el-link type="primary" @click.stop="showStockDetail(currentRowModel.code)">{{ currentRowModel.name }}</el-link>
+                  <lr-stock-detail-link :code="currentRowModel.code" :name="currentRowModel.name" />
                   &nbsp;
                   <template v-if="currentRowIndex !== -1">
                     {{ currentRowIndex + 1 }}/{{ dataList.length }}
@@ -183,6 +183,8 @@ export default {
       }
       if (this.hasEverLimitUp) {
         firstRoundDataList = firstRoundDataList.filter(item => item.limitUpCount > 0) // 发生过涨停，至少证明曾经有游资
+      } else {
+        firstRoundDataList = firstRoundDataList.filter(item => item.limitUpCount === 0) // 发生过涨停，至少证明曾经有游资
       }
 
       // 为了精简点数，进行数据剔除(采用天地人三个数)
@@ -239,9 +241,6 @@ export default {
       this.$bus.$emit('searchStockDetail', {
         code
       })
-    },
-    showStockDetail(code) {
-      this.$bus.$emit('showStockDetail', code)
     }
   }
 }

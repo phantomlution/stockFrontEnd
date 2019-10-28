@@ -239,9 +239,7 @@ export default {
           throw new Error('不考虑非股票产品')
         }
         const stockName = base.name.toUpperCase()
-        if (stockName.indexOf('ST') !== -1) {
-          throw new Error('不考虑垃圾股')
-        }
+
         if (stockName.indexOf('债') !== -1) {
           throw new Error('跳过债券')
         }
