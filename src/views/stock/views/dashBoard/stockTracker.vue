@@ -115,7 +115,12 @@ export default {
     }
   },
   mounted() {
-    this.startTracker()
+    this.loadDetail()
+    this.stopTracker()
+    // 分流所有的请求
+    setTimeout(_ => {
+      this.startTracker()
+    }, Math.random() * 30 * 1000)
   },
   beforeDestroy() {
     this.stopTracker()
@@ -128,8 +133,6 @@ export default {
       }
     },
     startTracker() {
-      this.loadDetail()
-      this.stopTracker()
       this.tracker = setInterval(_ => {
         const hour = new Date().getHours()
         if (hour >= 15) {

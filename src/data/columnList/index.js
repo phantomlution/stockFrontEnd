@@ -72,8 +72,17 @@ export default [
         date: '2019-10-01',
         eventList: [
           {
-            time: '09-13-12',
+            time: '09:13:12',
             event: '<span color="red">电讯报：约翰逊将在24小时内公布其最终的脱欧计划</span>'
+          }
+        ]
+      },
+      {
+        date: '2019-10-28',
+        eventList: [
+          {
+            time: '19:09',
+            event: '<span color="red">脱欧延迟至2020年1月31号</span>'
           }
         ]
       }

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-radio-group v-model="currentTab" style="width: 100%;text-align: center;margin-bottom: 16px">
+      <el-radio-button label="国家统计局">国家统计局</el-radio-button>
       <el-radio-button label="美债收益率">美债收益率</el-radio-button>
       <el-radio-button label="宏观杠杆率">宏观杠杆率</el-radio-button>
       <el-radio-button label="vix">恐慌指数</el-radio-button>
@@ -13,6 +14,9 @@
       <el-radio-button label="estateMarketHeat">房地产热度</el-radio-button>
     </el-radio-group>
     <div>
+      <div v-if="currentTab === '国家统计局'">
+        <lr-link-page src="http://www.stats.gov.cn/" />
+      </div>
       <div v-if="currentTab === '美债收益率'">
         <div style="font-size: 16px;color: rgba(0, 0, 0, 0.65);margin-bottom: 8px">
           倒挂算法：3M>10Y
@@ -65,7 +69,7 @@ export default {
   },
   data() {
     return {
-      currentTab: '美债收益率'
+      currentTab: '国家统计局'
     }
   }
 }
