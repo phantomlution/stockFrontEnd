@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div style="text-align: center;margin-top: -16px">
       <el-radio-group v-model="currentTab">
         <el-radio-button label="base">基础信息</el-radio-button>
+        <el-radio-button label="live">实时走势</el-radio-button>
         <el-radio-button label="noticeChange">公告列表</el-radio-button>
         <el-radio-button label="pledge">股票质押</el-radio-button>
         <el-radio-button label="deep">深度数据</el-radio-button>
@@ -154,17 +155,19 @@
           </el-col>
         </el-row>
       </div>
-      <div v-show="currentTab === 'noticeChange'">
-        <notice-list :list="noticeChangeList" height="calc(100vh - 130px)"/>
-      </div>
-      <div v-if="currentTab === 'pledge'">
-        <lr-link-page :src="`http://data.eastmoney.com/gpzy/detail/${rawCode}.html`" />
-      </div>
-      <div v-if="currentTab === 'deep'">
-        <lr-link-page :src="`http://data.eastmoney.com/stockdata/${rawCode}.html`" />
-      </div>
     </div>
-
+    <div v-show="currentTab === 'noticeChange'">
+      <notice-list :list="noticeChangeList" height="calc(100vh - 130px)"/>
+    </div>
+    <div v-if="currentTab === 'pledge'">
+      <lr-link-page :src="`http://data.eastmoney.com/gpzy/detail/${rawCode}.html`" />
+    </div>
+    <div v-if="currentTab === 'deep'">
+      <lr-link-page :src="`http://data.eastmoney.com/stockdata/${rawCode}.html`" />
+    </div>
+    <div v-if="currentTab === 'live'">
+      <lr-link-page :src="`http://quote.eastmoney.com/concept/${code}.html?from=classic`" />
+    </div>
   </div>
 </template>
 
@@ -197,6 +200,9 @@ export default {
   computed: {
     rawCode() {
       return this.code.substring(2)
+    },
+    loading() {
+      return !this.base
     }
   },
   mounted() {
