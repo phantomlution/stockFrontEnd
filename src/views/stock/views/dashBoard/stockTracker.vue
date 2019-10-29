@@ -8,29 +8,43 @@
         <span style="float: right;margin-left: 8px;margin-top: 1px" @click.stop="removeItem">
           <el-link icon="el-icon-close" />
         </span>
-        <span :style="priceStyle" style="float: right; margin: 3px 0;">
-          {{ biding.current || '-' }}&nbsp;&nbsp;&nbsp;{{ increment}}
+        <span style="float: right; margin: 3px 0;">
+          <stock-percent-tag :percentage="currentDiff">
+            <span slot="prepend">
+              {{ biding.current || '-' }}
+            </span>
+          </stock-percent-tag>
+          <span style="font-size: 12px;font-weight: bold">
+            {{ biding.volume | volume }}
+          </span>
         </span>
       </div>
       <div>
         <el-form>
           <el-row>
-            <el-col :span="8">
-              <el-form-item label="最高">{{ biding.max || '-' }}</el-form-item>
+            <el-col :span="12">
+              <el-form-item label="昨收">{{ biding.yesterday }}</el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="最低">{{ biding.min || '-' }}</el-form-item>
+            <el-col :span="12">
+              <el-form-item label="今开">
+                {{ biding.open}}
+                <stock-percent-tag :percentage="openDiff" ></stock-percent-tag>
+              </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="成交量">{{ biding.volume | volume }}</el-form-item>
-            </el-col>
+
           </el-row>
           <el-row>
-            <el-col :span="8">
-              <el-form-item label="卖一">{{ sellOne }}</el-form-item>
+            <el-col :span="12">
+              <el-form-item label="最高">
+                {{ biding.max || '-' }}
+                <stock-percent-tag :percentage="maxDiff" ></stock-percent-tag>
+              </el-form-item>
             </el-col>
-            <el-col :span="8">
-              <el-form-item label="买一">{{ buyOne }}</el-form-item>
+            <el-col :span="12">
+              <el-form-item label="最低">
+                {{ biding.min || '-' }}
+                <stock-percent-tag :percentage="minDiff" ></stock-percent-tag>
+              </el-form-item>
             </el-col>
           </el-row>
         </el-form>
@@ -41,6 +55,7 @@
 
 <script>
 import lodash from 'lodash'
+import stockPercentTag from './stockPercentTag.vue'
 
 const props = {
   name: {
@@ -55,6 +70,9 @@ const props = {
 
 export default {
   props,
+  components: {
+    stockPercentTag
+  },
   data(){
     return {
       tracker: null,
@@ -64,46 +82,17 @@ export default {
     }
   },
   computed: {
-    buyOne() {
-      if (!this.biding.biding) {
-        return '-'
-      }
-      return this.biding.biding[5][1]
+    maxDiff() {
+      return this.calculateDiff('max')
     },
-    sellOne() {
-      if (!this.biding.biding) {
-        return '-'
-      }
-      return this.biding.biding[4][1]
+    minDiff() {
+      return this.calculateDiff('min')
     },
-    priceTrend() { // 控制股价颜色, 1代表涨，0不变，-1 跌
-      if (this.biding.current) {
-        if (this.biding.current !== this.biding.yesterday) {
-          return this.biding.current - this.biding.yesterday > 0 ? 1 : -1
-        }
-      }
-      return 0
+    openDiff() {
+      return this.calculateDiff('open')
     },
-    priceStyle() {
-      if (this.priceTrend === 0) {
-        return {
-          color: 'grey'
-        }
-      } else if (this.priceTrend === 1) {
-        return {
-          color: 'red'
-        }
-      } else if (this.priceTrend === -1) {
-        return {
-          color: 'green'
-        }
-      }
-    },
-    increment() {
-      if (!this.biding.current) {
-        return '-'
-      }
-      return `${ lodash.round((this.biding.current - this.biding.yesterday) * 100 / this.biding.yesterday ,2)}%`
+    currentDiff() {
+      return this.calculateDiff('current')
     }
   },
   filters: {
@@ -155,6 +144,17 @@ export default {
       this.$fastConfirm().then(_ => {
         this.$emit('removeItem')
       })
+    },
+    calculateDiff(fieldName, target='yesterday') {
+      let result = ''
+      if (this.biding[target]) {
+        result = lodash.round((this.biding[fieldName] - this.biding[target]) * 100 / this.biding[target], 2).toString()
+      }
+      if (result.length === 0) {
+        return '-'
+      } else {
+        return `${result}`
+      }
     }
   }
 

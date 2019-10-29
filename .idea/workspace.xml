@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockPercentTag.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -82,33 +83,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2337">
-              <caret line="123" column="4" lean-forward="false" selection-start-line="123" selection-start-column="4" selection-end-line="123" selection-end-column="4" />
+            <state relative-caret-position="304">
+              <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
               <folding>
                 <element signature="n#style#0;n#span#1;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="e#413#419#0" expanded="true" />
-                <element signature="e#419#425#0" expanded="true" />
-                <element signature="e#425#431#0" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#1727#1754#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stockDetail.vue" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue">
+      <file leaf-file-name="stockPercentTag.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockPercentTag.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="204" column="14" lean-forward="false" selection-start-line="204" selection-start-column="14" selection-end-line="204" selection-end-column="14" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-                <element signature="n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
-              </folding>
+            <state relative-caret-position="76">
+              <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -166,11 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>第一季度</find>
-      <find>2019年第</find>
-      <find>情报中心</find>
-      <find>通货膨胀率</find>
-      <find>各国美债持有</find>
       <find>chart.render</find>
       <find>不考虑垃圾股</find>
       <find>是否历史涨停</find>
@@ -196,6 +186,11 @@
       <find>十大股东</find>
       <find>stock_holder_list</find>
       <find>基础信息</find>
+      <find>priceStyle</find>
+      <find>priceTrend</find>
+      <find>buyOne</find>
+      <find>increment</find>
+      <find>currentDiff</find>
     </findStrings>
     <replaceStrings>
       <replace>dialogVisible</replace>
@@ -239,7 +234,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/estate.vue" />
         <option value="$PROJECT_DIR$/src/data/statisticData/foreignExchange.json" />
         <option value="$PROJECT_DIR$/src/data/statisticData/foreignExchange.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/featureEconomyPredict/index.vue" />
@@ -288,8 +282,9 @@
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
         <option value="$PROJECT_DIR$/src/data/columnList/index.js" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockPercentTag.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
       </list>
     </option>
   </component>
@@ -777,14 +772,7 @@
       <workItem from="1572073213489" duration="85000" />
       <workItem from="1572173947774" duration="7824000" />
       <workItem from="1572259412129" duration="1710000" />
-      <workItem from="1572316593467" duration="430000" />
-    </task>
-    <task id="LOCAL-00053" summary="新增公告检索功能">
-      <created>1566916684004</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1566916684008</updated>
+      <workItem from="1572316593467" duration="3277000" />
     </task>
     <task id="LOCAL-00054" summary="第一版临时分类上线">
       <created>1566976768579</created>
@@ -1122,11 +1110,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572270449437</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="集成实时走势">
+      <created>1572317317174</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1572317317175</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="465205000" />
+    <option name="totallyTimeSpent" value="468052000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1141,7 +1136,7 @@
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24190938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24190938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1149,7 +1144,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5726496" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24786325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24786325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Plugins" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1172,10 +1167,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32763532" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5726496" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24786325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24271844" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24786325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24190938" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1191,7 +1186,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="汇通网的消息是真的牛皮" />
     <MESSAGE value="绕过有x-frame-option deny 的页面" />
     <MESSAGE value="集成 chrome extension, 为所欲为" />
     <MESSAGE value="集成专栏" />
@@ -1216,20 +1210,14 @@
     <MESSAGE value="前端集成交易期间，股票相关数据轮询" />
     <MESSAGE value="同步数据" />
     <MESSAGE value="集成持股公司查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成持股公司查询" />
+    <MESSAGE value="集成实时走势" />
+    <option name="LAST_COMMIT_MESSAGE" value="集成实时走势" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/figure/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="63" lean-forward="false" selection-start-line="11" selection-start-column="63" selection-end-line="11" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/data/statisticData/electricity.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -1571,29 +1559,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2337">
-          <caret line="123" column="4" lean-forward="false" selection-start-line="123" selection-start-column="4" selection-end-line="123" selection-end-column="4" />
-          <folding>
-            <element signature="n#style#0;n#span#1;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#413#419#0" expanded="true" />
-            <element signature="e#419#425#0" expanded="true" />
-            <element signature="e#425#431#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="204" column="14" lean-forward="false" selection-start-line="204" selection-start-column="14" selection-end-line="204" selection-end-column="14" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#div#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockPercentTag.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="15" column="15" lean-forward="true" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+          <folding>
+            <element signature="n#style#0;n#span#1;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1727#1754#0" expanded="true" />
           </folding>
         </state>
       </provider>
