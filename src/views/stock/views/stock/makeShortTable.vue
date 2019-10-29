@@ -8,7 +8,7 @@
             <div style="flex: 1">
               <div style="margin-bottom: 8px">
                 <span style="font-weight: bold;font-size: 16px">
-                  <lr-stock-detail-link :code="currentRowModel.code" :name="currentRowModel.name" />
+                  <lr-stock-detail-link :add="true" :code="currentRowModel.code" :name="currentRowModel.name" />
                   &nbsp;
                   <template v-if="currentRowIndex !== -1">
                     {{ currentRowIndex + 1 }}/{{ dataList.length }}
