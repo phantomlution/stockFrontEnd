@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      height: 540,
+      height: '540',
       noticeList: []
     }
   },

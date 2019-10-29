@@ -105,10 +105,7 @@ export default {
   mounted() {
     this.loadDetail()
     this.stopTracker()
-    // 分流所有的请求
-    setTimeout(_ => {
-      this.startTracker()
-    }, Math.random() * 30 * 1000)
+    this.startTracker()
   },
   beforeDestroy() {
     this.stopTracker()
