@@ -23,15 +23,14 @@
         <el-form>
           <el-row>
             <el-col :span="12">
-              <el-form-item label="昨收">{{ biding.yesterday }}</el-form-item>
-            </el-col>
-            <el-col :span="12">
               <el-form-item label="今开">
                 {{ biding.open}}
                 <stock-percent-tag :percentage="openDiff" ></stock-percent-tag>
               </el-form-item>
             </el-col>
-
+            <el-col :span="12">
+              <el-form-item label="昨收">{{ biding.yesterday }}</el-form-item>
+            </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
