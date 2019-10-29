@@ -199,7 +199,6 @@ export default {
   data() {
     return {
       currentTab: 'base',
-      loading: true,
       noticeChangeList: [],
       bidingList: [],
       base: null,
@@ -227,11 +226,9 @@ export default {
       this.loadBiding(),
       this.loadChangeNoticeList()
     ]).then(_ => {
-      this.loading = false
       // 加速
       this.$store.dispatch('loadStockData', this.code)
     }).catch(_ => {
-      this.loading = false
     })
   },
   filters: {
@@ -252,7 +249,6 @@ export default {
           }
           this.$http.get('/api/stock/share/all', { url }).then(_ => {
             this.$set(holder, 'stock_list', _)
-            console.log(_)
           }).catch(_ => {
             console.error(_)
           })
