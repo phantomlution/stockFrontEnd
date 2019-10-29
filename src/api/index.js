@@ -1,5 +1,4 @@
 export const apiMap = {
-  getCodeList: `/api/stock/list`
 }
 
 export default {

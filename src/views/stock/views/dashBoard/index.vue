@@ -72,7 +72,7 @@ export default {
         code: codeItem.value
       }
 
-      this.$http.post('/api/stock/pool', item).then(_ => {
+      this.$store.dispatch('addToStockPool', item).then(_ => {
         this.refresh()
       }).catch(_ => {
         console.log(_)

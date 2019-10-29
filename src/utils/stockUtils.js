@@ -49,29 +49,6 @@ export default class StockUtils {
     return result
   }
 
-  static getCodeList() {
-    return new Promise((resolve, reject) => {
-      http.get(apiMap.getCodeList).then(response => {
-        const codeNameMap = new Map()
-        response.nameList.forEach(item => {
-          codeNameMap.set(item.code, item.name)
-        })
-
-        let codeList = response.idList.map(item => ({
-          value: item.symbol,
-          label: codeNameMap.get(item.symbol)
-        }))
-        resolve({
-          codeList: codeList.filter(item => item.label),
-          baseList: response.idList
-        })
-      }).catch(_ => {
-        console.log(_)
-        reject(_)
-      })
-    })
-  }
-
   static isMakeShortPoint(yesterday, today) { // 是否当日交易量上升且价格下跌
     return today.diff > yesterday.diff && today.close < yesterday.close
   }

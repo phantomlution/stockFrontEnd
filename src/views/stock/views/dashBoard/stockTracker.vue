@@ -15,7 +15,7 @@
             </span>
           </stock-percent-tag>
           <span style="font-size: 12px;font-weight: bold">
-            {{ biding.volume | volume }}
+            {{ biding.volume | volume }},{{ biding.turnOverRate }}%
           </span>
         </span>
       </div>
@@ -78,6 +78,7 @@ export default {
       interval: 30,
       lastUpdate: -1,
       biding: {},
+      notificationList: []
     }
   },
   computed: {
@@ -131,6 +132,21 @@ export default {
       const code = this.code
       this.$http.get(`/api/stock/detail/biding`, { code }).then(response => {
         this.biding = response
+        if (code === 'SZ002927') {
+          const conditionList = [
+            {
+              key: 'price',
+              value: '19.60',
+              enabled: true
+            }
+          ]
+          this.checkNotification({
+            code,
+            name: this.name,
+            conditionList,
+            biding: response
+          })
+        }
         this.lastUpdate = new Date().getTime()
       }).catch(_ => {
         console.error(_)
@@ -150,6 +166,42 @@ export default {
         return '-'
       } else {
         return `${result}`
+      }
+    },
+    checkNotification({ code, name, conditionList, biding }) { // 开启内容推送
+      conditionList.filter(item => item.enabled).forEach(condition => {
+        let notificationItem = {
+          code,
+          name,
+          condition
+        }
+        if (condition.key === 'price') {
+          if (biding.current <= Number(condition.value)) {
+            this.addNotification(notificationItem)
+          }
+        } else if (condition.key === 'volume' || condition.key === 'turnOverRate') {
+          if (biding[condition.key] >= Number(condition.value)) {
+            this.addNotification(notificationItem)
+          }
+        }
+      })
+    },
+    addNotification({ code, name, condition }) {
+      const oldItem = this.notificationList.find(item => item.code === code && item.condition.key === condition.key)
+      if (!oldItem) {
+        // 弹出通知
+        this.$notify({
+          title: name,
+          message: `${ this.$moment().format('HH:MM')} 满足 ${ condition.key }: ${ condition.value }`,
+          duration: 0,
+          type: 'warning'
+        })
+        // 加入消息队列
+        this.notificationList.push({
+          code,
+          name,
+          condition
+        })
       }
     }
   }

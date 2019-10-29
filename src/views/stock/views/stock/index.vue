@@ -14,11 +14,9 @@
           <el-button @click.stop="refresh">刷新</el-button>
         </div>
         <div style="margin-top: 16px">
-          <el-input-number v-model="analyzeModel.dataCount" :step="50" :min="70" :max="historyDataCount" />
           <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
           <el-button type="primary" @click.stop="showDetail">详情</el-button>
           <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" style="width: 140px" />
-          <el-date-picker v-model="lastDatePoint" type="date" :editable="false" placeholder="最后数据点" style="width: 140px"/>
         </div>
       </lr-box>
       <lr-box v-if="progress.totalCount">
@@ -32,8 +30,8 @@
         </div>
       </lr-box>
       <make-short-table />
-      <trade-trend-chart ref="tradeTrendChart" />
-      <trade-data-chart ref="tradeDataChart" />
+      <trade-trend-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
+      <trade-data-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
     </div>
   </div>
 </template>
@@ -41,12 +39,11 @@
 <script>
 import { idGenerator, deepClone } from '@/utils'
 import lodash from 'lodash'
-import Stock from '@/utils/stock'
 import { RANGE_END_IN_DAYS } from '@/utils/stock'
 import stockUtils from '@/utils/stockUtils'
 import RequestThread from '@/utils/RequestThread'
-import tradeDataChart from './tradeDataChart.vue'
-import tradeTrendChart from './tradeTrendChart.vue'
+import tradeDataChart from '@/views/stock/components/tradeDataChart.vue'
+import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
 import makeShortTable from './makeShortTable.vue'
 import moment from 'moment'
@@ -69,7 +66,6 @@ export default {
       useChart: true,
       historyDataCount: 420,
       targetDate: new Date(), // 模拟N日前的数据
-      lastDatePoint: '',
       progress: {
         finishCount: 0,
         totalCount: 0,
@@ -84,15 +80,9 @@ export default {
         currentCodeList: [],
         title: '',
         code: '',
-        dataCount: 70,
         base: null,
         source: []
       }
-    }
-  },
-  watch: {
-    'analyzeModel.dataCount'() {
-      this.refresh()
     }
   },
   computed: {
@@ -132,20 +122,8 @@ export default {
     doInit() {
       this.loadingState = 0
       Promise.all([
-        stockUtils.getCodeList(),
+        this.$store.dispatch('getStockCodeList')
       ]).then(responseList => {
-        const { codeList, baseList } = responseList[0]
-
-        this.baseMap.clear()
-        baseList.forEach(item => {
-          this.baseMap.set(item.symbol, item)
-        })
-
-        this.$store.dispatch('updateData', {
-          key: 'codeList',
-          data: codeList
-        })
-
         this.loadingState = 1
       }).catch(_ => {
         this.loadingState = 2
@@ -196,89 +174,8 @@ export default {
 
       requestThread.run()
     },
-    formatData(stockDetail) {
-      const dataList = stockDetail.data.map(item => {
-        let model = Object.create(null)
-        for(let i=0; i<stockDetail.column.length; i++) {
-          let column = stockDetail.column[i]
-          model[column] = item[i]
-        }
-        // 强制转换日期格式
-        model.timestamp = moment(model.date).toDate().getTime()
-
-        return model
-      })
-      stockDetail.data = null
-      stockDetail.data = dataList
-    },
-    getStockDetailRequest(code) {
-      return this.$http.post(`/api/stock/detail`, { code })
-//      return this.$http.socket('stockDetail', { code: code })
-    },
-    loadData(code, forceUpdate = false) {
-      if (!code) {
-        return Promise.reject('code is empty')
-      }
-
-      if (this.stockMap.has(code)) { // 缓存中读取数据
-        const stock = this.stockMap.get(code)
-        this.updateStockInfo(stock, forceUpdate)
-        return Promise.resolve()
-      }
-
-      return Promise.all([
-        this.getStockDetailRequest(code)
-      ]).then(responseList => {
-        const base = this.baseMap.get(code)
-        if (!responseList[0] || !base) {
-          throw new Error('找不到该数据')
-        }
-
-
-        if (!base.float_shares) {
-          throw new Error('不考虑非股票产品')
-        }
-        const stockName = base.name.toUpperCase()
-
-        if (stockName.indexOf('债') !== -1) {
-          throw new Error('跳过债券')
-        }
-        this.formatData(responseList[0])
-        let data = responseList[0].data
-        if (data.length < this.historyDataCount / 2) {
-          throw new Error('数据不足')
-        }
-
-        this.analyze(data, base, forceUpdate)
-      }).catch(_ => {
-        console.log(_)
-      })
-    },
-    analyze(source, base, forceUpdate) {
-      const stock = new Stock(base, source)
-      this.stockMap.set(base.symbol, stock)
-      this.updateStockInfo(stock, forceUpdate)
-    },
-    updateStockInfo(stock, forceUpdate) {
-      const dataCount = this.analyzeModel.dataCount
-
-      if (forceUpdate || this.useChart) {
-        Object.assign(this.analyzeModel, {
-          base: stock.base,
-          title: stock.base.name
-        })
-
-        this.$refs.tradeDataChart.updateChart({
-          stock,
-          dataCount,
-          lastDatePoint: this.lastDatePoint
-        })
-        this.$refs.tradeTrendChart.updateChart({
-          stock,
-          dataCount,
-          lastDatePoint: this.lastDatePoint
-        })
-      }
+    loadData(code) {
+      return this.$store.dispatch('loadStockData', code)
     },
     startProbabilityModel() {
       this.$bus.$emit('analyzeMakeShort', this.analyzeProbability({

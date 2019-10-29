@@ -1,5 +1,9 @@
 <template>
-  <lr-box :title="title">
+  <lr-box>
+    <div slot="title">
+      <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
+    </div>
+    <el-input-number v-model="dataCount" :step="50" :min="70" :max="maxDataCount" slot="center"/>
     <lr-chart ref="chart" />
   </lr-box>
 </template>
@@ -7,22 +11,61 @@
 <script>
 import lodash from 'lodash'
 
+const props = {
+  code: {
+    type: String,
+    default: ''
+  },
+  autoUpdate: { // 跟随code 更新
+    type: Boolean,
+    default: true
+  },
+  showAdd: {
+    type: Boolean,
+    default: false
+  }
+}
 export default {
+  props,
   data() {
     return {
-      title: '',
-      stock: null
+      maxDataCount: 420,
+      name: '',
+      dataCount: 70
     }
   },
-  methods: {
-    updateChart({stock, dataCount, lastDatePoint}) {
-      this.stock = stock
-      let rawData = stock.rawData
-      if (lastDatePoint) {
-        rawData = rawData.filter(item => item.timestamp <= lastDatePoint.getTime())
+  watch: {
+    code(val) {
+      if (this.autoUpdate) {
+        this.updateChart()
       }
+    },
+    dataCount() {
+      this.updateChart()
+    }
+  },
+  mounted() {
+    this.updateChart()
+  },
+  methods: {
+    updateChart() {
+      if (!this.code) {
+        return
+      }
+      this.$store.dispatch('loadStockData', this.code).then(stock => {
+        this.renderChart({
+          stock,
+          dataCount: this.dataCount
+        })
+      }).catch(_ => {
+
+      })
+    },
+    renderChart({ stock, dataCount }) {
+      let rawData = stock.rawData
       const data = lodash.takeRight(rawData, dataCount)
-      this.title = stock.label
+      this.code = stock.code
+      this.name = stock.name
       const closeValueList = data.map(item => item.close)
       const waterList = data.map(item => item.turnoverRate).filter(item => item !== null)
 

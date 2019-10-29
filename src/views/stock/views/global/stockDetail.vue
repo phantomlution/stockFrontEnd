@@ -3,6 +3,7 @@
     <div style="text-align: center;margin-top: -16px">
       <el-radio-group v-model="currentTab">
         <el-radio-button label="base">基础信息</el-radio-button>
+        <el-radio-button label="analyze">趋势分析</el-radio-button>
         <el-radio-button label="live">实时走势</el-radio-button>
         <el-radio-button label="noticeChange">公告列表</el-radio-button>
         <el-radio-button label="pledge">股票质押</el-radio-button>
@@ -10,7 +11,7 @@
       </el-radio-group>
     </div>
     <div style="padding: 16px" v-if="base">
-      <div v-show="currentTab === 'base'" style="height: calc(100vh - 110px);overflow: auto">
+      <div v-show="currentTab === 'base'" :style="panelStyle">
         <el-row>
           <el-col :span="18">
             <el-form :inline="true">
@@ -156,6 +157,10 @@
         </el-row>
       </div>
     </div>
+    <div v-if="currentTab === 'analyze'" :style="panelStyle">
+      <tradeTrendChart :code="code" />
+      <tradeDataChart :code="code" />
+    </div>
     <div v-show="currentTab === 'noticeChange'">
       <notice-list :list="noticeChangeList" height="calc(100vh - 130px)"/>
     </div>
@@ -174,6 +179,8 @@
 <script>
 import lodash from 'lodash'
 import noticeList from '@/views/stock/components/noticeList'
+import tradeDataChart from '@/views/stock/components/tradeDataChart.vue'
+import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
 
 const props = {
   code: {
@@ -185,7 +192,9 @@ const props = {
 export default {
   props,
   components: {
-    noticeList
+    noticeList,
+    tradeDataChart,
+    tradeTrendChart
   },
   data() {
     return {
@@ -198,6 +207,12 @@ export default {
     }
   },
   computed: {
+    panelStyle() {
+      return {
+        height: 'calc(100vh - 110px)',
+        overflow: 'auto'
+      }
+    },
     rawCode() {
       return this.code.substring(2)
     },
@@ -213,6 +228,8 @@ export default {
       this.loadChangeNoticeList()
     ]).then(_ => {
       this.loading = false
+      // 加速
+      this.$store.dispatch('loadStockData', this.code)
     }).catch(_ => {
       this.loading = false
     })

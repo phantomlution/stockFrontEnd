@@ -1,5 +1,9 @@
 <template>
-  <lr-box :title="title">
+  <lr-box>
+    <div slot="title">
+      <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
+    </div>
+    <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
     <lr-chart ref="chart" />
   </lr-box>
 </template>
@@ -10,21 +14,61 @@ import moment from 'moment'
 
 const THRESHOLD_WATER_PERCENT = 50
 
+const props = {
+  code: {
+    type: String,
+    default: ''
+  },
+  autoUpdate: { // 跟随code 更新
+    type: Boolean,
+    default: true
+  },
+  showAdd: {
+    type: Boolean,
+    default: false
+  }
+}
 export default {
+  props,
   data() {
     return {
-      title: '',
-      stock: null,
+      dataCount: 70,
+      maxDataCount: 420,
+      name: '',
     }
   },
+  watch: {
+    code() {
+      if (this.autoUpdate) {
+        this.updateChart()
+      }
+    },
+    dataCount() {
+      this.updateChart()
+    }
+  },
+  mounted() {
+    this.updateChart()
+  },
   methods: {
-    updateChart({stock, dataCount, lastDatePoint}) {
+    updateChart() {
+      if (!this.code) {
+        return
+      }
+      this.$store.dispatch('loadStockData', this.code).then(stock => {
+        this.renderChart({
+          stock,
+          dataCount: this.dataCount
+        })
+      }).catch(_ => {
+
+      })
+    },
+    renderChart({stock, dataCount}) {
       let rawData = stock.result
       this.stock = stock
-      if (lastDatePoint) {
-        rawData = rawData.filter(item => item.timestamp <= lastDatePoint.getTime())
-      }
-      this.title = stock.label
+      this.code = stock.code
+      this.name = stock.name
       const data = lodash.takeRight(rawData, dataCount)
 
       const chart = this.$refs.chart.getChart()
