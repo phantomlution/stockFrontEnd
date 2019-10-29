@@ -84,8 +84,8 @@ export default {
       }
 
       view.source(data, scale);
-      view.line().position('timestamp*close').color('#4FAAEB').tooltip('timestamp*close*percent').size(2);
-      view.line().position('timestamp*diff').color('#9AD681').tooltip('timestamp*diff*lastStartDuration*lastEndDuration');
+      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2);
+      view.line().position('timestamp*diff').color('#9AD681').tooltip('turnoverRate**diff');
 
       for(let i=1; i<data.length; i++) {
         const today = data[i]

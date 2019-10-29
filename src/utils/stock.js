@@ -67,6 +67,7 @@ export default class Stock {
         close: todayData.close,
         percent: todayData.percent,
         totalDataCount: this.rawData.length,
+        turnoverRate: todayData.turnoverRate,
         date: stockUtils.dateFormat(timestamp),
         lastDataTimestamp: timestamp,
         diff: lodash.round((turnoverRateStart - turnoverRateEnd) / turnoverRateEnd * 100, 2),

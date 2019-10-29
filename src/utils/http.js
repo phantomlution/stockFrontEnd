@@ -40,7 +40,7 @@ const httpInstance = {
           showErrorMessage('请重新登录')
           reject({ message: '请重新登录' })
         }else if (responseData.code !== '200') {
-          showFriendlyErrorMessage(responseData)
+          showFriendlyErrorMessage(responseData.message)
           reject({ code: responseData.code, message: responseData.message })
         } else {
           resolve(responseData.data)
