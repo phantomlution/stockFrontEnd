@@ -87,12 +87,28 @@ export default {
       view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2);
       view.line().position('timestamp*diff').color('#9AD681').tooltip('turnoverRate**diff');
 
+      // 追加限售解禁信息
+      const restrict_sell_list = stock.base.restrict_sell_list.filter(item => item.increment > 0)
+      restrict_sell_list.forEach(item => {
+        view.guide().line({
+          start: [item.timestamp, 'min'], // 使用数组格式
+          end: [item.timestamp, 'max'],
+          text: {
+            position: 'end',
+            autoRotate: false,
+            content: `${ item.date.substring(5) }解禁`
+          }
+        });
+      })
+
       for(let i=1; i<data.length; i++) {
         const today = data[i]
         // 添加涨停提示
         if (today.percent >= 9.9) {
-          this.addLimitUpPoint(view, [today.timestamp, today.close])
+          console.log(today.timestamp)
+          this.addExtraInfoPoint(view, [today.timestamp, today.close], '涨停')
         }
+
         if (today.isMakeShort) {
           this.addMakeShortPoint(view, [today.timestamp, today.close])
         } else if (today.isMakeLong){
@@ -151,11 +167,11 @@ export default {
 
       chart.render();
     },
-    addLimitUpPoint(view, start) { // 添加涨停
+    addExtraInfoPoint(view, start, text) { // 添加涨停
       view.guide().dataMarker({
         top: false,
         position: start,
-        content: '涨停',
+        content: text,
         style: {
           point: {
             stroke: 'orange'
