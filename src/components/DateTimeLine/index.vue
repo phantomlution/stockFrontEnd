@@ -64,38 +64,39 @@ export default {
 
       // 每个日期占用一个刻度
       this.max = fullDateList.length - 1
-      // 距离上一次的天数
-      let lastDuration = -1
-      if (oldDateList.length > 0) {
-        lastDuration = this.$moment().diff(this.$moment(oldDateList[oldDateList.length - 1].dateString), 'days')
-      }
-      // 距离下一次的天数
-      let nextDuration = -1
-      if (newDateList.length > 0) {
-        nextDuration = this.$moment(newDateList[0].dateString).diff(this.$moment(), 'days')
-      }
-
+      const restrict_finished = (newDateList.length === 0)
       let displayString = ''
-      if (lastDuration !== -1) {
-        displayString += `Last:<span style="color:red;font-weight: bold">${ lastDuration }</span>天`
-      }
-      if (nextDuration !== -1) {
-        if (displayString.length > 0) {
-          displayString += ', '
+      if (!restrict_finished) {
+        // 距离上一次的天数
+        let lastDuration = -1
+        if (oldDateList.length > 0) {
+          lastDuration = this.$moment().diff(this.$moment(oldDateList[oldDateList.length - 1].dateString), 'days')
         }
-        displayString += `Next:<span style="color:red;font-weight: bold">${ nextDuration }</span>天`
+        // 距离下一次的天数
+        let nextDuration = -1
+        if (newDateList.length > 0) {
+          nextDuration = this.$moment(newDateList[0].dateString).diff(this.$moment(), 'days')
+        }
+
+        if (lastDuration !== -1) {
+          displayString += `Last:<span style="color:red;font-weight: bold">${ lastDuration }</span>天`
+        }
+        if (nextDuration !== -1) {
+          if (displayString.length > 0) {
+            displayString += ', '
+          }
+          displayString += `Next:<span style="color:red;font-weight: bold">${ nextDuration }</span>天`
+        }
       }
 
       // 通过天数确定当前时间在指定区间内的比值
       const startIndex = oldDateList.length - 1
-      const ratio = (current - oldDateList[startIndex].timestamp) / (newDateList[0].timestamp - oldDateList[startIndex].timestamp)
+      let ratio = 0
+      if (!restrict_finished) {
+        ratio = (current - oldDateList[startIndex].timestamp) / (newDateList[0].timestamp - oldDateList[startIndex].timestamp)
+      }
       const currentOffset =  startIndex + lodash.round(ratio, 2)
-      console.log(currentOffset)
       this.value = [0, currentOffset]
-
-
-
-
       // 生成 marks
       const marks = {}
       fullDateList.forEach((item, itemIndex) => {
@@ -105,19 +106,36 @@ export default {
         marks[itemIndex] = item.dateString
       })
 
-      marks[currentOffset] = {
-        style: {
-          color: 'rgba(0, 0, 0, 0.65)'
-        },
-        label: this.$createElement('div', {
+      if (restrict_finished) {
+        marks[currentOffset - 0.03] = {
           style: {
-            'margin-top': '-44px',
-            'text-align': 'center'
+            color: 'green'
           },
-          domProps: {
-            innerHTML: displayString
+          label: this.$createElement('div', {
+            style: {
+              'margin-top': '-44px',
+              'text-align': 'center'
+            },
+            domProps: {
+              innerHTML: '已完成'
+            },
+          })
+        }
+      } else {
+        marks[currentOffset] = {
+          style: {
+            color: 'rgba(0, 0, 0, 0.65)'
           },
-        })
+          label: this.$createElement('div', {
+            style: {
+              'margin-top': '-44px',
+              'text-align': 'center'
+            },
+            domProps: {
+              innerHTML: displayString
+            },
+          })
+        }
       }
 
       this.marks = marks

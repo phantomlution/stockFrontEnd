@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/DateTimeLine/index.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/DateTimeLine/index.vue" afterPath="$PROJECT_DIR$/src/components/DateTimeLine/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,7 +27,7 @@
       <file leaf-file-name="tradeTrendChart.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeTrendChart.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1843">
+            <state relative-caret-position="551">
               <caret line="98" column="69" lean-forward="false" selection-start-line="98" selection-start-column="69" selection-end-line="98" selection-end-column="69" />
               <folding>
                 <element signature="e#290#317#0" expanded="true" />
@@ -50,11 +49,11 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/DateTimeLine/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="741">
-              <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+            <state relative-caret-position="86">
+              <caret line="109" column="34" lean-forward="false" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
               <folding>
-                <marker date="1572404359000" expanded="true" signature="2167:2194" ph="..." />
-                <marker date="1572404359000" expanded="true" signature="2390:2417" ph="..." />
+                <marker date="1572405268000" expanded="true" signature="2282:2309" ph="..." />
+                <marker date="1572405268000" expanded="true" signature="2517:2544" ph="..." />
               </folding>
             </state>
           </provider>
@@ -846,14 +845,7 @@
       <workItem from="1572259412129" duration="1710000" />
       <workItem from="1572316593467" duration="4140000" />
       <workItem from="1572325141001" duration="12246000" />
-      <workItem from="1572395118662" duration="6901000" />
-    </task>
-    <task id="LOCAL-00061" summary="更新">
-      <created>1568812054620</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1568812054620</updated>
+      <workItem from="1572395118662" duration="7820000" />
     </task>
     <task id="LOCAL-00062" summary="集成选股助手：用于快速查看走势">
       <created>1568901858485</created>
@@ -1191,11 +1183,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572360582388</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="限售解禁UI集成">
+      <created>1572404369957</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1572404369958</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="488062000" />
+    <option name="totallyTimeSpent" value="488981000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1260,7 +1259,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="前端重构" />
     <MESSAGE value="追踪个人信息页" />
     <MESSAGE value="优化数据" />
     <MESSAGE value="新增前置数据依赖" />
@@ -1285,7 +1283,8 @@
     <MESSAGE value="集成自选功能，消息提示已经完成一半" />
     <MESSAGE value="前端问题修复" />
     <MESSAGE value="页面展示优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="页面展示优化" />
+    <MESSAGE value="限售解禁UI集成" />
+    <option name="LAST_COMMIT_MESSAGE" value="限售解禁UI集成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1634,16 +1633,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeTrendChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1843">
-          <caret line="98" column="69" lean-forward="false" selection-start-line="98" selection-start-column="69" selection-end-line="98" selection-end-column="69" />
-          <folding>
-            <element signature="e#290#317#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
@@ -1676,13 +1665,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeTrendChart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="98" column="69" lean-forward="false" selection-start-line="98" selection-start-column="69" selection-end-line="98" selection-end-column="69" />
+          <folding>
+            <element signature="e#290#317#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/DateTimeLine/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="741">
-          <caret line="59" column="0" lean-forward="true" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+        <state relative-caret-position="86">
+          <caret line="109" column="34" lean-forward="false" selection-start-line="109" selection-start-column="34" selection-end-line="109" selection-end-column="34" />
           <folding>
-            <marker date="1572404359000" expanded="true" signature="2167:2194" ph="..." />
-            <marker date="1572404359000" expanded="true" signature="2390:2417" ph="..." />
+            <marker date="1572405268000" expanded="true" signature="2282:2309" ph="..." />
+            <marker date="1572405268000" expanded="true" signature="2517:2544" ph="..." />
           </folding>
         </state>
       </provider>
