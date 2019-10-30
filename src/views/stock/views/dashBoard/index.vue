@@ -1,8 +1,11 @@
 <template>
   <div>
-    <div>
-      <searchStock v-model="stockCode" ref="searchStock" />
-      <el-button type="primary" @click.stop="addToPool">添加</el-button>
+    <div style="display: flex">
+      <div style="flex: 1">
+        <searchStock v-model="stockCode" ref="searchStock" />
+        <el-button type="primary" @click.stop="addToPool">添加</el-button>
+        <risk-detector style="margin-left: 72px" ref="riskDetector" />
+      </div>
     </div>
     <div style="margin-top: 16px;display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
       <stock-tracker @removeItem="removeItem(itemIndex)" :code="item.code" :name="item.name" v-for="(item, itemIndex) of stockPool" :key="itemIndex"></stock-tracker>
@@ -17,17 +20,24 @@
 import stockTracker from './stockTracker.vue'
 import searchStock from '@/views/stock/components/searchStock'
 import allStockNotice from './allStockNotice.vue'
+import riskDetector from './riskDetector.vue'
 
 export default {
   components: {
     stockTracker,
     searchStock,
-    allStockNotice
+    allStockNotice,
+    riskDetector
   },
   data() {
     return {
       stockCode: '',
       stockPool: []
+    }
+  },
+  computed: {
+    riskDetector() {
+      return this.$refs.riskDetector
     }
   },
   mounted() {
@@ -39,9 +49,26 @@ export default {
     },
     loadStockPool() {
       this.$http.get(`/api/stock/pool`).then(_ => {
-        this.stockPool =  _
+        // 执行强检测任务
+        Promise.all(_.map(item => this.detectRisk(item))).then(stockPoolList => {
+          this.stockPool =  stockPoolList
+          // 收集相关信息
+          this.riskDetector.collect(stockPoolList)
+        }).catch(_ => {
+          console.error(_)
+        })
       }).catch(_ => {
         console.log(_)
+      })
+    },
+    detectRisk(stockPoolItem) { // 风险检测
+      return new Promise((resolve, reject) => {
+        this.riskDetector.detect(stockPoolItem.code).then(riskList => {
+          stockPoolItem.riskList = riskList
+          resolve(stockPoolItem)
+        }).catch(_ => {
+          reject(_)
+        })
       })
     },
     removeItem(tagIndex) {

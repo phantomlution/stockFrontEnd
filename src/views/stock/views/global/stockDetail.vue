@@ -29,10 +29,10 @@
               </el-row>
               <el-row>
                 <el-col :span="6">
-                  <el-form-item label="总市值">{{ base.market_capital | capital}}</el-form-item>
+                  <el-form-item label="总市值">{{ base.market_capital | amount }}</el-form-item>
                 </el-col>
                 <el-col :span="9">
-                  <el-form-item label="流动市值">{{ base.float_market_capital | capital }}</el-form-item>
+                  <el-form-item label="流动市值">{{ base.float_market_capital | amount }}</el-form-item>
                 </el-col>
                 <el-col :span="9">
                   <el-form-item label="工商信息">
@@ -54,8 +54,8 @@
               <el-row>
                 <el-col :span="24">
                   <div >
-                    <el-popover width="540" placement="right">
-                      <el-table :data="base.restrict_sell_list">
+                    <el-popover width="540" placement="right-start">
+                      <el-table :data="base.restrict_sell_list" max-height="360px">
                         <el-table-column prop="date" label="日期" width="100"></el-table-column>
                         <el-table-column prop="increment" label="解禁数量(股)">
                           <template slot-scope="scope">
@@ -183,7 +183,7 @@
       <tradeTrendChart :code="code" />
       <tradeDataChart :code="code" />
     </div>
-    <div v-show="currentTab === 'noticeChange'">
+    <div v-show="currentTab === 'noticeChange'" style="padding: 0 16px">
       <notice-list :list="noticeChangeList" height="calc(100vh - 130px)"/>
     </div>
     <div v-if="currentTab === 'pledge'">
@@ -254,11 +254,8 @@ export default {
     })
   },
   filters: {
-    capital(val) {
-      return `${ lodash.round(val / 10000 / 10000, 2)}亿`
-    },
     amount(val) {
-      let val_str = val.toString()
+      let val_str = parseInt(val, 10).toString()
       if (val_str.length > 8) {
         return `${ lodash.round(val / 10000 / 10000, 2)}亿`
       } else if (val_str.length > 4) {

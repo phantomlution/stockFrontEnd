@@ -11,6 +11,7 @@
         <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
         <el-tab-pane label="工具箱" name="toolPanel"></el-tab-pane>
         <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
+        <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
       </el-tabs>
 
       <div v-show="currentTab === 'bigEvents'">
@@ -38,6 +39,9 @@
       <div v-if="currentTab === '未来经济预测'">
         <futurePredict />
       </div>
+      <div v-if="currentTab === '统计分析'">
+        <analyze-panel />
+      </div>
     </div>
     <!--全局使用的组件-->
     <div>
@@ -58,6 +62,7 @@ import columnPanel from '@/views/stock/views/global/columnPanel'
 import personFigure from '@/views/stock/views/figure/index'
 import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
 import stockDetailPanel from '@/views/stock/views/global/stockDetailPanel'
+import analyzePanel from '@/views/stock/views/analyze/index'
 
 export default {
   components: {
@@ -70,7 +75,8 @@ export default {
     columnPanel,
     personFigure,
     futurePredict,
-    stockDetailPanel
+    stockDetailPanel,
+    analyzePanel
   },
   data() {
     return {

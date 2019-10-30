@@ -56,7 +56,7 @@ export default {
   .lr-box__center{
     width: 100%;
     position: absolute;
-    top: 50px;
+    top: 36px;
     display: flex;
     justify-content: center;
     align-items: center;

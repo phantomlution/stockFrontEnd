@@ -79,4 +79,20 @@ export default class Stock {
     return result
   }
 
+  getRecentRestrictCount(days) { // 近期（前后）发生解禁的数量
+    let count = 0
+    const restrictSellList = this.base.restrict_sell_list
+    const today = moment()
+    restrictSellList.forEach(item => {
+      let diff = today.diff(moment(item.date), 'days')
+      if (Math.abs(diff) <= days) {
+        count += 1
+      }
+    })
+
+    return count
+  }
+
+
+
 }

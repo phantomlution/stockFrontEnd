@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     divideTimeList(dateList) {
-      const parsedDateList = dateList.map(item => {
+      const parsedDateList = dateList.filter(item => item.increment > 0).map(item => {
         return {
           timestamp: this.$moment(item.date).toDate().getTime(),
           dateString: item.date
