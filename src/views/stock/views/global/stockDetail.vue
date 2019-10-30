@@ -54,7 +54,19 @@
               <el-row>
                 <el-col :span="24">
                   <div >
-                    <el-link type="danger" :href="`http://f10.eastmoney.com/CapitalStockStructure/Index?type=web&code=${ code }`" target="_blank" >限售解禁&nbsp;&nbsp;股本结构<i class="el-icon-bottom" /></el-link>
+                    <el-popover width="540" placement="right">
+                      <el-table :data="base.restrict_sell_list">
+                        <el-table-column prop="date" label="日期" width="100"></el-table-column>
+                        <el-table-column prop="increment" label="解禁数量(股)">
+                          <template slot-scope="scope">
+                            {{ scope.row.increment | amount }}
+                          </template>
+                        </el-table-column>
+                        <el-table-column prop="desc" label="变动原因"></el-table-column>
+                      </el-table>
+                      <el-link type="danger" slot="reference">限售解禁&nbsp;&nbsp;股本结构<i class="el-icon-bottom" /></el-link>
+                      <!--<el-link type="danger" :href="`http://f10.eastmoney.com/CapitalStockStructure/Index?type=web&code=${ code }`" target="_blank" >限售解禁&nbsp;&nbsp;股本结构<i class="el-icon-bottom" /></el-link>-->
+                    </el-popover>
                   </div>
                   <div>
                     <lr-date-time-line :dateList="base.restrict_sell_list" />
@@ -244,6 +256,16 @@ export default {
   filters: {
     capital(val) {
       return `${ lodash.round(val / 10000 / 10000, 2)}亿`
+    },
+    amount(val) {
+      let val_str = val.toString()
+      if (val_str.length > 8) {
+        return `${ lodash.round(val / 10000 / 10000, 2)}亿`
+      } else if (val_str.length > 4) {
+        return `${ lodash.round(val / 10000)}万`
+      } else {
+        return val
+      }
     }
   },
   methods: {
