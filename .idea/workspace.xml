@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/index.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/restrictSell.vue" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/riskDetector.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Box/index.vue" afterPath="$PROJECT_DIR$/src/components/Box/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/DateTimeLine/index.vue" afterPath="$PROJECT_DIR$/src/components/DateTimeLine/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/stock.js" afterPath="$PROJECT_DIR$/src/utils/stock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -820,14 +811,7 @@
       <workItem from="1572259412129" duration="1710000" />
       <workItem from="1572316593467" duration="4140000" />
       <workItem from="1572325141001" duration="12246000" />
-      <workItem from="1572395118662" duration="18600000" />
-    </task>
-    <task id="LOCAL-00065" summary="增加资金流查看，优化排版">
-      <created>1569168387353</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1569168387354</updated>
+      <workItem from="1572395118662" duration="18625000" />
     </task>
     <task id="LOCAL-00066" summary="页面重新排版">
       <created>1569210184824</created>
@@ -1165,11 +1149,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572413346560</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="完善解禁信息，统计分析信息">
+      <created>1572445789165</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1572445789166</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="499761000" />
+    <option name="totallyTimeSpent" value="499786000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1234,7 +1225,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="同步房产信息" />
     <MESSAGE value="同步美债数据" />
     <MESSAGE value="美债数据可视化" />
     <MESSAGE value="记录了全国电力使用情况" />
@@ -1259,7 +1249,8 @@
     <MESSAGE value="修复时间线上的部分问题" />
     <MESSAGE value="优化展示效果" />
     <MESSAGE value="优化基础信息展示" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化基础信息展示" />
+    <MESSAGE value="完善解禁信息，统计分析信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善解禁信息，统计分析信息" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
