@@ -53,6 +53,16 @@
               </el-row>
               <el-row>
                 <el-col :span="24">
+                  <div >
+                    <el-link type="danger" :href="`http://f10.eastmoney.com/CapitalStockStructure/Index?type=web&code=${ code }`" target="_blank" >限售解禁&nbsp;&nbsp;股本结构<i class="el-icon-bottom" /></el-link>
+                  </div>
+                  <div>
+                    <lr-date-time-line :dateList="base.restrict_sell_list" />
+                  </div>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :span="24">
                   <el-form-item label="所属主题" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
                     <el-tag v-for="(theme, themeIndex) of base.theme_list" :key="themeIndex">
                       {{ theme }}
