@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ShoppingCart/index.vue" afterPath="$PROJECT_DIR$/src/components/ShoppingCart/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/noticeList.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/noticeList.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/allStockNotice.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/allStockNotice.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" afterPath="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -72,7 +67,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="noticeList.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="noticeList.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/noticeList.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
@@ -81,6 +76,16 @@
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/StockDetailLink/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="38">
+              <caret line="2" column="68" lean-forward="false" selection-start-line="2" selection-start-column="68" selection-end-line="2" selection-end-column="69" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -104,16 +109,6 @@
                 <element signature="n#style#0;n#span#1;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#2;n#div#0;n#el-card#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/utils/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="29" column="30" lean-forward="false" selection-start-line="29" selection-start-column="30" selection-end-line="29" selection-end-column="30" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -284,7 +279,6 @@
         <option value="$PROJECT_DIR$/src/components/DateTimeLine/index.vue" />
         <option value="$PROJECT_DIR$/config/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/riskDetector.vue" />
-        <option value="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockPercentTag.vue" />
         <option value="$PROJECT_DIR$/src/utils/index.js" />
         <option value="$PROJECT_DIR$/src/store/data/index.js" />
@@ -296,6 +290,7 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/allStockNotice.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/noticeList.vue" />
+        <option value="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" />
       </list>
     </option>
   </component>
@@ -810,14 +805,7 @@
       <workItem from="1572395118662" duration="18874000" />
       <workItem from="1572487459440" duration="4853000" />
       <workItem from="1572572773312" duration="12025000" />
-      <workItem from="1572613929037" duration="2400000" />
-    </task>
-    <task id="LOCAL-00071" summary="集成 chrome extension, 为所欲为">
-      <created>1569491632424</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1569491632425</updated>
+      <workItem from="1572613929037" duration="2629000" />
     </task>
     <task id="LOCAL-00072" summary="集成专栏">
       <created>1569497838674</created>
@@ -1155,11 +1143,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572594401316</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="集成后台数据源分析">
+      <created>1572618139076</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1572618139077</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="519313000" />
+    <option name="totallyTimeSpent" value="519542000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1224,7 +1219,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="数据同步更新" />
     <MESSAGE value="bug fix" />
     <MESSAGE value="集成报价数据" />
     <MESSAGE value="优化基础信息" />
@@ -1249,7 +1243,8 @@
     <MESSAGE value="分析组件解耦" />
     <MESSAGE value="更新分析组件" />
     <MESSAGE value="集成前端通知" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成前端通知" />
+    <MESSAGE value="集成后台数据源分析" />
+    <option name="LAST_COMMIT_MESSAGE" value="集成后台数据源分析" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1501,13 +1496,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/StockDetailLink/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="19" column="17" lean-forward="false" selection-start-line="19" selection-start-column="17" selection-end-line="19" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/riskDetector.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -1653,6 +1641,14 @@
             <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/StockDetailLink/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38">
+          <caret line="2" column="68" lean-forward="false" selection-start-line="2" selection-start-column="68" selection-end-line="2" selection-end-column="69" />
+          <folding />
         </state>
       </provider>
     </entry>
