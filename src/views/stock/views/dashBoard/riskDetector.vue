@@ -3,7 +3,7 @@
     <el-table :data="riskList">
       <el-table-column label="代码" prop="code" width="200px">
         <template slot-scope="scope">
-          <lr-stock-detail-link :code="scope.row.code" :name="scope.row.name" />
+          <lr-stock-detail-link :code="scope.row.code" :name="scope.row.name" :add="false" />
         </template>
       </el-table-column>
       <el-table-column label="风险">
