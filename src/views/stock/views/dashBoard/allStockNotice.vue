@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      height: '540',
       noticeList: []
     }
   },
@@ -36,7 +35,13 @@ export default {
       this.loadNotice()
     }
   },
+  mounted() {
+    this.loadNotice()
+  },
   computed: {
+    height() {
+      return `${ 40 * (this.noticeList.length + 1) }`
+    },
     totalList() {
       const result = []
       this.noticeList.forEach(item => {

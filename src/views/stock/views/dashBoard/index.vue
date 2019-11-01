@@ -10,8 +10,13 @@
     <div style="margin-top: 16px;display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
       <stock-tracker @removeItem="removeItem(itemIndex)" :code="item.code" :name="item.name" :item="item" v-for="(item, itemIndex) of stockPool" :key="itemIndex"></stock-tracker>
     </div>
-    <div style="margin-top: 24px;">
-      <all-stock-notice :stock-list="stockPool" />
+    <div style="margin-top: 16px;margin-bottom: 8px;">
+      <template v-if="!showNotice">
+        <el-button type="primary" size="large" style="width: 100%" @click.stop="showNotice=true">展开公告</el-button>
+      </template>
+      <template v-else>
+        <all-stock-notice :stock-list="stockPool" />
+      </template>
     </div>
   </div>
 </template>
@@ -32,7 +37,8 @@ export default {
   data() {
     return {
       stockCode: '',
-      stockPool: []
+      stockPool: [],
+      showNotice: false
     }
   },
   computed: {
