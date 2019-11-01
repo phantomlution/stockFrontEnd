@@ -8,7 +8,7 @@
       </div>
     </div>
     <div style="margin-top: 16px;display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
-      <stock-tracker @removeItem="removeItem(itemIndex)" :code="item.code" :name="item.name" v-for="(item, itemIndex) of stockPool" :key="itemIndex"></stock-tracker>
+      <stock-tracker @removeItem="removeItem(itemIndex)" :code="item.code" :name="item.name" :item="item" v-for="(item, itemIndex) of stockPool" :key="itemIndex"></stock-tracker>
     </div>
     <div style="margin-top: 24px;">
       <all-stock-notice :stock-list="stockPool" />
@@ -51,7 +51,7 @@ export default {
       this.$http.get(`/api/stock/pool`).then(_ => {
         // 执行强检测任务
         Promise.all(_.map(item => this.detectRisk(item))).then(stockPoolList => {
-          this.stockPool =  stockPoolList
+          this.stockPool = stockPoolList
           // 收集相关信息
           this.riskDetector.collect(stockPoolList)
         }).catch(_ => {

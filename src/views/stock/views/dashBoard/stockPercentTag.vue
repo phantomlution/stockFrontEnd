@@ -15,7 +15,7 @@
 <script>
 const props = {
   percentage: {
-    type: String,
+    type: [String, Number],
     default: ''
   }
 }

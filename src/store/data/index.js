@@ -26,7 +26,7 @@ export default {
     addToStockPool(context, model) { // 加入自选池
       return new Promise((resolve, reject) => {
         http.post('/api/stock/pool', model).then(_ => {
-          Message.success('加入成功')
+          Message.success('操作成功')
           resolve(_)
         }).catch(_ => {
           reject(_)

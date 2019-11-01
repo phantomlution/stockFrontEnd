@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block">
     <el-link type="primary" @click.stop="showStockDetail">{{ name }}({{ code }})</el-link>
-    <lr-shopping-cart :code="code" v-if="add" />
+    <lr-shopping-cart :code="code" v-if="add" :buttonText="addText" />
   </div>
 </template>
 
@@ -17,7 +17,11 @@ const props = {
   },
   add: { // 所以的添加功能
     type: Boolean,
-    default: false
+    default: true
+  },
+  addText: {
+    type: String,
+    default: '加自选'
   }
 }
 export default {

@@ -3,7 +3,7 @@
     <el-card>
       <div slot="header">
         <span>
-          <lr-stock-detail-link :code="code" :name="name" />
+          <lr-stock-detail-link :code="code" :name="name" addText="设置" />
         </span>
         <span style="float: right;margin-left: 8px;margin-top: 1px" @click.stop="removeItem">
           <el-link icon="el-icon-close" />
@@ -64,6 +64,10 @@ const props = {
   code: {
     type: String,
     required: true
+  },
+  item: { // 整个配置信息
+    type: Object,
+    required: true
   }
 }
 
@@ -75,6 +79,8 @@ export default {
   data(){
     return {
       tracker: null,
+      eventKey: `STOCK_POOL_UPDATE_${ this.code }`,
+      stockPoolItem: this.item,
       interval: 30,
       lastUpdate: -1,
       biding: null,
@@ -97,14 +103,23 @@ export default {
     }
   },
   mounted() {
-    this.loadDetail()
-    this.stopTracker()
-    this.startTracker()
+    this.$bus.$on(this.eventKey, newItem => {
+      console.log('updated')
+      this.stockPoolItem = newItem
+      this.initTracker()
+    })
+    this.initTracker()
   },
   beforeDestroy() {
+    this.$bus.$off(this.eventKey)
     this.stopTracker()
   },
   methods: {
+    initTracker() {
+      this.stopTracker()
+      this.startTracker()
+      this.loadDetail()
+    },
     stopTracker() {
       if (this.tracker) {
         clearInterval(this.tracker)
@@ -124,7 +139,6 @@ export default {
     loadDetail() {
       const code = this.code
       this.$http.get(`/api/stock/detail/biding`, { code }).then(response => {
-        console.log(response)
         response.maxDiff = this.calculateDiff(response, 'max')
         response.minDiff = this.calculateDiff(response, 'min')
         response.openDiff = this.calculateDiff(response, 'open')
@@ -132,14 +146,8 @@ export default {
 
         this.biding = response
         this.lastUpdate = new Date().getTime()
-        const conditionList = this.defaultConditionList
-        this.checkNotification({
-          code,
-          name: this.name,
-          conditionList,
-          biding: response
-        })
 
+        this.checkNotification(response)
       }).catch(_ => {
         console.error(_)
       })
@@ -152,8 +160,15 @@ export default {
     calculateDiff(biding, fieldName, target='yesterday') {
       return lodash.round((biding[fieldName] - biding[target]) * 100 / biding[target], 2)
     },
-    checkNotification({ code, name, conditionList, biding }) { // 开启内容推送
-      conditionList.filter(item => item.enabled).forEach(condition => {
+    checkNotification(biding) { // 开启内容推送
+      const code = this.code
+      const name = this.name
+
+      const conditionList = []
+      Array.prototype.push.apply(conditionList, this.defaultConditionList)
+      Array.prototype.push.apply(conditionList, this.stockPoolItem.conditionList || [])
+
+      conditionList.forEach(condition => {
         let notificationItem = {
           code,
           name,
@@ -177,19 +192,22 @@ export default {
     addNotification({ code, name, condition }) {
       const oldItem = this.notificationList.find(item => item.code === code && item.condition.key === condition.key)
       if (!oldItem) {
-        // 弹出通知
-        this.$notify({
-          title: name,
-          message: `${ this.$moment().format('HH:mm')} 满足 ${ condition.key }: ${ condition.value }`,
-          duration: 0,
-          type: 'warning'
-        })
         // 加入消息队列
         this.notificationList.push({
           code,
           name,
           condition
         })
+
+        setTimeout(_ => {
+          // 弹出通知
+          this.$notify({
+            title: `${ this.$moment().format('HH:mm')} ${ name } ${ condition.key }`,
+            message: `${ condition.value }`,
+            duration: 0,
+            type: 'warning'
+          })
+        }, 0)
       }
     }
   }
