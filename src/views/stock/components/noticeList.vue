@@ -4,6 +4,8 @@
       <el-radio-group v-model="filterType">
         <el-radio label="">全部</el-radio>
         <el-radio label="债券">债券相关</el-radio>
+        <el-radio label="增减持">增减持</el-radio>
+        <el-radio label="质押">质押</el-radio>
       </el-radio-group>
     </div>
     <el-table :data="displayList" :height="height" :default-sort="{prop: 'date', order: 'descending'}">
@@ -56,11 +58,19 @@ export default {
   },
   computed: {
     displayList() {
-      if (!this.filterType) {
-        return this.list
-      } else {
+      const filterType = this.filterType
+      if (filterType === '债券') {
         return this.list.filter(item => item.filterType === this.filterType)
+      } else if (filterType === '增减持') {
+        return this.list.filter(item => {
+          return item.title.indexOf('增持') !== -1 || item.title.indexOf('减持') !== -1
+        })
+      } else if (filterType === '质押') {
+        return this.list.filter(item => {
+          return item.title.indexOf('质押') !== -1
+        })
       }
+      return this.list
     }
   },
   methods: {

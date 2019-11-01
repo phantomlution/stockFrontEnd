@@ -88,7 +88,7 @@ export default {
       view.line().position('timestamp*diff').color('#9AD681').tooltip('turnoverRate**diff');
 
       // 追加限售解禁信息
-      const restrict_sell_list = stock.base.restrict_sell_list.filter(item => item.increment > 0)
+      const restrict_sell_list = stock.base.restrict_sell_list
       restrict_sell_list.forEach(item => {
         view.guide().line({
           start: [item.timestamp, 'min'], // 使用数组格式

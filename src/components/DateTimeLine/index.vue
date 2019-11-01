@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     divideTimeList(dateList) {
-      const parsedDateList = dateList.filter(item => item.increment > 0).map(item => {
+      const parsedDateList = dateList.map(item => {
         return {
           timestamp: this.$moment(item.date).toDate().getTime(),
           dateString: item.date
@@ -94,6 +94,10 @@ export default {
       let ratio = 0
       if (!restrict_finished) {
         ratio = (current - oldDateList[startIndex].timestamp) / (newDateList[0].timestamp - oldDateList[startIndex].timestamp)
+      }
+
+      if (ratio > 0.8) { // 优化页面样式
+        ratio = 0.8
       }
       const currentOffset =  startIndex + lodash.round(ratio, 2)
       this.value = [0, currentOffset]

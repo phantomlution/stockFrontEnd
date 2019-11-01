@@ -23,14 +23,9 @@ export default {
     updateData(context, config) {
       context.commit('updateData', config)
     },
-    addToStockPool(context, { code, name, temp=false, desc='' }) { // 加入自选池
+    addToStockPool(context, model) { // 加入自选池
       return new Promise((resolve, reject) => {
-        http.post('/api/stock/pool', {
-          code,
-          name,
-          temp,
-          desc
-        }).then(_ => {
+        http.post('/api/stock/pool', model).then(_ => {
           Message.success('加入成功')
           resolve(_)
         }).catch(_ => {

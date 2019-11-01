@@ -3,7 +3,7 @@
     <div style="display: flex">
       <div style="flex: 1">
         <searchStock v-model="stockCode" ref="searchStock" />
-        <el-button type="primary" @click.stop="addToPool">添加</el-button>
+        <lr-shopping-cart :code="stockCode" v-if="stockCode" style="margin-left: 8px"/>
         <risk-detector style="margin-left: 72px" ref="riskDetector" />
       </div>
     </div>
@@ -80,31 +80,7 @@ export default {
       }).catch(_ => {
         console.log(_)
       })
-    },
-    addToPool() {
-      const codeItem = this.$refs.searchStock.getCurrent()
-
-      if (!codeItem) {
-        this.$message.warning('请先选择股票')
-        return
-      }
-
-      if (this.stockPool.find(item => item.value === codeItem.value)) {
-        this.$message.error('当前股票已存在')
-        return
-      }
-
-      const item = {
-        name: codeItem.label,
-        code: codeItem.value
-      }
-
-      this.$store.dispatch('addToStockPool', item).then(_ => {
-        this.refresh()
-      }).catch(_ => {
-        console.log(_)
-      })
-    },
+    }
   }
 }
 </script>
