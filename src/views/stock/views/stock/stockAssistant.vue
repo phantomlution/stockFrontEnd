@@ -13,19 +13,19 @@
                   </template>
                 </span>
             </div>
-            <div v-if="currentRowModel.themeList.length > 0">
+            <div v-if="currentRowModel.themeList && currentRowModel.themeList.length > 0">
               <el-tag v-for="(theme, themeIndex) of currentRowModel.themeList" :key="themeIndex">
                 {{ theme }}
               </el-tag>
             </div>
+            <div v-if="currentRowModel.desc">
+              {{ currentRowModel.desc }}
+            </div>
+
           </div>
-          <div style="margin: 0 16px;">
-            <div>
-              <div class="lr-make-short-table-label">低于最高：{{ currentRowModel.closeMaxIncrement }}%</div>
-            </div>
-            <div>
-              <div class="lr-make-short-table-label">高于最低：{{ currentRowModel.closeMinIncrement }}%</div>
-            </div>
+          <div style="margin: 0 16px;" v-if="currentRowModel.closeMaxIncrement">
+            <div class="lr-make-short-table-label">低于最高：{{ currentRowModel.closeMaxIncrement }}%</div>
+            <div class="lr-make-short-table-label">高于最低：{{ currentRowModel.closeMinIncrement }}%</div>
           </div>
           <div>
             <div><el-button type="text" @click.stop="toPrevious">上一条</el-button></div>
@@ -35,6 +35,7 @@
         <template v-else>
           <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
             <el-button type="primary" @click.stop="setRowIndex(0)">查看第一条</el-button>
+            <el-button type="primary" @click.stop="getFileResource">其他数据源</el-button>
           </div>
         </template>
       </div>
@@ -55,6 +56,7 @@ export default {
     currentRowIndex(val) {
       if (val >= 0 && val < this.dataList.length) {
         this.currentRowModel = this.dataList[val]
+        this.showDetail(this.currentRowModel.code)
       } else {
         this.currentRowModel = null
       }
@@ -83,6 +85,25 @@ export default {
         this.currentRowIndex += 1
       }
     },
+    getFileResource() { // 加载其他数据源
+      const baseDir = '/static/analyze/'
+      const fileName = '二次限售解禁分析.json'
+
+      return this.getRemoteFile(baseDir + fileName).then(response => {
+        this.init(response)
+        this.$nextTick(_ => {
+          this.toNext()
+        })
+      }).catch(_ => {
+        console.error(_)
+      })
+    },
+    getRemoteFile(filePath) { // 读取远程文件
+      return this.$http.get(filePath)
+    },
+    showDetail(code) {
+      this.$emit('showDetail', code)
+    }
   }
 }
 </script>

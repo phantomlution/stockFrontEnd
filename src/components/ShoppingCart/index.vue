@@ -91,7 +91,7 @@ export default {
   watch: {
     code() {
       this.dialogVisible = false
-      this.$refs.form.clearValidate()
+      this.$refs.form && this.$refs.form.clearValidate()
     },
     dialogVisible(val) {
       if (val) {

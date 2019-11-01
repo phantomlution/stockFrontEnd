@@ -1,7 +1,7 @@
 <template>
   <lr-box style="position: relative">
     <!-- 工具条 -->
-    <stock-assistant ref="stockAssistant" />
+    <stock-assistant ref="stockAssistant" @showDetail="showDetail" />
     <div>
       <el-form :inline="true">
         <el-form-item label="总记录数">

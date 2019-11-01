@@ -2,10 +2,10 @@
   <div>
     <el-tabs type="border-card" tabPosition="left">
       <el-tab-pane label="全部">
-        <notice-list :list="totalList" :height="height" />
+        <notice-list :list="totalList" :table-height="height" />
       </el-tab-pane>
       <el-tab-pane :label="item.name" :key="itemIndex" v-for="(item, itemIndex) of noticeList">
-        <notice-list :list="item.list" :height="height" />
+        <notice-list :list="item.list" :table-height="height" :code="item.code" />
       </el-tab-pane>
     </el-tabs>
   </div>

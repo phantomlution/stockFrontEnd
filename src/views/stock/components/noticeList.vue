@@ -1,14 +1,19 @@
 <template>
   <div>
-    <div>
-      <el-radio-group v-model="filterType">
-        <el-radio label="">全部</el-radio>
-        <el-radio label="债券">债券相关</el-radio>
-        <el-radio label="增减持">增减持</el-radio>
-        <el-radio label="质押">质押</el-radio>
-      </el-radio-group>
+    <div style="display: flex">
+      <div style="flex: 1">
+        <el-radio-group v-model="filterType">
+          <el-radio label="">全部</el-radio>
+          <el-radio label="债券">债券相关</el-radio>
+          <el-radio label="增减持">增减持</el-radio>
+          <el-radio label="质押">质押</el-radio>
+        </el-radio-group>
+      </div>
+      <div v-if="code">
+        <el-link type="primary" :href="`http://data.eastmoney.com/notices/stock/${ code.substring(2) }.html`" target="_blank">查看更多公告</el-link>
+      </div>
     </div>
-    <el-table :data="displayList" :height="height" :default-sort="{prop: 'date', order: 'descending'}">
+    <el-table :data="displayList" :height="tableHeight" :default-sort="{prop: 'date', order: 'descending'}">
       <el-table-column label="名称" width="100px">
         <template slot-scope="scope">
           {{ scope.row.stock_name }}
@@ -16,12 +21,7 @@
       </el-table-column>
       <el-table-column label="公告标题">
         <template slot-scope="scope">
-          <el-link :type="scope.row.important ? 'danger' : ''" :underline="false">{{ scope.row.title }}</el-link>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="64px">
-        <template slot-scope="scope">
-          <el-button type="text" @click.stop="openNotice(scope.row)">查看</el-button>
+          <el-link :type="scope.row.important ? 'danger' : ''" :underline="false" @click.stop="openNotice(scope.row)">{{ scope.row.title }}</el-link>
         </template>
       </el-table-column>
       <el-table-column label="类型" width="128px" show-overflow-tooltip>
@@ -40,11 +40,15 @@
 
 <script>
 const props = {
+  code: {
+    type: String,
+    default: ''
+  },
   list: {
     type: Array,
     required: true
   },
-  height: {
+  tableHeight: {
     type: String,
     default: ''
   }

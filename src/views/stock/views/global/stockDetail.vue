@@ -184,7 +184,7 @@
       <tradeDataChart :code="code" />
     </div>
     <div v-show="currentTab === 'noticeChange'" style="padding: 0 16px">
-      <notice-list :list="noticeChangeList" height="calc(100vh - 130px)"/>
+      <notice-list :list="noticeChangeList" :code="code" table-height="calc(100vh - 150px)"/>
     </div>
     <div v-if="currentTab === 'pledge'">
       <lr-link-page :src="`http://data.eastmoney.com/gpzy/detail/${rawCode}.html`" />
