@@ -8,8 +8,8 @@
         <span style="float: right;margin-left: 8px;margin-top: 1px" @click.stop="removeItem">
           <el-link icon="el-icon-close" />
         </span>
-        <span style="float: right; margin: 3px 0;">
-          <stock-percent-tag :percentage="currentDiff">
+        <span style="float: right; margin: 3px 0;" v-if="biding">
+          <stock-percent-tag :percentage="biding.currentDiff">
             <span slot="prepend">
               {{ biding.current || '-' }}
             </span>
@@ -19,13 +19,13 @@
           </span>
         </span>
       </div>
-      <div>
+      <div v-if="biding">
         <el-form>
           <el-row>
             <el-col :span="12">
               <el-form-item label="今开">
                 {{ biding.open}}
-                <stock-percent-tag :percentage="openDiff" ></stock-percent-tag>
+                <stock-percent-tag :percentage="biding.openDiff" ></stock-percent-tag>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -36,13 +36,13 @@
             <el-col :span="12">
               <el-form-item label="最高">
                 {{ biding.max || '-' }}
-                <stock-percent-tag :percentage="maxDiff" ></stock-percent-tag>
+                <stock-percent-tag :percentage="biding.maxDiff" ></stock-percent-tag>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="最低">
                 {{ biding.min || '-' }}
-                <stock-percent-tag :percentage="minDiff" ></stock-percent-tag>
+                <stock-percent-tag :percentage="biding.minDiff" ></stock-percent-tag>
               </el-form-item>
             </el-col>
           </el-row>
@@ -77,22 +77,15 @@ export default {
       tracker: null,
       interval: 30,
       lastUpdate: -1,
-      biding: {},
-      notificationList: []
-    }
-  },
-  computed: {
-    maxDiff() {
-      return this.calculateDiff('max')
-    },
-    minDiff() {
-      return this.calculateDiff('min')
-    },
-    openDiff() {
-      return this.calculateDiff('open')
-    },
-    currentDiff() {
-      return this.calculateDiff('current')
+      biding: null,
+      notificationList: [],
+      defaultConditionList: [
+        {
+          key: 'slump',
+          value: '-5',
+          enabled: true
+        }
+      ]
     }
   },
   filters: {
@@ -131,23 +124,22 @@ export default {
     loadDetail() {
       const code = this.code
       this.$http.get(`/api/stock/detail/biding`, { code }).then(response => {
+        console.log(response)
+        response.maxDiff = this.calculateDiff(response, 'max')
+        response.minDiff = this.calculateDiff(response, 'min')
+        response.openDiff = this.calculateDiff(response, 'open')
+        response.currentDiff = this.calculateDiff(response, 'current')
+
         this.biding = response
-        if (code === 'SZ002927') {
-          const conditionList = [
-            {
-              key: 'price',
-              value: '19.60',
-              enabled: true
-            }
-          ]
-          this.checkNotification({
-            code,
-            name: this.name,
-            conditionList,
-            biding: response
-          })
-        }
         this.lastUpdate = new Date().getTime()
+        const conditionList = this.defaultConditionList
+        this.checkNotification({
+          code,
+          name: this.name,
+          conditionList,
+          biding: response
+        })
+
       }).catch(_ => {
         console.error(_)
       })
@@ -157,16 +149,8 @@ export default {
         this.$emit('removeItem')
       })
     },
-    calculateDiff(fieldName, target='yesterday') {
-      let result = ''
-      if (this.biding[target]) {
-        result = lodash.round((this.biding[fieldName] - this.biding[target]) * 100 / this.biding[target], 2).toString()
-      }
-      if (result.length === 0) {
-        return '-'
-      } else {
-        return `${result}`
-      }
+    calculateDiff(biding, fieldName, target='yesterday') {
+      return lodash.round((biding[fieldName] - biding[target]) * 100 / biding[target], 2)
     },
     checkNotification({ code, name, conditionList, biding }) { // 开启内容推送
       conditionList.filter(item => item.enabled).forEach(condition => {
@@ -183,6 +167,10 @@ export default {
           if (biding[condition.key] >= Number(condition.value)) {
             this.addNotification(notificationItem)
           }
+        } else if (condition.key === 'slump') {
+          if (Number(biding.currentDiff) <= Number(condition.value)) {
+            this.addNotification(notificationItem)
+          }
         }
       })
     },
@@ -192,7 +180,7 @@ export default {
         // 弹出通知
         this.$notify({
           title: name,
-          message: `${ this.$moment().format('HH:MM')} 满足 ${ condition.key }: ${ condition.value }`,
+          message: `${ this.$moment().format('HH:mm')} 满足 ${ condition.key }: ${ condition.value }`,
           duration: 0,
           type: 'warning'
         })

@@ -25,6 +25,10 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+      '/static': {
+        target: config.target,
+        changeOrigin: true
+      },
       '/api': {
         target: config.target,
         changeOrigin: true,
