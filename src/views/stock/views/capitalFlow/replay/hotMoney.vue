@@ -13,6 +13,7 @@
 <script>
 import lodash from 'lodash'
 import moment from 'moment'
+import { addStockDailyCoordinate, STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
 
 const props = {
   date: {
@@ -100,7 +101,7 @@ export default {
       return result
     },
     appendDate(timePoint) { // 补齐日期格式
-      return `2019-06-19 ${ timePoint }:00`
+      return `${ STOCK_COORDINATE_DATE } ${ timePoint }:00`
     },
     renderChart(vueReference, chartData, legend) {
       const chart = this.$refs[vueReference].getChart()
@@ -115,19 +116,8 @@ export default {
           return capitalLegend[val]
         }
       })
-      chart.scale('time', {
-        type: 'timeCat',
-        ticks: [
-          '09:31',
-          '10:30',
-          '11:30',
-          '14:00',
-          '15:00'
-        ].map(item => this.appendDate(item)).map(item => moment(item).toDate().getTime()),
-        formatter: function(val) {
-          return moment(val).format('HH:mm')
-        }
-      })
+
+      addStockDailyCoordinate(chart)
 
       chart.line().position('time*value').color('type')
       chart.render()
