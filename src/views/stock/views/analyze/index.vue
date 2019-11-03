@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      currentTab: '解禁分布'
+      currentTab: '历史分时成交'
     }
   }
 }

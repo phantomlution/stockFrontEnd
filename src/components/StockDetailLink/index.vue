@@ -13,7 +13,7 @@ const props = {
   },
   name: {
     type: String,
-    required: true
+    default: ''
   },
   add: { // 所以的添加功能
     type: Boolean,
@@ -22,6 +22,10 @@ const props = {
   addText: {
     type: String,
     default: '加自选'
+  },
+  defaultTab: {
+    type: String,
+    default: ''
   }
 }
 export default {
@@ -35,7 +39,11 @@ export default {
   methods: {
     showStockDetail() {
       const code = this.code
-      this.$bus.$emit('showStockDetail', code)
+      const defaultTab = this.defaultTab
+      this.$bus.$emit('showStockDetail', {
+        code,
+        defaultTab
+      })
     }
   }
 }

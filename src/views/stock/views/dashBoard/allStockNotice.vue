@@ -72,7 +72,9 @@ export default {
       })
     },
     showStockDetail(code) {
-      this.$bus.$emit('showStockDetail', code)
+      this.$bus.$emit('showStockDetail', {
+        code
+      })
     }
   }
 }

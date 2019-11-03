@@ -3,7 +3,7 @@
     <div style="text-align: center;margin-top: -16px">
       <el-radio-group v-model="currentTab">
         <el-radio-button label="base">基础信息</el-radio-button>
-        <el-radio-button label="analyze">趋势分析</el-radio-button>
+        <el-radio-button label="trendAnalyze">趋势分析</el-radio-button>
         <el-radio-button label="live">实时走势</el-radio-button>
         <el-radio-button label="noticeChange">公告列表</el-radio-button>
         <el-radio-button label="pledge">股票质押</el-radio-button>
@@ -179,7 +179,7 @@
         </el-row>
       </div>
     </div>
-    <div v-if="currentTab === 'analyze'" :style="panelStyle">
+    <div v-if="currentTab === 'trendAnalyze'" :style="panelStyle">
       <tradeTrendChart :code="code" />
       <tradeDataChart :code="code" />
     </div>
@@ -208,6 +208,10 @@ const props = {
   code: {
     type: String,
     required: true
+  },
+  defaultTab: {
+    type: String,
+    default: ''
   }
 }
 
@@ -220,7 +224,7 @@ export default {
   },
   data() {
     return {
-      currentTab: 'base',
+      currentTab: this.defaultTab || 'base',
       noticeChangeList: [],
       bidingList: [],
       base: null,
@@ -239,6 +243,11 @@ export default {
     },
     loading() {
       return !this.base
+    }
+  },
+  watch: {
+    defaultTab() {
+      this.updateTab()
     }
   },
   mounted() {
@@ -266,6 +275,11 @@ export default {
     }
   },
   methods: {
+    updateTab() {
+      if (this.defaultTab) {
+        this.currentTab = this.defaultTab
+      }
+    },
     loadBase() {
       const code = this.code
       return this.$http.get(`/api/stock/base`, { code }).then(base => {

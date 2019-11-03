@@ -1,6 +1,6 @@
 <template>
   <el-drawer title="个股详情" size="90%" :visible.sync="drawerVisible">
-    <stock-detail :code="code" v-if="code"/>
+    <stock-detail :code="code" v-if="code" :defaultTab="defaultTab"/>
   </el-drawer>
 </template>
 
@@ -14,7 +14,8 @@ export default {
   data() {
     return {
       drawerVisible: false,
-      code: ''
+      code: '',
+      defaultTab: ''
     }
   },
   watch: {
@@ -25,8 +26,10 @@ export default {
     }
   },
   mounted() {
-    this.$bus.$on('showStockDetail', code => {
+    this.$bus.$on('showStockDetail', ({ code, defaultTab }) => {
+      console.log(defaultTab)
       this.code = code
+      this.defaultTab = defaultTab
       this.drawerVisible = true
     })
   }

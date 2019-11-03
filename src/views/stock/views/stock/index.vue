@@ -131,7 +131,10 @@ export default {
       })
     },
     showDetail() {
-      this.$bus.$emit('showStockDetail', this.stockCode)
+      const code = this.stockCode
+      this.$bus.$emit('showStockDetail', {
+        code
+       })
     },
     refresh() {
       this.$nextTick(_ => {

@@ -2,21 +2,24 @@
   <div>
     <div>
       <search-stock v-model="stockCode"/>
-      <el-date-picker v-model="date" style="width: 160px"/>
-
-      <el-button type="primary" @click.stop="loadData">查看</el-button>
+      <lr-date-picker v-model="date" @change="checkAndLoad" />
+      <el-button type="primary" @click.stop="loadData" style="margin-left: 8px;">查看</el-button>
     </div>
-    <div>
+    <lr-box style="margin-top: 16px" v-if="stockCode">
       <div slot="title">
+        <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
+        <span v-if="currentDate" style="font-size: 14px;color: rgba(0, 0, 0, 0,65)">
+          {{ currentDate }}
+        </span>
       </div>
       <lr-chart ref="chart" />
-    </div>
+    </lr-box>
   </div>
 </template>
 
 <script>
 import searchStock from '@/views/stock/components/searchStock'
-import { addStockDailyCoordinate, STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
+import { addStockDailyCoordinate, STOCK_COORDINATE_DATE, COORDINATE_TIME_LIST } from '@/utils/ChartUtils'
 import moment from 'moment'
 import lodash from 'lodash'
 
@@ -27,10 +30,16 @@ export default {
   data() {
     return {
       stockCode: '',
+      currentDate: '',
       date: '',
     }
   },
   methods: {
+    checkAndLoad() {
+      if (this.stockCode && this.date) {
+        this.loadData()
+      }
+    },
     loadData() {
       if (!this.stockCode) {
         return this.$message.error('请选择代码')
@@ -48,6 +57,7 @@ export default {
         if (!tradeList) {
           tradeList = []
         }
+        this.currentDate = date
         this.renderChart(tradeList)
       }).catch(_ => {
         console.error(_)
@@ -59,47 +69,46 @@ export default {
         return this.$message.warning('没有找到对应的数据')
       }
       const dataList = tradeList.map(item => {
-        // 抹掉秒
-        let oldTimeList = item.time.split(':')
         return {
-          time: moment(`${ STOCK_COORDINATE_DATE } ${ oldTimeList[0] }:${ oldTimeList[1] }:00`).toDate().getTime(),
+          time: `${ STOCK_COORDINATE_DATE } ${ item.time }`,
           value: item.price
         }
       })
 
-      // 拆分数据为早上和下午两部分
-      const separateTime = moment(`${ STOCK_COORDINATE_DATE } 12:00:00`).toDate().getTime()
-
-      const morningDataList = dataList.filter(item => item.time <= separateTime).map(item => {
-        return {
-          time: moment(item.time).format('YYYY-MM-DD HH:mm:ss'),
-          value: item.value
+      // 补齐坐标轴可能缺失的数据点
+      const missingPoint = []
+      COORDINATE_TIME_LIST.forEach(time_string => {
+        const isExisted = dataList.find(item => item.time === time_string)
+        if (!isExisted) { // 补齐
+          // 找到上一个时间点的价格
+          let lastItem = null
+          for (let i=0; i<dataList.length; i++) {
+            if (!lastItem) {
+              lastItem = dataList[i]
+              continue
+            }
+            let diff = moment(time_string).diff(moment(dataList[i].time))
+            if (diff >= 0) {
+              lastItem = dataList[i]
+              continue
+            } else {
+              break
+            }
+          }
+          if (lastItem) {
+            missingPoint.push({
+              time: time_string,
+              value: lastItem['value']
+            })
+          }
         }
       })
 
-      const afternoonDateList = dataList.filter(item => item.time >= separateTime).map(item => {
-        return {
-          time: moment(item.time).format('YYYY-MM-DD HH:mm:ss'),
-          value: item.value
-        }
-      })
+      Array.prototype.push.apply(dataList, missingPoint)
 
-      // 修复早盘最后一个数据点
-      const lastMorningPoint = morningDataList[morningDataList.length - 1]
-      if (morningDataList.time !== `${ STOCK_COORDINATE_DATE } 11:30:00`) {
-        morningDataList.push({
-          time: `${ STOCK_COORDINATE_DATE } 11:30:00`,
-          value: lastMorningPoint.value
-        })
-      }
+      const yesterdayClose = dataList[0].price - dataList[0].change
 
-      const displayDataList = []
-      Array.prototype.push.apply(displayDataList, morningDataList.filter((item, itemIndex) => itemIndex === morningDataList.findIndex(subItem => subItem.time === item.time)))
-      Array.prototype.push.apply(displayDataList, afternoonDateList.filter((item, itemIndex) => itemIndex === afternoonDateList.findIndex(subItem => subItem.time === item.time)))
-
-      const yesterdayClose = tradeList[0].price - tradeList[0].change
-
-      chart.source(displayDataList)
+      chart.source(dataList)
       addStockDailyCoordinate(chart)
 
       // 添加辅助线
