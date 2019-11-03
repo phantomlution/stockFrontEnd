@@ -106,13 +106,15 @@ export default {
 
       Array.prototype.push.apply(dataList, missingPoint)
 
-      const yesterdayClose = dataList[0].price - dataList[0].change
+
+      const yesterdayClose = lodash.round(tradeList[0].price - tradeList[0].change, 2)
 
       chart.source(dataList)
       addStockDailyCoordinate(chart)
 
       // 添加辅助线
       this.addAssistantLine(chart, yesterdayClose, `昨收 ${ yesterdayClose }`)
+
 
       // 添加幅度变化辅助线
       for(let i=1; i<= 10; i++) {
