@@ -68,7 +68,7 @@
                       <!--<el-link type="danger" :href="`http://f10.eastmoney.com/CapitalStockStructure/Index?type=web&code=${ code }`" target="_blank" >限售解禁&nbsp;&nbsp;股本结构<i class="el-icon-bottom" /></el-link>-->
                     </el-popover>
                   </div>
-                  <div>
+                  <div v-if="base.restrict_sell_list">
                     <lr-date-time-line :dateList="base.restrict_sell_list" />
                   </div>
                 </el-col>
@@ -285,6 +285,7 @@ export default {
       return this.$http.get(`/api/stock/base`, { code }).then(base => {
         this.base = base
         // 异步加载各个股东，其他持股的公司
+        base.stock_holder_list = base.stock_holder_list || []
         base.stock_holder_list.forEach(holder => {
           let url = holder.company_href
           if (!url) {

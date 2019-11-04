@@ -17,7 +17,6 @@ const props = {
   },
   width: {
     type: String,
-    required: true
   },
   top: {
     type: String,

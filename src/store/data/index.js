@@ -54,10 +54,6 @@ export default {
           const base = responseList[0]['base']
           const source = responseList[0]['data']
 
-          if (!base.float_shares) {
-            throw new Error('不考虑非股票产品')
-          }
-
           const stockName = base.name.toUpperCase()
 
           if (stockName.indexOf('债') !== -1) {
@@ -65,6 +61,7 @@ export default {
           }
 
           // 重新格式化数据
+
           const rawData = source.data.map(item => {
             let model = Object.create(null)
             for(let i=0; i<source.column.length; i++) {

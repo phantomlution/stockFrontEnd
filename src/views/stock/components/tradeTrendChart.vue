@@ -65,6 +65,7 @@ export default {
       })
     },
     renderChart({stock, dataCount}) {
+      debugger
       let rawData = stock.result
       this.stock = stock
       this.code = stock.code
@@ -72,7 +73,6 @@ export default {
       const data = lodash.takeRight(rawData, dataCount)
 
       const chart = this.$refs.chart.getChart()
-      chart.clear()
 
       const view = chart.view()
       var scale = {
@@ -88,7 +88,7 @@ export default {
       view.line().position('timestamp*diff').color('#9AD681').tooltip('turnoverRate**diff');
 
       // 追加限售解禁信息
-      const restrict_sell_list = stock.base.restrict_sell_list
+      const restrict_sell_list = stock.base.restrict_sell_list || []
       restrict_sell_list.forEach(item => {
         view.guide().line({
           start: [item.timestamp, 'min'], // 使用数组格式
@@ -105,7 +105,6 @@ export default {
         const today = data[i]
         // 添加涨停提示
         if (today.percent >= 9.9) {
-          console.log(today.timestamp)
           this.addExtraInfoPoint(view, [today.timestamp, today.close], '涨停')
         }
 

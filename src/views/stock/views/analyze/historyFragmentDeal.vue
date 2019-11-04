@@ -1,14 +1,13 @@
 <template>
   <div>
     <div>
-      <search-stock v-model="stockCode"/>
+      <search-stock v-model="stockCode" @change="checkAndLoad"/>
       <lr-date-picker v-model="date" @change="checkAndLoad" />
-      <el-button type="primary" @click.stop="loadData" style="margin-left: 8px;">查看</el-button>
     </div>
     <lr-box style="margin-top: 16px" v-if="stockCode">
       <div slot="title">
         <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
-        <span v-if="currentDate" style="font-size: 14px;color: rgba(0, 0, 0, 0,65)">
+        <span v-if="currentDate" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
           {{ currentDate }}
         </span>
       </div>

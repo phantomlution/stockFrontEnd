@@ -1,6 +1,6 @@
 <template>
   <div style="display: inline-block">
-    <el-link type="primary" @click.stop="showStockDetail">{{ name }}({{ codeLabel }})</el-link>
+    <el-link type="primary" @click.stop="showStockDetail">{{ name }}{{ codeLabel }}</el-link>
     <lr-shopping-cart :code="code" v-if="add" :buttonText="addText" />
   </div>
 </template>
@@ -33,7 +33,10 @@ export default {
   props,
   computed: {
     codeLabel() {
-      return this.code.substring(2)
+      if (this.name === '上证指数') {
+        return ''
+      }
+      return `(${ this.code.substring(2) })`
     }
   },
   methods: {

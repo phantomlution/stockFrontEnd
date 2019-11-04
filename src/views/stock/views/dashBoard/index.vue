@@ -32,7 +32,7 @@ export default {
     stockTracker,
     searchStock,
     allStockNotice,
-    riskDetector
+    riskDetector,
   },
   data() {
     return {
