@@ -61,10 +61,11 @@ export default {
   },
   methods: {
     openInWindow() {
-      const src = this.src
-      if (src) {
-        window.open(src, '_blank')
-      }
+      // 必须先安装项目下的 chrome Extension
+      const frameLocation = this.getFrame()
+      frameLocation.contentWindow.postMessage({
+        event: 'openInNewPage'
+      }, '*')
     },
     getFrame() {
       return document.getElementById(this.frameId)

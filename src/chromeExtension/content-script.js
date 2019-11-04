@@ -12,10 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll("[target='_blank'][rel='nofollow']").forEach(item => {
       item.style.display = 'none'
     })
-  } else if (/7clang22\.com/.test(host)) {
-    document.body.id = 'clang'
-  } else if (/taidi\d*.com/.test(host)) {
-    document.body.id = 'teddy'
   } else if (/tianya\.cn/.test(host)) {
     document.body.id = 'tianya'
   } else if (/sina\.com/.test(host)) {
@@ -23,4 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
   } else if (/investing\.com/.test(href)) {
     document.body.id = 'investing'
   }
+
+  window.addEventListener('message', function(event) {
+    let eventData = event.data
+    if (eventData.event === 'openInNewPage') {
+      window.open(window.location.href, '_blank')
+    }
+  })
+
 })
