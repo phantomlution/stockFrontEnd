@@ -8,11 +8,7 @@
       <el-radio-button label="centralBankOperation">央行操作</el-radio-button>
       <el-radio-button label="shibor">shibor</el-radio-button>
       <el-radio-button label="loanPrimeRate">LPR</el-radio-button>
-      <el-radio-button label="央行官方新闻">央行官方新闻</el-radio-button>
-      <el-radio-button label="CNBC">CNBC</el-radio-button>
       <el-radio-button label="新华网">新华网</el-radio-button>
-      <el-radio-button label="外交部">外交部</el-radio-button>
-      <el-radio-button label="发改委">发改委</el-radio-button>
     </el-radio-group>
 
     <div>
@@ -35,20 +31,8 @@
       <div v-if="eventTab === 'loanPrimeRate'">
         <lr-link-page src="http://www.chinamoney.com.cn/chinese/bklpr/" />
       </div>
-      <div v-if="eventTab === 'CNBC'">
-        <lr-link-page src="https://www.cnbc.com" :skipLoading="true" />
-      </div>
       <div v-if="eventTab === '新华网'">
         <lr-link-page src="http://www.xinhuanet.com" />
-      </div>
-      <div v-if="eventTab === '外交部'">
-        <lr-link-page :redirect="true" src="https://www.fmprc.gov.cn/web/fyrbt_673021/dhdw_673027/" />
-      </div>
-      <div v-if="eventTab === '央行官方新闻'">
-        <lr-link-page src="http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/11040/index1.html" />
-      </div>
-      <div v-if="eventTab === '发改委'">
-        <lr-link-page src="http://www.ndrc.gov.cn/" />
       </div>
     </div>
   </div>

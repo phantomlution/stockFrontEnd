@@ -7,7 +7,6 @@
         <el-tab-pane label="情报中心" name="informationCenter"></el-tab-pane>
         <el-tab-pane label="资金流向" name="capitalFlow" ></el-tab-pane>
         <el-tab-pane label="未来经济预测" name="未来经济预测"></el-tab-pane>
-        <el-tab-pane label="关注" name="figure"></el-tab-pane>
         <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
         <el-tab-pane label="工具箱" name="toolPanel"></el-tab-pane>
         <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
@@ -23,9 +22,6 @@
       </div>
       <div v-if="currentTab === 'capitalFlow'">
         <capital-flow />
-      </div>
-      <div v-if="currentTab === 'figure'" >
-        <person-figure />
       </div>
       <div v-if="currentTab === 'informationCenter'">
         <information-center />
@@ -47,6 +43,7 @@
     <div>
       <column-panel />
       <stock-detail-panel />
+      <news-panel />
     </div>
   </div>
 </template>
@@ -59,10 +56,10 @@ import dashBoard from '@/views/stock/views/dashBoard/index'
 import capitalFlow from '@/views/stock/views/capitalFlow/index'
 import bigEvents from '@/views/stock/views/bigEvents/index'
 import columnPanel from '@/views/stock/views/global/columnPanel'
-import personFigure from '@/views/stock/views/figure/index'
 import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
 import stockDetailPanel from '@/views/stock/views/global/stockDetailPanel'
 import analyzePanel from '@/views/stock/views/analyze/index'
+import newsPanel from '@/views/stock/views/global/news/index'
 
 export default {
   components: {
@@ -73,10 +70,10 @@ export default {
     capitalFlow,
     bigEvents,
     columnPanel,
-    personFigure,
     futurePredict,
     stockDetailPanel,
-    analyzePanel
+    analyzePanel,
+    newsPanel
   },
   data() {
     return {
