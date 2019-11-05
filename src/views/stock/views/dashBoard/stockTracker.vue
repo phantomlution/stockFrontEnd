@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card>
+    <el-card :style="cardStyle">
       <div slot="header">
         <span>
           <lr-stock-detail-link :code="code" :name="name" addText="设置" />
@@ -94,6 +94,18 @@ export default {
       ]
     }
   },
+  computed: {
+    cardStyle() {
+      if (this.stockPoolItem.payAttention) {
+        return {
+          background: '#fdf6ec'
+        }
+      }
+      return {
+
+      }
+    }
+  },
   filters: {
     volume(val) {
       if (!val) {
@@ -104,8 +116,7 @@ export default {
   },
   mounted() {
     this.$bus.$on(this.eventKey, newItem => {
-      console.log('updated')
-      this.stockPoolItem = newItem
+      this.$set(this, 'stockPoolItem', newItem)
       this.initTracker()
     })
     this.initTracker()

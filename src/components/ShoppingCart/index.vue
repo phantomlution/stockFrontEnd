@@ -3,6 +3,9 @@
     <div v-loading="loading" v-if="formModel">
       <p>
         <el-form :model="formModel" ref="form" label-width="84px">
+          <el-form-item label="关注" prop="payAttention">
+            <el-checkbox v-model="formModel.payAttention" />
+          </el-form-item>
           <el-form-item label="分析" prop="desc">
             <div style="display: flex">
               <el-input v-model="formModel.desc" placeholder="选择理由" style="flex: 1" />
@@ -63,6 +66,7 @@ const props = {
 
 const defaultFormModel = {
   desc: '',
+  payAttention: false,
   notification: {
     'price': {
       value: ''
@@ -109,6 +113,7 @@ export default {
         if (_) {
           this.oldModel = _
           this.formModel.desc = _.desc || ''
+          this.formModel.payAttention = _.payAttention || false
           if (_.conditionList) {
             Object.keys(this.formModel.notification).forEach(conditionKey => {
               const condition = _.conditionList.find(item => item.key === conditionKey)
@@ -142,6 +147,7 @@ export default {
       }
 
       model['desc'] = this.formModel.desc
+      model['payAttention'] = this.formModel.payAttention
       model.conditionList = Object.keys(this.formModel.notification).filter(conditionKey => this.formModel.notification[conditionKey].value.length > 0).map(conditionKey => {
         return {
           key: conditionKey,
