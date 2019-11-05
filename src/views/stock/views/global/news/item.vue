@@ -1,0 +1,82 @@
+<template>
+  <div class="lr-news-item">
+    <div style="min-height: 48px;">
+      <div style="display: flex">
+        <div v-if="item.thumb" style="margin-right: 8px;">
+          <img :src="item.thumb" style="max-width: 100px" />
+        </div>
+        <div style="flex: 1">
+          <div class="lr-news-item__title" @click.stop="openArticle">
+            {{ item.title }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="color: #ABABAB;font-size: 14px;margin-bottom: 16px;" v-if="item.shorterDescription">
+      {{ item.shorterDescription }}
+    </div>
+    <div style="display: flex">
+      <div style="flex: 1">
+        <el-tag type="primary" >
+          {{ item.source }}
+        </el-tag>
+        <template v-if="item.section">
+          <el-tag type="warning" >{{ item.section }}</el-tag>
+        </template>
+      </div>
+      <div>
+        <template v-if="item.premium">
+          <el-tag type="danger" >付费</el-tag>
+        </template>
+        <template v-if="item.materialType">
+          <el-tag type="primary" >{{ item.materialType }}</el-tag>
+        </template>
+        <el-tag type="info" >
+          {{ item.publish_date }}
+        </el-tag>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+const props = {
+  item: {
+    type: Object,
+    required: true
+  }
+}
+
+export default {
+  props,
+  methods: {
+    openArticle() {
+      const url = this.item.url || ''
+
+      window.open(url, '_blank')
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.lr-news-item{
+  padding: 8px 8px 0 8px;
+  box-shadow: 0px 2px 13px 0px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all .3s ease;
+  & + .lr-news-item{
+    margin-top: 16px;
+  }
+  .lr-news-item__title{
+    font-size: 16px;
+    font-weight: bold;
+    color: #3b3b3b;
+    line-height: 1.5;
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
+</style>

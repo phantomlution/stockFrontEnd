@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/figure/elonMusk.vue" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/figure/index.vue" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/global/news/index.vue" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/global/news/item.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/bigEvents/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/bigEvents/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/informationCenter/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -744,14 +741,7 @@
       <workItem from="1572572773312" duration="12025000" />
       <workItem from="1572613929037" duration="3700000" />
       <workItem from="1572680322274" duration="9069000" />
-      <workItem from="1572759095517" duration="15105000" />
-    </task>
-    <task id="LOCAL-00081" summary="前端重构">
-      <created>1569763708489</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1569763708490</updated>
+      <workItem from="1572759095517" duration="15124000" />
     </task>
     <task id="LOCAL-00082" summary="追踪个人信息页">
       <created>1569975447009</created>
@@ -1089,11 +1079,18 @@
       <option name="project" value="LOCAL" />
       <updated>1572858939099</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="集成 frame 内链接在外部打开">
+      <created>1572945450760</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1572945450764</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="544787000" />
+    <option name="totallyTimeSpent" value="544806000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
