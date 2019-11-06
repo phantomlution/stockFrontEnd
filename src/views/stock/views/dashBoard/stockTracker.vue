@@ -9,11 +9,11 @@
           <el-link icon="el-icon-close" />
         </span>
         <span style="float: right; margin: 3px 0;" v-if="biding">
-          <stock-percent-tag :percentage="biding.currentDiff">
+          <lr-number-tag :percentage="biding.currentDiff">
             <span slot="prepend">
               {{ biding.current || '-' }}
             </span>
-          </stock-percent-tag>
+          </lr-number-tag>
           <span style="font-size: 12px;font-weight: bold">
             {{ biding.volume | volume }},{{ biding.turnOverRate }}%
           </span>
@@ -25,7 +25,7 @@
             <el-col :span="12">
               <el-form-item label="今开">
                 {{ biding.open}}
-                <stock-percent-tag :percentage="biding.openDiff" ></stock-percent-tag>
+                <lr-number-tag :percentage="biding.openDiff" ></lr-number-tag>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -36,13 +36,13 @@
             <el-col :span="12">
               <el-form-item label="最高">
                 {{ biding.max || '-' }}
-                <stock-percent-tag :percentage="biding.maxDiff" ></stock-percent-tag>
+                <lr-number-tag :percentage="biding.maxDiff" ></lr-number-tag>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="最低">
                 {{ biding.min || '-' }}
-                <stock-percent-tag :percentage="biding.minDiff" ></stock-percent-tag>
+                <lr-number-tag :percentage="biding.minDiff" ></lr-number-tag>
               </el-form-item>
             </el-col>
           </el-row>
@@ -54,7 +54,6 @@
 
 <script>
 import lodash from 'lodash'
-import stockPercentTag from './stockPercentTag.vue'
 
 const props = {
   name: {
@@ -71,17 +70,17 @@ const props = {
   }
 }
 
+const default_interval = 30
+const attention_interval = 5
+
 export default {
   props,
-  components: {
-    stockPercentTag
-  },
   data(){
     return {
       tracker: null,
       eventKey: `STOCK_POOL_UPDATE_${ this.code }`,
       stockPoolItem: this.item,
-      interval: 30,
+      interval: default_interval,
       lastUpdate: -1,
       biding: null,
       notificationList: [],
@@ -106,6 +105,11 @@ export default {
       }
     }
   },
+  watch: {
+    'stockPoolItem.payAttention'() {
+      this.updateTrakcerSpeed()
+    }
+  },
   filters: {
     volume(val) {
       if (!val) {
@@ -115,6 +119,7 @@ export default {
     }
   },
   mounted() {
+    this.updateTrakcerSpeed()
     this.$bus.$on(this.eventKey, newItem => {
       this.$set(this, 'stockPoolItem', newItem)
       this.initTracker()
@@ -135,6 +140,14 @@ export default {
       if (this.tracker) {
         clearInterval(this.tracker)
         this.tracker = null
+      }
+    },
+    updateTrakcerSpeed() {
+      const val = this.stockPoolItem.payAttention || false
+      if (!val) {
+        this.interval = default_interval
+      } else {
+        this.interval = attention_interval
       }
     },
     startTracker() {

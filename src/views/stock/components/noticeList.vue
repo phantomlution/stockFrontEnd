@@ -4,6 +4,7 @@
       <div style="flex: 1">
         <el-radio-group v-model="filterType">
           <el-radio label="">全部</el-radio>
+          <el-radio label="回购">回购</el-radio>
           <el-radio label="债券">债券相关</el-radio>
           <el-radio label="增减持">增减持</el-radio>
           <el-radio label="质押">质押</el-radio>
@@ -72,6 +73,10 @@ export default {
       } else if (filterType === '质押') {
         return this.list.filter(item => {
           return item.title.indexOf('质押') !== -1
+        })
+      } else if(filterType === '回购') {
+        return this.list.filter(item => {
+          return item.title.indexOf('回购') !== -1
         })
       }
       return this.list

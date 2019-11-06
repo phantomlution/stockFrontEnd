@@ -6,6 +6,9 @@
         <lr-shopping-cart :code="stockCode" v-if="stockCode" style="margin-left: 8px"/>
         <risk-detector style="margin-left: 72px" ref="riskDetector" />
       </div>
+      <div>
+        <money-tracker />
+      </div>
     </div>
     <div style="margin-top: 16px;display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
       <stock-tracker @removeItem="removeItem(itemIndex)" :code="item.code" :name="item.name" :item="item" v-for="(item, itemIndex) of stockPool" :key="itemIndex"></stock-tracker>
@@ -26,6 +29,7 @@ import stockTracker from './stockTracker.vue'
 import searchStock from '@/views/stock/components/searchStock'
 import allStockNotice from './allStockNotice.vue'
 import riskDetector from './riskDetector.vue'
+import moneyTracker from './moneyTracker.vue'
 
 export default {
   components: {
@@ -33,6 +37,7 @@ export default {
     searchStock,
     allStockNotice,
     riskDetector,
+    moneyTracker
   },
   data() {
     return {

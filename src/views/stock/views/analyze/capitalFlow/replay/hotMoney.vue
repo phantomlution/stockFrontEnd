@@ -1,0 +1,247 @@
+<template>
+  <div style="font-size: 14px; color: rgba(0, 0, 0, 0.65)">
+    <!-- 简要的文本信息展示区 -->
+    <div v-if="showLabel">
+      <span>
+        <span style="font-weight: bold">北向资金</span>
+        <span>(</span>
+        <span class="lr-hot-money-label__sub">当前:<lr-number-tag :amount="northAnalyzeModel.current" unit="亿"></lr-number-tag></span>
+        <span class="lr-hot-money-label__sub">最高:<lr-number-tag :amount="northAnalyzeModel.max" unit="亿"></lr-number-tag></span>
+        <span class="lr-hot-money-label__sub">最低:<lr-number-tag :amount="northAnalyzeModel.min" unit="亿"></lr-number-tag></span>
+        <span>)</span>
+      </span>
+    </div>
+    <!-- 图形展示区 -->
+    <div>
+      <lr-box v-if="showNorthChart">
+        <span slot="title" v-if="!lightMode">
+          北向资金(亿元)
+        </span>
+        <lr-chart ref="northChart" :height="height" :usePadding="useChartPadding" />
+      </lr-box>
+      <lr-box v-if="showSouthChart">
+        <span slot="title" v-if="!lightMode">
+          南向资金(亿元)
+        </span>
+        <lr-chart ref="southChart" :height="height" :usePadding="useChartPadding" />
+      </lr-box>
+    </div>
+  </div>
+</template>
+
+<script>
+import lodash from 'lodash'
+import moment from 'moment'
+import { addStockDailyCoordinate, STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
+
+const props = {
+  date: {
+    type: String,
+    default: ''
+  },
+  live: { // 是否使用实时数据
+    type: Boolean,
+    default: false
+  },
+  showLabel: {
+    type: Boolean,
+    default: false
+  },
+  showNorthChart: {
+    type: Boolean,
+    default: true
+  },
+  showSouthChart: {
+    type: Boolean,
+    default: true
+  },
+  height: {
+    type: Number,
+    default: 0.5
+  },
+  lightMode: { // 是否轻量化展示
+    type: Boolean,
+    default: false
+  }
+}
+
+export default {
+  props,
+  data() {
+    return {
+      northAnalyzeModel: this.getAnalyzeModel([]),
+      southAnalyzeModel: this.getAnalyzeModel([]),
+      interval: 10,
+      tracker: null,
+    }
+  },
+  computed: {
+    useChartPadding() {
+      return !this.lightMode
+    },
+    chart() {
+      return this.$refs.chart.getChart()
+    }
+  },
+  mounted() {
+    this.loadData()
+    this.startTracker()
+  },
+  watch: {
+    date() {
+      this.loadData()
+    }
+  },
+  beforeDestroy() {
+    this.stopTracker()
+  },
+  methods: {
+    startTracker() {
+      this.stopTracker()
+      if (new Date().getHours() > 15) {
+        return
+      }
+      if (this.live) {
+        this.tracker = setInterval(_ => {
+          this.loadData()
+        }, this.interval * 1000)
+      }
+    },
+    stopTracker() {
+      if (this.tracker) {
+        clearInterval(this.tracker)
+      }
+      this.tracker = null
+
+    },
+    formatDate(date) {
+      return moment(date).format('YYYY-MM-DD')
+    },
+    loadData() {
+      if (!this.live && !this.date) {
+        return
+      }
+
+      const query = {
+        live: this.live
+      }
+      if (this.live) {
+        query['date'] = this.formatDate(new Date())
+      } else {
+        query['date'] = this.formatDate(this.date)
+      }
+
+      this.$http.get(`/api/stock/capital/hotMoney`, query).then(result => {
+        // 生成数据
+        const northChartData = this.getChartData('s2n', result)
+        const southChartData = this.getChartData('n2s', result)
+
+        // 生成文本
+        this.northAnalyzeModel = this.getAnalyzeModel(northChartData)
+        this.southAnalyzeModel = this.getAnalyzeModel(southChartData)
+
+        // 更新图表
+        this.showNorthChart && this.renderChart('northChart', northChartData, [
+          '沪股通',
+          '深股通',
+          '北向资金'
+        ])
+
+        this.showSouthChart && this.renderChart('southChart', southChartData, [
+          '港股通(沪)',
+          '港股通(深)',
+          '南向资金'
+        ])
+
+      }).catch(_ => {
+        console.error(_)
+      })
+    },
+    getAnalyzeModel(data) {
+      const totalAmountDataList = data.filter(item => item.type === '2')
+      const validAmountDataList = totalAmountDataList.filter(item => item.value)
+      const maxValue = lodash.maxBy(totalAmountDataList, 'value')
+      const minValue = lodash.minBy(totalAmountDataList, 'value')
+
+      return {
+        "current": validAmountDataList.length > 0 ? validAmountDataList[validAmountDataList.length - 1].value : '',
+        "max": maxValue ? maxValue.value : '',
+        "min": minValue ? minValue.value : ''
+      }
+    },
+    getChartData(key, response) {
+      const result = []
+
+      if (!this.live) {
+        // 日期比对
+        let date_string = this.$moment(this.date).format('MM-DD')
+        if (date_string !== response[`${key}Date`]) {
+          return result
+        }
+      }
+
+      response[key].forEach((_item, _itemIndex) => {
+        let item = _item.split(',')
+
+        function getLastResult(val) {
+          val = Number(val)
+          return Number((val / 10000).toFixed(2))
+        }
+        let time = this.appendDate(item[0])
+        let huAmount = item[1] ? getLastResult(item[1]) : null
+        let shenAmount = item[3] ? getLastResult(item[3]) : null
+        let totalAmount = (huAmount && shenAmount) ?Number((huAmount + shenAmount).toFixed(2)) : null
+
+        result.push({
+          time,
+          type: "0",
+          value: huAmount
+        })
+        result.push({
+          time,
+          type: "1",
+          value: shenAmount
+        })
+        result.push({
+          time,
+          type: '2',
+          value: totalAmount
+        })
+      })
+
+      return result
+    },
+    appendDate(timePoint) { // 补齐日期格式
+      return `${ STOCK_COORDINATE_DATE } ${ timePoint }:00`
+    },
+    renderChart(vueReference, chartData, legend) {
+      const chart = this.$refs[vueReference].getChart()
+      chart.clear()
+      if (chartData.length === 0) {
+        return
+      }
+      const capitalLegend = legend
+      chart.source(chartData)
+      chart.scale('type', {
+        formatter: function(val) {
+          return capitalLegend[val]
+        }
+      })
+
+      addStockDailyCoordinate(chart)
+
+      chart.line().position('time*value').color('type')
+      chart.render()
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.lr-hot-money-label__sub{
+  display: inline-block;
+  & + .lr-hot-money-label__sub{
+    margin-left: 8px;
+  }
+}
+</style>

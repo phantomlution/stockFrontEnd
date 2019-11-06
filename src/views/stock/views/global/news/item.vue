@@ -2,9 +2,9 @@
   <div class="lr-news-item">
     <div style="margin-bottom: 16px">
       <div style="display: flex">
-        <div v-if="item.thumb" style="margin-right: 8px;">
-          <img :src="item.thumb" style="max-width: 100px" />
-        </div>
+        <!--<div v-if="item.thumb" style="margin-right: 8px;">-->
+          <!--<img :src="item.thumb" style="max-width: 100px" />-->
+        <!--</div>-->
         <div style="flex: 1">
           <div class="lr-news-item__title" @click.stop="openArticle">
             {{ item.title }}

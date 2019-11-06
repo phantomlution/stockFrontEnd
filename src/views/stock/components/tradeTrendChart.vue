@@ -65,7 +65,6 @@ export default {
       })
     },
     renderChart({stock, dataCount}) {
-      debugger
       let rawData = stock.result
       this.stock = stock
       this.code = stock.code

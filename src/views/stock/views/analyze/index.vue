@@ -2,6 +2,7 @@
   <div>
     <el-radio-group v-model="currentTab" style="width: 100%;text-align: center;margin-bottom: 16px">
       <el-radio-button label="历史分时成交">历史分时成交</el-radio-button>
+      <el-radio-button label="历史资金动向">历史资金动向</el-radio-button>
       <el-radio-button label="解禁分布">解禁分布</el-radio-button>
     </el-radio-group>
 
@@ -12,6 +13,9 @@
       <div v-if="currentTab === '历史分时成交'">
         <history-fragment-deal />
       </div>
+      <div v-if="currentTab === '历史资金动向'">
+        <capital-flow />
+      </div>
     </div>
   </div>
 </template>
@@ -19,11 +23,13 @@
 <script>
 import LrRestrictSell from './restrictSell.vue'
 import historyFragmentDeal from './historyFragmentDeal.vue'
+import capitalFlow from './capitalFlow/index.vue'
 
 export default {
   components: {
     LrRestrictSell,
-    historyFragmentDeal
+    historyFragmentDeal,
+    capitalFlow
   },
   data() {
     return {

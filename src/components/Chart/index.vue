@@ -10,6 +10,10 @@ const props = {
   height: { // 高度比例
     type: Number,
     default: 0.8
+  },
+  usePadding: {
+    type: Boolean,
+    default: true
   }
 }
 
@@ -32,12 +36,21 @@ export default {
       if (this._chart) {
         this._chart.clear()
       } else {
+        let height = this.height
+        if (this.height <= 1) { //
+          height = window.innerHeight * this.height
+        }
+        let padding = [20, 30, 60, 30]
+        if (this.usePadding) {
+          padding = [20, 80, 80, 80]
+        }
+
         this._chart = new G2.Chart({
           container: this.chartId,
           forceFit: true,
           width: window.innerWidth,
-          height: window.innerHeight * this.height,
-          padding: [20, 80, 80, 80]
+          height,
+          padding: padding
         })
       }
 
