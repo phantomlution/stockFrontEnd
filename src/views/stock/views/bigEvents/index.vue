@@ -5,9 +5,6 @@
       <el-radio-button label="mine">我的日历</el-radio-button>
       <el-radio-button label="official">财经事件数据源</el-radio-button>
       <el-radio-button label="fastNews">7*24</el-radio-button>
-      <el-radio-button label="centralBankOperation">央行操作</el-radio-button>
-      <el-radio-button label="shibor">shibor</el-radio-button>
-      <el-radio-button label="loanPrimeRate">LPR</el-radio-button>
       <el-radio-button label="新华网">新华网</el-radio-button>
     </el-radio-group>
 
@@ -21,15 +18,6 @@
       </div>
       <div v-if="eventTab === 'fastNews'">
         <lr-link-page src="http://kx.fx678.com" />
-      </div>
-      <div v-if="eventTab === 'centralBankOperation'">
-        <lr-link-page src="http://www.chinamoney.com.cn/chinese/scggyhywgg/" />
-      </div>
-      <div v-if="eventTab === 'shibor'">
-        <lr-link-page src="http://www.chinamoney.com.cn/chinese/bkshibor/" />
-      </div>
-      <div v-if="eventTab === 'loanPrimeRate'">
-        <lr-link-page src="http://www.chinamoney.com.cn/chinese/bklpr/" />
       </div>
       <div v-if="eventTab === '新华网'">
         <lr-link-page src="http://www.xinhuanet.com" />
