@@ -5,10 +5,9 @@
       <el-tabs v-model="currentTab" type="card">
         <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
         <el-tab-pane label="情报中心" name="informationCenter"></el-tab-pane>
-        <el-tab-pane label="未来经济预测" name="未来经济预测"></el-tab-pane>
         <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
-        <el-tab-pane label="工具箱" name="toolPanel"></el-tab-pane>
         <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
+        <el-tab-pane label="宏观经济数据" name="宏观经济数据"></el-tab-pane>
         <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
       </el-tabs>
 
@@ -22,13 +21,10 @@
       <div v-if="currentTab === 'informationCenter'">
         <information-center />
       </div>
-      <div v-if="currentTab === 'toolPanel'">
-        <tool-panel />
-      </div>
       <div v-if="currentTab === 'dashBoard'">
         <dash-board />
       </div>
-      <div v-if="currentTab === '未来经济预测'">
+      <div v-if="currentTab === '宏观经济数据'">
         <futurePredict />
       </div>
       <div v-if="currentTab === '统计分析'">
@@ -47,7 +43,6 @@
 <script>
 import stockDetail from '@/views/stock/views/stock'
 import informationCenter from '@/views/stock/views/informationCenter'
-import toolPanel from '@/views/stock/views/tools/index'
 import dashBoard from '@/views/stock/views/dashBoard/index'
 import bigEvents from '@/views/stock/views/bigEvents/index'
 import columnPanel from '@/views/stock/views/global/columnPanel'
@@ -60,7 +55,6 @@ export default {
   components: {
     stockDetail,
     informationCenter,
-    toolPanel,
     dashBoard,
     bigEvents,
     columnPanel,

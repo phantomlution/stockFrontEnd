@@ -9,7 +9,7 @@
           <el-link icon="el-icon-close" />
         </span>
         <span style="float: right; margin: 3px 0;" v-if="biding">
-          <lr-number-tag :percentage="biding.currentDiff">
+          <lr-number-tag :amount="biding.currentDiff">
             <span slot="prepend">
               {{ biding.current || '-' }}
             </span>
@@ -25,7 +25,7 @@
             <el-col :span="12">
               <el-form-item label="今开">
                 {{ biding.open}}
-                <lr-number-tag :percentage="biding.openDiff" ></lr-number-tag>
+                <lr-number-tag :amount="biding.openDiff" ></lr-number-tag>
               </el-form-item>
             </el-col>
             <el-col :span="12">
@@ -36,13 +36,13 @@
             <el-col :span="12">
               <el-form-item label="最高">
                 {{ biding.max || '-' }}
-                <lr-number-tag :percentage="biding.maxDiff" ></lr-number-tag>
+                <lr-number-tag :amount="biding.maxDiff" ></lr-number-tag>
               </el-form-item>
             </el-col>
             <el-col :span="12">
               <el-form-item label="最低">
                 {{ biding.min || '-' }}
-                <lr-number-tag :percentage="biding.minDiff" ></lr-number-tag>
+                <lr-number-tag :amount="biding.minDiff" ></lr-number-tag>
               </el-form-item>
             </el-col>
           </el-row>
