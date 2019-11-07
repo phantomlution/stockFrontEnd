@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/notification/content.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/notification/content.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/notification/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/notification/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -721,14 +719,7 @@
       <workItem from="1572680322274" duration="9069000" />
       <workItem from="1572759095517" duration="17372000" />
       <workItem from="1573038677217" duration="13175000" />
-      <workItem from="1573092310465" duration="7871000" />
-    </task>
-    <task id="LOCAL-00088" summary="记录了全国电力使用情况">
-      <created>1570545312529</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1570545312534</updated>
+      <workItem from="1573092310465" duration="7900000" />
     </task>
     <task id="LOCAL-00089" summary="债券信息同步">
       <created>1570697205492</created>
@@ -1066,11 +1057,18 @@
       <option name="project" value="LOCAL" />
       <updated>1573118108279</updated>
     </task>
-    <option name="localTasksCounter" value="137" />
+    <task id="LOCAL-00137" summary=" 通知展示问题修复">
+      <created>1573125092455</created>
+      <option name="number" value="00137" />
+      <option name="presentableId" value="LOCAL-00137" />
+      <option name="project" value="LOCAL" />
+      <updated>1573125092455</updated>
+    </task>
+    <option name="localTasksCounter" value="138" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="568100000" />
+    <option name="totallyTimeSpent" value="568129000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1135,7 +1133,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="集成自选功能，消息提示已经完成一半" />
     <MESSAGE value="前端问题修复" />
     <MESSAGE value="页面展示优化" />
     <MESSAGE value="限售解禁UI集成" />
@@ -1160,7 +1157,8 @@
     <MESSAGE value="页面排版重构中" />
     <MESSAGE value="bug修复" />
     <MESSAGE value="前端通知集成" />
-    <option name="LAST_COMMIT_MESSAGE" value="前端通知集成" />
+    <MESSAGE value=" 通知展示问题修复" />
+    <option name="LAST_COMMIT_MESSAGE" value=" 通知展示问题修复" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
