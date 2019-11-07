@@ -1,6 +1,5 @@
 <template>
-  <div>
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -10,7 +9,8 @@ import { idGenerator } from '@/utils'
 export default {
   data() {
     return {
-      notificationMap: new Map()
+      notificationMap: new Map(),
+      notificationLocalCache: new Map()
     }
   },
   mounted() {
@@ -32,7 +32,10 @@ export default {
     loadNotification() {
       this.$http.get(`/api/notification/list`).then(list => {
         list.forEach(item => {
-          this.notify(item)
+          if (!this.notificationLocalCache.has(item._id)) {
+            this.notificationLocalCache.set(item._id, '')
+            this.notify(item)
+          }
         })
       }).catch(_ => {
         console.error(_)

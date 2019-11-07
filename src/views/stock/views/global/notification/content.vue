@@ -15,7 +15,11 @@
     </div>
     <div style="margin-top: 8px;margin-bottom: -8px;">
         <div style="display: flex;justify-content: center;align-items: center">
-          <span style="flex: 1;color: #909399">数据发布于: {{ item.release_date }}</span>
+          <span style="flex: 1;color: #909399">
+            <span v-if="item.release_date">
+              数据发布于: {{ item.release_date }}
+            </span>
+          </span>
           <template v-if="!hasRead">
             <el-button type="text" @click.stop="markRead">标记为已读</el-button>
           </template>
