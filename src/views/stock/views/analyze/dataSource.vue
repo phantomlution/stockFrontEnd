@@ -8,6 +8,7 @@
       </el-form-item>
       <el-form-item label="重点关注">
         <el-link class="lr-data-source-link" type="danger" href="https://cn.investing.com/rates-bonds/usa-government-bonds" target="_blank">美债收益率</el-link>
+        <el-link class="lr-data-source-link" type="danger" href="http://biz.finance.sina.com.cn/meeting/showAllMeeting.php">财经会议数据源</el-link>
       </el-form-item>
       <el-form-item label="情绪数据">
         <el-link class="lr-data-source-link" type="danger" target="_blank" href="https://money.cnn.com/data/fear-and-greed/">CNN恐慌贪婪指数</el-link>
