@@ -1,5 +1,9 @@
 <template>
-  <el-drawer title="新闻面板" direction="ltr" size="50%" :visible.sync="visible">
+  <el-drawer direction="ltr" size="50%" :visible.sync="visible">
+    <div slot="title">
+      <span>新闻面板</span>
+      <el-button type="text" @click.stop="loadNews">刷新</el-button>
+    </div>
     <div style="height: calc(100vh - 80px);overflow: auto;padding: 16px;">
       <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of newsList" />
     </div>
@@ -23,12 +27,12 @@ export default {
     this.$bus.$off('openNewsPanel')
   },
   mounted() {
-    console.log('mounted')
     this.$bus.$on('openNewsPanel', _ => {
       this.visible = true
-      this.loadNews()
+      setTimeout(_ => {
+        this.loadNews()
+      }, 200)
     })
-    this.$bus.$emit('openNewsPanel')
   },
   methods: {
     loadNews() {

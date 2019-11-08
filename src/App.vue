@@ -7,6 +7,7 @@
         <stock-detail-panel />
         <news-panel />
         <notification-daemon />
+        <global-button />
       </div>
       <!-- 页面内容 -->
       <div>
@@ -55,6 +56,7 @@ import stockDetailPanel from '@/views/stock/views/global/stockDetailPanel'
 import analyzePanel from '@/views/stock/views/analyze/index'
 import newsPanel from '@/views/stock/views/global/news/index'
 import notificationDaemon from '@/views/stock/views/global/notification/index'
+import globalButton from '@/views/stock/views/global/button/index'
 
 export default {
   components: {
@@ -67,7 +69,8 @@ export default {
     stockDetailPanel,
     analyzePanel,
     newsPanel,
-    notificationDaemon
+    notificationDaemon,
+    globalButton
   },
   data() {
     return {
