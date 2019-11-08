@@ -201,6 +201,9 @@ export default {
         if (condition.key === 'price') {
           if (biding.current <= Number(condition.value)) {
             this.addNotification(notificationItem)
+          } else if (biding.min <= Number(condition.value)) {
+            notificationItem.title = `${ notificationItem.name } 最低值`
+            this.addNotification(notificationItem)
           }
         } else if (condition.key === 'volume' || condition.key === 'turnOverRate') {
           if (biding[condition.key] >= Number(condition.value)) {
@@ -213,7 +216,7 @@ export default {
         }
       })
     },
-    addNotification({ code, name, condition }) {
+    addNotification({ code, name, condition, title }) {
       const oldItem = this.notificationList.find(item => item.code === code && item.condition.key === condition.key)
       if (!oldItem) {
         // 加入消息队列
@@ -226,7 +229,7 @@ export default {
         setTimeout(_ => {
           // 弹出通知
           this.$notify({
-            title: `${ this.$moment().format('HH:mm')} ${ name } ${ condition.key }`,
+            title: title ? title : `${ this.$moment().format('HH:mm')} ${ name } ${ condition.key }`,
             message: `${ condition.value }`,
             duration: 0,
             type: 'warning'
