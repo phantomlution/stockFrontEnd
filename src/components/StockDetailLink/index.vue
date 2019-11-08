@@ -1,13 +1,6 @@
 <template>
   <div style="display: inline-block">
-    <el-link type="primary" @click.stop="showStockDetail">
-      <template v-if="showName">
-        {{ name }}
-      </template>
-      <template v-if="showCode">
-        {{ codeLabel }}
-      </template>
-    </el-link>
+    <el-link type="primary" @click.stop="showStockDetail">{{ displayLabel }}</el-link>
     <lr-shopping-cart :code="code" v-if="add" :buttonText="addText" />
   </div>
 </template>
@@ -47,6 +40,16 @@ export default {
   name: 'LrStockDetailLink',
   props,
   computed: {
+    displayLabel() {
+      let label = ''
+      if (this.showName) {
+        label += this.name
+      }
+      if (this.showCode) {
+        label += this.codeLabel
+      }
+      return label
+    },
     codeLabel() {
       if (this.name === '上证指数') {
         return ''
