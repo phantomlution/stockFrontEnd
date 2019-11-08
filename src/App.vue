@@ -8,13 +8,13 @@
         <news-panel />
         <notification-daemon />
         <global-button />
+        <theme-market />
       </div>
       <!-- 页面内容 -->
       <div>
         <lr-motto style="margin-bottom: 8px"></lr-motto>
         <el-tabs v-model="currentTab" type="card">
           <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
-          <el-tab-pane label="情报中心" name="informationCenter"></el-tab-pane>
           <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
           <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
           <el-tab-pane label="宏观经济数据" name="宏观经济数据"></el-tab-pane>
@@ -27,9 +27,6 @@
         <div v-show="currentTab === 'stockDetail'">
           <!-- 初始化数据 -->
           <stock-detail />
-        </div>
-        <div v-if="currentTab === 'informationCenter'">
-          <information-center />
         </div>
         <div v-if="currentTab === 'dashBoard'">
           <dash-board />
@@ -47,7 +44,6 @@
 
 <script>
 import stockDetail from '@/views/stock/views/stock'
-import informationCenter from '@/views/stock/views/informationCenter'
 import dashBoard from '@/views/stock/views/dashBoard/index'
 import bigEvents from '@/views/stock/views/bigEvents/index'
 import columnPanel from '@/views/stock/views/global/columnPanel'
@@ -57,11 +53,11 @@ import analyzePanel from '@/views/stock/views/analyze/index'
 import newsPanel from '@/views/stock/views/global/news/index'
 import notificationDaemon from '@/views/stock/views/global/notification/index'
 import globalButton from '@/views/stock/views/global/button/index'
+import themeMarket from '@/views/stock/views/global/themeMarket/index'
 
 export default {
   components: {
     stockDetail,
-    informationCenter,
     dashBoard,
     bigEvents,
     columnPanel,
@@ -70,7 +66,8 @@ export default {
     analyzePanel,
     newsPanel,
     notificationDaemon,
-    globalButton
+    globalButton,
+    themeMarket
   },
   data() {
     return {

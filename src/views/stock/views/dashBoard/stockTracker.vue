@@ -107,7 +107,7 @@ export default {
   },
   watch: {
     'stockPoolItem.payAttention'() {
-      this.updateTrakcerSpeed()
+      this.updateTrackSpeed()
     }
   },
   filters: {
@@ -119,7 +119,7 @@ export default {
     }
   },
   mounted() {
-    this.updateTrakcerSpeed()
+    this.updateTrackSpeed()
     this.$bus.$on(this.eventKey, newItem => {
       this.$set(this, 'stockPoolItem', newItem)
       this.initTracker()
@@ -142,7 +142,7 @@ export default {
         this.tracker = null
       }
     },
-    updateTrakcerSpeed() {
+    updateTrackSpeed() {
       const val = this.stockPoolItem.payAttention || false
       if (!val) {
         this.interval = default_interval
@@ -192,12 +192,17 @@ export default {
       Array.prototype.push.apply(conditionList, this.defaultConditionList)
       Array.prototype.push.apply(conditionList, this.stockPoolItem.conditionList || [])
 
+      // 所有数据应该考虑实时的值，和历史的值
+      const priceConditionItem = conditionList.filter(item => item.key === 'price')
+
+
       conditionList.forEach(condition => {
         let notificationItem = {
           code,
           name,
           condition
         }
+
         if (condition.key === 'price') {
           if (biding.current <= Number(condition.value)) {
             this.addNotification(notificationItem)
@@ -205,7 +210,7 @@ export default {
             notificationItem.title = `${ notificationItem.name } 最低值`
             this.addNotification(notificationItem)
           }
-        } else if (condition.key === 'volume' || condition.key === 'turnOverRate') {
+        } else if (condition.key === 'volume') {
           if (biding[condition.key] >= Number(condition.value)) {
             this.addNotification(notificationItem)
           }

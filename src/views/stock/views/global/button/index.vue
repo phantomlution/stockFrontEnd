@@ -1,5 +1,6 @@
 <template>
   <div class="lr-global-button">
+    <el-button size="small" circle icon="el-icon-shopping-cart-1" @click.stop="openThemeMarket"/>
     <el-button size="small" circle icon="el-icon-reading" @click.stop="openNews" />
   </div>
 </template>
@@ -7,6 +8,9 @@
 <script>
 export default {
   methods: {
+    openThemeMarket() {
+      this.$bus.$emit('openThemeMarket')
+    },
     openNews() {
       this.$bus.$emit('openNewsPanel')
     }

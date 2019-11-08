@@ -1,45 +1,65 @@
 <template>
-  <div v-loading="loading">
-    <el-row :gutter="32">
-      <el-col :span="12">
-        <el-card>
-          <el-divider>核心主题</el-divider>
-          <div style="display: inline-block" v-for="(item, itemIndex) of defaultThemeList" :key="itemIndex">
-            <el-button size="small" type="text" @click.stop="showTheme(item)">{{ item.name }}</el-button>
-            <el-badge :max="99" :value="item.list.length"></el-badge>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="12" v-if="currentTheme">
-        <el-card>
-        <el-divider>{{ currentTheme.name }} - 股票列表(共<span style="color: red">{{ currentTheme.list.length }}</span>个)</el-divider>
-        <div style="display: inline-block;width: 84px" :key="itemIndex" v-for="(item, itemIndex) of currentTheme.list">
-          <lr-stock-detail-link :add="false" :showCode="false" :code="item.code" :name="item.name" />
-        </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+  <el-drawer title="主题市场" :visible.sync="visible" size="80%" direction="ltr">
+    <div slot="title" style="display: flex;align-items: center">
+      <div style="margin-right: 16px;">主题市场</div>
+      <div v-if="themeList.length > 0">
+        <span style="margin-left: 64px;font-size: 14px;color: grey">快速跳转:</span>
+        <el-link style="margin-left: 16px;" type="primary" :href="`#${theme.containerId}`" v-for="theme of themeList" :key="theme.containerId">{{ theme.name }}</el-link>
+      </div>
+     </div>
+    <div style="padding: 0 16px;">
+      <el-row :gutter="32">
+        <el-col :span="12">
+          <el-card :style="cardStyle" v-loading="loading">
+            <div v-if="!loading" style="margin-top: -10px">
+              <theme-list :theme="theme" @showTheme="showTheme" v-for="theme of themeList" :key="theme.containerId"></theme-list>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :span="12">
+          <el-card :style="cardStyle">
+            <template v-if="currentTheme">
+              <el-divider>{{ currentTheme.name }}(共<span style="color: red">{{ currentTheme.list.length }}</span>个)</el-divider>
+              <div style="display: inline-block;width: 84px" :key="itemIndex" v-for="(item, itemIndex) of currentTheme.list">
+                <lr-stock-detail-link :add="false" :showCode="false" :code="item.code" :name="item.name" />
+              </div>
+            </template>
+            <template v-else>
+              <el-divider>请选择主题</el-divider>
+            </template>
+          </el-card>
+        </el-col>
+      </el-row>
+    </div>
+  </el-drawer>
 </template>
 
 <script>
+import { idGenerator } from '@/utils'
+import themeList from './themeList.vue'
 
 export default {
+  components: {
+    themeList
+  },
   data() {
     return {
+      visible: false,
+      height: 'calc(100vh - 90px)',
       loading: true,
       activeName: '1',
       currentTheme: null,
-      defaultThemeList: [], // 展示的主题
+      themeList: [],
+      defaultThemeRuleName: '核心主题',
       themeRuleList: [{ // 概念分片
         ruleName: '指数类',
         ruleThemeList: [
           'HS300_', 'MSCI大盘', 'MSCI中国', '上证180_', '上证50_',
           'MSCI中盘', '中证500', '上证380', '深成500', '深证100R',
           '央视50_'
-        ],
-        itemList: []
+        ]
       }, {
+
         ruleName: '地区类',
         ruleThemeList: [
           '上海板块', '吉林板块', '广东板块', '湖北板块', '北京板块',
@@ -50,8 +70,7 @@ export default {
           '辽宁板块', '湖南板块', '河北板块', '海南板块', '西藏板块',
           '广西板块', '内蒙古', '福建板块', '滨海新区', '重庆板块',
           '宁夏板块', '天津板块', '京津冀', '长株潭'
-        ],
-        itemList: []
+        ]
       }, {
         ruleName: '噪声',
         ruleThemeList: [ // '--' 为退市
@@ -81,18 +100,38 @@ export default {
           "保险", "专用设备",  "水泥建材", "基因测序", "国产软件",
           "工艺商品",  "园林工程", "智能电视", "知识产权", "次新股",
           "数字中国", "食品安全"
-        ],
-        itemList: []
+        ]
       }]
     }
   },
+  computed: {
+    cardStyle() {
+      return {
+        'height': this.height,
+        'overflow': 'auto'
+      }
+    }
+  },
+  beforeDestroy() {
+    this.$bus.$off('openThemeMarket')
+  },
   mounted() {
-     this.loadMarketTheme()
+    this.$bus.$on('openThemeMarket', _ => {
+      this.visible = true
+      this.loadMarketTheme()
+    })
   },
   methods: {
     loadMarketTheme() {
+      this.loading = true
       this.$http.get(`/api/stock/theme/market`).then(themeMarketList => {
-        const defaultThemeList = []
+        // 初始化
+        const themeMap = new Map()
+        themeMap.set(this.defaultThemeRuleName, [])
+        this.themeRuleList.forEach(themeRule => {
+          themeMap.set(themeRule.ruleName, [])
+        })
+
         themeMarketList.forEach(themeMarketItem => {
           let themeName = themeMarketItem['name']
 
@@ -101,16 +140,27 @@ export default {
           for(let i=0; i<this.themeRuleList.length; i++) {
             const currentThemeRule = this.themeRuleList[i]
             if (currentThemeRule.ruleThemeList.indexOf(themeName) !== -1) {
+              themeMap.get(currentThemeRule.ruleName).push(themeMarketItem)
               gotcha = true
             }
           }
 
           if (!gotcha) {
-            defaultThemeList.push(themeMarketItem)
+            themeMap.get(this.defaultThemeRuleName).push(themeMarketItem)
           }
         })
 
-        this.defaultThemeList = defaultThemeList
+        // 生成要展示的数据
+        const themeList = []
+        for(let themeRuleName of themeMap.keys()) {
+          themeList.push({
+            name: themeRuleName,
+            containerId: idGenerator.next('theme_market'),
+            list: themeMap.get(themeRuleName)
+          })
+        }
+        this.themeList = themeList
+        themeMap.clear()
         this.loading = false
       }).catch(_ => {
         console.error(_)
@@ -121,12 +171,4 @@ export default {
     }
   }
 }
-
 </script>
-
-<style lang="scss">
-.lr-theme-badge{
-  margin-right: 40px;
-  margin-bottom: 16px;
-}
-</style>
