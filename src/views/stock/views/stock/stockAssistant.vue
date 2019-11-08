@@ -86,7 +86,7 @@ export default {
       }
     },
     getFileResource() { // 加载其他数据源
-      const baseDir = '/static/analyze/'
+      const baseDir = '/api/static/analyze/'
       const fileName = '二次限售解禁分析.json'
 
       return this.getRemoteFile(baseDir + fileName).then(response => {

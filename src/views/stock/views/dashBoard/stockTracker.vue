@@ -83,12 +83,12 @@ export default {
       interval: default_interval,
       lastUpdate: -1,
       biding: null,
-      notificationList: [],
+      defaultNotificationList: [],
+      customNotificationList: [],
       defaultConditionList: [
         {
           key: 'slump',
           value: '-5',
-          enabled: true
         }
       ]
     }
@@ -153,10 +153,10 @@ export default {
     startTracker() {
       this.tracker = setInterval(_ => {
         const hour = new Date().getHours()
-        if (hour >= 15) {
-          this.stopTracker()
-          return
-        }
+//        if (hour >= 15) {
+//          this.stopTracker()
+//          return
+//        }
         this.loadDetail()
       }, 1000 * this.interval)
     },
@@ -171,7 +171,7 @@ export default {
         this.biding = response
         this.lastUpdate = new Date().getTime()
 
-        this.checkNotification(response)
+        this.checkAllNotification(response)
       }).catch(_ => {
         console.error(_)
       })
@@ -184,57 +184,54 @@ export default {
     calculateDiff(biding, fieldName, target='yesterday') {
       return lodash.round((biding[fieldName] - biding[target]) * 100 / biding[target], 2)
     },
-    checkNotification(biding) { // 开启内容推送
-      const code = this.code
-      const name = this.name
-
-      const conditionList = []
-      Array.prototype.push.apply(conditionList, this.defaultConditionList)
-      Array.prototype.push.apply(conditionList, this.stockPoolItem.conditionList || [])
-
-      // 所有数据应该考虑实时的值，和历史的值
-      const priceConditionItem = conditionList.filter(item => item.key === 'price')
-
-
-      conditionList.forEach(condition => {
-        let notificationItem = {
-          code,
-          name,
-          condition
-        }
-
-        if (condition.key === 'price') {
-          if (biding.current <= Number(condition.value)) {
-            this.addNotification(notificationItem)
-          } else if (biding.min <= Number(condition.value)) {
-            notificationItem.title = `${ notificationItem.name } 最低值`
-            this.addNotification(notificationItem)
-          }
-        } else if (condition.key === 'volume') {
-          if (biding[condition.key] >= Number(condition.value)) {
-            this.addNotification(notificationItem)
-          }
-        } else if (condition.key === 'slump') {
-          if (Number(biding.currentDiff) <= Number(condition.value)) {
-            this.addNotification(notificationItem)
-          }
-        }
+    checkAllNotification(biding) {
+      // 默认消息
+      this.checkConditionList(biding, this.defaultNotificationList, this.defaultConditionList)
+      this.checkConditionList(biding, this.customNotificationList, this.stockPoolItem.conditionList || [])
+    },
+    checkConditionList(biding, notificationSource, conditionList) { // 开启内容推送
+      conditionList.forEach(conditionItem => {
+        this.checkConditionItem(biding, notificationSource, conditionItem)
       })
     },
-    addNotification({ code, name, condition, title }) {
-      const oldItem = this.notificationList.find(item => item.code === code && item.condition.key === condition.key)
+    checkConditionItem(biding, notificationSource, condition) {
+      // 所有数据应该考虑实时的值，和历史的值
+      if (condition.key === 'price') {
+
+        if (biding.current <= Number(condition.value)) {
+          this.addNotification(notificationSource, condition)
+        }
+        if (biding.min <= Number(condition.value)) { // 判断历史
+          this.addNotification(notificationSource, condition, true)
+        }
+      } else if (condition.key === 'volume') {
+        if (biding[condition.key] >= Number(condition.value)) {
+          this.addNotification(notificationSource, condition)
+        }
+      } else if (condition.key === 'slump') { // 判断历史
+        if (Number(biding.currentDiff) <= Number(condition.value)) {
+          this.addNotification(notificationSource, condition)
+        }
+        if (Number(biding.minDiff) <= Number(condition.value)) {
+          this.addNotification(notificationSource, condition, true)
+        }
+      }
+
+    },
+    addNotification(notificationSource, conditionItem, history=false) {
+      const condition = {
+        history,
+        ...conditionItem
+      }
+      const oldItem = notificationSource.find(item => item.key === condition.key && item.history === condition.history)
       if (!oldItem) {
         // 加入消息队列
-        this.notificationList.push({
-          code,
-          name,
-          condition
-        })
+        notificationSource.push(condition)
 
         setTimeout(_ => {
           // 弹出通知
           this.$notify({
-            title: title ? title : `${ this.$moment().format('HH:mm')} ${ name } ${ condition.key }`,
+            title: `${ condition.history ? '前期数据' : this.$moment().format('HH:mm')} ${ this.name } ${ condition.key }`,
             message: `${ condition.value }`,
             duration: 0,
             type: 'warning'
