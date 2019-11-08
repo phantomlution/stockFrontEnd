@@ -1,27 +1,25 @@
 <template>
   <div v-loading="loading">
-    <lr-box title="主题列表">
-      <el-table :data="defaultThemeList" max-height="300">
-        <el-table-column label="主题名称" prop="name">
-          <template slot-scope="scope">
-            <el-button size="small" type="text" @click.stop="showTheme(scope.row)">{{ scope.row.name }}</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="包含股票数">
-          <template slot-scope="scope">
-            {{ scope.row.list.length }}
-          </template>
-        </el-table-column>
-      </el-table>
-    </lr-box>
-    <lr-box :title="currentTheme.name + '股票列表'" v-if="currentTheme" style="margin-top: 8px">
-      <el-table :data="currentTheme.list">
-        <el-table-column label="name" prop="name" />
-        <el-table-column label="code" prop="code" />
-      </el-table>
-    </lr-box>
+    <el-row :gutter="32">
+      <el-col :span="12">
+        <el-card>
+          <el-divider>核心主题</el-divider>
+          <div style="display: inline-block" v-for="(item, itemIndex) of defaultThemeList" :key="itemIndex">
+            <el-button size="small" type="text" @click.stop="showTheme(item)">{{ item.name }}</el-button>
+            <el-badge :max="99" :value="item.list.length"></el-badge>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12" v-if="currentTheme">
+        <el-card>
+        <el-divider>{{ currentTheme.name }} - 股票列表(共<span style="color: red">{{ currentTheme.list.length }}</span>个)</el-divider>
+        <div style="display: inline-block;width: 84px" :key="itemIndex" v-for="(item, itemIndex) of currentTheme.list">
+          <lr-stock-detail-link :add="false" :showCode="false" :code="item.code" :name="item.name" />
+        </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
-
 </template>
 
 <script>
@@ -30,6 +28,7 @@ export default {
   data() {
     return {
       loading: true,
+      activeName: '1',
       currentTheme: null,
       defaultThemeList: [], // 展示的主题
       themeRuleList: [{ // 概念分片

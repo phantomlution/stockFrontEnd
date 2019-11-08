@@ -1,6 +1,13 @@
 <template>
   <div style="display: inline-block">
-    <el-link type="primary" @click.stop="showStockDetail">{{ name }}{{ codeLabel }}</el-link>
+    <el-link type="primary" @click.stop="showStockDetail">
+      <template v-if="showName">
+        {{ name }}
+      </template>
+      <template v-if="showCode">
+        {{ codeLabel }}
+      </template>
+    </el-link>
     <lr-shopping-cart :code="code" v-if="add" :buttonText="addText" />
   </div>
 </template>
@@ -26,6 +33,14 @@ const props = {
   defaultTab: {
     type: String,
     default: ''
+  },
+  showName: {
+    type: Boolean,
+    default: true
+  },
+  showCode: {
+    type: Boolean,
+    default: true
   }
 }
 export default {
