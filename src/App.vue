@@ -3,12 +3,7 @@
     <div>
       <!--全局使用的组件-->
       <div>
-        <column-panel />
-        <stock-detail-panel />
-        <news-panel />
-        <notification-daemon />
-        <global-button />
-        <theme-market />
+        <global-item />
       </div>
       <!-- 页面内容 -->
       <div>
@@ -46,28 +41,18 @@
 import stockDetail from '@/views/stock/views/stock'
 import dashBoard from '@/views/stock/views/dashBoard/index'
 import bigEvents from '@/views/stock/views/bigEvents/index'
-import columnPanel from '@/views/stock/views/global/columnPanel'
 import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
-import stockDetailPanel from '@/views/stock/views/global/stockDetailPanel'
 import analyzePanel from '@/views/stock/views/analyze/index'
-import newsPanel from '@/views/stock/views/global/news/index'
-import notificationDaemon from '@/views/stock/views/global/notification/index'
-import globalButton from '@/views/stock/views/global/button/index'
-import themeMarket from '@/views/stock/views/global/themeMarket/index'
+import globalItem from '@/views/stock/views/global/index'
 
 export default {
   components: {
     stockDetail,
     dashBoard,
     bigEvents,
-    columnPanel,
     futurePredict,
-    stockDetailPanel,
     analyzePanel,
-    newsPanel,
-    notificationDaemon,
-    globalButton,
-    themeMarket
+    globalItem,
   },
   data() {
     return {
