@@ -10,6 +10,9 @@
             {{ item.title }}
           </div>
         </div>
+        <div>
+          <el-rate :value="subscribeValue" :max="1" @click.native.stop="subscribeChanged"></el-rate>
+        </div>
       </div>
     </div>
     <div style="color: #ABABAB;font-size: 14px;margin-bottom: 16px;" v-if="item.shorterDescription">
@@ -34,6 +37,7 @@
         <el-tag type="info" >
           {{ item.publish_date }}
         </el-tag>
+        <el-button type="text" @click.stop="markRead" v-if="!item.has_read">已读</el-button>
       </div>
     </div>
   </div>
@@ -49,7 +53,34 @@ const props = {
 
 export default {
   props,
+  data() {
+    return {
+      subscribeValue: 0
+    }
+  },
+  watch: {
+    'item.subscribe'() {
+      this.updateSubscribeValue()
+    }
+  },
+  mounted() {
+    this.updateSubscribeValue()
+  },
   methods: {
+    updateSubscribeValue() {
+      let val = this.item.subscribe
+      if (val) {
+        this.subscribeValue = 1
+      } else {
+        this.subscribeValue = 0
+      }
+    },
+    subscribeChanged() {
+      this.$emit('subscribeChanged')
+    },
+    markRead() {
+      this.$emit('markRead')
+    },
     openArticle() {
       const url = this.item.url || ''
 
