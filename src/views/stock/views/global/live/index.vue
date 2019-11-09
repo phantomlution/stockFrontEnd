@@ -185,6 +185,7 @@ export default {
   position: fixed;
   left: 50%;
   top: 16px;
+  z-index: 999;
   transform: translateX(-50%);
 
 }

@@ -5,18 +5,15 @@
     </div>
     <div v-loading="loading" v-show="loadingState !== 2">
       <lr-box>
-        <div>
-          <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
-          <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
-          <el-button :loading="batchAnalyzeLoading" @click.stop="startBash(false)">快速分析</el-button>
-          <el-button @click.stop="openYearReport">年报</el-button>
-          <el-button @click.stop="openNotice">公告</el-button>
-          <el-button @click.stop="refresh">刷新</el-button>
-        </div>
-        <div style="margin-top: 16px">
-          <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
-          <el-button type="primary" @click.stop="showDetail">详情</el-button>
-          <el-date-picker v-model="targetDate" type="date" :editable="false" placeholder="复盘日期" style="width: 140px" />
+        <div style="display: flex">
+          <div style="width: 420px">
+            <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+          </div>
+          <div>
+            <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
+            <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
+            <el-button :loading="batchAnalyzeLoading" @click.stop="startBash(false)">快速分析</el-button>
+          </div>
         </div>
       </lr-box>
       <lr-box v-if="progress.totalCount">
@@ -65,7 +62,6 @@ export default {
       baseMap: new Map(),
       useChart: true,
       historyDataCount: 420,
-      targetDate: new Date(), // 模拟N日前的数据
       progress: {
         finishCount: 0,
         totalCount: 0,
@@ -130,17 +126,6 @@ export default {
         console.error(_)
       })
     },
-    showDetail() {
-      const code = this.stockCode
-      this.$bus.$emit('showStockDetail', {
-        code
-       })
-    },
-    refresh() {
-      this.$nextTick(_ => {
-        this.searchStock(this.stockCode)
-      })
-    },
     searchStock(code) {
       this.loadData(code, true)
     },
@@ -181,26 +166,16 @@ export default {
       return this.$store.dispatch('loadStockData', code)
     },
     startProbabilityModel() {
-      this.$bus.$emit('analyzeMakeShort', this.analyzeProbability({
-        targetDate: this.targetDate
-      }))
+      this.$bus.$emit('analyzeMakeShort', this.analyzeProbability())
     },
     getTargetStockResultRange(stock, beforeDays = 0) {
       return lodash.slice(stock.result, 0, stock.result.length - beforeDays)
     },
-    analyzeProbability({ targetDate }) {
+    analyzeProbability() {
       const collector = []
       for(let stock of this.stockMap.values()) {
-        let beforeDays = -1
-        for(let i=0; i<stock.rawData.length; i++) {
-          if (stock.rawData[stock.rawData.length - 1 - i].timestamp <= targetDate.getTime()) {
-            beforeDays = i
-            break
-          }
-        }
-        if (beforeDays === -1) {
-          continue
-        }
+        // 回溯天数
+        let beforeDays = 0
 
         const targetStockResult = this.getTargetStockResultRange(stock, beforeDays)
         // 已复盘至指定日期
@@ -365,12 +340,6 @@ export default {
         }
       })
       return secondPhaseGraph
-    },
-    openYearReport() {
-      window.open(`https://xueqiu.com/snowman/S/${ this.stockCode }/detail#/ZYCWZB`)
-    },
-    openNotice() {
-      window.open(`http://data.eastmoney.com/notices/stock/${ this.stockCode.substring(2) }.html`)
     }
   }
 }

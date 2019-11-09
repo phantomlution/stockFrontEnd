@@ -9,17 +9,12 @@
             </div>
           </template>
           <div>
-            <template v-if="scope.event.title === '财经资讯'">
-              <financialInformation :date="scope.event.start" />
-            </template>
-            <template v-else>
-              <el-card>
-                <h4 :class="{ 'lr-calendar-important': scope.event.isImportant }" >
-                  {{ scope.event.title }}
-                </h4>
-                <el-button type="text" v-if="scope.event.source" @click.stop="toSource(scope.event.source)">信息来源</el-button>
-              </el-card>
-            </template>
+            <el-card>
+              <h4 :class="{ 'lr-calendar-important': scope.event.isImportant }" >
+                {{ scope.event.title }}
+              </h4>
+              <el-button type="text" v-if="scope.event.source" @click.stop="toSource(scope.event.source)">信息来源</el-button>
+            </el-card>
           </div>
         </el-popover>
       </template>
@@ -32,13 +27,11 @@ import chineseCalendar from '@/data/chineseNationalStatisticsCalendar/data2019.j
 import customEvent from '@/data/customEvent'
 import fullCalendar from '@/components/FullCalendar'
 import moment from 'moment'
-import financialInformation from './financialInformation.vue'
 
 
 export default {
   components: {
-    fullCalendar,
-    financialInformation
+    fullCalendar
   },
   data() {
     return {
