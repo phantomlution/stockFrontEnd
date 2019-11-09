@@ -153,10 +153,11 @@ export default {
     startTracker() {
       this.tracker = setInterval(_ => {
         const hour = new Date().getHours()
-//        if (hour >= 15) {
-//          this.stopTracker()
-//          return
-//        }
+        const day = new Date().getDay()
+        if (day === 6 || day === 7 || hour >= 16) {
+          this.stopTracker()
+          return
+        }
         this.loadDetail()
       }, 1000 * this.interval)
     },

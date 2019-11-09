@@ -1,12 +1,27 @@
 <template>
   <div class="lr-global-button">
     <el-button size="small" circle icon="el-icon-shopping-cart-1" @click.stop="openThemeMarket"/>
-    <el-button size="small" circle icon="el-icon-reading" @click.stop="openNews" />
+    <el-badge :max="999" :value="newsCount" :hidden="newsCount === 0">
+      <el-button size="small" circle icon="el-icon-reading" @click.stop="openNews" />
+    </el-badge>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      newsCount: 0
+    }
+  },
+  beforeDestroy() {
+    this.$bus.$off('update_news_count')
+  },
+  mounted() {
+    this.$bus.$on('update_news_count', count => {
+      this.newsCount = count
+    })
+  },
   methods: {
     openThemeMarket() {
       this.$bus.$emit('openThemeMarket')

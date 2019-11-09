@@ -19,25 +19,44 @@ export default {
   },
   data() {
     return {
+      interval: null,
       visible: false,
       newsList: []
     }
   },
   beforeDestroy() {
     this.$bus.$off('openNewsPanel')
+    this.stopInterval()
   },
   mounted() {
     this.$bus.$on('openNewsPanel', _ => {
       this.visible = true
-      setTimeout(_ => {
-        this.loadNews()
-      }, 200)
     })
+    this.startInterval()
+    this.initNews()
   },
   methods: {
+    startInterval() {
+      this.stopInterval()
+      this.interval = setInterval(_ => {
+        this.loadNews()
+      }, 5 * 60 * 1000)
+    },
+    stopInterval() {
+      if (this.interval) {
+        clearInterval(this.interval)
+        this.interval = null
+      }
+    },
+    initNews() {
+      if (this.newsList.length === 0) {
+        this.loadNews()
+      }
+    },
     markRead(item) {
       this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {
         item.has_read = true
+        this.updateNewsCount()
       }).catch(_ => {
         console.error(_)
       })
@@ -52,7 +71,14 @@ export default {
     loadNews() {
       this.$http.get(`/api/news/page`).then(page => {
         this.newsList = page['list']
+        this.updateNewsCount()
+      }).catch(_ => {
+        this.$message.error('加载新闻失败')
       })
+    },
+    updateNewsCount() {
+      const unReadCount = this.newsList.filter(item => !item.has_read && !item.subscribe).length
+      this.$bus.$emit('update_news_count', unReadCount)
     }
   }
 }
