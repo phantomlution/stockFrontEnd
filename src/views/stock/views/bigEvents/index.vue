@@ -1,7 +1,16 @@
 <template>
   <div>
-    <ongoing />
-    <eventCalendar />
+    <div style="display: flex">
+      <div style="flex: 1">
+        <ongoing />
+      </div>
+      <div>
+        <el-link type="danger" href="https://rl.fx678.com/Index_week.html" >本周-财经周历</el-link>
+      </div>
+    </div>
+    <div>
+      <eventCalendar />
+    </div>
   </div>
 </template>
 

@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import chineseCalendar from '@/data/chineseNationalStatisticsCalendar/data2019.json'
 import customEvent from '@/data/customEvent'
 import fullCalendar from '@/components/FullCalendar'
 import moment from 'moment'
@@ -54,7 +53,6 @@ export default {
         this.loadStockPreReleaseNotice(),
         this.loadCentralBankEvent(),
         this.loadCustomEvent(),
-        this.loadOtherEvent()
       ]).then(allEventList => {
         allEventList.forEach(event => {
           Array.prototype.push.apply(calendarList, event)
@@ -91,18 +89,6 @@ export default {
     },
     loadCustomEvent() { // 加载自定义事件
       return Promise.resolve(customEvent)
-    },
-    loadOtherEvent() { // 追加国家统计局数据
-      const eventList = []
-      chineseCalendar.forEach(item => {
-        eventList.push({
-          title: `${ item.eventName }`,
-          start: item.date,
-          end: item.date,
-          raw: item
-        })
-      })
-      return Promise.resolve(eventList)
     },
     loadCentralBankEvent() { // 加载央行会议
       return new Promise((resolve, reject) => {
