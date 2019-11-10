@@ -24,12 +24,20 @@ export default {
       newsList: []
     }
   },
+  watch: {
+    visible(val) {
+      if (!val) {
+        this.startInterval()
+      }
+    }
+  },
   beforeDestroy() {
     this.$bus.$off('openNewsPanel')
     this.stopInterval()
   },
   mounted() {
     this.$bus.$on('openNewsPanel', _ => {
+      this.stopInterval()
       this.visible = true
     })
     this.startInterval()

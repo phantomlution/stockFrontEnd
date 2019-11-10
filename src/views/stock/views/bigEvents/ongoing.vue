@@ -34,8 +34,8 @@ export default {
         columnList.filter(column => !column.finish).forEach(column => {
           // 为了让信息出现在日历中，每次未最近几天
           result.push({
-            start: this.$moment().add('days', 0).format('YYYY-MM-DD'),
-            end: this.$moment().add('days', 0).format('YYYY-MM-DD'),
+            start: this.$moment().format('YYYY-MM-DD'),
+            end: this.$moment().format('YYYY-MM-DD'),
             title: `${ column.title }`,
             isImportant: true,
             display: 'column',

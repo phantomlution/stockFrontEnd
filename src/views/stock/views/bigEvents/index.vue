@@ -5,7 +5,7 @@
         <ongoing />
       </div>
       <div>
-        <el-link type="danger" href="https://rl.fx678.com/Index_week.html" >本周-财经周历</el-link>
+        <el-link type="danger" href="https://rl.fx678.com/Index_week.html" target="_blank">本周-财经周历</el-link>
       </div>
     </div>
     <div>
