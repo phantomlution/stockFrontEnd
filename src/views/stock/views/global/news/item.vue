@@ -11,7 +11,12 @@
           </div>
         </div>
         <div>
-          <el-rate :value="subscribeValue" :max="1" @click.native.stop="subscribeChanged"></el-rate>
+          <div>
+            <el-rate :value="subscribeValue" :max="1" @click.native.stop="subscribeChanged"></el-rate>
+          </div>
+          <div style="margin-top: 8px;" @click.stop="openCustomEventDialog">
+            <el-link type="primary" :underline="false"><i class="el-icon-paperclip" ></i></el-link>
+          </div>
         </div>
       </div>
     </div>
@@ -85,6 +90,13 @@ export default {
       const url = this.item.url || ''
 
       window.open(url, '_blank')
+    },
+    openCustomEventDialog() {
+      this.$bus.$emit('openCustomEventDialog', {
+        content: this.item.title,
+        url: this.item.url,
+        time: this.item.publish_date
+      })
     }
   }
 }

@@ -18,7 +18,7 @@
             <div :class="{ 'lr-live-item--important': item.isImportant }">
               <template v-if="item.macro">
                 <el-card>
-                  <h3>{{ item.title }}</h3>
+                  <h3><el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>{{ item.title }}</h3>
                   <p>
                     <span>前值: {{ item.former }}</span>
                     <el-divider direction="vertical"></el-divider>
@@ -30,7 +30,7 @@
               </template>
               <template v-else>
                 <div style="display: flex">
-                  <div style="flex: 1">{{ item.title }}</div>
+                  <div style="flex: 1"><el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>{{ item.title }}</div>
                   <div v-if="item.imageList" style="margin-left: 32px;">
                     <el-image style="max-width: 96px;max-height: 72px" :data-src="url" :src="url" :preview-src-list="[url]" v-for="url of item.imageList" :key="url"></el-image>
                   </div>
@@ -114,6 +114,14 @@ export default {
     },
     loadData(date) {
       return this.$http.get(`/api/live/fx?date=${date}`)
+    },
+    openCustomEventDialog(item) {
+      // TODO 宏观数据html生成
+      this.$bus.$emit('openCustomEventDialog', {
+        content: item.title,
+        time: item.timestamp,
+        url: item.url
+      })
     },
     addNewestToList(model) { // 将最新的数据插入列表
       model.id = idGenerator.next('live')

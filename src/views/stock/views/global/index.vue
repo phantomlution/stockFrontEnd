@@ -7,7 +7,7 @@
     <global-button />
     <theme-market />
     <message-live />
-    <custom-event-add />
+    <custom-event-dialog />
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import notificationDaemon from './notification/index'
 import globalButton from './button/index'
 import themeMarket from './themeMarket/index'
 import messageLive from './live/index.vue'
-import customEventAdd from './customEvent/add.vue'
+import customEventDialog from './customEvent/dialog.vue'
 
 export default {
   components: {
@@ -30,7 +30,7 @@ export default {
     globalButton,
     themeMarket,
     messageLive,
-    customEventAdd
+    customEventDialog
   }
 }
 </script>
