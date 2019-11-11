@@ -55,6 +55,10 @@ export default {
       return moment(date).format('YYYY-MM-DD')
     })
 
+    Vue.filter('datetime', date => {
+      return moment(date).format('YYYY-MM-DD HH:mm')
+    })
+
     Vue.prototype.$moment = moment
 
     Vue.prototype.$fastConfirm = function() {

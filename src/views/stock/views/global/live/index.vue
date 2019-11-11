@@ -2,6 +2,14 @@
   <el-popover v-model="visible">
     <div style="width: 640px;height: 480px;overflow: auto;padding: 8px;">
       <div>
+        <!-- 置顶信息 -->
+        <div v-if="topItemList.length > 0" style="margin-bottom: 8px;">
+          <lr-motto v-for="(topItem, topItemIndex) of topItemList" :key="topItemIndex">
+            <div style="line-height: 18px">
+              {{ topItem.timestamp | datetime }}&nbsp;&nbsp;{{ topItem.title }}
+            </div>
+          </lr-motto>
+        </div>
         <div class="el-timeline-item__timestamp" style="margin-bottom: 8px; font-size: 16px">
           {{ todayDateString }}
         </div>
@@ -51,6 +59,7 @@ export default {
       todayDateString: '',
       socket: null,
       socketState: 0, // 0(ing), 1(succuss), 2(disconnect),
+      topItemList: [],
       itemList: [],
       newsIdCache: []
     }
@@ -125,6 +134,11 @@ export default {
           return item.replace('/sl_', '/sy_')
         })
       }
+
+      if (model.isTop) { // 置顶信息
+        this.topItemList.push(model)
+      }
+
       // 展示
       this.itemList.unshift(model)
     },
@@ -137,6 +151,7 @@ export default {
       // 转换模型
       const model = {
         "title": message['newsTitle'],
+        "macro": message['idxId'] !== 0,
         "former": message['previousValue'],
         "predict": message['forecaseValue'],
         "current": message['currentValue'],
@@ -145,13 +160,17 @@ export default {
         "newsId": message['newsId'],
         "isTop": message['isTop'] || false
       }
+      if (message['newsimage']) {
+        model.imageList = [
+          message['newsimage']
+        ]
+      }
       console.warn(message)
 
       // 新闻去重
       if (this.newsIdCache.indexOf(model.newsId) === -1) {
         this.newsIdCache.push(model.newsId)
       } else {
-        console.error('重复数据')
         return
       }
 
@@ -187,6 +206,9 @@ export default {
 <style lang="scss">
 .lr-live-item--important{
   color: red;
+  .el-card{
+    color: inherit;
+  }
 }
 
 .lr-live-button{

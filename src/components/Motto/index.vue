@@ -2,7 +2,7 @@
   <div class="lr-motto__wrapper">
     <div class="lr-motto__content el-message--warning">
       <div class="el-message__content">
-        <div>不仅要对<span style="color: red;font-weight: bold">风险</span>敏感，也要对<span style="color: red;font-weight: bold">收益</span>敏感</div>
+        <slot />
       </div>
     </div>
   </div>
@@ -15,6 +15,11 @@ export default {
 </script>
 
 <style lang="scss">
+.lr-motto__wrapper{
+  & + .lr-motto__wrapper{
+    margin-top: 8px;
+  }
+}
 .lr-motto__content{
   box-sizing: border-box;
   border-width: 1px;
