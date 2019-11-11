@@ -21,7 +21,13 @@
                 </el-card>
               </template>
               <template v-else>
-                <div>{{ item.title }}</div>
+                <div style="display: flex">
+                  <div style="flex: 1">{{ item.title }}</div>
+                  <div v-if="item.imageList" style="margin-left: 32px;">
+                    <el-image style="max-width: 96px;max-height: 72px" :data-src="url" :src="url" :preview-src-list="[url]" v-for="url of item.imageList" :key="url"></el-image>
+                  </div>
+                </div>
+
               </template>
             </div>
           </el-timeline-item>
@@ -45,7 +51,8 @@ export default {
       todayDateString: '',
       socket: null,
       socketState: 0, // 0(ing), 1(succuss), 2(disconnect),
-      itemList: []
+      itemList: [],
+      newsIdCache: []
     }
   },
   computed: {
@@ -112,6 +119,12 @@ export default {
       }
       model['dateStr'] = this.$moment(model.timestamp).format(dateFormat)
       this.todayDateString = this.$moment().format('YYYY-MM-DD')
+
+      if (model.imageList) { // 调整清晰度
+        model.imageList = model.imageList.map(item => {
+          return item.replace('/sl_', '/sy_')
+        })
+      }
       // 展示
       this.itemList.unshift(model)
     },
@@ -121,8 +134,6 @@ export default {
       }
     },
     resolveMessage(message) {
-      console.warn(message)
-      this.updateMessageCount()
       // 转换模型
       const model = {
         "title": message['newsTitle'],
@@ -130,9 +141,21 @@ export default {
         "predict": message['forecaseValue'],
         "current": message['currentValue'],
         "isImportant": message['importantLevel'] === 3,
-        "timestamp": message['publishtime'] * 1000
+        "timestamp": message['publishtime'] * 1000,
+        "newsId": message['newsId'],
+        "isTop": message['isTop'] || false
+      }
+      console.warn(message)
+
+      // 新闻去重
+      if (this.newsIdCache.indexOf(model.newsId) === -1) {
+        this.newsIdCache.push(model.newsId)
+      } else {
+        console.error('重复数据')
+        return
       }
 
+      this.updateMessageCount()
       this.addNewestToList(model)
     },
     initEventSource() { // 连接数据源
