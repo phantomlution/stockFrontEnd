@@ -85,8 +85,10 @@ export default {
   ::selection{
     background:rgba(255,170,55,.33);
   }
-  p{
+  h1, h2, h3, p {
     margin-top: 0;
+  }
+  p{
     line-height: 1.5;
     &:last-child{
       margin-bottom: 0;
