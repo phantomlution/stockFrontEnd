@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :visible.sync="visible">
+  <el-dialog :title="title" :visible.sync="visible" :close-on-click-modal="false">
     <custom-event-add ref="add" v-if="visible" @close="closeDialog"/>
   </el-dialog>
 </template>
