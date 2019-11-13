@@ -92,8 +92,13 @@ export default {
       window.open(url, '_blank')
     },
     openCustomEventDialog() {
+      let contentHtml = `<p>${ this.item.title }</p>`
+      if (this.item.shorterDescription) {
+        contentHtml += `<p>${ this.item.shorterDescription }</p>`
+      }
+
       this.$bus.$emit('openCustomEventDialog', {
-        content: this.item.title,
+        content: contentHtml,
         url: this.item.url,
         time: this.item.publish_date
       })

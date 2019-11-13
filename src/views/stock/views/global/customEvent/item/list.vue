@@ -35,7 +35,7 @@ export default {
 <style lang="scss">
 .lr-column-card{
   .el-card__body{
-    padding: 16px 16px 8px 16px;
+    padding: 8px 16px 8px 16px;
     h4{
       margin: 0;
     }
