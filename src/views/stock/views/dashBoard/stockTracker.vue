@@ -224,7 +224,7 @@ export default {
         history,
         ...conditionItem
       }
-      const oldItem = notificationSource.find(item => item.key === condition.key && item.history === condition.history)
+      const oldItem = notificationSource.find(item => item.key === condition.key && item.history === condition.history && item.value === condition.value)
       if (!oldItem) {
         // 加入消息队列
         notificationSource.push(condition)

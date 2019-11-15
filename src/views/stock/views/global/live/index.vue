@@ -156,6 +156,9 @@ export default {
       }
     },
     resolveMessage(message) {
+      if (message.actionType === 3) {
+        return
+      }
       // 转换模型
       const model = {
         "title": message['newsTitle'],
