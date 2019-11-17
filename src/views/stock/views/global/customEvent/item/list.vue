@@ -4,6 +4,9 @@
       <el-timeline-item :timestamp="item.datetime" placement="top" :key="list._id" v-for="(item, itemIndex) of list">
         <el-card class="lr-column-card">
           <h4 v-html="item.content"></h4>
+          <template v-if="item.url">
+            <el-link type="primary" :href="item.url" target="_blank">#相关链接#</el-link>
+          </template>
           <!--<div v-show="item.source">-->
             <!--<el-button type="text" @click.stop="showSource(item.source)">信息源</el-button>-->
           <!--</div>-->

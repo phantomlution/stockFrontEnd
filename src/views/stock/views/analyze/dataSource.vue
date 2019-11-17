@@ -6,6 +6,9 @@
         <el-link class="lr-data-source-link" type="danger" href="http://www.chinamoney.com.cn/chinese/bkshibor/" target="_blank">Shibor</el-link>
         <el-link class="lr-data-source-link" type="danger" href="http://www.chinamoney.com.cn/chinese/bklpr/" target="_blank">LPR</el-link>
       </el-form-item>
+      <el-form-item label="分析报告">
+        <el-link class="lr-data-source-link" type="danger" href="http://www.nifd.cn/SeriesReport" target="_blank">国家金融与发展实验室-系列报告</el-link>
+      </el-form-item>
       <el-form-item label="新闻数据">
         <el-link class="lr-data-source-link" type="info" href="http://www.xinhuanet.com" target="_blank">新华网</el-link>
         <el-link class="lr-data-source-link" type="info" href="https://www.jiemian.com" target="_blank">界面新闻</el-link>
@@ -14,7 +17,7 @@
       <el-form-item label="重点关注">
         <el-link class="lr-data-source-link" type="danger" href="https://rl.fx678.com/" target="_blank">财经大事件日历</el-link>
         <el-link class="lr-data-source-link" type="danger" href="https://cn.investing.com/rates-bonds/usa-government-bonds" target="_blank">美债收益率</el-link>
-        <el-link class="lr-data-source-link" type="danger" href="http://biz.finance.sina.com.cn/meeting/showAllMeeting.php">财经会议数据源</el-link>
+        <el-link class="lr-data-source-link" type="danger" href="http://biz.finance.sina.com.cn/meeting/showAllMeeting.php" target="_blank">财经会议数据源</el-link>
       </el-form-item>
       <el-form-item label="情绪数据">
         <el-link class="lr-data-source-link" type="danger" target="_blank" href="https://money.cnn.com/data/fear-and-greed/">CNN恐慌贪婪指数</el-link>

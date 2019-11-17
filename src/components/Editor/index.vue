@@ -50,6 +50,7 @@ export default {
   methods: {
     initEditor() {
       const editor = new MediumEditor(`#${ this.editorId }`, {
+        targetBlank: true
       })
       this.editorInstance = editor
       if (this.text) {

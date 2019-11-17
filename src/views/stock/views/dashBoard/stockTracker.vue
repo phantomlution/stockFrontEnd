@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="lr-stock-tracker">
     <el-card :style="cardStyle">
       <div slot="header">
         <span>
@@ -244,3 +244,14 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+.lr-stock-tracker{
+  .el-card__header{
+    padding: 16px;
+  }
+  .el-card__body{
+    padding: 16px;
+  }
+}
+</style>

@@ -1,27 +1,29 @@
 <template>
   <el-drawer title="事件列表" size="75%" :visible.sync="visible" direction="ltr">
-    <div>
-      <el-tag size="small" v-for="event of eventList" :key="event._id" @click.stop="loadEventDetail(event._id)">{{ event.name }}</el-tag>
-    </div>
-    <div>
-      <el-row :gutter="32" v-if="current">
-        <el-col :span="12">
-          <el-form :model="current" label-width="64px" ref="form">
-            <el-form-item label="名称" prop="name" :rules="[ { required: true }]">
-              <el-input v-model="current.name" />
-            </el-form-item>
-            <el-form-item label="内容">
-              <lr-editor v-model="current.content" />
-            </el-form-item>
-          </el-form>
-          <div style="text-align: right">
-            <el-button type="primary" @click.stop="updateEvent">更新</el-button>
-          </div>
-        </el-col>
-        <el-col :span="12">
-          <item-list :list="current.item_list" />
-        </el-col>
-      </el-row>
+    <div style="height: calc(100vh - 80px);overflow: hidden;display: flex;flex-direction: column">
+      <div style="padding: 0 16px;">
+        <el-tag size="small" v-for="event of eventList" :key="event._id" @click.stop="loadEventDetail(event._id)">{{ event.name }}</el-tag>
+      </div>
+      <div style="overflow: auto">
+        <el-row :gutter="32" v-if="current">
+          <el-col :span="12">
+            <el-form :model="current" label-width="64px" ref="form">
+              <el-form-item label="名称" prop="name" :rules="[ { required: true }]">
+                <el-input v-model="current.name" />
+              </el-form-item>
+              <el-form-item label="内容">
+                <lr-editor v-model="current.content" />
+              </el-form-item>
+            </el-form>
+            <div style="text-align: right">
+              <el-button type="primary" @click.stop="updateEvent">更新</el-button>
+            </div>
+          </el-col>
+          <el-col :span="12">
+            <item-list :list="current.item_list" />
+          </el-col>
+        </el-row>
+      </div>
     </div>
   </el-drawer>
 </template>
