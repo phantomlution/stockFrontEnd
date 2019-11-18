@@ -1,13 +1,11 @@
 <template>
   <el-popover v-model="visible">
-    <div style="width: 640px;height: 480px;overflow: auto;padding: 8px;">
+    <div class="lr-live-item__wrapper">
       <div>
         <!-- 置顶信息 -->
         <div v-if="topItemList.length > 0" style="margin-bottom: 8px;">
           <lr-motto v-for="(topItem, topItemIndex) of topItemList" :key="topItemIndex">
-            <div style="line-height: 18px">
-              {{ topItem.timestamp | datetime }}&nbsp;&nbsp;{{ topItem.title }}
-            </div>
+            <span style="line-height: 18px" v-html="topItem.title"></span>
           </lr-motto>
         </div>
         <div class="el-timeline-item__timestamp" style="margin-bottom: 8px; font-size: 16px">
@@ -18,7 +16,10 @@
             <div :class="{ 'lr-live-item--important': item.isImportant }">
               <template v-if="item.macro">
                 <el-card>
-                  <h3><el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>{{ item.title }}</h3>
+                  <h3>
+                    <el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>
+                    <span v-html="item.title"></span>
+                  </h3>
                   <p>
                     <span>前值: {{ item.former }}</span>
                     <el-divider direction="vertical"></el-divider>
@@ -30,7 +31,10 @@
               </template>
               <template v-else>
                 <div style="display: flex">
-                  <div style="flex: 1"><el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>{{ item.title }}</div>
+                  <div style="flex: 1">
+                    <el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>
+                    <span v-html="item.title"></span>
+                  </div>
                   <div v-if="item.imageList" style="margin-left: 32px;">
                     <el-image style="max-width: 96px;max-height: 72px" :data-src="url" :src="url" :preview-src-list="[url]" v-for="url of item.imageList" :key="url"></el-image>
                   </div>
@@ -123,6 +127,16 @@ export default {
         url: item.url
       })
     },
+    beautify(model) { // 重新排版
+      const paragraphList = model['title'].replace(/；/g, ';').split(';').filter(item => item)
+      model.title = paragraphList.map((item, itemIndex) => {
+        if (itemIndex === 0) {
+          return `${ item }${ paragraphList.length === 1 ? '' : ';' }`
+        } else{
+          return `<p>${ item };</p>`
+        }
+      }).join('')
+    },
     addNewestToList(model) { // 将最新的数据插入列表
       model.id = idGenerator.next('live')
 
@@ -146,6 +160,8 @@ export default {
       if (model.isTop) { // 置顶信息
         this.topItemList.push(model)
       }
+
+      this.beautify(model)
 
       // 展示
       this.itemList.unshift(model)
@@ -215,6 +231,18 @@ export default {
 </script>
 
 <style lang="scss">
+.lr-live-item__wrapper{
+  width: 640px;
+  height: 480px;
+  overflow: auto;
+  padding: 8px;
+  .el-link{
+    position: absolute;
+    top: 1px;
+    left: 68px;
+  }
+}
+
 .lr-live-item--important{
   color: red;
   .el-card{
