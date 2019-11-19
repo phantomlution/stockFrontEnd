@@ -205,7 +205,7 @@ export default {
         if (biding.min <= Number(condition.value)) { // 判断历史
           this.addNotification(notificationSource, condition, true)
         }
-      } else if (condition.key === 'volume') {
+      } else if (condition.key === 'turnOverRate') {
         if (biding[condition.key] >= Number(condition.value)) {
           this.addNotification(notificationSource, condition)
         }

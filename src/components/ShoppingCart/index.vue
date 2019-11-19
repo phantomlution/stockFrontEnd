@@ -18,10 +18,12 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="成交量≥" prop="notification.volume.value" :rules="[{validator: conditionValidator, trigger: 'blur'}]">
+          <el-form-item label="换手率≥" prop="notification.turnOverRate.value" :rules="[{validator: conditionValidator, trigger: 'blur'}]">
             <div style="display: flex">
               <div style="flex: 1">
-                <el-input v-model="formModel.notification.volume.value" />
+                <el-input v-model="formModel.notification.turnOverRate.value">
+                  <span slot="append">%</span>
+                </el-input>
               </div>
             </div>
           </el-form-item>
@@ -71,7 +73,7 @@ const defaultFormModel = {
     'price': {
       value: ''
     },
-    'volume': {
+    'turnOverRate': {
       value: ''
     },
     'slump': {
