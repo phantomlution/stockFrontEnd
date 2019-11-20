@@ -83,4 +83,8 @@ export default {
     padding: 0;
   }
 }
+
+.el-drawer__body{
+  overflow: auto;
+}
 </style>

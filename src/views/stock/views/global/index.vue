@@ -7,6 +7,7 @@
     <global-button />
     <theme-market />
     <message-live />
+    <article-reader />
   </div>
 </template>
 
@@ -18,6 +19,7 @@ import globalButton from './button/index'
 import themeMarket from './themeMarket/index'
 import messageLive from './live/index.vue'
 import customEvent from './customEvent/index.vue'
+import articleReader from './article/index.vue'
 
 export default {
   components: {
@@ -27,7 +29,8 @@ export default {
     globalButton,
     themeMarket,
     messageLive,
-    customEvent
+    customEvent,
+    articleReader
   }
 }
 </script>

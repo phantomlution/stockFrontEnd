@@ -21,7 +21,7 @@
             </span>
           </span>
           <template v-if="!hasRead">
-            <el-button type="text" @click.stop="markRead">标记为已读</el-button>
+            <el-button type="text" @click.stop="markRead">{{ buttonLabel }}</el-button>
           </template>
           <template v-else>
             <span style="color: #909399">已读</span>
@@ -47,6 +47,12 @@ export default {
     }
   },
   computed: {
+    buttonLabel() {
+      if (this.item.type === 'article') {
+        return '立即查看'
+      }
+      return '标记为已读'
+    },
     containerStyle() {
       if (this.item.html) {
         if (this.item.description.indexOf('</table>') !== -1) {
@@ -66,6 +72,7 @@ export default {
       const item = this.item
       this.$http.put(`/api/notification/read?id=${ item._id}`).then(_ => {
         this.hasRead = true
+        this.$bus.$emit('open_article', this.item)
         // 关闭通知
         setTimeout(_ => {
           this.$bus.$emit('close_notification', item.notificationId)
@@ -73,7 +80,7 @@ export default {
       }).catch(_ => {
         console.error(_)
       })
-    }
+    },
   }
 }
 </script>
