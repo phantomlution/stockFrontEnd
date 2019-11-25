@@ -47,8 +47,11 @@ export default {
     }
   },
   computed: {
+    isReaderItem() {
+      return this.item.type === 'reader'
+    },
     buttonLabel() {
-      if (this.item.type === 'article') {
+      if (this.isReaderItem) {
         return '立即查看'
       }
       return '标记为已读'
@@ -72,7 +75,10 @@ export default {
       const item = this.item
       this.$http.put(`/api/notification/read?id=${ item._id}`).then(_ => {
         this.hasRead = true
-        this.$bus.$emit('open_article', this.item)
+        if (this.isReaderItem) {
+          this.$bus.$emit('open_article', this.item)
+        }
+
         // 关闭通知
         setTimeout(_ => {
           this.$bus.$emit('close_notification', item.notificationId)

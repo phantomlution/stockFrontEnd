@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading">
-    <div style="text-align: center;margin-top: -16px">
+    <div style="text-align: center;position: absolute;width: 100%;background: #FFFFFF;z-index: 999">
       <el-radio-group v-model="currentTab">
         <el-radio-button label="base">基础信息</el-radio-button>
         <el-radio-button label="trendAnalyze">趋势分析</el-radio-button>
@@ -10,8 +10,8 @@
         <el-radio-button label="deep">深度数据</el-radio-button>
       </el-radio-group>
     </div>
-    <div style="padding: 16px" v-if="base">
-      <div v-show="currentTab === 'base'" :style="panelStyle">
+    <div style="padding: 40px 16px 16px 16px;" v-if="base">
+      <div v-show="currentTab === 'base'">
         <el-row>
           <el-col :span="18">
             <el-form :inline="true">
@@ -179,7 +179,7 @@
         </el-row>
       </div>
     </div>
-    <div v-if="currentTab === 'trendAnalyze'" :style="panelStyle">
+    <div v-if="currentTab === 'trendAnalyze'">
       <tradeTrendChart :code="code" />
       <tradeDataChart :code="code" />
     </div>
@@ -232,12 +232,6 @@ export default {
     }
   },
   computed: {
-    panelStyle() {
-      return {
-        height: 'calc(100vh - 110px)',
-        overflow: 'auto'
-      }
-    },
     rawCode() {
       return this.code.substring(2)
     },
