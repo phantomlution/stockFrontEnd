@@ -5,6 +5,7 @@
         <el-radio-button label="base">基础信息</el-radio-button>
         <el-radio-button label="trendAnalyze">趋势分析</el-radio-button>
         <el-radio-button label="live">实时走势</el-radio-button>
+        <el-radio-button label="fragmentTrade">分时成交</el-radio-button>
         <el-radio-button label="noticeChange">公告列表</el-radio-button>
         <el-radio-button label="pledge">股票质押</el-radio-button>
         <el-radio-button label="deep">深度数据</el-radio-button>
@@ -183,6 +184,9 @@
       <tradeTrendChart :code="code" />
       <tradeDataChart :code="code" />
     </div>
+    <div v-if="currentTab === 'fragmentTrade'">
+      <fragment-trade-detail :code="code" style="padding: 0 12px"/>
+    </div>
     <div v-show="currentTab === 'noticeChange'" style="padding: 0 16px">
       <notice-list :list="noticeChangeList" :code="code" table-height="calc(100vh - 150px)"/>
     </div>
@@ -203,6 +207,7 @@ import lodash from 'lodash'
 import noticeList from '@/views/stock/components/noticeList'
 import tradeDataChart from '@/views/stock/components/tradeDataChart.vue'
 import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
+import fragmentTradeDetail from '@/views/stock/views/analyze/historyFragmentDeal.vue'
 
 const props = {
   code: {
@@ -220,7 +225,8 @@ export default {
   components: {
     noticeList,
     tradeDataChart,
-    tradeTrendChart
+    tradeTrendChart,
+    fragmentTradeDetail
   },
   data() {
     return {

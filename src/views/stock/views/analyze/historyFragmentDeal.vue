@@ -1,14 +1,17 @@
 <template>
   <div>
     <div>
-      <search-stock v-model="stockCode" @change="checkAndLoad"/>
+      <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
       <lr-date-picker v-model="date" @change="checkAndLoad" />
+    </div>
+    <div>
+      {{ distributionList }}
     </div>
     <lr-box style="margin-top: 16px" v-if="stockCode">
       <div slot="title">
         <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
-        <span v-if="currentDate" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
-          {{ currentDate }}
+        <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
+          {{ date | date }}
         </span>
       </div>
       <lr-chart ref="chart" />
@@ -22,15 +25,27 @@ import { addStockDailyCoordinate, STOCK_COORDINATE_DATE, COORDINATE_TIME_LIST } 
 import moment from 'moment'
 import lodash from 'lodash'
 
+const props = {
+  code: { // 指定代码
+    type: String,
+    default: ''
+  }
+}
 export default {
+  props,
   components: {
     searchStock
   },
   data() {
     return {
-      stockCode: '',
-      currentDate: '',
+      stockCode: this.code,
+      distributionList: [],
       date: '',
+    }
+  },
+  mounted() {
+    if (this.code) {
+      this.date = this.$moment().add('days', -1).toDate()
     }
   },
   methods: {
@@ -56,11 +71,29 @@ export default {
         if (!tradeList) {
           tradeList = []
         }
-        this.currentDate = date
         this.renderChart(tradeList)
+        this.calculateDistribution(tradeList)
       }).catch(_ => {
         console.error(_)
       })
+    },
+    calculateDistribution(tradeList) {
+      this.distributionList = []
+      const totalVolume = lodash.sum(tradeList.map(item => item.volume))
+      for (let i=2; i<=10; i++) {
+        let targetVolume = totalVolume / i
+        let tempTotalVolume = 0
+        for(let j=0; j<tradeList.length; j++) {
+          tempTotalVolume += tradeList[j].volume
+          if (tempTotalVolume >= targetVolume) {
+            this.distributionList.push({
+              volume: `1/${i}`,
+              time: tradeList[j].time
+            })
+            break
+          }
+        }
+      }
     },
     renderChart(tradeList) {
       const chart = this.$refs.chart.getChart()

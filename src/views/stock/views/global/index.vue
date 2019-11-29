@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import stockDetailPanel from './stockDetailPanel'
+import stockDetailPanel from './stockDetail/index.vue'
 import newsPanel from './news/index'
 import notificationDaemon from './notification/index'
 import globalButton from './button/index'
