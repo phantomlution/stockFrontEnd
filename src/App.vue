@@ -7,9 +7,7 @@
       </div>
       <!-- 页面内容 -->
       <div>
-        <lr-motto style="margin-bottom: 8px">
-          <div>不仅要对<span style="color: red;font-weight: bold">风险</span>敏感，也要对<span style="color: red;font-weight: bold">收益</span>敏感</div>
-        </lr-motto>
+        <lr-hint style="margin-bottom: 8px"/>
         <el-tabs v-model="currentTab" type="card">
           <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
           <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
@@ -46,6 +44,7 @@ import bigEvents from '@/views/stock/views/bigEvents/index'
 import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
 import analyzePanel from '@/views/stock/views/analyze/index'
 import globalItem from '@/views/stock/views/global/index'
+import lrHint from '@/views/stock/views/global/hint/index'
 
 export default {
   components: {
@@ -55,6 +54,7 @@ export default {
     futurePredict,
     analyzePanel,
     globalItem,
+    lrHint
   },
   data() {
     return {
