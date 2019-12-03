@@ -4,7 +4,6 @@
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/hint/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/hint/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -51,8 +50,8 @@
       <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="95" column="20" lean-forward="false" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
+            <state relative-caret-position="136">
+              <caret line="93" column="9" lean-forward="true" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
               <folding>
                 <element signature="e#1818#1845#0" expanded="true" />
               </folding>
@@ -726,14 +725,7 @@
       <workItem from="1574646368802" duration="1067000" />
       <workItem from="1574734348084" duration="422000" />
       <workItem from="1574990188233" duration="1590000" />
-      <workItem from="1575250416175" duration="1472000" />
-    </task>
-    <task id="LOCAL-00119" summary="集成前端通知">
-      <created>1572594401316</created>
-      <option name="number" value="00119" />
-      <option name="presentableId" value="LOCAL-00119" />
-      <option name="project" value="LOCAL" />
-      <updated>1572594401316</updated>
+      <workItem from="1575250416175" duration="1554000" />
     </task>
     <task id="LOCAL-00120" summary="集成后台数据源分析">
       <created>1572618139076</created>
@@ -1071,11 +1063,18 @@
       <option name="project" value="LOCAL" />
       <updated>1575254918965</updated>
     </task>
-    <option name="localTasksCounter" value="168" />
+    <task id="LOCAL-00168" summary="添加破板预测">
+      <created>1575342129369</created>
+      <option name="number" value="00168" />
+      <option name="presentableId" value="LOCAL-00168" />
+      <option name="project" value="LOCAL" />
+      <updated>1575342129369</updated>
+    </task>
+    <option name="localTasksCounter" value="169" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="656829000" />
+    <option name="totallyTimeSpent" value="656911000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1140,7 +1139,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="新闻UI优化" />
     <MESSAGE value="主题筛选器调整中" />
     <MESSAGE value="主题市场重构" />
     <MESSAGE value="ui 问题修复" />
@@ -1165,7 +1163,8 @@
     <MESSAGE value="部分样式调整" />
     <MESSAGE value="优化性能" />
     <MESSAGE value="集成全局提示" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成全局提示" />
+    <MESSAGE value="添加破板预测" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加破板预测" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1518,8 +1517,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="95" column="20" lean-forward="false" selection-start-line="95" selection-start-column="20" selection-end-line="95" selection-end-column="20" />
+        <state relative-caret-position="136">
+          <caret line="93" column="9" lean-forward="true" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
           <folding>
             <element signature="e#1818#1845#0" expanded="true" />
           </folding>

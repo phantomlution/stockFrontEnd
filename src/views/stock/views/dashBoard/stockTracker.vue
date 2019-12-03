@@ -93,7 +93,7 @@ export default {
         },
         {
           key: 'breakCeilWarn',
-          value: '20000'
+          value: '30000'
         }
       ]
     }
