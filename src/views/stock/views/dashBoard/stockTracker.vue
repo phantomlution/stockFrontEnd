@@ -54,6 +54,7 @@
 
 <script>
 import lodash from 'lodash'
+import { deepClone} from '@/utils'
 
 const props = {
   name: {
@@ -89,6 +90,10 @@ export default {
         {
           key: 'slump',
           value: '-5',
+        },
+        {
+          key: 'breakCeilWarn',
+          value: '20000'
         }
       ]
     }
@@ -198,7 +203,6 @@ export default {
     checkConditionItem(biding, notificationSource, condition) {
       // 所有数据应该考虑实时的值，和历史的值
       if (condition.key === 'price') {
-
         if (biding.current <= Number(condition.value)) {
           this.addNotification(notificationSource, condition)
         }
@@ -215,6 +219,15 @@ export default {
         }
         if (Number(biding.minDiff) <= Number(condition.value)) {
           this.addNotification(notificationSource, condition, true)
+        }
+      } else if (condition.key === 'breakCeilWarn') {
+        // 判断涨停板买一挂单量，破板前提前通知
+        if (Number(biding.currentDiff) >= 9.9) {
+          if (Number(biding.biding[5][2]) <= Number(condition.value)) {
+            condition = deepClone(condition)
+            condition.value = `可能破板预测：${ condition.value }`
+            this.addNotification(notificationSource, condition)
+          }
         }
       }
 
