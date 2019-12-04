@@ -38,7 +38,7 @@ export default {
     loadData() {
       this.$store.dispatch('getConceptBlock').then(itemList => {
         const goldItemIndex = itemList.findIndex(item => item.name === '黄金概念')
-        if (goldItemIndex !== -1 && goldItemIndex < 3) {
+        if (goldItemIndex !== -1 && goldItemIndex < 10) {
           const goldItem = itemList.find(item => item.name === '黄金概念')
           if (goldItem.percent >= 1) {
             this.riskModel.gold = {

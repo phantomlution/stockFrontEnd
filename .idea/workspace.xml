@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/ShoppingCart/index.vue" afterPath="$PROJECT_DIR$/src/components/ShoppingCart/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/data/index.js" afterPath="$PROJECT_DIR$/src/store/data/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -46,8 +41,8 @@
       <file leaf-file-name="emotionTracker.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="42" column="35" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="35" />
+            <state relative-caret-position="855">
+              <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="e#106#112#0" expanded="true" />
@@ -699,14 +694,7 @@
       <workItem from="1574734348084" duration="422000" />
       <workItem from="1574990188233" duration="1590000" />
       <workItem from="1575250416175" duration="1665000" />
-      <workItem from="1575423489011" duration="3468000" />
-    </task>
-    <task id="LOCAL-00121" summary="页面样式优化">
-      <created>1572618520958</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1572618520958</updated>
+      <workItem from="1575423489011" duration="3559000" />
     </task>
     <task id="LOCAL-00122" summary="对齐公告展示">
       <created>1572619342115</created>
@@ -1044,11 +1032,18 @@
       <option name="project" value="LOCAL" />
       <updated>1575342244212</updated>
     </task>
-    <option name="localTasksCounter" value="170" />
+    <task id="LOCAL-00170" summary="集成情绪点监测">
+      <created>1575462541929</created>
+      <option name="number" value="00170" />
+      <option name="presentableId" value="LOCAL-00170" />
+      <option name="project" value="LOCAL" />
+      <updated>1575462541929</updated>
+    </task>
+    <option name="localTasksCounter" value="171" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="660490000" />
+    <option name="totallyTimeSpent" value="660581000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1063,7 +1058,7 @@
     <frame x="0" y="23" width="1280" height="773" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21682848" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21682848" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26495728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1113,7 +1108,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="主题筛选器调整中" />
     <MESSAGE value="主题市场重构" />
     <MESSAGE value="ui 问题修复" />
     <MESSAGE value="股票追踪器全流程监控" />
@@ -1138,7 +1132,8 @@
     <MESSAGE value="优化性能" />
     <MESSAGE value="集成全局提示" />
     <MESSAGE value="添加破板预测" />
-    <option name="LAST_COMMIT_MESSAGE" value="添加破板预测" />
+    <MESSAGE value="集成情绪点监测" />
+    <option name="LAST_COMMIT_MESSAGE" value="集成情绪点监测" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1520,8 +1515,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="42" column="35" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="35" />
+        <state relative-caret-position="855">
+          <caret line="45" column="39" lean-forward="true" selection-start-line="45" selection-start-column="39" selection-end-line="45" selection-end-column="39" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#106#112#0" expanded="true" />
