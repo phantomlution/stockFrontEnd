@@ -1,10 +1,15 @@
 <template>
   <div>
     <div style="display: flex">
-      <div style="flex: 1">
-        <searchStock v-model="stockCode" ref="searchStock" />
-        <lr-shopping-cart :code="stockCode" v-if="stockCode" style="margin-left: 8px"/>
-        <risk-detector style="margin-left: 72px" ref="riskDetector" />
+      <div style="flex: 1;display: flex;margin-right: 16px">
+        <div>
+          <searchStock v-model="stockCode" ref="searchStock" />
+          <lr-shopping-cart :code="stockCode" v-if="stockCode" style="margin-left: 8px"/>
+          <risk-detector style="margin-left: 72px" ref="riskDetector" />
+        </div>
+        <div style="flex: 1;text-align: right">
+          <emotion-tracker />
+        </div>
       </div>
       <div>
         <money-tracker />
@@ -30,6 +35,7 @@ import searchStock from '@/views/stock/components/searchStock'
 import allStockNotice from './allStockNotice.vue'
 import riskDetector from './riskDetector.vue'
 import moneyTracker from './moneyTracker.vue'
+import emotionTracker from './emotionTracker.vue'
 
 export default {
   components: {
@@ -37,7 +43,8 @@ export default {
     searchStock,
     allStockNotice,
     riskDetector,
-    moneyTracker
+    moneyTracker,
+    emotionTracker
   },
   data() {
     return {

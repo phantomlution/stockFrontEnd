@@ -103,6 +103,15 @@ export default {
           reject(_)
         })
       })
+    },
+    getConceptBlock() { // 获取概念板块数据
+      return new Promise((resolve, reject) => {
+        http.get('/api/data/block/concept').then(result => {
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
     }
   }
 }

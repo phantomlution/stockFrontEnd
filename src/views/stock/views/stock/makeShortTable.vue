@@ -63,7 +63,7 @@ export default {
       flowReturn: false, // 是否考虑流量回归
       continuousCount: 3, // 连续数据点个数
       hasEverLimitUp: true,
-      overMinPercent: 5, // 高于最低值百分比
+      overMinPercent: 3, // 高于最低值百分比
       dataList: [],
       defaultSort: {
         prop: 'closeMaxIncrement',

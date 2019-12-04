@@ -89,7 +89,7 @@ export default {
       defaultConditionList: [
         {
           key: 'slump',
-          value: '-5',
+          value: '5',
         },
         {
           key: 'breakCeilWarn',
@@ -214,10 +214,10 @@ export default {
           this.addNotification(notificationSource, condition)
         }
       } else if (condition.key === 'slump') { // 判断历史
-        if (Number(biding.currentDiff) <= Number(condition.value)) {
+        if (Math.abs(Number(biding.currentDiff)) >= Math.abs(Number(condition.value))) {
           this.addNotification(notificationSource, condition)
         }
-        if (Number(biding.minDiff) <= Number(condition.value)) {
+        if (Number(biding.minDiff) >= Number(condition.value)) {
           this.addNotification(notificationSource, condition, true)
         }
       } else if (condition.key === 'breakCeilWarn') {

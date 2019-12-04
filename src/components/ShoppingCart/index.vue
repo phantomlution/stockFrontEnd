@@ -11,14 +11,14 @@
               <el-input v-model="formModel.desc" placeholder="选择理由" style="flex: 1" />
             </div>
           </el-form-item>
-          <el-form-item label="价格≤" prop="notification.price.value" :rules="[{validator: conditionValidator, trigger: 'blur'}]">
+          <el-form-item label="价格≤" prop="notification.price.value" :rules="[{validator: conditionValidator, trigger: 'blur'}, {validator: positiveNumberValidator, trigger: 'blur'} ]">
             <div style="display: flex;">
               <div style="flex: 1">
                 <el-input v-model="formModel.notification.price.value" />
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="换手率≥" prop="notification.turnOverRate.value" :rules="[{validator: conditionValidator, trigger: 'blur'}]">
+          <el-form-item label="换手率≥" prop="notification.turnOverRate.value" :rules="[{validator: conditionValidator, trigger: 'blur'}, {validator: positiveNumberValidator, trigger: 'blur'} ]">
             <div style="display: flex">
               <div style="flex: 1">
                 <el-input v-model="formModel.notification.turnOverRate.value">
@@ -27,7 +27,7 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="跌幅≥" prop="notification.slump.value" :rules="[{validator: conditionValidator, trigger: 'blur'}]">
+          <el-form-item label="跌幅≥" prop="notification.slump.value" :rules="[{validator: conditionValidator, trigger: 'blur'}, {validator: positiveNumberValidator, trigger: 'blur'} ]">
             <div style="display: flex">
               <div style="flex: 1">
                 <el-input v-model="formModel.notification.slump.value" >
@@ -168,7 +168,19 @@ export default {
         return callback()
       }
       if (isNaN(val)) {
-        return callback('请输入正确的数字')
+        return callback('请输入数字')
+      }
+      return callback()
+    },
+    positiveNumberValidator(rule, val = '', callback) {
+      if (val.length === 0) {
+        return callback()
+      }
+      if (isNaN(val)) {
+        return callback('请输入数字')
+      }
+      if (Number(val) < 0) {
+        return callback('不能小于零')
       }
       return callback()
     }
