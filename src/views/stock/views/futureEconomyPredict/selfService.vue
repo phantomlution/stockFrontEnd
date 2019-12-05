@@ -33,7 +33,7 @@ export default {
     },
     loadIndex() {
       this.itemList = []
-      this.$http.get(`/api/financial/huitong/index`).then(indexList => {
+      this.$http.get(`/api/data/huitong/index`).then(indexList => {
         const map = {}
         indexList.forEach(item => {
           if (!map[item.country]) {

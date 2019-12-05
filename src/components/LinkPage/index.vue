@@ -26,10 +26,6 @@ const props = {
   skipLoading: {
     type: Boolean,
     default: false
-  },
-  redirect: {
-    type: Boolean,
-    default: false
   }
 }
 
@@ -81,8 +77,7 @@ export default {
       this.$nextTick(_ => {
         this.localSrc = ''
         setTimeout(_ => {
-          this.localSrc = `${ this.redirect ? '/api/redirect?url=' : '' }${ this.src }`
-          console.warn(this.localSrc)
+          this.localSrc = `${ this.src }`
         }, 100)
       })
 

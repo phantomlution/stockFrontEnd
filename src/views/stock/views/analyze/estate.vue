@@ -48,14 +48,14 @@ export default {
   methods: {
     loadDateList() {
       this.dateList = []
-      this.$http.get(`/api/financial/estate/date/list`).then(_ => {
+      this.$http.get(`/api/data/estate/date/list`).then(_ => {
         this.dateList = _
       }).catch(_ => {
         console.error(_)
       })
     },
     loadData(date) {
-      return this.$http.get('/api/financial/estate', { date }).then(response => {
+      return this.$http.get('/api/data/estate', { date }).then(response => {
         this.estateData = response
 
         this.analyze()

@@ -55,7 +55,7 @@ export default {
     },
     getHistoryData(start, end) {
       return new Promise((resolve, reject) => {
-        this.$http.get(`/api/financial/shibor`, {
+        this.$http.get(`/api/data/shibor`, {
           start,
           end
         }).then(result => {

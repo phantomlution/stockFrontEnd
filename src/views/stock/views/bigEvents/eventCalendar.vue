@@ -92,7 +92,7 @@ export default {
     },
     loadCentralBankEvent() { // 加载央行会议
       return new Promise((resolve, reject) => {
-        this.$http.get(`/api/financial/centralBank`).then(response => {
+        this.$http.get(`/api/data/centralBank`).then(response => {
           const result = response.data.map(item => {
             return {
               start: item.date,
