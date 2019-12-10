@@ -262,18 +262,6 @@ export default {
     }).catch(_ => {
     })
   },
-  filters: {
-    amount(val) {
-      let val_str = parseInt(val, 10).toString()
-      if (val_str.length > 8) {
-        return `${ lodash.round(val / 10000 / 10000, 2)}亿`
-      } else if (val_str.length > 4) {
-        return `${ lodash.round(val / 10000)}万`
-      } else {
-        return val
-      }
-    }
-  },
   methods: {
     updateTab() {
       if (this.defaultTab) {

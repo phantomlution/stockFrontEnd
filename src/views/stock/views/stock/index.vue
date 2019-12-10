@@ -137,7 +137,7 @@ export default {
 
       // 测试集
       if (!full) { // 快速分析
-        stockList = stockList.filter((item, itemIndex) => itemIndex <= 100)
+        stockList = stockList.filter((item, itemIndex) => itemIndex <= 500)
       }
 
       const needLoadCodeList = stockList.map(item => item.value)
@@ -206,6 +206,8 @@ export default {
             profit: lodash.round((mostRecentDay.close - today.close) / today.close * 100, 1),
             lastDiff: today.diff,
             close: today.close,
+            amount: today.amount,
+            amountInMillion: today.amountInMillion,
             minClose: lodash.min(closePriceList),
             maxClose: lodash.max(closePriceList),
             recentItemList: deepClone(recentCalculateItemList),

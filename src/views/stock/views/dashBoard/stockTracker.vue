@@ -15,7 +15,7 @@
             </span>
           </lr-number-tag>
           <span style="font-size: 12px;font-weight: bold">
-            {{ biding.volume | volume }},{{ biding.turnOverRate }}%
+            {{ biding.amount | amount }}
           </span>
         </span>
       </div>
@@ -113,14 +113,6 @@ export default {
   watch: {
     'stockPoolItem.payAttention'() {
       this.updateTrackSpeed()
-    }
-  },
-  filters: {
-    volume(val) {
-      if (!val) {
-        return '-'
-      }
-      return `${ lodash.round(val / 10000, 2)}万手`
     }
   },
   mounted() {

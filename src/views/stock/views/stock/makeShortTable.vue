@@ -25,7 +25,7 @@
       <el-table-column type="index" />
       <el-table-column label="code">
         <template slot-scope="props">
-          <span>(L{{ props.row.rank}},{{ props.row.diffIncrement }}%){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
+          <span>({{ props.row.amount | amount }},L{{ props.row.rank}},{{ props.row.diffIncrement }}%){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
           <el-button type="text" @click.stop="showDetail(props.row.code)">查看</el-button>
           <span>{{ props.row.bounceRate }}</span>
         </template>
@@ -114,10 +114,10 @@ export default {
         }
       })
 
-
       let firstRoundDataList = data
         .filter(item => item.close >= STOCK_PRICE_MIN)
         .filter(item => item.close <= STOCK_PRICE_MAX)
+        .filter(item => item.amountInMillion >= 20) // 成交量基本要求
         .filter(item => item.closeMaxIncrement <= -20) // 低于最高值 20%
         .filter(item => item.closeMinIncrement <= this.overMinPercent) // 高于最低值百分比
 

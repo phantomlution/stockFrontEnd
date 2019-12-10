@@ -15,6 +15,10 @@ export default class Stock {
     this.base = base
     this.code = base.symbol
     this.name = base.name
+    // 调整部分单位
+    rawData.map(item => {
+      item.amountInMillion = lodash.round(item.amount / (100 * 10000), 2)
+    })
     this.rawData = rawData
     this.label = `${ base.name }(${ base.symbol })`
     this.options = {}
@@ -66,6 +70,8 @@ export default class Stock {
         timestamp,
         close: todayData.close,
         percent: todayData.percent,
+        amount: todayData.amount,
+        amountInMillion: todayData.amountInMillion,
         totalDataCount: this.rawData.length,
         turnoverRate: todayData.turnoverRate,
         date: stockUtils.dateFormat(timestamp),
