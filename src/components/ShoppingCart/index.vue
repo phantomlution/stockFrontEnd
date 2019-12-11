@@ -18,11 +18,11 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="换手率≥" prop="notification.turnOverRate.value" :rules="[{validator: conditionValidator, trigger: 'blur'}, {validator: positiveNumberValidator, trigger: 'blur'} ]">
+          <el-form-item label="成交额≥" prop="notification.amount.value" :rules="[{validator: conditionValidator, trigger: 'blur'}, {validator: positiveNumberValidator, trigger: 'blur'} ]">
             <div style="display: flex">
               <div style="flex: 1">
-                <el-input v-model="formModel.notification.turnOverRate.value">
-                  <span slot="append">%</span>
+                <el-input v-model="formModel.notification.amount.value">
+                  <span slot="append">Million</span>
                 </el-input>
               </div>
             </div>
@@ -73,8 +73,9 @@ const defaultFormModel = {
     'price': {
       value: ''
     },
-    'turnOverRate': {
-      value: ''
+    'amount': {
+      value: '',
+      unit: 'Million'
     },
     'slump': {
       value: ''
@@ -153,7 +154,8 @@ export default {
       model.conditionList = Object.keys(this.formModel.notification).filter(conditionKey => this.formModel.notification[conditionKey].value.length > 0).map(conditionKey => {
         return {
           key: conditionKey,
-          value: this.formModel.notification[conditionKey].value
+          value: this.formModel.notification[conditionKey].value,
+          unit: this.formModel.notification[conditionKey].unit || ''
         }
       })
 

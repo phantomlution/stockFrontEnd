@@ -90,6 +90,7 @@ export default {
         {
           key: 'slump',
           value: '5',
+          unit: '%'
         },
         {
           key: 'breakCeilWarn',
@@ -201,7 +202,7 @@ export default {
         if (biding.min <= Number(condition.value)) { // 判断历史
           this.addNotification(notificationSource, condition, true)
         }
-      } else if (condition.key === 'turnOverRate') {
+      } else if (condition.key === 'amount') {
         if (biding[condition.key] >= Number(condition.value)) {
           this.addNotification(notificationSource, condition)
         }
@@ -239,7 +240,7 @@ export default {
           // 弹出通知
           this.$notify({
             title: `${ condition.history ? '前期数据' : this.$moment().format('HH:mm')} ${ this.name } ${ condition.key }`,
-            message: `${ condition.value }`,
+            message: `${ condition.value } ${ condition.unit ? condition.unit : ''}`,
             duration: 0,
             type: 'warning'
           })

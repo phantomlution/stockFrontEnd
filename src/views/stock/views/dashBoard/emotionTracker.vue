@@ -40,13 +40,11 @@ export default {
         const goldItemIndex = itemList.findIndex(item => item.name === '黄金概念')
         if (goldItemIndex !== -1 && goldItemIndex < 10) {
           const goldItem = itemList.find(item => item.name === '黄金概念')
-          if (goldItem.percent >= 1) {
-            this.riskModel.gold = {
-              index: goldItemIndex + 1,
-              percent: goldItem.percent
-            }
-            return
+          this.riskModel.gold = {
+            index: goldItemIndex + 1,
+            percent: goldItem.percent
           }
+          return
         }
         this.riskModel.gold = null
       }).catch(_ => {

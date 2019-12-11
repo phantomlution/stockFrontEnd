@@ -5,7 +5,6 @@
     </div>
     <el-input-number v-model="dataCount" :step="50" :min="70" :max="maxDataCount" slot="center"/>
     <lr-chart ref="amountChart" />
-    <lr-chart ref="chart" />
   </lr-box>
 </template>
 
@@ -54,10 +53,6 @@ export default {
         return
       }
       this.$store.dispatch('loadStockData', this.code).then(stock => {
-        this.renderChart({
-          stock,
-          dataCount: this.dataCount
-        })
         this.renderTradeAmountChart({
           stock,
           dataCount: this.dataCount
@@ -113,72 +108,6 @@ export default {
         },
         text: {
           content: `${ amountInMillion } M`
-        }
-      })
-
-      view1.guide().line({
-        start: {
-          timestamp: 'min',
-          close: average
-        },
-        end: {
-          timestamp: 'max',
-          close: average
-        },
-        text: {
-          content: average
-        }
-      })
-
-      chart.render()
-    },
-    renderChart({ stock, dataCount }) {
-      let rawData = stock.rawData
-      const data = lodash.takeRight(rawData, dataCount)
-      this.code = stock.code
-      this.name = stock.name
-      const closeValueList = data.map(item => item.close)
-      const waterList = data.map(item => item.turnoverRate).filter(item => item !== null)
-
-      const turnoverRate = lodash.round(lodash.mean(waterList), 2)
-      const average = lodash.round(lodash.mean(closeValueList), 2)
-
-      const chart = this.$refs.chart.getChart()
-      chart.clear()
-
-      var scale = {
-        timestamp: {
-          alias: '日期',
-          type: 'time',
-          mask: 'YYYY-MM-DD'
-        },
-        close: {
-          alias: 'close',
-          min: 0
-        },
-        turnoverRate: {
-          alias: 'turnoverRate',
-          formatter: function formatter(value) {
-            return value
-          }
-        },
-      };
-      var view1 = chart.view();
-      view1.source(data, scale);
-      view1.line().position('timestamp*close').tooltip('timestamp*close*percent').color('#4FAAEB').size(2);
-      view1.line().position('timestamp*turnoverRate').color('#9AD681').size(2);
-
-      view1.guide().line({
-        start: {
-          timestamp: 'min',
-          turnoverRate: turnoverRate
-        },
-        end: {
-          timestamp: 'max',
-          turnoverRate: turnoverRate
-        },
-        text: {
-          content: `${ turnoverRate }%`
         }
       })
 

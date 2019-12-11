@@ -61,8 +61,8 @@ export default class Stock {
         continue
       }
 
-      const turnoverRateStart = stockUtils.getTurnoverRateInDays(data, startDays)
-      const turnoverRateEnd = stockUtils.getTurnoverRateInDays(data, endDays)
+      const amountInMillionStart = stockUtils.getAmountInMillionInDays(data, startDays)
+      const amountInMillionEnd = stockUtils.getAmountInMillionInDays(data, endDays)
       const timestamp = data[data.length - 1].timestamp
       const todayData = data[data.length - 1]
       result.push({
@@ -76,9 +76,9 @@ export default class Stock {
         turnoverRate: todayData.turnoverRate,
         date: stockUtils.dateFormat(timestamp),
         lastDataTimestamp: timestamp,
-        diff: lodash.round((turnoverRateStart - turnoverRateEnd) / turnoverRateEnd * 100, 2),
-        lastStartDuration: turnoverRateStart,
-        lastEndDuration: turnoverRateEnd
+        diff: lodash.round((amountInMillionStart - amountInMillionEnd) / amountInMillionEnd * 100, 2),
+        lastStartDuration: amountInMillionStart,
+        lastEndDuration: amountInMillionEnd
       })
     }
 

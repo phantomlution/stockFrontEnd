@@ -84,7 +84,7 @@ export default {
 
       view.source(data, scale);
       view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2);
-      view.line().position('timestamp*diff').color('#9AD681').tooltip('turnoverRate**diff');
+      view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff');
 
       // 追加限售解禁信息
       const restrict_sell_list = stock.base.restrict_sell_list || []
