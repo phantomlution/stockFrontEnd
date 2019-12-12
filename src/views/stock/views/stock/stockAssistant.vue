@@ -19,9 +19,8 @@
               </el-tag>
             </div>
             <div v-if="currentRowModel.desc">
-              {{ currentRowModel.desc }}
+              <pre>{{ currentRowModel.desc }}</pre>
             </div>
-
           </div>
           <div style="margin: 0 16px;" v-if="currentRowModel.closeMaxIncrement">
             <div class="lr-make-short-table-label">低于最高：{{ currentRowModel.closeMaxIncrement }}%</div>
@@ -35,6 +34,7 @@
         <template v-else>
           <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
             <el-button type="primary" @click.stop="setRowIndex(0)">查看第一条</el-button>
+            <el-button type="primary" @click.stop="getCurrentCustomSource">当前自定义数据源</el-button>
             <el-button type="primary" @click.stop="getFileResource">其他数据源</el-button>
           </div>
         </template>
@@ -84,6 +84,16 @@ export default {
       } else {
         this.currentRowIndex += 1
       }
+    },
+    getCurrentCustomSource() {
+      return this.$http.get('/api/analyze/custom').then(response => {
+        this.init(response)
+        this.$nextTick(_ => {
+          this.toNext()
+        })
+      }).catch(_ => {
+        console.error(_)
+      })
     },
     getFileResource() { // 加载其他数据源
       const baseDir = '/api/static/analyze/'

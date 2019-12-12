@@ -5,7 +5,7 @@
       <lr-date-picker v-model="date" @change="checkAndLoad" />
     </div>
     <div>
-      {{ distributionList }}
+      <!--{{ distributionList }}-->
     </div>
     <lr-box style="margin-top: 16px" v-if="stockCode">
       <div slot="title">
@@ -14,7 +14,12 @@
           {{ date | date }}
         </span>
       </div>
-      <lr-chart ref="chart" />
+      <div>
+        <lr-chart ref="chart" />
+      </div>
+      <div>
+        <lr-chart ref="amountChart" />
+      </div>
     </lr-box>
   </div>
 </template>
@@ -97,13 +102,16 @@ export default {
     },
     renderChart(tradeList) {
       const chart = this.$refs.chart.getChart()
+      const amountChart = this.$refs.amountChart.getChart()
+
       if (tradeList.length === 0) {
         return this.$message.warning('没有找到对应的数据')
       }
       const dataList = tradeList.map(item => {
         return {
           time: `${ STOCK_COORDINATE_DATE } ${ item.time }`,
-          value: item.price
+          value: item.price,
+          amount: item.amount
         }
       })
 
@@ -153,12 +161,15 @@ export default {
         this.addAssistantLine(chart, lodash.round(yesterdayClose * (1 + 0.01 * i), 2), `${ i }%`)
         this.addAssistantLine(chart, lodash.round(yesterdayClose * (1 - 0.01 * i), 2), `-${ i }%`)
       }
-
-
-
-
       chart.line().position('time*value')
       chart.render()
+      console.log(dataList)
+
+      // 绘制成交量
+      amountChart.source(dataList)
+      addStockDailyCoordinate(amountChart)
+      amountChart.line().position('time*amount')
+      amountChart.render()
     },
     addAssistantLine(chart, value, text) { // 添加价格辅助线
       chart.guide().line({
