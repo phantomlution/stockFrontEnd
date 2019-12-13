@@ -4,7 +4,8 @@
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -25,12 +26,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="emotionTracker.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="emotionTracker.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="912">
-              <caret line="48" column="29" lean-forward="false" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="228">
+              <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+              <folding>
+                <element signature="e#353#359#0" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,8 +53,8 @@
       <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="19" column="15" lean-forward="false" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
+            <state relative-caret-position="1007">
+              <caret line="91" column="21" lean-forward="false" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -58,19 +63,23 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-179">
+            <state relative-caret-position="285">
               <caret line="15" column="39" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="39" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="historyFragmentDeal.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="historyFragmentDeal.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="170" column="48" lean-forward="false" selection-start-line="170" selection-start-column="48" selection-end-line="170" selection-end-column="48" />
-              <folding />
+            <state relative-caret-position="2432">
+              <caret line="141" column="23" lean-forward="false" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
+              <folding>
+                <element signature="n#style#0;n#lr-box#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#lr-box#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#710#772#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -78,7 +87,7 @@
       <file leaf-file-name="stockAssistant.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1528">
+            <state relative-caret-position="437">
               <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
               <folding />
             </state>
@@ -139,7 +148,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loadStockData</find>
       <find>/stock/pool</find>
       <find>takeRight</find>
       <find>趋势分析</find>
@@ -169,6 +177,7 @@
       <find>历史分时成交</find>
       <find>其他数据源</find>
       <find>getFileResource</find>
+      <find>displayLabel</find>
     </findStrings>
     <replaceStrings>
       <replace>lastStartDuration</replace>
@@ -256,15 +265,15 @@
         <option value="$PROJECT_DIR$/src/utils/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeDataChart.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeTrendChart.vue" />
         <option value="$PROJECT_DIR$/src/utils/stockUtils.js" />
         <option value="$PROJECT_DIR$/src/utils/stock.js" />
         <option value="$PROJECT_DIR$/src/components/ShoppingCart/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" />
       </list>
     </option>
   </component>
@@ -452,7 +461,7 @@
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js.eslint.eslintPackage" value="$PROJECT_DIR$/node_modules/eslint" />
     <property name="js-jscs-nodeInterpreter" value="$USER_HOME$/.nvm/versions/node/v8.9.0/bin/node" />
-    <property name="SearchEverywhereHistoryKey" value="his&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/analyze/historyFragmentDeal.vue&#10;stockTra&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;stock.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stock.js&#10;trade&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/tradeTrendChart.vue&#10;make&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/stock/makeShortTable.vue&#10;stockTrac&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;tre&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/tradeTrendChart.vue&#10;page/ind&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/LinkPage/index.vue&#10;numbertag/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/NumberTag/index.vue&#10;datepicker/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/DatePicker/index.vue&#10;app&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/App.vue&#10;shoppingcart/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/ShoppingCart/index.vue&#10;track&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;editor/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Editor/index.vue&#10;ongo&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/bigEvents/ongoing.vue&#10;stoc&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;stock&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;lr-motto&#9;null&#9;null&#10;socket/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/socket/index.js&#10;self&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/futureEconomyPredict/selfService.vue&#10;dataS&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/analyze/dataSource.vue&#10;stockdetaillink/i&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;shoppingcart/i&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/ShoppingCart/index.vue&#10;stockdetaillink/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;detaillink/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;tracker&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;data&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/analyze/dataSource.vue&#10;chart/index&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Chart/index.vue&#10;box/ind&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Box/index.vue&#10;linkpage/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/LinkPage/index.vue&#10;detaillink/i&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;stockde&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/global/stockDetail.vue&#10;chart&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/ChartUtils.js&#10;chart/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Chart/index.vue&#10;notice&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/noticeList.vue&#10;tag/&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockPercentTag.vue&#10;data/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/store/data/index.js&#10;tradeTre&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/tradeTrendChart.vue&#10;data/index.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/store/data/index.js&#10;Stock.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stock.js&#10;sto&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stockUtils.js&#10;http&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/http.js&#10;stockdetail/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;link/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;box/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Box/index.vue&#10;sear&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/searchStock.vue&#10;stockU&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stockUtils.js&#10;stockUtil&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stockUtils.js&#10;trendChart&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/stock/tradeTrendChart.vue&#10;index.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/index.js" />
+    <property name="SearchEverywhereHistoryKey" value="stoc&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;his&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/analyze/historyFragmentDeal.vue&#10;stockTra&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;stock.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stock.js&#10;trade&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/tradeTrendChart.vue&#10;make&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/stock/makeShortTable.vue&#10;stockTrac&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;tre&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/tradeTrendChart.vue&#10;page/ind&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/LinkPage/index.vue&#10;numbertag/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/NumberTag/index.vue&#10;datepicker/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/DatePicker/index.vue&#10;app&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/App.vue&#10;shoppingcart/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/ShoppingCart/index.vue&#10;track&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;editor/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Editor/index.vue&#10;ongo&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/bigEvents/ongoing.vue&#10;stock&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;lr-motto&#9;null&#9;null&#10;socket/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/socket/index.js&#10;self&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/futureEconomyPredict/selfService.vue&#10;dataS&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/analyze/dataSource.vue&#10;stockdetaillink/i&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;shoppingcart/i&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/ShoppingCart/index.vue&#10;stockdetaillink/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;detaillink/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;tracker&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockTracker.vue&#10;data&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/analyze/dataSource.vue&#10;chart/index&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Chart/index.vue&#10;box/ind&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Box/index.vue&#10;linkpage/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/LinkPage/index.vue&#10;detaillink/i&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;stockde&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/global/stockDetail.vue&#10;chart&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/ChartUtils.js&#10;chart/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Chart/index.vue&#10;notice&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/noticeList.vue&#10;tag/&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/dashBoard/stockPercentTag.vue&#10;data/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/store/data/index.js&#10;tradeTre&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/tradeTrendChart.vue&#10;data/index.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/store/data/index.js&#10;Stock.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stock.js&#10;sto&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stockUtils.js&#10;http&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/http.js&#10;stockdetail/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;link/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/StockDetailLink/index.vue&#10;box/in&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/components/Box/index.vue&#10;sear&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/components/searchStock.vue&#10;stockU&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stockUtils.js&#10;stockUtil&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/stockUtils.js&#10;trendChart&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/views/stock/views/stock/tradeTrendChart.vue&#10;index.js&#9;FILE&#9;file:///Users/yixiaoxiao/WebstormProjects/fancyDashboard/src/utils/index.js" />
     <property name="editor.config.accepted" value="true" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
   </component>
@@ -741,14 +750,8 @@
       <workItem from="1575858283064" duration="148000" />
       <workItem from="1575940126618" duration="3412000" />
       <workItem from="1576027482153" duration="1975000" />
-      <workItem from="1576113981155" duration="1690000" />
-    </task>
-    <task id="LOCAL-00126" summary="优化历史数据分析的便捷性问题">
-      <created>1572761857932</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1572761857933</updated>
+      <workItem from="1576113981155" duration="2253000" />
+      <workItem from="1576199402992" duration="1642000" />
     </task>
     <task id="LOCAL-00127" summary="问题修复">
       <created>1572762105743</created>
@@ -1086,11 +1089,18 @@
       <option name="project" value="LOCAL" />
       <updated>1576054222647</updated>
     </task>
-    <option name="localTasksCounter" value="175" />
+    <task id="LOCAL-00175" summary="尝试第二套模型">
+      <created>1576152452992</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1576152452993</updated>
+    </task>
+    <option name="localTasksCounter" value="176" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="670365000" />
+    <option name="totallyTimeSpent" value="672570000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1108,7 +1118,6 @@
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21197411" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26495728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32763532" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4002849" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1123,6 +1132,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26495728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -1155,7 +1165,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="股票追踪器全流程监控" />
     <MESSAGE value="整合新闻阅读器" />
     <MESSAGE value="细节优化" />
     <MESSAGE value="集成7*24" />
@@ -1180,7 +1189,8 @@
     <MESSAGE value="集成情绪点监测" />
     <MESSAGE value="后端路由重构" />
     <MESSAGE value="筛选策略重大调整" />
-    <option name="LAST_COMMIT_MESSAGE" value="筛选策略重大调整" />
+    <MESSAGE value="尝试第二套模型" />
+    <option name="LAST_COMMIT_MESSAGE" value="尝试第二套模型" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1379,7 +1389,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1083">
           <caret line="57" column="29" lean-forward="false" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1436,7 +1445,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
           <caret line="5" column="17" lean-forward="false" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1444,7 +1452,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1919">
           <caret line="103" column="50" lean-forward="false" selection-start-line="103" selection-start-column="50" selection-end-line="103" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1474,14 +1481,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="912">
-          <caret line="48" column="29" lean-forward="false" selection-start-line="48" selection-start-column="29" selection-end-line="48" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeDataChart.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1197">
@@ -1506,17 +1505,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="19" column="15" lean-forward="false" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-179">
+        <state relative-caret-position="285">
           <caret line="15" column="39" lean-forward="false" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="39" />
           <folding />
         </state>
@@ -1524,7 +1515,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1528">
+        <state relative-caret-position="437">
           <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
           <folding />
         </state>
@@ -1532,9 +1523,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="170" column="48" lean-forward="false" selection-start-line="170" selection-start-column="48" selection-end-line="170" selection-end-column="48" />
+        <state relative-caret-position="2432">
+          <caret line="141" column="23" lean-forward="false" selection-start-line="141" selection-start-column="23" selection-end-line="141" selection-end-column="23" />
+          <folding>
+            <element signature="n#style#0;n#lr-box#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#lr-box#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#710#772#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1007">
+          <caret line="91" column="21" lean-forward="false" selection-start-line="91" selection-start-column="21" selection-end-line="91" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+          <folding>
+            <element signature="e#353#359#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

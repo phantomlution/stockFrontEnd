@@ -138,7 +138,8 @@ export default {
           if (lastItem) {
             missingPoint.push({
               time: time_string,
-              value: lastItem['value']
+              value: lastItem['value'],
+              amount: 0
             })
           }
         }
@@ -166,9 +167,15 @@ export default {
       console.log(dataList)
 
       // 绘制成交量
-      amountChart.source(dataList)
+      const duplicateDataList = dataList.map(item => item)
+      duplicateDataList.sort((former, later) => {
+        return former.amount - later.amount
+      })
+      const renderDataList = lodash.takeRight(duplicateDataList, 10)
+      console.log(renderDataList)
+      amountChart.source(renderDataList)
       addStockDailyCoordinate(amountChart)
-      amountChart.line().position('time*amount')
+      amountChart.interval().position('time*amount')
       amountChart.render()
     },
     addAssistantLine(chart, value, text) { // 添加价格辅助线

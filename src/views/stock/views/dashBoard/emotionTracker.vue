@@ -1,16 +1,27 @@
 <template>
-  <div class="lr-emotion-tracker" v-if="displayLabel">
-    <span style="font-weight: bold">情绪点:&nbsp;</span>
-    <div v-if="hasGoldRisk" style="display: inline-block">
-      <span>
-        <span style="color: red">黄金概念</span>
-        <span>(涨幅第<span style="color: red">{{ riskModel.gold.index }}</span>位,<lr-number-tag :amount="riskModel.gold.percent" />)</span>
+  <div class="lr-emotion-tracker">
+    <el-popover>
+      <div>
+        <el-table :data="rankList">
+          <el-table-column type="index" />
+          <el-table-column prop="name" label="概念名称" />
+          <el-table-column prop="percent" label="涨跌幅" />
+        </el-table>
+      </div>
+      <el-link :underline="false" slot="reference">情绪点&nbsp;</el-link>
+    </el-popover>
+    <div style="display: inline-block" v-if="riskModelList.length > 0">
+      <span v-for="item of riskModelList" :key="item.name">
+        <span style="color: red">{{ item.name }}</span>
+        <span>(涨幅第<span style="color: red">{{ item.index }}</span>位,<lr-number-tag :amount="item.percent" />)</span>
       </span>
     </div>
   </div>
 </template>
 
 <script>
+import lodash from 'lodash'
+
 export default {
   data() {
     return {
@@ -18,18 +29,20 @@ export default {
       riskModel: {
         gold: null
       },
+      rankList: [],
+      riskItemList: [
+        {
+          name: '黄金概念'
+        },
+        {
+          name: '券商概念'
+        }
+      ],
+      riskModelList: []
     }
   },
   beforeDestroy() {
     this.stopTracker()
-  },
-  computed: {
-    hasGoldRisk() {
-      return !!this.riskModel.gold
-    },
-    displayLabel() {
-      return this.hasGoldRisk
-    }
   },
   mounted() {
     this.startTracker()
@@ -37,16 +50,21 @@ export default {
   methods: {
     loadData() {
       this.$store.dispatch('getConceptBlock').then(itemList => {
-        const goldItemIndex = itemList.findIndex(item => item.name === '黄金概念')
-        if (goldItemIndex !== -1 && goldItemIndex < 10) {
-          const goldItem = itemList.find(item => item.name === '黄金概念')
-          this.riskModel.gold = {
-            index: goldItemIndex + 1,
-            percent: goldItem.percent
+        this.rankList = lodash.take(itemList, 10)
+
+        const riskModelList = []
+        this.riskItemList.forEach(riskItem => {
+          const riskItemIndex = itemList.findIndex(item => item.name === riskItem.name)
+          if (riskItemIndex !== -1 && riskItemIndex < 10) {
+            const currentRiskItem = itemList.find(item => item.name === riskItem.name)
+            riskModelList.push({
+              name: riskItem.name,
+              index: riskItemIndex + 1,
+              percent: currentRiskItem.percent
+            })
           }
-          return
-        }
-        this.riskModel.gold = null
+        })
+        this.riskModelList = riskModelList
       }).catch(_ => {
         console.error(_)
       })

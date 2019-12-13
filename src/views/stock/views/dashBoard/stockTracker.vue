@@ -89,7 +89,7 @@ export default {
       defaultConditionList: [
         {
           key: 'slump',
-          value: '5',
+          value: '3',
           unit: '%'
         },
         {
