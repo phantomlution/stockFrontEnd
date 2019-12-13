@@ -5,7 +5,11 @@
         <el-table :data="rankList">
           <el-table-column type="index" />
           <el-table-column prop="name" label="概念名称" />
-          <el-table-column prop="percent" label="涨跌幅" />
+          <el-table-column prop="percent" label="涨跌幅">
+            <template slot-scope="scope">
+              {{ scope.row.percent }}%
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <el-link :underline="false" slot="reference">情绪点&nbsp;</el-link>

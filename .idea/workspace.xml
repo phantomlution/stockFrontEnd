@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,10 +27,10 @@
       <file leaf-file-name="emotionTracker.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+            <state relative-caret-position="171">
+              <caret line="9" column="38" lean-forward="false" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
               <folding>
-                <element signature="e#353#359#0" expanded="true" />
+                <element signature="e#485#491#0" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -751,14 +749,7 @@
       <workItem from="1575940126618" duration="3412000" />
       <workItem from="1576027482153" duration="1975000" />
       <workItem from="1576113981155" duration="2253000" />
-      <workItem from="1576199402992" duration="1642000" />
-    </task>
-    <task id="LOCAL-00127" summary="问题修复">
-      <created>1572762105743</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1572762105743</updated>
+      <workItem from="1576199402992" duration="1937000" />
     </task>
     <task id="LOCAL-00128" summary="集成上证指数">
       <created>1572839745197</created>
@@ -1096,11 +1087,18 @@
       <option name="project" value="LOCAL" />
       <updated>1576152452993</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="优化情绪点策略">
+      <created>1576219282339</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1576219282341</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="672570000" />
+    <option name="totallyTimeSpent" value="672865000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1165,7 +1163,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="整合新闻阅读器" />
     <MESSAGE value="细节优化" />
     <MESSAGE value="集成7*24" />
     <MESSAGE value="前端样式重构" />
@@ -1190,7 +1187,8 @@
     <MESSAGE value="后端路由重构" />
     <MESSAGE value="筛选策略重大调整" />
     <MESSAGE value="尝试第二套模型" />
-    <option name="LAST_COMMIT_MESSAGE" value="尝试第二套模型" />
+    <MESSAGE value="优化情绪点策略" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化情绪点策略" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1543,10 +1541,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/emotionTracker.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="70" lean-forward="false" selection-start-line="12" selection-start-column="70" selection-end-line="12" selection-end-column="70" />
+        <state relative-caret-position="171">
+          <caret line="9" column="38" lean-forward="false" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
           <folding>
-            <element signature="e#353#359#0" expanded="true" />
+            <element signature="e#485#491#0" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#span#0;n#span#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
