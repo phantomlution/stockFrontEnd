@@ -110,6 +110,10 @@ export default {
         view.guide().line({
           start: [item.timestamp, 'min'], // 使用数组格式
           end: [item.timestamp, 'max'],
+          lineStyle: {
+            stroke: '#E6A23C',
+            lineWidth: 2
+          },
           text: {
             position: 'end',
             autoRotate: false,
