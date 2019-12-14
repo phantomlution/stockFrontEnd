@@ -207,7 +207,7 @@ import lodash from 'lodash'
 import noticeList from '@/views/stock/components/noticeList'
 import tradeDataChart from '@/views/stock/components/tradeDataChart.vue'
 import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
-import fragmentTradeDetail from '@/views/stock/views/analyze/historyFragmentDeal.vue'
+import fragmentTradeDetail from '@/views/stock/components/historyFragmentDeal.vue'
 
 const props = {
   code: {

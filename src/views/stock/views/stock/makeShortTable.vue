@@ -1,7 +1,7 @@
 <template>
   <lr-box style="position: relative">
     <!-- 工具条 -->
-    <stock-assistant ref="stockAssistant" @showDetail="showDetail" />
+    <stock-assistant ref="stockAssistant" @showDetail="showDetail" :fragmentDealToken="fragmentDealToken" />
     <div>
       <el-form :inline="true">
         <el-form-item label="总记录数">
@@ -57,6 +57,12 @@ import stockAssistant from './stockAssistant.vue'
 export default {
   components: {
     stockAssistant
+  },
+  props: {
+    fragmentDealToken: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {

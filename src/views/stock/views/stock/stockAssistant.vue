@@ -19,7 +19,13 @@
               </el-tag>
             </div>
             <div v-if="currentRowModel.desc">
-              <pre>{{ currentRowModel.desc }}</pre>
+              <pre style="white-space: pre-line;">{{ currentRowModel.desc }}</pre>
+            </div>
+            <!-- 自定义分析 -->
+            <div v-if="currentRowModel.list">
+              <div v-for="(item, itemIndex) of currentRowModel.list">
+                {{ item }}<el-button type="text" @click.stop="customAnalyze(item)">查看</el-button>
+              </div>
             </div>
           </div>
           <div style="margin: 0 16px;" v-if="currentRowModel.closeMaxIncrement">
@@ -45,6 +51,12 @@
 
 <script>
 export default {
+  props: {
+    fragmentDealToken: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       currentRowModel: null,
@@ -113,6 +125,12 @@ export default {
     },
     showDetail(code) {
       this.$emit('showDetail', code)
+    },
+    customAnalyze(item) {
+      if (this.fragmentDealToken) {
+        item.code = this.currentRowModel.code
+        this.$bus.$emit(this.fragmentDealToken, item)
+      }
     }
   }
 }

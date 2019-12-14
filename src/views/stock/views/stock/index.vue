@@ -26,8 +26,9 @@
           </div>
         </div>
       </lr-box>
-      <make-short-table />
+      <make-short-table :fragmentDealToken="fragmentDealToken" />
       <trade-trend-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
+      <history-fragment-deal :code="stockCode" v-if="stockCode" :token="fragmentDealToken"/>
       <trade-data-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
     </div>
   </div>
@@ -42,6 +43,7 @@ import RequestThread from '@/utils/RequestThread'
 import tradeDataChart from '@/views/stock/components/tradeDataChart.vue'
 import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
+import historyFragmentDeal from '@/views/stock/components/historyFragmentDeal.vue'
 import makeShortTable from './makeShortTable.vue'
 import moment from 'moment'
 
@@ -51,10 +53,12 @@ export default {
     tradeTrendChart,
     searchStock,
     makeShortTable,
+    historyFragmentDeal
   },
   data() {
     return {
       stockCode: '',
+      fragmentDealToken: idGenerator.next('fragment_deal'),
       loadingState: 0,
       batchAnalyzeLoading: false,
       stockMap: this.$store.state.data.stockMap,

@@ -34,7 +34,7 @@
 
 <script>
 import LrRestrictSell from './restrictSell.vue'
-import historyFragmentDeal from './historyFragmentDeal.vue'
+import historyFragmentDeal from '@/views/stock/components/historyFragmentDeal.vue'
 import capitalFlow from './capitalFlow/index.vue'
 import dataSource from './dataSource.vue'
 import shiborHistory from './shiborHistory'

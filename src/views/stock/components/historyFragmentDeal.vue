@@ -1,27 +1,20 @@
 <template>
-  <div>
-    <div>
+  <lr-box style="margin-top: 16px" v-if="stockCode">
+    <div slot="title">
       <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
       <lr-date-picker v-model="date" @change="checkAndLoad" />
+      <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
+      <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
+        {{ date | date }}
+      </span>
     </div>
     <div>
-      <!--{{ distributionList }}-->
+      <lr-chart ref="chart" />
     </div>
-    <lr-box style="margin-top: 16px" v-if="stockCode">
-      <div slot="title">
-        <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
-        <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
-          {{ date | date }}
-        </span>
-      </div>
-      <div>
-        <lr-chart ref="chart" />
-      </div>
-      <div>
-        <lr-chart ref="amountChart" />
-      </div>
-    </lr-box>
-  </div>
+    <div>
+      <lr-chart ref="amountChart" />
+    </div>
+  </lr-box>
 </template>
 
 <script>
@@ -32,6 +25,10 @@ import lodash from 'lodash'
 
 const props = {
   code: { // 指定代码
+    type: String,
+    default: ''
+  },
+  token: { // 是否接收更新事件
     type: String,
     default: ''
   }
@@ -48,10 +45,38 @@ export default {
       date: '',
     }
   },
+  watch: {
+    code(val) {
+      this.date = ''
+      this.stockCode = val
+    },
+    date(val) {
+      if (!val) {
+        const chart = this.$refs.chart.getChart()
+        const amountChart = this.$refs.amountChart.getChart()
+
+        chart.clear()
+        amountChart.clear()
+      }
+    }
+  },
   mounted() {
     if (this.code) {
       this.date = this.$moment().add('days', -1).toDate()
     }
+    console.log(this.token)
+    if (this.token) {
+      this.$bus.$on(this.token, item => {
+        if (item.code !== this.stockCode) {
+          this.$message.error('序号不匹配')
+          return
+        }
+        this.date = this.$moment(item.date).toDate()
+      })
+    }
+  },
+  beforeDestroy() {
+    this.$bus.$off(this.token)
   },
   methods: {
     checkAndLoad() {
