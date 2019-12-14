@@ -2,7 +2,7 @@
   <lr-box style="margin-top: 16px" v-if="stockCode">
     <div slot="title">
       <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
-      <lr-date-picker v-model="date" @change="checkAndLoad" />
+      <lr-date-picker v-model="date" @change="checkAndLoad" pattern="stock" />
       <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
       <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
         {{ date | date }}
@@ -64,7 +64,6 @@ export default {
     if (this.code) {
       this.date = this.$moment().add('days', -1).toDate()
     }
-    console.log(this.token)
     if (this.token) {
       this.$bus.$on(this.token, item => {
         if (item.code !== this.stockCode) {
@@ -189,7 +188,6 @@ export default {
       }
       chart.line().position('time*value')
       chart.render()
-      console.log(dataList)
 
       // 绘制成交量
       const duplicateDataList = dataList.map(item => item)
@@ -197,7 +195,7 @@ export default {
         return former.amount - later.amount
       })
       const renderDataList = lodash.takeRight(duplicateDataList, 10)
-      console.log(renderDataList)
+
       amountChart.source(renderDataList)
       addStockDailyCoordinate(amountChart)
       amountChart.interval().position('time*amount')

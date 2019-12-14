@@ -1,18 +1,22 @@
 <template>
   <div style="display: inline-block">
     <el-date-picker v-model="date" style="width: 160px" @change="dateChanged"/>
-    <el-button type="primary" @click.stop="toLast">上一天</el-button>
-    <el-button type="primary" @click.stop="toNext">下一天</el-button>
+    <span v-show="date">
+      <el-button type="primary" @click.stop="toLast">上一天</el-button>
+      <el-button type="primary" @click.stop="toNext">下一天</el-button>
+    </span>
   </div>
 </template>
 
 <script>
-import moment from 'moment'
-
 const props = {
   value: {
     type: [String, Date],
     required: true
+  },
+  pattern: {
+    type: String,
+    default: ''
   }
 }
 
@@ -38,14 +42,29 @@ export default {
       this.$emit('change', val)
     },
     toLast() {
-      this.addDate(-1)
+      let diff = -1
+      if (this.pattern === 'stock') {
+        const weekDay = this.$moment(this.date).weekday()
+        if (weekDay === 0) {
+          diff -= 2
+        }
+      }
+
+      this.addDate(diff)
     },
     toNext() {
-      this.addDate(1)
+      let diff = 1
+      if (this.pattern === 'stock') {
+        const weekDay = this.$moment(this.date).weekday()
+        if (weekDay === 4) {
+          diff += 2
+        }
+      }
+      this.addDate(diff)
     },
     addDate(diff) {
       if (this.date) {
-        this.date = moment(this.date).add('days', diff).toDate()
+        this.date = this.$moment(this.date).add('days', diff).toDate()
       }
     }
   }
