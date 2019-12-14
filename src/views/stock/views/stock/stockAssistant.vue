@@ -124,7 +124,27 @@ export default {
       return this.$http.get(filePath)
     },
     showDetail(code) {
-      this.$emit('showDetail', code)
+      const highlight = []
+      if (this.currentRowModel.list.length > 0) {
+        this.currentRowModel.list.forEach(item => {
+          highlight.push({
+            date: item.date,
+            timestamp: this.$moment(item.date).toDate().getTime()
+          })
+        })
+      }
+      this.$emit('showDetail', {
+        code,
+        highlight
+      })
+
+      // 自动触发分析
+      setTimeout(_ => {
+        if (this.currentRowModel.list.length > 0) {
+          this.customAnalyze(this.currentRowModel.list[0])
+        }
+      }, 300)
+
     },
     customAnalyze(item) {
       if (this.fragmentDealToken) {

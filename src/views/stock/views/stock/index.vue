@@ -27,7 +27,7 @@
         </div>
       </lr-box>
       <make-short-table :fragmentDealToken="fragmentDealToken" />
-      <trade-trend-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
+      <trade-trend-chart :code="stockCode" :config="config" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
       <history-fragment-deal :code="stockCode" v-if="stockCode" :token="fragmentDealToken"/>
       <trade-data-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
     </div>
@@ -72,6 +72,7 @@ export default {
         requestCount: 0,
         seconds: 0
       },
+      config: null,
       analyzeModel: {
         recentRecordCount: 3,
         maxOutputStockCount: 48,
@@ -107,8 +108,9 @@ export default {
   mounted() {
     this.doInit()
 
-    this.$bus.$on('searchStockDetail', ({ code }) => {
-      this.stockCode = code
+    this.$bus.$on('searchStockDetail', item => {
+      this.stockCode = item.code
+      this.config = item
     })
 
     this.$bus.$on('restartAnalyzeProbability', _ => {

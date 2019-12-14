@@ -26,6 +26,9 @@ const props = {
   showAdd: {
     type: Boolean,
     default: false
+  },
+  config: {
+    type: Object
   }
 }
 export default {
@@ -96,6 +99,21 @@ export default {
             position: 'end',
             autoRotate: false,
             content: `${ item.date.substring(5) }解禁`
+          }
+        })
+      })
+
+      // 追加高亮点
+
+      const highlight = this.config ? this.config.highlight || [] : []
+      highlight.forEach(item => {
+        view.guide().line({
+          start: [item.timestamp, 'min'], // 使用数组格式
+          end: [item.timestamp, 'max'],
+          text: {
+            position: 'end',
+            autoRotate: false,
+            content: `${ item.date }当前点`
           }
         });
       })

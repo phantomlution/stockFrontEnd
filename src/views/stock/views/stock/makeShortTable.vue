@@ -26,7 +26,7 @@
       <el-table-column label="code">
         <template slot-scope="props">
           <span>({{ props.row.amount | amount }},L{{ props.row.rank}},{{ props.row.diffIncrement }}%){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
-          <el-button type="text" @click.stop="showDetail(props.row.code)">查看</el-button>
+          <el-button type="text" @click.stop="showDetail({ code: props.row.code })">查看</el-button>
           <span>{{ props.row.bounceRate }}</span>
         </template>
       </el-table-column>
@@ -182,10 +182,8 @@ export default {
     refresh() {
       this.$bus.$emit('restartAnalyzeProbability')
     },
-    showDetail(code) {
-      this.$bus.$emit('searchStockDetail', {
-        code
-      })
+    showDetail(model) {
+      this.$bus.$emit('searchStockDetail', model)
     }
   }
 }
