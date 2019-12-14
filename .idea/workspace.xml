@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/views/stock/views/analyze/historyFragmentDeal.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/historyFragmentDeal.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/analyze/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/stockDetail.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/stockDetail.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/makeShortTable.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/stockAssistant.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -791,14 +785,7 @@
       <workItem from="1576027482153" duration="1975000" />
       <workItem from="1576113981155" duration="2253000" />
       <workItem from="1576199402992" duration="1947000" />
-      <workItem from="1576292960940" duration="2812000" />
-    </task>
-    <task id="LOCAL-00129" summary="集成 frame 内链接在外部打开">
-      <created>1572858939096</created>
-      <option name="number" value="00129" />
-      <option name="presentableId" value="LOCAL-00129" />
-      <option name="project" value="LOCAL" />
-      <updated>1572858939099</updated>
+      <workItem from="1576292960940" duration="2844000" />
     </task>
     <task id="LOCAL-00130" summary="集成 frame 内链接在外部打开">
       <created>1572945450760</created>
@@ -1136,11 +1123,18 @@
       <option name="project" value="LOCAL" />
       <updated>1576223856555</updated>
     </task>
-    <option name="localTasksCounter" value="178" />
+    <task id="LOCAL-00178" summary="大幅提升模型人工分析效率">
+      <created>1576313463333</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1576313463334</updated>
+    </task>
+    <option name="localTasksCounter" value="179" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="675687000" />
+    <option name="totallyTimeSpent" value="675719000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1205,7 +1199,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="细节优化" />
     <MESSAGE value="集成7*24" />
     <MESSAGE value="前端样式重构" />
     <MESSAGE value="页面内容调整" />
@@ -1230,7 +1223,8 @@
     <MESSAGE value="筛选策略重大调整" />
     <MESSAGE value="尝试第二套模型" />
     <MESSAGE value="优化情绪点策略" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化情绪点策略" />
+    <MESSAGE value="大幅提升模型人工分析效率" />
+    <option name="LAST_COMMIT_MESSAGE" value="大幅提升模型人工分析效率" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
