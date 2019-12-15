@@ -55,6 +55,11 @@
 <script>
 import { idGenerator } from '@/utils'
 
+const sensitiveWord = [
+  '在岸人民币', '现货钯金', 'Nymex钯金', '美元指数', 'Nymex美原油', '澳元兑美元'
+]
+const contentFilterRegex = new RegExp(`^(${ sensitiveWord.map(word => '(' + word +')').join('|') })`)
+
 export default {
   data() {
     return {
@@ -138,6 +143,11 @@ export default {
       }).join('')
     },
     addNewestToList(model) { // 将最新的数据插入列表
+      if (!model.isImportant) {
+        if (contentFilterRegex.test(model.title)) {
+          return
+        }
+      }
       model.id = idGenerator.next('live')
 
       let dateFormat = 'HH:mm'

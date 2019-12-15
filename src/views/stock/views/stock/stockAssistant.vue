@@ -35,6 +35,20 @@
           <div>
             <div><el-button type="text" @click.stop="toPrevious">上一条</el-button></div>
             <div><el-button type="text" @click.stop="toNext">下一条</el-button></div>
+            <div>
+              <el-popover>
+                <div>
+                  <div>
+                    <el-input-number :min="0" :max="dataList.length - 1" v-model="jumpIndex" />
+                  </div>
+                  <div style="text-align: right">
+                    <el-button @click.stop="toCustom" >确定</el-button>
+                  </div>
+                </div>
+                <el-button type="text" slot="reference">跳转</el-button>
+              </el-popover>
+
+            </div>
           </div>
         </template>
         <template v-else>
@@ -61,6 +75,7 @@ export default {
     return {
       currentRowModel: null,
       currentRowIndex: -1,
+      jumpIndex: '',
       dataList: []
     }
   },
@@ -97,6 +112,10 @@ export default {
         this.currentRowIndex += 1
       }
     },
+    toCustom() {
+      const jumpIndex = this.jumpIndex
+      this.setRowIndex(jumpIndex)
+    },
     getCurrentCustomSource() {
       return this.$http.get('/api/analyze/custom').then(response => {
         this.init(response)
@@ -125,6 +144,7 @@ export default {
     },
     showDetail(code) {
       const highlight = []
+      this.currentRowModel.list = this.currentRowModel.list || []
       if (this.currentRowModel.list.length > 0) {
         this.currentRowModel.list.forEach(item => {
           highlight.push({

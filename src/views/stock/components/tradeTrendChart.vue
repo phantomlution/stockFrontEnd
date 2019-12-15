@@ -2,6 +2,9 @@
   <lr-box>
     <div slot="title">
       <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
+      <span style="display: inline-block; font-size: 14px;margin-left: 8px">
+        近一个月成交额: {{ average }} million
+      </span>
     </div>
     <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
     <lr-chart ref="chart" />
@@ -38,6 +41,7 @@ export default {
       dataCount: 70,
       maxDataCount: 420,
       name: '',
+      average: ''
     }
   },
   watch: {
@@ -67,12 +71,20 @@ export default {
 
       })
     },
+    calculateAmount(data) {
+      this.average = ''
+      const recentDataList = lodash.takeRight(data, 30)
+      // 计算最近一个自然月的平均成交量
+      const average = lodash.round(lodash.mean(recentDataList.map(item => item.amountInMillion)), 2)
+      this.average = average
+    },
     renderChart({stock, dataCount}) {
       let rawData = stock.result
       this.stock = stock
       this.code = stock.code
       this.name = stock.name
       const data = lodash.takeRight(rawData, dataCount)
+      this.calculateAmount(data)
 
       const chart = this.$refs.chart.getChart()
 

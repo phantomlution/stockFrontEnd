@@ -13,6 +13,9 @@
             <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
             <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
             <el-button :loading="batchAnalyzeLoading" @click.stop="startBash(false)">快速分析</el-button>
+            <el-button @click.stop="useFragment = !useFragment">
+              <template v-if="useFragment">关闭</template><template v-else>打开</template>成交量分析
+            </el-button>
           </div>
         </div>
       </lr-box>
@@ -28,7 +31,7 @@
       </lr-box>
       <make-short-table :fragmentDealToken="fragmentDealToken" />
       <trade-trend-chart :code="stockCode" :config="config" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
-      <history-fragment-deal :code="stockCode" v-if="stockCode" :token="fragmentDealToken"/>
+      <history-fragment-deal :code="stockCode" v-if="useFragment && stockCode" :token="fragmentDealToken"/>
       <trade-data-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
     </div>
   </div>
@@ -72,6 +75,7 @@ export default {
         requestCount: 0,
         seconds: 0
       },
+      useFragment: false,
       config: null,
       analyzeModel: {
         recentRecordCount: 3,

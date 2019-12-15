@@ -12,7 +12,7 @@
         </div>
         <div>
           <div>
-            <el-rate :value="subscribeValue" :max="1" @click.native.stop="subscribeChanged"></el-rate>
+            <el-button type="text" @click.stop="markRead" v-if="!item.has_read">已读</el-button>
           </div>
           <div style="margin-top: 8px;" @click.stop="openCustomEventDialog">
             <el-link type="primary" :underline="false"><i class="el-icon-paperclip" ></i></el-link>
@@ -42,7 +42,7 @@
         <el-tag type="info" >
           {{ item.publish_date }}
         </el-tag>
-        <el-button type="text" @click.stop="markRead" v-if="!item.has_read">已读</el-button>
+        <el-rate :value="subscribeValue" :max="1" @click.native.stop="subscribeChanged" style="display: inline-block"></el-rate>
       </div>
     </div>
   </div>

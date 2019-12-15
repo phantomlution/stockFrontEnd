@@ -2,6 +2,7 @@
   <div>
     <el-radio-group v-model="currentTab" style="width: 100%;text-align: center;margin-bottom: 16px">
       <el-radio-button label="数据源列表">数据源列表</el-radio-button>
+      <el-radio-button label="概念板块走势">概念板块走势</el-radio-button>
       <el-radio-button label="历史分时成交">历史分时成交</el-radio-button>
       <el-radio-button label="Shibor历史数据">Shibor历史数据</el-radio-button>
       <el-radio-button label="历史资金动向">历史资金动向</el-radio-button>
@@ -12,6 +13,9 @@
     <div>
       <div v-if="currentTab === '数据源列表'">
         <data-source />
+      </div>
+      <div v-if="currentTab === '概念板块走势'">
+        <concept-block-trend />
       </div>
       <div v-if="currentTab === '历史分时成交'">
         <history-fragment-deal />
@@ -38,6 +42,7 @@ import historyFragmentDeal from '@/views/stock/components/historyFragmentDeal.vu
 import capitalFlow from './capitalFlow/index.vue'
 import dataSource from './dataSource.vue'
 import shiborHistory from './shiborHistory'
+import conceptBlockTrend from './conceptBlockTrend.vue'
 import estate from './estate.vue'
 
 export default {
@@ -47,6 +52,7 @@ export default {
     capitalFlow,
     dataSource,
     shiborHistory,
+    conceptBlockTrend,
     estate
   },
   data() {
