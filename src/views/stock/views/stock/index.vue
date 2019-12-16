@@ -204,7 +204,7 @@ export default {
 
           const secondPhaseResult = this.calculateSecondPhaseResult(lodash.takeRight(targetStockResult, 45))
 
-          const targetStockResultData = lodash.takeRight(targetStockResult, 120)
+          const targetStockResultData = lodash.takeRight(targetStockResult, 100)
           const closePriceList = targetStockResultData.map(item => item.close)
           const limitUpCount = targetStockResultData.filter(item => item.percent >= 9.9).length
 

@@ -16,9 +16,6 @@
         <el-form-item label="是否历史涨停">
           <el-switch v-model="hasEverLimitUp" />
         </el-form-item>
-        <el-form-item label="高于最低值%">
-          <el-input-number v-model="overMinPercent" />
-        </el-form-item>
       </el-form>
     </div>
     <el-table :highlight-current-row="true" ref="table" border sortable :data="dataList" :line-numbers="true" :defaultSort="defaultSort" maxHeight="300px">
@@ -69,7 +66,6 @@ export default {
       flowReturn: false, // 是否考虑流量回归
       continuousCount: 3, // 连续数据点个数
       hasEverLimitUp: true,
-      overMinPercent: 3, // 高于最低值百分比
       dataList: [],
       defaultSort: {
         prop: 'closeMaxIncrement',
@@ -87,9 +83,6 @@ export default {
     continuousCount() {
       this.refresh()
     },
-    overMinPercent() {
-      this.refresh()
-    }
   },
   mounted() {
     this.$bus.$on('analyzeMakeShort', data => {
@@ -125,7 +118,6 @@ export default {
         .filter(item => item.close <= STOCK_PRICE_MAX)
         .filter(item => item.amountInMillion >= 20) // 成交量基本要求
         .filter(item => item.closeMaxIncrement <= -20) // 低于最高值 20%
-        .filter(item => item.closeMinIncrement <= this.overMinPercent) // 高于最低值百分比
 
 //        .filter(item => item.diffIncrement > 0)
 //        .filter(item => item.secondPhaseCount > 0) // 必须存在二阶段的点
