@@ -2,7 +2,7 @@
   <div class="lr-emotion-tracker">
     <el-popover>
       <div>
-        <el-table :data="rankList">
+        <el-table :data="rankList" maxHeight="400px">
           <el-table-column type="index" />
           <el-table-column prop="name" label="概念名称" />
           <el-table-column prop="percent" label="涨跌幅">
@@ -54,7 +54,7 @@ export default {
   methods: {
     loadData() {
       this.$store.dispatch('getConceptBlock').then(itemList => {
-        this.rankList = lodash.take(itemList, 10)
+        this.rankList = lodash.take(itemList, 20)
 
         const riskModelList = []
         this.riskItemList.forEach(riskItem => {
@@ -81,7 +81,7 @@ export default {
       }
       this.tracker = setInterval(_ => {
         this.loadData()
-      }, 60 * 1000)
+      }, 15 * 1000)
     },
     stopTracker() {
       if (this.tracker) {

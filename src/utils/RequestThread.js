@@ -1,3 +1,8 @@
+/**
+ * 使用interval 实现并发
+ * @type {number}
+ */
+
 const MAX_REQUEST_QUEUE_LENGTH = 50
 const STATE_UPDATE_MILL_SECONDS = 1000
 

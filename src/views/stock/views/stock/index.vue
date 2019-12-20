@@ -42,7 +42,7 @@ import { idGenerator, deepClone } from '@/utils'
 import lodash from 'lodash'
 import { RANGE_END_IN_DAYS } from '@/utils/stock'
 import stockUtils from '@/utils/stockUtils'
-import RequestThread from '@/utils/RequestThread'
+
 import tradeDataChart from '@/views/stock/components/tradeDataChart.vue'
 import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
@@ -138,42 +138,6 @@ export default {
     },
     searchStock(code) {
       this.loadData(code, true)
-    },
-    updateProgress(model) {
-      Object.assign(this.progress, model)
-    },
-    startBash(full = false) { // 是否是全量数据
-      let stockList = this.$refs.searchStock.stockList
-
-      // 测试集
-      if (!full) { // 快速分析
-        stockList = stockList.filter((item, itemIndex) => itemIndex <= 500)
-      }
-
-      const needLoadCodeList = stockList.map(item => item.value)
-
-      const requestThread = new RequestThread(needLoadCodeList, _ => this.loadData(_, false))
-
-      this.useChart = false
-      this.stockMap.clear()
-      this.batchAnalyzeLoading = true
-      requestThread.on({
-        sync: state => { // 同步状态
-          this.updateProgress(state)
-        },
-        done: state => { // 任务结束
-          this.updateProgress(state)
-          this.useChart = true
-          this.$nextTick(_ => {
-            this.batchAnalyzeLoading = false
-          })
-        }
-      })
-
-      requestThread.run()
-    },
-    loadData(code) {
-      return this.$store.dispatch('loadStockData', code)
     },
     startProbabilityModel() {
       this.$bus.$emit('analyzeMakeShort', this.analyzeProbability())

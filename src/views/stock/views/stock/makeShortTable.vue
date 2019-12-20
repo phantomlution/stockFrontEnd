@@ -22,7 +22,7 @@
       <el-table-column type="index" />
       <el-table-column label="code">
         <template slot-scope="props">
-          <span>({{ props.row.amount | amount }},L{{ props.row.rank}},{{ props.row.diffIncrement }}%){{ props.row.code }}({{ props.row.name}}),{{ props.row.targetDate }},{{ props.row.profit }}%</span>
+          <span>({{ props.row.code }}({{ props.row.name}})</span>
           <el-button type="text" @click.stop="showDetail({ code: props.row.code })">查看</el-button>
           <span>{{ props.row.bounceRate }}</span>
         </template>
@@ -35,11 +35,6 @@
       <el-table-column label="最高" prop="closeMaxIncrement">
         <template slot-scope="props">
           {{ props.row.closeMaxIncrement}}%
-        </template>
-      </el-table-column>
-      <el-table-column label="最低">
-        <template slot-scope="props">
-          {{ props.row.close }}({{ props.row.closeMinIncrement }}%)
         </template>
       </el-table-column>
     </el-table>

@@ -80,5 +80,9 @@ export default {
         return val
       }
     })
+
+    Vue.filter('price', val => {
+      return Number(val).toFixed(2)
+    })
   }
 }

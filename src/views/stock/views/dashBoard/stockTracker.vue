@@ -11,7 +11,7 @@
         <span style="float: right; margin: 3px 0;" v-if="biding">
           <lr-number-tag :amount="biding.currentDiff">
             <span slot="prepend">
-              {{ biding.current || '-' }}
+              {{ biding.current | price }}
             </span>
           </lr-number-tag>
           <span style="font-size: 12px;font-weight: bold">
@@ -90,6 +90,11 @@ export default {
         {
           key: 'slump',
           value: '3',
+          unit: '%'
+        },
+        {
+          key: 'surge',
+          value: '5',
           unit: '%'
         },
         {
@@ -214,7 +219,15 @@ export default {
         if (Number(biding.minDiff) <= slumpValue) {
           this.addNotification(notificationSource, condition, true)
         }
-      } else if (condition.key === 'breakCeilWarn') {
+      } else if(condition.key === 'surge') {
+        let surgeValue = Math.abs(Number(condition.value))
+        if (Number(biding.currentDiff) >= surgeValue) {
+          this.addNotification(notificationSource, condition)
+        }
+        if (Number(biding.maxDiff) >= surgeValue) {
+          this.addNotification(notificationSource, condition, true)
+        }
+      }else if (condition.key === 'breakCeilWarn') {
         // 判断涨停板买一挂单量，破板前提前通知
         if (Number(biding.currentDiff) >= 9.9) {
           if (Number(biding.biding[5][2]) <= Number(condition.value)) {
