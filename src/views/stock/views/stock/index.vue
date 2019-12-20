@@ -1,18 +1,13 @@
 <template>
   <div style="overflow: auto">
-    <div v-if="loadingState === 2">
-      <el-button @click.stop="doInit">重新加载</el-button>
-    </div>
-    <div v-loading="loading" v-show="loadingState !== 2">
+    <div>
       <lr-box>
         <div style="display: flex">
           <div style="width: 420px">
             <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
           </div>
           <div>
-            <el-button :loading="batchAnalyzeLoading" type="primary" @click.stop="startBash(true)">全量分析</el-button>
             <el-button type="primary" @click.stop="startProbabilityModel">概率模型</el-button>
-            <el-button :loading="batchAnalyzeLoading" @click.stop="startBash(false)">快速分析</el-button>
             <el-button @click.stop="useFragment = !useFragment">
               <template v-if="useFragment">关闭</template><template v-else>打开</template>成交量分析
             </el-button>
@@ -110,8 +105,6 @@ export default {
     }
   },
   mounted() {
-    this.doInit()
-
     this.$bus.$on('searchStockDetail', item => {
       this.stockCode = item.code
       this.config = item
@@ -125,17 +118,6 @@ export default {
     this.$bus.$off('searchStockDetail')
   },
   methods: {
-    doInit() {
-      this.loadingState = 0
-      Promise.all([
-        this.$store.dispatch('getStockCodeList')
-      ]).then(responseList => {
-        this.loadingState = 1
-      }).catch(_ => {
-        this.loadingState = 2
-        console.error(_)
-      })
-    },
     searchStock(code) {
       this.loadData(code, true)
     },

@@ -8,7 +8,6 @@
     <theme-market />
     <message-live />
     <article-reader />
-    <data-source />
   </div>
 </template>
 
@@ -21,7 +20,6 @@ import themeMarket from './themeMarket/index'
 import messageLive from './live/index.vue'
 import customEvent from './customEvent/index.vue'
 import articleReader from './article/index.vue'
-import dataSource from './dataSource/index.vue'
 
 export default {
   components: {
@@ -32,8 +30,11 @@ export default {
     themeMarket,
     messageLive,
     customEvent,
-    articleReader,
-    dataSource
+    articleReader
+  },
+  mounted() {
+    // 初始化数据
+    this.$store.dispatch('getStockCodeList')
   }
 }
 </script>

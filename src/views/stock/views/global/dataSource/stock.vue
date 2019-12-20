@@ -5,15 +5,18 @@
     </div>
     <div style="flex: 1;margin-left: 32px;">
       <div style="display: flex;height: 100%;flex-direction: column">
-        <div style="color: rgba(0, 0, 0, 0.65);margin-left: 8px;display: flex;align-items: center;flex: 1">
+        <div style="color: rgba(0, 0, 0, 0.65);display: flex;align-items: center;flex: 1">
           交易数据
           <span v-if="total">
             (共<span style="color: red">{{ total }}</span>条)
           </span>
         </div>
-        <div style="height: 54px;" v-if="loadingState === 0">
-          <el-button type="primary" @click.stop="syncStockData">开始同步</el-button>
-          <el-button type="warning" @click.stop="syncStockData({ 'full': false })">部分同步</el-button>
+        <div style="height: 54px;">
+          <el-button type="primary" @click.stop="syncStockData">{{ buttonLabel }}</el-button>
+          <el-radio-group v-model="dataSetType" style="margin-left: 32px">
+            <el-radio-button label="full">全量数据</el-radio-button>
+            <el-radio-button label="part">测试数据</el-radio-button>
+          </el-radio-group>
         </div>
       </div>
     </div>
@@ -29,6 +32,7 @@ export default {
     return {
       percentage: 0,
       total: 0,
+      dataSetType: 'full',
       loadingState: 0, // 1: 进行中
     }
   },
@@ -41,6 +45,12 @@ export default {
     },
     stockMap() {
       return this.$store.state.data.stockMap
+    },
+    buttonLabel() {
+      if (this.loadingState === 0) {
+        return '开始同步'
+      }
+      return '同步中...'
     }
   },
   methods: {
@@ -48,6 +58,7 @@ export default {
       return new Promise((resolve, reject) => {
         const stockCodeList = this.$store.state.data.codeList
         if (stockCodeList.length === 0) {
+          this.$message.error('数据未初始化')
           return reject('数据未初始化')
         }
         resolve({
@@ -61,13 +72,13 @@ export default {
       }
       this.percentage = Math.round(state.finishCount / state.totalCount * 100)
     },
-    syncStockData({ full = true }) {
+    syncStockData() {
       this.loadDependency().then(({ stockList }) => {
         if (this.loadingState !== 0) {
           return this.$message.warning('当前正在同步中')
         }
 
-        if (!full) { // 部分同步
+        if (this.dataSetType === 'part') { // 部分同步
           stockList = stockList.filter((item, itemIndex) => itemIndex < 100)
         }
 
