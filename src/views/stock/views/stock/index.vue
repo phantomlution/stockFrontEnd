@@ -10,7 +10,7 @@
       <trade-data-chart :code="stockCode" :showAdd="true" v-if="stockCode"/>
       <history-fragment-deal :code="stockCode" v-if="stockCode" :date.sync="historyDate"/>
     </div>
-    <stock-assistant @showDetail="showDetail" />
+    <stock-assistant />
   </div>
 </template>
 
@@ -55,10 +55,7 @@ export default {
       this.$bus.$emit('searchStockDetail', {
         code
       })
-    },
-    showDetail() {
-
-    },
+    }
   }
 }
 </script>
