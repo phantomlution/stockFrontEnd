@@ -91,6 +91,9 @@ export default {
       this.startAnalyze()
     },
     startAnalyze() {
+      if (this.loading) {
+        return
+      }
       this.itemList = []
       this.currentRowIndex = -1
 
