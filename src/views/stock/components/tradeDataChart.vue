@@ -16,10 +16,6 @@ const props = {
     type: String,
     default: ''
   },
-  autoUpdate: { // 跟随code 更新
-    type: Boolean,
-    default: true
-  },
   showAdd: {
     type: Boolean,
     default: false
@@ -35,10 +31,8 @@ export default {
     }
   },
   watch: {
-    code(val) {
-      if (this.autoUpdate) {
-        this.updateChart()
-      }
+    code() {
+      this.updateChart()
     },
     dataCount() {
       this.updateChart()

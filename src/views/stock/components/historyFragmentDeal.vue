@@ -2,17 +2,14 @@
   <lr-box style="margin-top: 16px" v-if="stockCode">
     <div slot="title">
       <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
-      <lr-date-picker v-model="date" @change="checkAndLoad" pattern="stock" />
+      <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
       <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
       <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
-        {{ date | date }}
+        {{ currentDate | date }}
       </span>
     </div>
     <div>
-      <lr-chart ref="chart" />
-    </div>
-    <div>
-      <lr-chart ref="amountChart" />
+      <lr-chart ref="chart" :isEmpty="isEmpty" />
     </div>
   </lr-box>
 </template>
@@ -28,9 +25,8 @@ const props = {
     type: String,
     default: ''
   },
-  token: { // 是否接收更新事件
-    type: String,
-    default: ''
+  date: {
+    type: [Date, String]
   }
 }
 export default {
@@ -41,45 +37,36 @@ export default {
   data() {
     return {
       stockCode: this.code,
+      isEmpty: false,
       distributionList: [],
-      date: '',
+      currentDate: this.date || '',
     }
   },
   watch: {
+    date(val) {
+      this.currentDate = val
+    },
     code(val) {
-      this.date = ''
+      this.currentDate = ''
       this.stockCode = val
     },
-    date(val) {
+    currentDate(val) {
       if (!val) {
         const chart = this.$refs.chart.getChart()
-        const amountChart = this.$refs.amountChart.getChart()
-
         chart.clear()
-        amountChart.clear()
       }
+      this.$emit('update:date', val)
     }
   },
   mounted() {
-    if (this.code) {
-      this.date = this.$moment().add('days', -1).toDate()
+    if (this.code && !this.currentDate) {
+      this.currentDate = this.$moment().add('days', -1).toDate()
     }
-    if (this.token) {
-      this.$bus.$on(this.token, item => {
-        if (item.code !== this.stockCode) {
-          this.$message.error('序号不匹配')
-          return
-        }
-        this.date = this.$moment(item.date).toDate()
-      })
-    }
-  },
-  beforeDestroy() {
-    this.$bus.$off(this.token)
+    this.checkAndLoad()
   },
   methods: {
     checkAndLoad() {
-      if (this.stockCode && this.date) {
+      if (this.stockCode && this.currentDate) {
         this.loadData()
       }
     },
@@ -87,11 +74,11 @@ export default {
       if (!this.stockCode) {
         return this.$message.error('请选择代码')
       }
-      if (!this.date) {
+      if (!this.currentDate) {
         return this.$message.error('请选择日期')
       }
       const code = this.stockCode.substring(2)
-      const date = moment(this.date).format('YYYY-MM-DD')
+      const date = moment(this.currentDate).format('YYYY-MM-DD')
 
       this.$http.get('/api/analyze/history/fragment/trade', {
         code,
@@ -126,10 +113,12 @@ export default {
     },
     renderChart(tradeList) {
       const chart = this.$refs.chart.getChart()
-      const amountChart = this.$refs.amountChart.getChart()
 
       if (tradeList.length === 0) {
-        return this.$message.warning('没有找到对应的数据')
+        this.isEmpty = true
+        return
+      } else {
+        this.isEmpty = false
       }
       const dataList = tradeList.map(item => {
         return {
@@ -190,16 +179,16 @@ export default {
       chart.render()
 
       // 绘制成交量
-      const duplicateDataList = dataList.map(item => item)
-      duplicateDataList.sort((former, later) => {
-        return former.amount - later.amount
-      })
-      const renderDataList = lodash.takeRight(duplicateDataList, 10)
-
-      amountChart.source(renderDataList)
-      addStockDailyCoordinate(amountChart)
-      amountChart.interval().position('time*amount')
-      amountChart.render()
+//      const duplicateDataList = dataList.map(item => item)
+//      duplicateDataList.sort((former, later) => {
+//        return former.amount - later.amount
+//      })
+//      const renderDataList = lodash.takeRight(duplicateDataList, 10)
+//
+//      amountChart.source(renderDataList)
+//      addStockDailyCoordinate(amountChart)
+//      amountChart.interval().position('time*amount')
+//      amountChart.render()
     },
     addAssistantLine(chart, value, text) { // 添加价格辅助线
       chart.guide().line({

@@ -1,21 +1,14 @@
 <template>
   <div style="overflow: auto">
-    <div>
-      <lr-box>
-        <div style="display: flex">
-          <div style="width: 420px">
-            <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
-          </div>
-          <div>
-            <el-button @click.stop="useFragment = !useFragment">
-              <template v-if="useFragment">关闭</template><template v-else>打开</template>成交量分析
-            </el-button>
-          </div>
-        </div>
-      </lr-box>
-      <trade-trend-chart :code="stockCode" :config="config" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
-      <history-fragment-deal :code="stockCode" v-if="useFragment && stockCode"/>
-      <trade-data-chart :code="stockCode" :showAdd="true" :autoUpdate="useChart" v-if="stockCode"/>
+    <div style="padding: 8px">
+      <el-form :inline="true">
+        <el-form-item label="股票代码：">
+          <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+        </el-form-item>
+      </el-form>
+      <trade-trend-chart :code="stockCode" :config="config" :showAdd="true" v-if="stockCode"/>
+      <trade-data-chart :code="stockCode" :showAdd="true" v-if="stockCode"/>
+      <history-fragment-deal :code="stockCode" v-if="stockCode" :date.sync="historyDate"/>
     </div>
     <stock-assistant @showDetail="showDetail" />
   </div>
@@ -39,7 +32,7 @@ export default {
   data() {
     return {
       stockCode: '',
-      useFragment: false,
+      historyDate: null,
       config: null
     }
   },
@@ -47,6 +40,11 @@ export default {
     this.$bus.$on('searchStockDetail', item => {
       this.stockCode = item.code
       this.config = item
+      if (item.date) {
+        this.historyDate = this.$moment(item.date).toDate()
+      } else {
+        this.historyDate = this.$moment().toDate()
+      }
     })
   },
   beforeDestroy() {

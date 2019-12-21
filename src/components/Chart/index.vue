@@ -1,5 +1,7 @@
 <template>
-  <div :id="chartId"></div>
+  <div :id="chartId" class="lr-chart-wrapper">
+    <div class="lr-chart__empty" v-if="isEmpty">暂无数据</div>
+  </div>
 </template>
 
 <script>
@@ -14,6 +16,10 @@ const props = {
   usePadding: {
     type: Boolean,
     default: true
+  },
+  isEmpty: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -59,3 +65,17 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-chart-wrapper{
+  position: relative;
+}
+
+.lr-chart__empty{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(0, 0, 0, 0.65)
+}
+</style>

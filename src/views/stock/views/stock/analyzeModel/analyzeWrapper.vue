@@ -26,18 +26,21 @@
         <!-- date -->
         <div v-if="currentRowModel.list">
           <div v-for="(item, itemIndex) of currentRowModel.list">
-            {{ item }}<el-button type="text" @click.stop="customAnalyze(item)">查看</el-button>
+            {{ item }}<el-button type="text" @click.stop="showDetailItem(item)">查看</el-button>
           </div>
         </div>
       </div>
-      <div>
+      <div v-if="analyzeCount === 0">
         <el-button type="primary" @click.stop="startAnalyze">开始分析</el-button>
       </div>
     </div>
     <!-- right -->
-    <div>
+    <div v-if="itemList.length > 0">
       <div v-if="itemList.length > 0 && currentRowIndex !== -1">
         {{ currentRowIndex + 1 }}/{{ itemList.length }}
+      </div>
+      <div style="margin-top: 8px" v-if="analyzeCount > 0">
+        <el-button circle icon="el-icon-refresh" @click.stop="reAnalyze"></el-button>
       </div>
       <div style="margin-top: 8px">
         <el-button circle icon="el-icon-arrow-up" @click.stop="toPrevious"></el-button>
@@ -52,7 +55,7 @@
 <script>
 const props = {
   analyzePromise: {
-    type: Promise,
+    type: Function,
     required: true
   }
 }
@@ -70,7 +73,7 @@ export default {
   watch: {
     currentRowModel(model) {
       if (model) {
-//        this.showDetail(model.code)
+        this.showDetail()
       }
     },
     currentRowIndex(val) {
@@ -83,14 +86,21 @@ export default {
     }
   },
   methods: {
+    reAnalyze() {
+      this.startAnalyze()
+    },
     startAnalyze() {
       this.itemList = []
       this.currentRowIndex = -1
-      this.analyzeCount += 1
 
       this.analyzePromise().then(rawList => {
         this.itemList = this.normalization(rawList)
-        this.toNext()
+        if (this.itemList.length > 0) {
+          this.analyzeCount += 1
+          this.toNext()
+        } else {
+          return this.$message.warning('无任何数据')
+        }
       }).catch(_ => {
         this.$message.error('读取数据失败')
         console.error(_)
@@ -116,6 +126,21 @@ export default {
         this.currentRowIndex += 1
       }
     },
+    showDetailItem(item) {
+      this.showDetail({
+        date: item.date
+      })
+    },
+    showDetail(item = {}) {
+      if (!this.currentRowModel) {
+        return this.$message.warning('没有选择数据')
+      }
+      const model = {
+        code: this.currentRowModel.code
+      }
+      Object.assign(model, item)
+      this.$bus.$emit('searchStockDetail', model)
+    }
   }
 }
 </script>
