@@ -163,35 +163,7 @@ export default {
         }
       })
 
-      const secondPhaseMap = this.$store.state.data.secondPhaseMap
-      const secondPhaseItem = secondPhaseMap.get(stock.code)
-      if (secondPhaseItem) {
-        if (secondPhaseItem.secondPhaseResult) {
-          secondPhaseItem.secondPhaseResult.forEach(phaseItem => {
-            view.guide().region({
-              top: true,
-              start: {
-                timestamp: moment(phaseItem.startDate).toDate().getTime(),
-                close: phaseItem.startClose
-              },
-              end: {
-                timestamp: moment(phaseItem.offsetEndDate).toDate().getTime(),
-                close: phaseItem.offsetEndClose
-              },
-              style: {
-                lineWidth: 1, // 辅助框的边框宽度
-                fill: '#f00', // 辅助框填充的颜色
-                fillOpacity: 1,
-                stroke: '#f00' // 辅助框的边框颜色设置
-              },
-
-            })
-          })
-        }
-
-      }
-
-      chart.render();
+      chart.render()
     },
     addExtraInfoPoint(view, start, text) { // 添加涨停
       view.guide().dataMarker({

@@ -1,6 +1,6 @@
 <!-- 复用通用的分析区域 -->
 <template>
-  <div style="display: flex">
+  <div style="display: flex;min-height: 64px" v-loading="loading">
     <!-- left -->
     <div style="flex: 1">
       <!-- params -->
@@ -10,7 +10,7 @@
       <!-- current -->
       <div v-if="currentRowModel">
         <!-- base -->
-        <div>
+        <div style="margin-bottom: 8px">
           <lr-stock-detail-link :add="true" :code="currentRowModel.code" :name="currentRowModel.name" />
         </div>
         <!-- desc -->
@@ -18,7 +18,7 @@
           <pre style="white-space: pre-line;">{{ currentRowModel.desc }}</pre>
         </div>
         <!-- theme -->
-        <div v-if="currentRowModel.themeList && currentRowModel.themeList.length > 0">
+        <div v-if="currentRowModel.themeList && currentRowModel.themeList.length > 0" class="lr-analyze-wrapper--theme">
           <el-tag v-for="(theme, themeIndex) of currentRowModel.themeList" :key="themeIndex">
             {{ theme }}
           </el-tag>
@@ -65,6 +65,7 @@ export default {
   data() {
     return {
       analyzeCount: 0,
+      loading: false,
       currentRowIndex: -1,
       currentRowModel: null,
       itemList: []
@@ -93,7 +94,9 @@ export default {
       this.itemList = []
       this.currentRowIndex = -1
 
+      this.loading = true
       this.analyzePromise().then(rawList => {
+        this.loading = false
         this.itemList = this.normalization(rawList)
         if (this.itemList.length > 0) {
           this.analyzeCount += 1
@@ -102,12 +105,27 @@ export default {
           return this.$message.warning('无任何数据')
         }
       }).catch(_ => {
+        this.loading = false
         this.$message.error('读取数据失败')
         console.error(_)
       })
     },
     normalization(itemList) { // 对齐数据
-      return itemList
+      // 暂时剔除创业板
+      const result = itemList.filter(item => {
+        return item.code.indexOf('SZ300') === -1
+      })
+
+      // 追加概念板块信息(仅仅从本地缓存读取数据)
+      const stockMap = this.$store.state.data.stockMap
+      result.forEach(item => {
+        if (stockMap.has(item.code)) {
+          const stock = stockMap.get(item.code)
+          item.themeList = stock.base.theme_list || []
+        }
+      })
+
+      return result
     },
     setRowIndex(index) {
       this.currentRowIndex = index
@@ -144,3 +162,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-analyze-wrapper--theme{
+  margin-top: -8px;
+  .el-tag{
+    margin-top: 8px;
+    margin-right: 8px;
+  }
+}
+</style>

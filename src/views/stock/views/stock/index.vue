@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: auto">
+  <div>
     <div style="padding: 8px">
       <el-form :inline="true">
         <el-form-item label="股票代码：">

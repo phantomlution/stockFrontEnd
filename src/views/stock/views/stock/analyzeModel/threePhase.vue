@@ -12,9 +12,6 @@
           <el-switch v-model="hasEverLimitUp" />
         </el-form-item>
       </el-form>
-      <div>
-        three phase
-      </div>
     </analyze-wrapper>
   </div>
 </template>
@@ -228,16 +225,12 @@ export default {
         secondRoundDataList = ninePercentDataList
       }
 
-      const finalRoundDataList = secondRoundDataList
-      this.dataList = finalRoundDataList.filter(item => { // 暂时剔除创业板
-        return item.code.indexOf('SZ300') === -1
-      })
-
-      const secondPhaseMap = this.$store.state.data.secondPhaseMap
-      secondPhaseMap.clear()
-      console.log(this.dataList)
-      this.dataList.forEach(item => {
-        secondPhaseMap.set(item.code, item)
+      this.dataList = secondRoundDataList.map(item => {
+        return {
+          name: item.name,
+          code: item.code,
+          desc: item.desc
+        }
       })
 
       return Promise.resolve(this.dataList)
@@ -273,8 +266,6 @@ export default {
             code: stock.code,
             name: stock.name,
             targetDate: today.date,
-            themeList: stock.base.theme_list,
-            profit: lodash.round((mostRecentDay.close - today.close) / today.close * 100, 1),
             lastDiff: today.diff,
             close: today.close,
             amount: today.amount,
@@ -282,14 +273,9 @@ export default {
             minClose: lodash.min(closePriceList),
             maxClose: lodash.max(closePriceList),
             recentItemList: deepClone(recentCalculateItemList),
-            secondPhaseResult,
             limitUpCount,
-            secondPhaseCount: secondPhaseResult.length
           }
-          if (secondPhaseResult.length > 0) {
-            model.bounceRate = secondPhaseResult[secondPhaseResult.length - 1].bounceRate
-          }
-          model.closeMinIncrement = lodash.round((model.close / model.minClose - 1) * 100)
+
           model.closeMaxIncrement = lodash.round((model.close / model.maxClose - 1) * 100)
           model.desc = `低于最高:${ model.closeMaxIncrement }%`
           collector.push(model)

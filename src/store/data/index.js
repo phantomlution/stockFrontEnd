@@ -11,7 +11,6 @@ export default {
     codeList: [],
     marketHeat: [],
     lowPriceCount: [],
-    secondPhaseMap: new Map(),
     marketPriceMap: new Map(), // 市场价格
   },
   mutations: {
