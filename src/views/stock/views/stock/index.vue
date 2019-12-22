@@ -6,6 +6,8 @@
           <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
         </el-form-item>
       </el-form>
+      <!--<temp-analyze :code="stockCode" />-->
+      <!--<history-fragment-deal :code="stockCode" v-if="stockCode" :date.sync="historyDate"/>-->
       <trade-trend-chart :code="stockCode" :config="config" :showAdd="true" v-if="stockCode"/>
       <trade-data-chart :code="stockCode" :showAdd="true" v-if="stockCode"/>
       <history-fragment-deal :code="stockCode" v-if="stockCode" :date.sync="historyDate"/>
@@ -20,6 +22,7 @@ import tradeTrendChart from '@/views/stock/components/tradeTrendChart.vue'
 import searchStock from '@/views/stock/components/searchStock.vue'
 import historyFragmentDeal from '@/views/stock/components/historyFragmentDeal.vue'
 import stockAssistant from './stockAssistant.vue'
+import tempAnalyze from './tempAnalyze.vue'
 
 export default {
   components: {
@@ -27,7 +30,8 @@ export default {
     tradeTrendChart,
     searchStock,
     historyFragmentDeal,
-    stockAssistant
+    stockAssistant,
+    tempAnalyze
   },
   data() {
     return {

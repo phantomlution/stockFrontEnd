@@ -4,6 +4,9 @@
       <div slot="header">
         <span>
           <lr-stock-detail-link :code="code" :name="name" addText="设置" />
+          <template v-if="stockPoolItem.threePhase">
+            <el-tag effect="dark" type="danger">③</el-tag>
+          </template>
         </span>
         <span style="float: right;margin-left: 8px;margin-top: 1px" @click.stop="removeItem">
           <el-link icon="el-icon-close" />
