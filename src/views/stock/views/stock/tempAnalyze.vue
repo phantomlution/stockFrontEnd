@@ -70,7 +70,7 @@ export default {
       ).then(_ => {
         const dataList = []
         _.forEach(predictItem => {
-          const time = '10:15:00'
+          const time = '14:00:00'
           const currentTimePredict = predictItem.result.find(item => item.real === time)
 
           const realModel = {

@@ -78,7 +78,9 @@ export default {
           return this.$message.warning('当前正在同步中')
         }
 
-        if (this.dataSetType === 'part') { // 部分同步
+        this.updateState('')
+        const currentType = this.dataSetType
+        if (currentType === 'part') { // 部分同步
           stockList = stockList.filter((item, itemIndex) => itemIndex < 100)
         }
 
@@ -99,6 +101,11 @@ export default {
           done: state => { // 任务结束
             this.updateProgress(state)
             this.loadingState = 0
+            if (currentType === 'part') {
+              this.updateState('warning')
+            } else {
+              this.updateState('success')
+            }
           }
         })
         requestThread.run()
@@ -107,6 +114,9 @@ export default {
     loadStockData(code) {
       return this.$store.dispatch('loadStockData', code)
     },
+    updateState(state) {
+      this.$emit('change', state)
+    }
 
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <el-popover>
-    <stock-data />
-    <el-button slot="reference" size="small" circle icon="el-icon-s-promotion"></el-button>
+    <stock-data @change="updateState"/>
+    <el-button slot="reference" :type="state" size="small" circle icon="el-icon-s-promotion"></el-button>
   </el-popover>
 </template>
 
@@ -12,5 +12,15 @@ export default {
   components: {
     stockData
   },
+  data() {
+    return {
+      state: ''
+    }
+  },
+  methods: {
+    updateState(state) {
+      this.state = state
+    }
+  }
 }
 </script>

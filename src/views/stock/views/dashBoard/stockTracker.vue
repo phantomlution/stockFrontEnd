@@ -32,7 +32,14 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="昨收">{{ biding.yesterday }}</el-form-item>
+              <el-form-item label="昨收">
+                <span>{{ biding.yesterday }}</span>
+                <template v-if="yesterdayItem">
+                  ({{ yesterdayItem.amount | amount }},{{todayAmountPercent}})
+                </template>
+                <!--<template v-if=""></template>-->
+                <!--<i icon-el-warnign ></i>-->
+              </el-form-item>
             </el-col>
           </el-row>
           <el-row>
@@ -67,6 +74,10 @@ const props = {
   code: {
     type: String,
     required: true
+  },
+  yesterday: {
+    type: Date,
+    default: null
   },
   item: { // 整个配置信息
     type: Object,
@@ -104,7 +115,9 @@ export default {
           key: 'breakCeilWarn',
           value: '30000'
         }
-      ]
+      ],
+      yesterdayItem: null,
+      todayAmountPercent: ''
     }
   },
   computed: {
@@ -114,14 +127,18 @@ export default {
           background: '#fdf6ec'
         }
       }
-      return {
-
-      }
+      return {}
+    },
+    isIndex() { // 是否为指数
+      return ['上证指数'].indexOf(this.name) !== -1
     }
   },
   watch: {
     'stockPoolItem.payAttention'() {
       this.updateTrackSpeed()
+    },
+    yesterday() {
+      this.loadYesterdayData()
     }
   },
   mounted() {
@@ -131,6 +148,7 @@ export default {
       this.initTracker()
     })
     this.initTracker()
+    this.loadYesterdayData()
   },
   beforeDestroy() {
     this.$bus.$off(this.eventKey)
@@ -177,8 +195,29 @@ export default {
 
         this.biding = response
         this.lastUpdate = new Date().getTime()
+        this.updateAmountInfo()
 
         this.checkAllNotification(response)
+      }).catch(_ => {
+        console.error(_)
+      })
+    },
+    updateAmountInfo() { // 更新成交量信息
+      let result = ''
+      if (this.biding && this.yesterdayItem) {
+        result = `${ Math.ceil(this.biding.amount / this.yesterdayItem.amount * 100) }%`
+      }
+      this.todayAmountPercent = result
+    },
+    loadYesterdayData() {
+      if (this.isIndex || !this.yesterday) {
+        return
+      }
+      const date = this.$moment(this.yesterday).format('YYYY-MM-DD')
+      this.$store.dispatch('loadStockData', this.code).then(stockItem => {
+        const yesterday = stockItem.rawData.find(item => item.date === date)
+        this.yesterdayItem = yesterday
+        this.updateAmountInfo()
       }).catch(_ => {
         console.error(_)
       })
