@@ -25,8 +25,6 @@
 <script>
 import customEvent from '@/data/customEvent'
 import fullCalendar from '@/components/FullCalendar'
-import moment from 'moment'
-
 
 export default {
   components: {
@@ -50,6 +48,8 @@ export default {
       const calendarList = []
 
       Promise.all([
+        this.loadSuspendTradeDateList(),
+        this.loadOptionDeliveryDate(),
         this.loadStockPreReleaseNotice(),
         this.loadCentralBankEvent(),
         this.loadCustomEvent(),
@@ -90,6 +90,56 @@ export default {
     loadCustomEvent() { // 加载自定义事件
       return Promise.resolve(customEvent)
     },
+    loadSuspendTradeDateList() { // 加载休市日期列表
+      return new Promise((resolve, reject) => {
+        this.$store.dispatch('getSuspendTradeDateList').then(dateList => {
+          const result = []
+          dateList.forEach(item => {
+            result.push({
+              title: `${ item.title }`,
+              start: item.date,
+              end: item.date,
+              isImportant: true
+            })
+          })
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
+    },
+    loadOptionDeliveryDate() { // 加载期权交割日期
+      return new Promise((resolve, reject) => {
+        const currentMonth = this.$moment().format('YYYY-MM')
+        const lastMonth = this.$moment(`${ currentMonth }-01`).add(-1, 'months').format('YYYY-MM')
+        const nextMonth = this.$moment(`${ currentMonth }-01`).add(1, 'months').format('YYYY-MM')
+
+        Promise.all([
+          this.$store.dispatch('getEftOptionDeliveryDate', lastMonth),
+          this.$store.dispatch('getEftOptionDeliveryDate', currentMonth),
+          this.$store.dispatch('getEftOptionDeliveryDate', nextMonth)
+        ]).then(_ => {
+          console.log(_)
+          const result = []
+          _.forEach(deliveryItemList => {
+            deliveryItemList.forEach(deliveryItem => {
+              const date = deliveryItem.key
+              const title = `[期权交割] ${ deliveryItem.value.map(item => item.name).join(', ')}`
+
+              result.push({
+                title,
+                start: date,
+                end: date,
+                isImportant: true
+              })
+            })
+          })
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
+    },
     loadCentralBankEvent() { // 加载央行会议
       return new Promise((resolve, reject) => {
         this.$http.get(`/api/data/centralBank`).then(response => {
@@ -114,12 +164,12 @@ export default {
 </script>
 
 <style lang="scss">
-.lr-calendar-popover{
-  padding: 0 !important;
-}
+  .lr-calendar-popover{
+    padding: 0 !important;
+  }
 
-.lr-calendar-important{
-  color: red;
-  font-weight: bold;
-}
+  .lr-calendar-important{
+    color: red;
+    font-weight: bold;
+  }
 </style>

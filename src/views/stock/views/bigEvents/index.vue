@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import eventCalendar from './eventCalendar.vue'
+import eventCalendar from './calendar.vue'
 
 export default {
   components: {

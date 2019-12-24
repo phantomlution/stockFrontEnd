@@ -50,6 +50,8 @@ export const deepClone = function(model) {
   return JSON.parse(JSON.stringify(model))
 }
 
+export const $moment = moment
+
 export default {
   install(Vue) {
     Vue.filter('date', date => {
@@ -73,7 +75,7 @@ export default {
     Vue.filter('amount', val => {
       let val_str = parseInt(val, 10).toString()
       if (val_str.length > 8) {
-        return `${ lodash.round(val / 10000 / 10000, 2)}亿`
+        return `${ lodash.round(val / 10000 / 10000)}亿`
       } else if (val_str.length > 4) {
         return `${ lodash.round(val / 10000)}万`
       } else {
@@ -85,4 +87,19 @@ export default {
       return Number(val).toFixed(2)
     })
   }
+}
+
+/**
+ * object to list
+ */
+export const object2List = function(obj) {
+  const result = []
+  Object.keys(obj).forEach(key => {
+    result.push({
+      key,
+      value: obj[key]
+    })
+  })
+
+  return result
 }

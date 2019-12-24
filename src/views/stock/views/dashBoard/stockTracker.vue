@@ -210,7 +210,7 @@ export default {
       this.todayAmountPercent = result
     },
     loadYesterdayData() {
-      if (this.isIndex || !this.yesterday) {
+      if (!this.yesterday) {
         return
       }
       const date = this.$moment(this.yesterday).format('YYYY-MM-DD')
