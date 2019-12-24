@@ -96,9 +96,9 @@ export default {
           const result = []
           dateList.forEach(item => {
             result.push({
-              title: `${ item.title }`,
-              start: item.date,
-              end: item.date,
+              title: `[${ item.type } 休市] ${ item.desc }`,
+              start: item.start,
+              end: item.end,
               isImportant: true
             })
           })
