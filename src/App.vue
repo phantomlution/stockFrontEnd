@@ -87,4 +87,10 @@ export default {
 .el-drawer__body{
   overflow: auto;
 }
+p {
+  margin-block-end: 0;
+}
+p:first-child{
+  margin-block-start: 0;
+}
 </style>
