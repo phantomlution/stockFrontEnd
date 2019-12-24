@@ -15,12 +15,12 @@
     </div>
     <div style="margin-top: 8px;margin-bottom: -8px;">
         <div style="display: flex;justify-content: center;align-items: center">
-          <span style="flex: 1;color: #909399">
+          <span style="flex: 1;">
             <template v-if="item.url">
               <el-button type="text" @click.stop="openUrl(item.url)">查看链接</el-button>
             </template>
             <template v-if="item.release_date">
-              数据发布于: {{ item.release_date }}
+              <span style="font-size: 12px;color: #909399">数据发布于: {{ item.release_date }}</span>
             </template>
           </span>
           <template v-if="!hasRead">

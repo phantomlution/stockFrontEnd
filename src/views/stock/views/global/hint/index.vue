@@ -1,5 +1,5 @@
 <template>
-  <lr-motto>
+  <lr-motto :useCollapse="true">
     <div>
       <div class="lr-hint__item" v-for="(item, itemIndex) of displayItemList" :key="itemIndex" v-html="item.html"></div>
       <!--<span>12.15号关税，12.16解禁潮走向</span>-->
