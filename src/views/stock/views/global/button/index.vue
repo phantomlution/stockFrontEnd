@@ -1,5 +1,6 @@
 <template>
   <div class="lr-global-button">
+    <event-calendar style="margin-right: 10px" />
     <data-source-button style="margin-right: 10px"/>
     <el-button size="small" circle icon="el-icon-collection" @click.stop="openEventPanel"></el-button>
     <el-button size="small" circle icon="el-icon-shopping-cart-1" @click.stop="openThemeMarket"></el-button>
@@ -11,10 +12,12 @@
 
 <script>
 import dataSourceButton from '../dataSource/index.vue'
+import eventCalendar from '../calendar/index.vue'
 
 export default {
   components: {
-    dataSourceButton
+    dataSourceButton,
+    eventCalendar
   },
   data() {
     return {

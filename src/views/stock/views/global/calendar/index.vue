@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <el-button @click.stop="loadCalendar">test</el-button>
-
-    <el-timeline>
-      <el-timeline-item :timestamp="item.date" placement="top" v-for="item of eventList" :key="item.date">
-        <item-list :list="item.list"></item-list>
-      </el-timeline-item>
-    </el-timeline>
-  </div>
+  <el-popover>
+    <div style="width: 60vw;height: 60vh;overflow: auto">
+      <el-button @click.stop="loadCalendar">test</el-button>
+      <el-timeline>
+        <el-timeline-item :timestamp="item.date" placement="top" v-for="item of eventList" :key="item.date">
+          <item-list :list="item.list"></item-list>
+        </el-timeline-item>
+      </el-timeline>
+    </div>
+    <el-button circle icon="el-icon-date" slot="reference"></el-button>
+  </el-popover>
 </template>
 
 <script>

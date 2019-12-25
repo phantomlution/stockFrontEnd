@@ -5,7 +5,7 @@
     <span>{{ item.country }}</span>
     <el-divider direction="vertical"></el-divider>
     <span>{{ item.area }}</span>
-    {{ item.name }}
+    {{ item.name }}, L{{ item.importantLevel}}
   </div>
 </template>
 

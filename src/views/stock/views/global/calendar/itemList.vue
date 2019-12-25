@@ -29,23 +29,12 @@ const FilterRule = function(keyword, countryList = []) {
 }
 
 const ignoredDataRegexList = [ // 忽略数据
-  new FilterRule('库存变动'),
-  new FilterRule('企业服务价格指数', ['日本']),
-  new FilterRule('当周买进外国', ['日本']),
-  new FilterRule('当周外资买进', ['日本']),
-  new FilterRule('新屋开工年', ['日本']),
-  new FilterRule('当周MBA', ['美国']),
-  new FilterRule('失业金', ['美国']),
-  new FilterRule('BBA', ['英国']),
-  new FilterRule('高盛连锁店销售', ['美国']),
-  new FilterRule('红皮书商业零售', ['美国']),
-  new FilterRule('季调房价指数', ['美国']),
-  new FilterRule('谘商会消费者', ['美国']),
-  new FilterRule('房价指数', ['美国']),
-  new FilterRule('达拉斯联储', ['美国']),
-  new FilterRule('成屋签约销售', ['美国']),
-  new FilterRule('当周DOE', ['美国'])
-
+  new FilterRule('库存变动', ['美国']),
+  new FilterRule('失业金人数', ['美国']),
+  new FilterRule('钻井总数', ['美国']),
+  new FilterRule('零售销售', ['德国']),
+  new FilterRule('批发库存月率', ['美国']),
+  new FilterRule('BBA房屋购买', ['英国']),
 ]
 
 const props = {
@@ -90,7 +79,15 @@ export default {
         if (item.type === 'event') {
           eventList.push(item)
         } else if(item.type === 'data') {
-          if (this.matchRule(item.name, ignoredDataRegexList)) {
+          if (item.name.indexOf('库存变动(万桶)') !== -1) {
+//            debugger
+          }
+          if (item.name.indexOf('中国') !== -1) {
+            dataList.push(item)
+          } else if (item.importantLevel === '') {
+            ignoredDataList.push(item)
+          } else if (this.matchRule(item.name, ignoredDataRegexList)) {
+            console.log(item)
             ignoredDataList.push(item)
           } else {
             dataList.push(item)
