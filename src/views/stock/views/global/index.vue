@@ -8,6 +8,7 @@
     <theme-market />
     <message-live />
     <article-reader />
+    <event-calendar />
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import themeMarket from './themeMarket/index'
 import messageLive from './live/index.vue'
 import customEvent from './customEvent/index.vue'
 import articleReader from './article/index.vue'
+import eventCalendar from './calendar/index.vue'
 
 export default {
   components: {
@@ -30,7 +32,8 @@ export default {
     themeMarket,
     messageLive,
     customEvent,
-    articleReader
+    articleReader,
+    eventCalendar
   },
   mounted() {
     // 初始化数据

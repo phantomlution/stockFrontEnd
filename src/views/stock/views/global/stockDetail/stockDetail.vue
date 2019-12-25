@@ -76,7 +76,7 @@
               </el-row>
               <el-row>
                 <el-col :span="24">
-                  <el-form-item label="所属主题" style="color: rgba(0, 0, 0, 0.65);font-size: 14px">
+                  <el-form-item class="lr-stock-detail-theme" label="所属主题">
                     <el-tag v-for="(theme, themeIndex) of base.theme_list" :key="themeIndex">
                       {{ theme }}
                     </el-tag>
@@ -315,3 +315,14 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-stock-detail-theme {
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 14px;
+  .el-tag{
+    margin-right: 8px;
+  }
+}
+
+</style>

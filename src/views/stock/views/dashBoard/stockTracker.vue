@@ -23,8 +23,8 @@
         </span>
       </div>
       <div v-if="biding">
-        <el-form>
-          <el-row>
+        <el-form label-width="42px">
+          <el-row :gutter="0">
             <el-col :span="12">
               <el-form-item label="今开">
                 {{ biding.open}}
@@ -32,13 +32,11 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="昨收">
+              <el-form-item label="昨收" style="white-space: nowrap;overflow: hidden">
                 <span>{{ biding.yesterday }}</span>
                 <template v-if="yesterdayItem">
-                  ({{ yesterdayItem.amount | amount }},{{todayAmountPercent}})
+                  <span :title="todayAmountPercent">({{ yesterdayItem.amount | amount }},{{todayAmountPercent}})</span>
                 </template>
-                <!--<template v-if=""></template>-->
-                <!--<i icon-el-warnign ></i>-->
               </el-form-item>
             </el-col>
           </el-row>

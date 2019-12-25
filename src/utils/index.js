@@ -75,7 +75,7 @@ export default {
     Vue.filter('amount', val => {
       let val_str = parseInt(val, 10).toString()
       if (val_str.length > 8) {
-        return `${ lodash.round(val / 10000 / 10000)}亿`
+        return `${ lodash.round(val / 10000 / 10000, 1)}亿`
       } else if (val_str.length > 4) {
         return `${ lodash.round(val / 10000)}万`
       } else {

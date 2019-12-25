@@ -1,7 +1,7 @@
 <template>
   <el-drawer title="事件列表" size="75%" :visible.sync="visible" direction="ltr">
     <div style="height: calc(100vh - 80px);overflow: hidden;display: flex;flex-direction: column">
-      <div style="padding: 0 16px;">
+      <div class="lr-event-dialog-event">
         <el-tag size="small" v-for="event of eventList" :key="event._id" @click.stop="loadEventDetail(event._id)">{{ event.name }}</el-tag>
       </div>
       <div style="overflow: auto">
@@ -96,3 +96,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-event-dialog-event{
+  padding: 0 16px;
+  .el-tag{
+    margin-right: 8px;
+    margin-bottom: 8px;
+  }
+}
+</style>
