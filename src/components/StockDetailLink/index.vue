@@ -1,6 +1,6 @@
 <template>
   <div style="display: inline-block">
-    <el-link type="primary" @click.stop="showStockDetail">{{ displayLabel }}</el-link>
+    <el-link :type="type" @click.stop="showStockDetail">{{ displayLabel }}</el-link>
     <lr-shopping-cart :code="code" v-if="add" :buttonText="addText" />
   </div>
 </template>
@@ -40,6 +40,16 @@ export default {
   name: 'LrStockDetailLink',
   props,
   computed: {
+    isInStockPool() { // 如果在股票池中，标记当前项
+      const stockPoolList = this.$store.getters.stockPoolList
+      return !!stockPoolList.find(item => item.code === this.code)
+    },
+    type() {
+      if (this.isInStockPool) {
+        return 'danger'
+      }
+      return 'primary'
+    },
     displayLabel() {
       let label = ''
       if (this.showName) {
