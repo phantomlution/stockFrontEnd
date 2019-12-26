@@ -40,7 +40,7 @@ export const getRecentDeliveryDate = function (deliveryModel) {
   const startMonth = `${ year }-${ month > 10 ? '' : '0'}${ month }`
   const deliverDate = getDeliveryDate(deliveryModel, startMonth)
   if ($moment(deliverDate).toDate().getTime() < $moment(today).toDate().getTime()) { // 当月已到期
-    const nextStartDate = $moment(startMonth + '-01').add(1, 'months')
+    const nextStartDate = $moment(startMonth + '-01').add(1, 'months').format('YYYY-MM')
     return getDeliveryDate(deliveryModel, nextStartDate)
   } else {
     return deliverDate

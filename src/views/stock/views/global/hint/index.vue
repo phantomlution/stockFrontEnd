@@ -2,8 +2,6 @@
   <lr-motto :useCollapse="true">
     <div>
       <div class="lr-hint__item" v-for="(item, itemIndex) of displayItemList" :key="itemIndex" v-html="item.html"></div>
-      <!--<span>12.15号关税，12.16解禁潮走向</span>-->
-      <!--<span>不仅要对<span style="color: red;font-weight: bold">风险</span>敏感，也要对<span style="color: red;font-weight: bold">收益</span>敏感</span>-->
     </div>
   </lr-motto>
 </template>
@@ -22,7 +20,7 @@ export default {
     getHintList() { // 获取所有提醒
       Promise.all([
         this.getOptionDelivery(), // 期权交割日期
-        this.getRecentSuspendTradeDateList(), // 最近休市日期
+//        this.getRecentSuspendTradeDateList(), // 最近休市日期
       ]).then(labelList => {
         const displayItemList = []
 
@@ -38,6 +36,7 @@ export default {
     getOptionDelivery() {
       return new Promise((resolve, reject) => {
         this.$store.dispatch('getEtfOptionNextDeliveryDate').then(optionDeliveryDateList => {
+          console.log(optionDeliveryDateList)
           const displayItemList = []
           optionDeliveryDateList.forEach(item => {
             const title = item.value.map(valueItem => valueItem.name).join(", ")
