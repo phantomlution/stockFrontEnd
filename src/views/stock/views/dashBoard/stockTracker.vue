@@ -3,7 +3,7 @@
     <el-card :style="cardStyle">
       <div slot="header">
         <span>
-          <lr-stock-detail-link :code="code" :name="name" addText="设置" />
+          <lr-stock-detail-link :code="code" :name="name" icon="el-icon-setting" :detectType="false" />
           <template v-if="stockPoolItem.threePhase">
             <el-tag effect="dark" type="danger">③</el-tag>
           </template>

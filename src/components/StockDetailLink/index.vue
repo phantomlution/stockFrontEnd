@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block">
     <el-link :type="type" @click.stop="showStockDetail">{{ displayLabel }}</el-link>
-    <lr-shopping-cart :code="code" v-if="add" :buttonText="addText" />
+    <lr-shopping-cart :code="code" v-if="add" :icon="icon" />
   </div>
 </template>
 
@@ -19,9 +19,8 @@ const props = {
     type: Boolean,
     default: true
   },
-  addText: {
+  icon: {
     type: String,
-    default: '加自选'
   },
   defaultTab: {
     type: String,
@@ -32,6 +31,10 @@ const props = {
     default: true
   },
   showCode: {
+    type: Boolean,
+    default: true
+  },
+  detectType: { // 是否自动判断是否在股票池内，调整显示的颜色
     type: Boolean,
     default: true
   }
@@ -45,7 +48,7 @@ export default {
       return !!stockPoolList.find(item => item.code === this.code)
     },
     type() {
-      if (this.isInStockPool) {
+      if (this.detectType && this.isInStockPool) {
         return 'danger'
       }
       return 'primary'

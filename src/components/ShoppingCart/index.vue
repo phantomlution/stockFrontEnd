@@ -57,7 +57,7 @@
         <el-button type="primary" size="mini" @click.stop="addToStockPool">确定</el-button>
       </div>
     </div>
-    <el-link slot="reference" @click.stop="dialogVisible=true">{{ buttonText }}</el-link>
+    <el-link type="info" slot="reference" :underline="false" @click.stop="dialogVisible=true"><i :class="icon" /></el-link>
   </el-popover>
 </template>
 
@@ -74,9 +74,9 @@ const props = {
     type: Boolean,
     default: true
   },
-  buttonText: {
+  icon: {
     type: String,
-    default: '加自选'
+    default: 'el-icon-circle-plus'
   }
 }
 
