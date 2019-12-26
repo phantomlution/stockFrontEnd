@@ -1,7 +1,6 @@
 <template>
-  <el-popover>
-    <div style="width: 60vw;height: 60vh;overflow: auto">
-      <el-button @click.stop="loadCalendar">test</el-button>
+  <el-popover v-model="visible">
+    <div v-loading="isLoading" class="lr-financial-calendar">
       <el-timeline>
         <el-timeline-item :timestamp="item.date" placement="top" v-for="item of eventList" :key="item.date">
           <item-list :list="item.list"></item-list>
@@ -13,6 +12,10 @@
 </template>
 
 <script>
+/**
+ * 样式模拟 Bilibili 的历史界面
+ */
+
 import itemList from './itemList.vue'
 
 export default {
@@ -21,11 +24,17 @@ export default {
   },
   data() {
     return {
-      eventList: []
+      eventList: [],
+      visible: false,
+      isLoading: false
     }
   },
-  mounted() {
-    this.loadCalendar()
+  watch: {
+    visible(val) {
+      if (val && this.eventList.length === 0) {
+        this.loadCalendar()
+      }
+    }
   },
   methods: {
     getDateList() { // 获取最近7日数据
@@ -48,9 +57,16 @@ export default {
       })
     },
     loadCalendar() {
+      if (this.isLoading) {
+        return
+      }
+      this.isLoading = true
+
       Promise.all(this.getDateList().map(date => this.getEventCalendar(date))).then(_ => {
         this.eventList = _
+        this.isLoading = false
       }).catch(_ => {
+        this.isLoading = false
         console.error(_)
       })
     }
@@ -58,3 +74,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-financial-calendar{
+  width: 60vw;
+  height: 60vh;
+  overflow: auto;
+  .el-timeline{
+    padding-left: 100px;
+  }
+  .el-timeline-item__timestamp{
+    position: absolute;
+    left: -88px;
+  }
+}
+
+</style>

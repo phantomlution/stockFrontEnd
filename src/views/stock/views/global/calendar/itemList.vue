@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div>
-      <div>财经大事件</div>
-      <div v-for="item of eventList" :key="item.key">
-        <item :item="item" />
+    <div class="lr-financial-calendar-block" v-if="eventList.length > 0">
+      <div>
+        <div class="lr-financial-calendar-block-label">财经大事件</div>
+      </div>
+      <div>
+        <item :item="item" v-for="item of eventList" :key="item.key"/>
       </div>
     </div>
-    <div>
-      <div>财经数据</div>
-      <div v-for="item of dataList" :key="item.key">
-        <item :item="item" />
+    <div class="lr-financial-calendar-block" v-if="dataList.length > 0">
+      <div class="lr-financial-calendar-block-label">财经数据</div>
+      <div>
+        <item :item="item" v-for="item of dataList" :key="item.key"/>
       </div>
     </div>
   </div>
@@ -61,6 +63,9 @@ export default {
       this.updateEventList()
     }
   },
+  mounted() {
+    this.updateEventList()
+  },
   methods: {
     matchRule(str, ruleList) {
       for(let i=0; i<ruleList.length; i++) {
@@ -79,15 +84,11 @@ export default {
         if (item.type === 'event') {
           eventList.push(item)
         } else if(item.type === 'data') {
-          if (item.name.indexOf('库存变动(万桶)') !== -1) {
-//            debugger
-          }
           if (item.name.indexOf('中国') !== -1) {
             dataList.push(item)
           } else if (item.importantLevel === '') {
             ignoredDataList.push(item)
           } else if (this.matchRule(item.name, ignoredDataRegexList)) {
-            console.log(item)
             ignoredDataList.push(item)
           } else {
             dataList.push(item)
@@ -95,6 +96,12 @@ export default {
         }
       })
 
+      if (eventList.length === 0) {
+        eventList.push({
+          name: '暂无数据',
+          time: '待定'
+        })
+      }
       this.dataList = dataList
       this.ignoredDataList = ignoredDataList
       this.eventList = eventList
@@ -103,3 +110,16 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-financial-calendar-block{
+  & + .lr-financial-calendar-block{
+    margin-top: 16px;
+  }
+}
+
+.lr-financial-calendar-block-label{
+  color: #1f2f3d;
+  margin-bottom: 8px;
+}
+</style>
