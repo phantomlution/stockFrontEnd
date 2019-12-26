@@ -6,6 +6,8 @@
           <lr-stock-detail-link :code="code" :name="name" addText="设置" />
           <template v-if="stockPoolItem.threePhase">
             <el-tag effect="dark" type="danger">③</el-tag>
+          </template>
+          <template v-if="stockPoolItem.isReducing">
             <el-tag effect="dark" type="danger">减</el-tag>
           </template>
         </span>

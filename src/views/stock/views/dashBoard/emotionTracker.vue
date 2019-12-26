@@ -36,6 +36,9 @@ export default {
       rankList: [],
       riskItemList: [
         {
+          name: 'ST概念'
+        },
+        {
           name: '黄金概念'
         },
         {

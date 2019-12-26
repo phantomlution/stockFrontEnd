@@ -51,7 +51,7 @@ export default {
         this.loadSuspendTradeDateList(),
         this.loadOptionDeliveryDate(),
         this.loadStockPreReleaseNotice(),
-        this.loadCentralBankEvent(),
+//        this.loadCentralBankEvent(),
         this.loadCustomEvent(),
       ]).then(allEventList => {
         allEventList.forEach(event => {

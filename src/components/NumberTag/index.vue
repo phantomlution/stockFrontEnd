@@ -2,12 +2,11 @@
   <span :style="colorStyle">
     <slot name="prepend" />
     <template v-if="amount.length === 0">
-      -
+      <span>-</span>
     </template>
     <template v-else>
-      {{ amount }}{{ unit }}
+      <span>{{ amount }}{{ unit }}</span>
     </template>
-    <span></span>
     <slot name="append" />
   </span>
 </template>
