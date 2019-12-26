@@ -184,6 +184,7 @@ export default {
         this.dialogVisible = false
         this.$bus.$emit(this.eventKey, model)
       }).catch(_ => {
+        console.error(_)
       })
     },
     conditionValidator(rule, val='', callback) {

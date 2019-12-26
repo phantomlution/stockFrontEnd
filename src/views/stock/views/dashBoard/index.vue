@@ -21,7 +21,7 @@
       </div>
     </div>
     <div style="margin-top: 16px;display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
-      <stock-tracker @removeItem="removeItem(itemIndex)" :yesterday="yesterdayDate" :code="item.code" :name="item.name" :item="item" v-for="(item, itemIndex) of stockPool" :key="item.code"></stock-tracker>
+      <stock-tracker :yesterday="yesterdayDate" :code="item.code" :name="item.name" :item="item" v-for="(item, itemIndex) of stockPool" :key="item.code"></stock-tracker>
     </div>
     <div style="margin-top: 16px;margin-bottom: 8px;">
       <template v-if="!showNotice">
@@ -53,7 +53,6 @@ export default {
     return {
       yesterdayDate: this.getYesterdayDate(),
       stockCode: '',
-      stockPool: [],
       showNotice: false
     }
   },
@@ -67,14 +66,21 @@ export default {
         return `.周${ ['日', '一', '二', '三', '四', '五', '六'][day] }`
       }
       return ''
+    },
+    stockPool() {
+      return this.$store.getters.stockPoolList
+    }
+  },
+  watch: {
+    stockPool() {
+      this.analyzeRisk()
     }
   },
   mounted() {
-    this.loadStockPool()
+    this.analyzeRisk()
   },
   methods: {
     getYesterdayDate() { // 计算上一个交易日的日期
-      //TODO 手动操作可以做一次浏览器缓存
       const day = new Date().getDay()
       let diff = -1
       if (day === 6) { // 周六
@@ -86,41 +92,28 @@ export default {
       }
       return this.$moment().add('days', diff).toDate()
     },
-    refresh() {
-      this.loadStockPool()
-    },
-    loadStockPool() {
-      this.$http.get(`/api/stock/pool`).then(_ => {
-        // 执行强检测任务
-        Promise.all(_.map(item => this.detectRisk(item))).then(stockPoolList => {
-          this.stockPool = stockPoolList
-          // 收集相关信息
-          this.riskDetector.collect(stockPoolList)
-        }).catch(_ => {
-          console.error(_)
-        })
+    analyzeRisk() {
+      const stockPoolList = this.stockPool
+      // 执行强检测任务
+      Promise.all(stockPoolList.map(item => this.detectRisk(item))).then(riskItemList => {
+        // 收集相关信息
+        this.riskDetector.collect(riskItemList)
       }).catch(_ => {
-        console.log(_)
+        this.$message.error('风险检测失败')
+        console.error(_)
       })
     },
     detectRisk(stockPoolItem) { // 风险检测
       return new Promise((resolve, reject) => {
         this.riskDetector.detect(stockPoolItem.code).then(riskList => {
-          stockPoolItem.riskList = riskList
-          resolve(stockPoolItem)
+          resolve({
+            code: stockPoolItem.code,
+            name: stockPoolItem.name,
+            riskList
+          })
         }).catch(_ => {
           reject(_)
         })
-      })
-    },
-    removeItem(tagIndex) {
-      const item = this.stockPool[tagIndex]
-      const code = item['code']
-
-      this.$http.delete('/api/stock/pool', { code }).then(_ => {
-        this.refresh()
-      }).catch(_ => {
-        console.log(_)
       })
     }
   }

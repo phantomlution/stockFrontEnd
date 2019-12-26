@@ -179,7 +179,7 @@ export default {
       this.tracker = setInterval(_ => {
         const hour = new Date().getHours()
         const day = new Date().getDay()
-        if (day === 6 || day === 7 || hour >= 16) {
+        if (day === 6 || day === 7 || hour >= 15) {
           this.stopTracker()
           return
         }
@@ -225,7 +225,7 @@ export default {
     },
     removeItem() {
       this.$fastConfirm().then(_ => {
-        this.$emit('removeItem')
+        this.$store.dispatch('removeStockPoolItem', this.code)
       })
     },
     calculateDiff(biding, fieldName, target='yesterday') {

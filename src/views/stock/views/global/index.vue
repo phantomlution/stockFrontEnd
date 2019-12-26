@@ -33,8 +33,13 @@ export default {
     articleReader,
   },
   mounted() {
-    // 初始化数据
+    /**
+     * 数据初始化
+     */
+    // 加载股票代码表
     this.$store.dispatch('getStockCodeList')
+    // 加载自选股票池
+    this.$store.dispatch('getStockPoolList')
   }
 }
 </script>

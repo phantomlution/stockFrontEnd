@@ -22,16 +22,6 @@ export default {
     updateData(context, config) {
       context.commit('updateData', config)
     },
-    addToStockPool(context, model) { // 加入自选池
-      return new Promise((resolve, reject) => {
-        http.post('/api/stock/pool', model).then(_ => {
-          Message.success('操作成功')
-          resolve(_)
-        }).catch(_ => {
-          reject(_)
-        })
-      })
-    },
     loadStockData(context, code) {
       const stockMap = context.state.stockMap
       return new Promise((resolve, reject) => {

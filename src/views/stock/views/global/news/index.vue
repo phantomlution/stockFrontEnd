@@ -78,7 +78,14 @@ export default {
     },
     loadNews() {
       this.$http.get(`/api/news/page`).then(page => {
-        this.newsList = page['list']
+        const newsList = page['list']
+        newsList.forEach(item => {
+          const title = item.title.toLowerCase()
+          if (title.indexOf('chinese') !== -1 || title.indexOf('china') !== -1) {
+            item.important = true
+          }
+        })
+        this.newsList = newsList
         this.updateNewsCount()
       }).catch(_ => {
         this.$message.error('加载新闻失败')

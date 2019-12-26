@@ -2,11 +2,8 @@
   <div class="lr-news-item">
     <div style="margin-bottom: 16px">
       <div style="display: flex">
-        <!--<div v-if="item.thumb" style="margin-right: 8px;">-->
-          <!--<img :src="item.thumb" style="max-width: 100px" />-->
-        <!--</div>-->
         <div style="flex: 1">
-          <div class="lr-news-item__title" @click.stop="openArticle">
+          <div class="lr-news-item__title" :style="titleStyle" @click.stop="openArticle">
             {{ item.title }}
           </div>
         </div>
@@ -63,6 +60,15 @@ export default {
       subscribeValue: 0
     }
   },
+  computed: {
+    titleStyle() {
+      const style = {}
+      if (this.item.important) {
+        style['color'] = 'red'
+      }
+      return style
+    }
+  },
   watch: {
     'item.subscribe'() {
       this.updateSubscribeValue()
@@ -109,7 +115,7 @@ export default {
 
 <style lang="scss">
 .lr-news-item{
-  padding: 8px 8px 0 8px;
+  padding: 8px;
   box-shadow: 0px 2px 13px 0px rgba(0, 0, 0, 0.06);
   border-radius: 4px;
   overflow: hidden;

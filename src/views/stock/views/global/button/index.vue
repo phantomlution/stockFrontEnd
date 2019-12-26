@@ -3,7 +3,7 @@
     <event-calendar style="margin-right: 10px" />
     <data-source-button style="margin-right: 10px"/>
     <el-button size="small" circle icon="el-icon-collection" @click.stop="openEventPanel"></el-button>
-    <el-button size="small" circle icon="el-icon-shopping-cart-1" @click.stop="openThemeMarket"></el-button>
+    <el-button size="small" circle icon="el-icon-search" @click.stop="openThemeMarket"></el-button>
     <el-badge :max="999" :value="newsCount" :hidden="newsCount === 0" style="margin-left: 10px">
       <el-button size="small" circle icon="el-icon-reading" @click.stop="openNews"></el-button>
     </el-badge>
