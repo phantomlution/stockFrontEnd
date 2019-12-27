@@ -80,6 +80,7 @@ export default {
   width: 60vw;
   height: 60vh;
   overflow: auto;
+  padding: 8px 0;
   .el-timeline{
     padding-left: 100px;
   }

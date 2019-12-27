@@ -28,9 +28,9 @@ export default {
   props,
   computed: {
     colorStyle() {
-      if(this.amount.length === 0) {
+      if(isNaN(this.amount)) {
         return {
-          color: ''
+          color: 'grey'
         }
       }
       let percent = Number(this.amount)

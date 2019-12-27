@@ -7,6 +7,10 @@
       <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
         {{ currentDate | date }}
       </span>
+      <span>
+        <el-button @click.stop="test">test</el-button>
+        result: {{ testResult}}
+      </span>
     </div>
     <div>
       <lr-chart ref="chart" :isEmpty="isEmpty" />
@@ -40,6 +44,7 @@ export default {
       isEmpty: false,
       distributionList: [],
       currentDate: this.date || '',
+      testResult: null
     }
   },
   watch: {
@@ -65,6 +70,19 @@ export default {
     this.checkAndLoad()
   },
   methods: {
+    test() {
+      const code = this.code.substring(2)
+      const date = moment(this.currentDate).format('YYYY-MM-DD')
+      this.$http.get(`/api/analyze/surge_for_short`, {
+        code,
+        date
+      }).then(testResult => {
+        this.testResult = {
+          date,
+          testResult
+        }
+      })
+    },
     checkAndLoad() {
       if (this.stockCode && this.currentDate) {
         this.loadData()
