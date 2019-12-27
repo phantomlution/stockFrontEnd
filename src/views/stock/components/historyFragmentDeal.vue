@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     test() {
-      const code = this.code.substring(2)
+      const code = this.code
       const date = moment(this.currentDate).format('YYYY-MM-DD')
       this.$http.get(`/api/analyze/surge_for_short`, {
         code,

@@ -5,6 +5,7 @@
       <span style="display: inline-block; font-size: 14px;margin-left: 8px">
         近一个月成交额: {{ average }} million
       </span>
+      <el-button type="primary" :loading="isLoading" @click.stop="loadSurgeForShort">跌点分析</el-button>
     </div>
     <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
     <lr-chart ref="chart" />
@@ -37,7 +38,9 @@ export default {
       dataCount: 70,
       maxDataCount: 420,
       name: '',
-      average: ''
+      average: '',
+      isLoading: false,
+      stock: null
     }
   },
   watch: {
@@ -56,7 +59,10 @@ export default {
       if (!this.code) {
         return
       }
+      this.isLoading = false
       this.$store.dispatch('loadStockData', this.code).then(stock => {
+        console.log(stock)
+        this.stock = stock
         this.renderChart({
           stock,
           dataCount: this.dataCount
@@ -65,6 +71,39 @@ export default {
 
       })
     },
+    loadSurgeForShort() {
+      // 同步时的代码
+      const code = this.code
+      const stock = this.stock
+      if (!stock || this.isLoading) {
+        return
+      }
+
+      if (code === this.code && stock === this.stock) {
+        this.isLoading = true
+        // 分析数据点个数
+        const historyItemList = lodash.takeRight(stock.rawData, 2)
+        const dateList = historyItemList.map(item => item.date)
+        Promise.all(dateList.map(item => this.$http.get(`/api/analyze/surge_for_short`, { code, date: item }))).then(_ => {
+          if (code === this.code && stock === this.stock) {
+            this.isLoading = false
+            // TODO update chart
+            this.renderChart({
+              stock,
+              dataCount: this.dataCount,
+              surgeForShortPointList: _
+            })
+            console.log(_)
+          }
+        }).catch(_ => {
+          console.error(_)
+          if (code === this.code && stock === this.stock) {
+            this.isLoading = false
+            this.$message.error('分析失败')
+          }
+        })
+      }
+    },
     calculateAmount(data) {
       this.average = ''
       const recentDataList = lodash.takeRight(data, 30)
@@ -72,7 +111,8 @@ export default {
       const average = lodash.round(lodash.mean(recentDataList.map(item => item.amountInMillion)), 2)
       this.average = average
     },
-    renderChart({stock, dataCount}) {
+
+    renderChart({stock, dataCount, surgeForShortPointList = []}) {
       let rawData = stock.result
       this.stock = stock
       this.code = stock.code
@@ -80,7 +120,8 @@ export default {
       const data = lodash.takeRight(rawData, dataCount)
       this.calculateAmount(data)
 
-      const chart = this.$refs.chart.getChart()
+      const chartRef = this.$refs.chart
+      const chart = chartRef.getChart()
 
       const view = chart.view()
       var scale = {
@@ -95,37 +136,35 @@ export default {
       view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2);
       view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff');
 
+      // 拉高出货点
+      surgeForShortPointList.forEach(item => {
+        item.timestamp = this.$moment(item.date).toDate().getTime()
+        const position = {
+          start: [item.timestamp, 'min'],
+          end: [item.timestamp, 'max']
+        }
+        chartRef.addAssistantLine(view, position, `拉高出货`)
+      })
+
       // 追加限售解禁信息
       const restrict_sell_list = stock.base.restrict_sell_list || []
       restrict_sell_list.forEach(item => {
-        view.guide().line({
-          start: [item.timestamp, 'min'], // 使用数组格式
-          end: [item.timestamp, 'max'],
-          text: {
-            position: 'end',
-            autoRotate: false,
-            content: `${ item.date.substring(5) }解禁`
-          }
-        })
+
+        const position = {
+          start: [item.timestamp, 'min'],
+          end: [item.timestamp, 'max']
+        }
+        chartRef.addAssistantLine(view, position, `${ item.date.substring(5) }解禁`)
       })
 
       // 追加高亮点
-
       const highlight = this.config ? this.config.highlight || [] : []
       highlight.forEach(item => {
-        view.guide().line({
-          start: [item.timestamp, 'min'], // 使用数组格式
-          end: [item.timestamp, 'max'],
-          lineStyle: {
-            stroke: '#E6A23C',
-            lineWidth: 2
-          },
-          text: {
-            position: 'end',
-            autoRotate: false,
-            content: `${ item.date }当前点`
-          }
-        });
+        const position = {
+          start: [item.timestamp, 'min'],
+          end: [item.timestamp, 'max']
+        }
+        chartRef.addAssistantLine(view, position, `${ item.date }当前点`)
       })
 
       for(let i=1; i<data.length; i++) {
@@ -141,10 +180,14 @@ export default {
           this.addMakeLongPoint(view, [today.timestamp, today.close])
         }
         const yesterday = data[i - 1]
+        const position = {
+          start: [today.timestamp, today.close],
+          end: [yesterday.timestamp, yesterday.close]
+        }
         if (today.isMakeShort && yesterday.isMakeShort) {
-          this.addMakeShortGuideLine(view, [today.timestamp, today.close], [yesterday.timestamp, yesterday.close])
+          chartRef.addAssistantLine(view, position, '', { color: 'red', dash: false })
         } else if (today.isMakeLong && yesterday.isMakeLong) {
-          this.addMakeLongGuideLine(view, [today.timestamp, today.close], [yesterday.timestamp, yesterday.close])
+          chartRef.addAssistantLine(view, position, '', { color: '#0f0', dash: false })
         }
       }
 
@@ -199,30 +242,6 @@ export default {
         }
       });
     },
-    addMakeShortGuideLine(view, start, end) {
-      view.guide().line({
-        top: true,
-        lineStyle: {
-          stroke: '#f00',
-          lineDash: [0],
-          lineWidth: 3,
-        },
-        start: start,
-        end: end
-      })
-    },
-    addMakeLongGuideLine(view, start, end) {
-      view.guide().line({
-        top: true,
-        lineStyle: {
-          stroke: '#0f0',
-          lineDash: [0],
-          lineWidth: 3,
-        },
-        start: start,
-        end: end
-      })
-    }
   }
 }
 </script>
