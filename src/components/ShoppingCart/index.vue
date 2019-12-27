@@ -4,19 +4,24 @@
       <p>
         <el-form :model="formModel" ref="form" label-width="84px">
           <el-row>
-            <el-col :span="8">
+            <el-col :span="5">
               <el-form-item label="关注" prop="payAttention">
                 <el-checkbox v-model="formModel.payAttention" />
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="5">
               <el-form-item label="三阶段" prop="threePhase">
                 <el-checkbox v-model="formModel.threePhase" />
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="5">
               <el-form-item label="减持" prop="isReducing">
                 <el-checkbox v-model="formModel.isReducing" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="仓位" prop="weight">
+                <el-input-number v-model="formModel.weight" controls-position="right" :min="0" :max="2" style="width: 76px" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -49,6 +54,9 @@
                 </el-input>
               </div>
             </div>
+          </el-form-item>
+          <el-form-item label="排序值">
+            <el-input-number :min="1" :max="999" v-model="formModel.order"></el-input-number>
           </el-form-item>
         </el-form>
       </p>
@@ -85,6 +93,7 @@ const defaultFormModel = {
   payAttention: false,
   threePhase: false,
   isReducing: false, // 是否减持中
+  order: 999,
   notification: {
     'price': {
       value: ''
@@ -95,6 +104,9 @@ const defaultFormModel = {
     },
     'slump': {
       value: ''
+    },
+    'weight': {
+      value: 0
     }
   }
 }
@@ -135,6 +147,8 @@ export default {
           this.formModel.payAttention = _.payAttention || false
           this.formModel.threePhase = _.threePhase || false
           this.formModel.isReducing = _.isReducing || false
+          this.formModel.weight = _.weight || 0
+          this.formModel.order = _.order || 999
 
           if (_.conditionList) {
             Object.keys(this.formModel.notification).forEach(conditionKey => {
@@ -160,18 +174,18 @@ export default {
       })
     },
     saveStockPoolItem() {
-      let model = this.oldModel
-      if (!this.model) {
-        model = {
-          code: this.code,
-          temp: this.temp
-        }
+      let model = this.oldModel || {
+        code: this.code,
+        temp: this.temp
       }
 
       model['desc'] = this.formModel.desc
       model['payAttention'] = this.formModel.payAttention
       model['threePhase'] = this.formModel.threePhase
       model['isReducing'] = this.formModel.isReducing
+      model['weight'] = this.formModel.weight
+      model['order'] = this.formModel.order
+
       model.conditionList = Object.keys(this.formModel.notification).filter(conditionKey => this.formModel.notification[conditionKey].value.length > 0).map(conditionKey => {
         return {
           key: conditionKey,

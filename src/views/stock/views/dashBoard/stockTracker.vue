@@ -1,16 +1,19 @@
 <template>
   <div class="lr-stock-tracker">
+    <div class="lr-stock-tracker--tag">
+      <template v-if="stockPoolItem.threePhase">
+        <el-tag effect="dark" type="danger">③</el-tag>
+      </template>
+      <template v-if="stockPoolItem.isReducing">
+        <el-tag effect="dark" type="danger">减</el-tag>
+      </template>
+      <template v-if="stockPoolItem.weight && stockPoolItem.weight > 0">
+        <el-tag effect="dark" type="dander">{{ stockPoolItem.weight }}x</el-tag>
+      </template>
+    </div>
     <el-card :style="cardStyle">
       <div slot="header">
-        <span>
-          <lr-stock-detail-link :code="code" :name="name" icon="el-icon-setting" :detectType="false" />
-          <template v-if="stockPoolItem.threePhase">
-            <el-tag effect="dark" type="danger">③</el-tag>
-          </template>
-          <template v-if="stockPoolItem.isReducing">
-            <el-tag effect="dark" type="danger">减</el-tag>
-          </template>
-        </span>
+        <lr-stock-detail-link :code="code" :name="name" icon="el-icon-setting" :detectType="false" />
         <span style="float: right;margin-left: 8px;margin-top: 1px" @click.stop="removeItem">
           <el-link icon="el-icon-close" />
         </span>
@@ -310,6 +313,12 @@ export default {
 
 <style lang="scss">
 .lr-stock-tracker{
+  position: relative;
+  .lr-stock-tracker--tag{
+    position: absolute;
+    top: 44px;
+    left: 16px;
+  }
   .el-card__header{
     padding: 16px;
   }

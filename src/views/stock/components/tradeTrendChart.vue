@@ -82,7 +82,7 @@ export default {
       if (code === this.code && stock === this.stock) {
         this.isLoading = true
         // 分析数据点个数
-        const historyItemList = lodash.takeRight(stock.rawData, 2)
+        const historyItemList = lodash.takeRight(stock.rawData, 200)
         const dateList = historyItemList.map(item => item.date)
         Promise.all(dateList.map(item => this.$http.get(`/api/analyze/surge_for_short`, { code, date: item }))).then(_ => {
           if (code === this.code && stock === this.stock) {
@@ -91,7 +91,7 @@ export default {
             this.renderChart({
               stock,
               dataCount: this.dataCount,
-              surgeForShortPointList: _
+              surgeForShortPointList: _.filter(item => !!item.result)
             })
             console.log(_)
           }
