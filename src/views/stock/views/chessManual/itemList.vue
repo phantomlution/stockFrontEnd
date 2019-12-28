@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isHistory">
+    <div v-if="isHistory" style="padding-bottom: 24px">
       <el-divider><span style="color: #909399">以下为历史数据</span></el-divider>
     </div>
     <el-timeline class="lr-pretty">
