@@ -86,6 +86,11 @@ export default {
     Vue.filter('price', val => {
       return Number(val).toFixed(2)
     })
+
+    const week = ['日', '一', '二', '三', '四', '五', '六']
+    Vue.filter('week', val => {
+      return `周${week[$moment(val).toDate().getDay()] }`
+    })
   }
 }
 

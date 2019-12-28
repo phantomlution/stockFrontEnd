@@ -19,6 +19,10 @@ const props = {
   value: {
     type: String,
     required: true
+  },
+  placeholder: {
+    type: String,
+    default: '来写点什么'
   }
 }
 export default {
@@ -39,6 +43,9 @@ export default {
     },
     text(val) {
       this.$emit('input', val)
+    },
+    focus(val) {
+      this.$emit('update:focus', val)
     }
   },
   mounted() {
@@ -50,7 +57,10 @@ export default {
   methods: {
     initEditor() {
       const editor = new MediumEditor(`#${ this.editorId }`, {
-        targetBlank: true
+        targetBlank: true,
+        placeholder: {
+          text: this.placeholder
+        }
       })
       this.editorInstance = editor
       if (this.text) {
@@ -58,6 +68,12 @@ export default {
       }
       editor.subscribe('editableInput', (event, element) =>{
         this.text = element.innerHTML
+      })
+      editor.subscribe('focus', _ => {
+        this.$emit('focus')
+      })
+      editor.subscribe('blur', _ => {
+        this.$emit('blur')
       })
     },
     updateEditorContent(val) {

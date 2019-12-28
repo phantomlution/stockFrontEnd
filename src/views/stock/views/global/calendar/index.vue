@@ -1,7 +1,7 @@
 <template>
   <el-popover v-model="visible">
     <div v-loading="isLoading" class="lr-financial-calendar">
-      <el-timeline>
+      <el-timeline class="lr-pretty">
         <el-timeline-item :timestamp="item.date" placement="top" v-for="item of eventList" :key="item.date">
           <item-list :list="item.list"></item-list>
         </el-timeline-item>
@@ -81,13 +81,6 @@ export default {
   height: 60vh;
   overflow: auto;
   padding: 8px 0;
-  .el-timeline{
-    padding-left: 100px;
-  }
-  .el-timeline-item__timestamp{
-    position: absolute;
-    left: -88px;
-  }
 }
 
 </style>

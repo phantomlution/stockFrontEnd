@@ -1,20 +1,22 @@
 <template>
-  <div class="lr-timeline">
-    manual
+  <div>
+    <div>
+      <!-- 七日数据 -->
+      <item-list :autoLoad="true" />
+    </div>
+    <div>
+      <!-- 历史数据 -->
+      <item-list :isHistory="true"/>
+    </div>
   </div>
 </template>
 
 <script>
+import itemList from './itemList.vue'
+
 export default {
-  name: 'lr-timeline',
-  data() {
-    return {
-      data: [
-        {
-          date: '2019-01-01'
-        }
-      ]
-    }
+  components: {
+    itemList
   }
 }
 </script>

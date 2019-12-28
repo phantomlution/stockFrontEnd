@@ -99,4 +99,15 @@ p {
 p:first-child{
   margin-block-start: 0;
 }
+
+.el-timeline.lr-pretty{
+  padding-left: 100px;
+  .el-timeline-item__timestamp{
+    position: absolute;
+    left: -88px;
+  }
+  .el-timeline-item:last-child{
+    padding-bottom: 0;
+  }
+}
 </style>
