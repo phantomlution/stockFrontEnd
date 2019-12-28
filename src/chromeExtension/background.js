@@ -14,7 +14,7 @@ chrome.webRequest.onBeforeRequest.addListener(function(details) {
 chrome.webRequest.onHeadersReceived.addListener(function(details) {
   let url = details.url
 
-  if (details.initiator === local_host_url && /js\.fx678\.com/.test(url)) {
+  if (details.initiator === local_host_url && /js\.fx678img\.com/.test(url)) {
     const responseHeaders = []
     for (var i = 0; i < details.responseHeaders.length; ++i) {
       let headerItem = details.responseHeaders[i]
@@ -36,20 +36,26 @@ chrome.webRequest.onHeadersReceived.addListener(function(details) {
 
 }, {urls: ["<all_urls>"]}, [ 'blocking', 'responseHeaders', 'extraHeaders']);
 
+function replaceHeader(headers, name, value) {
+  for (var i = 0; i < headers.length; ++i) {
+    if (headers[i].name === name) {
+      headers[i].value = value
+      return
+    }
+  }
+  // 未找到
+  headers.push({
+    name: name,
+    value: value
+  })
+}
+
 chrome.webRequest.onBeforeSendHeaders.addListener(function(details) {
   let url = details.url
   if (details.initiator === local_host_url) {
-    if (/js\.fx678\.com/.test(url)){
-      for (var i = 0; i < details.requestHeaders.length; ++i) {
-        if (details.requestHeaders[i].name === 'Origin') {
-          details.requestHeaders.splice(i, 1)
-          break
-        }
-      }
-      details.requestHeaders.push({
-        name: 'Origin',
-        value: 'https://kx.fx678.com'
-      })
+    if (/js\.fx678img\.com/.test(url)){
+      replaceHeader(details.requestHeaders, 'Origin', 'https://kx.fx678.com')
+      replaceHeader(details.requestHeaders, 'Host', 'js.fx678img.com:8800')
     }
   }
 
