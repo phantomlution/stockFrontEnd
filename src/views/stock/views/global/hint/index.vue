@@ -1,5 +1,5 @@
 <template>
-  <lr-motto :useCollapse="true">
+  <lr-motto>
     <div>
       <div class="lr-hint__item" v-for="(item, itemIndex) of displayItemList" :key="itemIndex" v-html="item.html"></div>
     </div>

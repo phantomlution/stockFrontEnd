@@ -7,18 +7,21 @@
       </div>
       <!-- 页面内容 -->
       <div>
-        <lr-hint style="margin-bottom: 8px"/>
-        <el-tabs v-model="currentTab" type="card">
+        <!--<lr-hint />-->
+        <el-tabs v-model="currentTab" type="card" style="margin-top: 8px">
           <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
+          <el-tab-pane label="每日分析" name="chessManual"></el-tab-pane>
           <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
           <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
-          <el-tab-pane label="棋谱" name="chessManual"></el-tab-pane>
-          <el-tab-pane label="宏观经济数据" name="宏观经济数据"></el-tab-pane>
+          <el-tab-pane label="宏观数据" name="宏观数据"></el-tab-pane>
           <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
         </el-tabs>
 
         <div v-show="currentTab === 'bigEvents'">
           <big-events />
+        </div>
+        <div v-if="currentTab === 'chessManual'">
+          <chess-manual />
         </div>
         <div v-show="currentTab === 'stockDetail'">
           <!-- 初始化数据 -->
@@ -27,10 +30,7 @@
         <div v-if="currentTab === 'dashBoard'">
           <dash-board />
         </div>
-        <div v-if="currentTab === 'chessManual'">
-          <chess-manual />
-        </div>
-        <div v-if="currentTab === '宏观经济数据'">
+        <div v-if="currentTab === '宏观数据'">
           <futurePredict />
         </div>
         <div v-if="currentTab === '统计分析'">
