@@ -215,6 +215,8 @@ export default {
       this.addNewestToList(model)
     },
     initEventSource() { // 连接数据源
+
+      return
       const url = 'https://js.fx678.com:8800'
       const socket = window.io(url, {
         'reconnection': true,

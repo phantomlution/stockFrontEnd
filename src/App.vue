@@ -12,6 +12,7 @@
           <el-tab-pane label="重大事件" name="bigEvents"></el-tab-pane>
           <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
           <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
+          <el-tab-pane label="棋谱" name="chessManual"></el-tab-pane>
           <el-tab-pane label="宏观经济数据" name="宏观经济数据"></el-tab-pane>
           <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
         </el-tabs>
@@ -25,6 +26,9 @@
         </div>
         <div v-if="currentTab === 'dashBoard'">
           <dash-board />
+        </div>
+        <div v-if="currentTab === 'chessManual'">
+          <chess-manual />
         </div>
         <div v-if="currentTab === '宏观经济数据'">
           <futurePredict />
@@ -45,6 +49,7 @@ import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
 import analyzePanel from '@/views/stock/views/analyze/index'
 import globalItem from '@/views/stock/views/global/index'
 import lrHint from '@/views/stock/views/global/hint/index'
+import chessManual from '@/views/stock/views/chessManual/index'
 
 export default {
   components: {
@@ -54,7 +59,8 @@ export default {
     futurePredict,
     analyzePanel,
     globalItem,
-    lrHint
+    lrHint,
+    chessManual
   },
   data() {
     return {

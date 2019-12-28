@@ -61,7 +61,6 @@ export default {
       }
       this.isLoading = false
       this.$store.dispatch('loadStockData', this.code).then(stock => {
-        console.log(stock)
         this.stock = stock
         this.renderChart({
           stock,
@@ -84,16 +83,15 @@ export default {
         // 分析数据点个数
         const historyItemList = lodash.takeRight(stock.rawData, 200)
         const dateList = historyItemList.map(item => item.date)
-        Promise.all(dateList.map(item => this.$http.get(`/api/analyze/surge_for_short`, { code, date: item }))).then(_ => {
+        this.$http.put(`/api/analyze/surge_for_short`, {
+          code,
+          dateList
+        }).then(_ => {
           if (code === this.code && stock === this.stock) {
+            this.stock.surgeForShortList = _.filter(item => !!item.result)
             this.isLoading = false
-            // TODO update chart
-            this.renderChart({
-              stock,
-              dataCount: this.dataCount,
-              surgeForShortPointList: _.filter(item => !!item.result)
-            })
-            console.log(_)
+
+            this.updateChart()
           }
         }).catch(_ => {
           console.error(_)
@@ -112,12 +110,13 @@ export default {
       this.average = average
     },
 
-    renderChart({stock, dataCount, surgeForShortPointList = []}) {
+    renderChart({stock, dataCount}) {
       let rawData = stock.result
       this.stock = stock
       this.code = stock.code
       this.name = stock.name
       const data = lodash.takeRight(rawData, dataCount)
+      const surgeForShortList = stock.surgeForShortList || []
       this.calculateAmount(data)
 
       const chartRef = this.$refs.chart
@@ -137,7 +136,7 @@ export default {
       view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff');
 
       // 拉高出货点
-      surgeForShortPointList.forEach(item => {
+      surgeForShortList.forEach(item => {
         item.timestamp = this.$moment(item.date).toDate().getTime()
         const position = {
           start: [item.timestamp, 'min'],
