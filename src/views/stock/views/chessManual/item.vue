@@ -3,7 +3,7 @@
     <span class="el-timeline-item__timestamp lr-chess-manual--week">{{ item.date | week }}</span>
     <el-row>
       <el-col :span="10">
-        <lr-editor v-model="item.predict" placeholder="今天还没有预测分析哦" :style="editorStyle" @focus="focus('predict')" @blur="blur('predict')"/>
+        <lr-editor v-model="item.predict" :style="editorStyle" @focus="focus('predict')" @blur="blur('predict')"/>
         <div class="lr-chess-manual--button">
           <el-button type="primary" v-if="predict.focused" @click.stop="updateValue('predict')">保存</el-button>
         </div>
@@ -22,7 +22,7 @@
         </el-row>
       </el-col>
       <el-col :span="10">
-        <lr-editor v-model="item.replay" placeholder="今天还没有复盘哦" :style="editorStyle" @focus="focus('replay')" @blur="blur('replay')"/>
+        <lr-editor v-model="item.replay" :style="editorStyle" @focus="focus('replay')" @blur="blur('replay')"/>
         <div class="lr-chess-manual--button" >
           <el-button type="primary" v-if="replay.focused" @click.stop="updateValue('replay')">保存</el-button>
         </div>

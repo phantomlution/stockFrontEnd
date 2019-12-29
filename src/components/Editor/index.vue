@@ -22,7 +22,7 @@ const props = {
   },
   placeholder: {
     type: String,
-    default: '来写点什么'
+    default: ''
   }
 }
 export default {
