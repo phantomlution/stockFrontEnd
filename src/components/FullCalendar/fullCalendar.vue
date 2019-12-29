@@ -42,6 +42,7 @@ export default {
   },
   data() {
     return {
+      timeZone: 'Asia/Shanghai',
       locale,
       header: {
         left: 'prev,next',

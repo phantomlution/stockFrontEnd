@@ -160,5 +160,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.fc-time{
+  display: none;
+}
 </style>
