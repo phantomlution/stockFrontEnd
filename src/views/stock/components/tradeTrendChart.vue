@@ -7,7 +7,7 @@
       </span>
       <el-button type="primary" :loading="isLoading" @click.stop="loadSurgeForShort">跌点分析</el-button>
     </div>
-    <el-input-number slot="center" v-model="dataCount" :step="50" :min="10" :max="maxDataCount" />
+    <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
     <lr-chart ref="chart" />
   </lr-box>
 </template>
@@ -35,7 +35,7 @@ export default {
   props,
   data() {
     return {
-      dataCount: 10,
+      dataCount: 70,
       maxDataCount: 420,
       name: '',
       average: '',

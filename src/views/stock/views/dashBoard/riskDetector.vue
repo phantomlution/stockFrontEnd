@@ -44,12 +44,12 @@ export default {
       return new Promise((resolve, reject) => {
         this.$store.dispatch('loadStockData', code).then(stock => {
           const duration = 90
-          if (stock.getRecentRestrictCount(duration) > 0) {
+          stock.getRecentRestrictSellList(duration).forEach(item => {
             riskList.push({
               type: 'warning',
-              message: `最近前后${ duration }日存在解禁相关信息`
+              message: `${ item.date }(${ this.$moment(item.date).fromNow() })：${ item.desc }`
             })
-          }
+          })
           resolve(riskList)
         }).catch(_ => {
           reject(_)
