@@ -1,34 +1,21 @@
 <template>
   <lr-box v-loading="loading">
-    <full-calendar :events="calendarEvents" style="max-width: 100%">
-      <template slot="fc-event-card" slot-scope="scope">
-        <el-popover popper-class="lr-calendar-popover" trigger="hover" placement="right">
-          <template slot="reference">
-            <div style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
-              <span :class="{ 'lr-calendar-important': scope.event.isImportant }">{{ scope.event.title }}</span>
-            </div>
-          </template>
-          <div>
-            <el-card>
-              <h4 :class="{ 'lr-calendar-important': scope.event.isImportant }" >
-                {{ scope.event.title }}
-              </h4>
-              <el-button type="text" v-if="scope.event.source" @click.stop="toSource(scope.event.source)">信息来源</el-button>
-            </el-card>
-          </div>
-        </el-popover>
-      </template>
+    <div style="position: absolute;right: 18px;top: 24px">
+      <add-custom-event @change="reload"/>
+    </div>
+    <full-calendar :calendarEvents="calendarEvents" >
     </full-calendar>
   </lr-box>
 </template>
 
 <script>
-import customEvent from '@/data/customEvent'
 import fullCalendar from '@/components/FullCalendar'
+import addCustomEvent from './addCustomEvent.vue'
 
 export default {
   components: {
-    fullCalendar
+    fullCalendar,
+    addCustomEvent
   },
   data() {
     return {
@@ -43,9 +30,11 @@ export default {
     toSource(source) {
       window.open(source, '_blank')
     },
+    reload() {
+      this.loadData()
+    },
     loadData() {
       this.loading = true
-      const calendarList = []
 
       Promise.all([
         this.loadSuspendTradeDateList(),
@@ -54,10 +43,17 @@ export default {
 //        this.loadCentralBankEvent(),
         this.loadCustomEvent(),
       ]).then(allEventList => {
+        const calendarList = []
         allEventList.forEach(event => {
+          event.forEach(item => {
+            item.start = this.$moment(item.start + ' 00:00:00').toDate()
+            item.end = this.$moment(item.end + " 23:59:59").toDate()
+          })
+
           Array.prototype.push.apply(calendarList, event)
-          this.calendarEvents = calendarList
         })
+        console.log(calendarList)
+        this.calendarEvents = calendarList
         this.$nextTick(_ => {
           this.loading = false
         })
@@ -88,7 +84,7 @@ export default {
       })
     },
     loadCustomEvent() { // 加载自定义事件
-      return Promise.resolve(customEvent)
+      return this.$http.get(`/api/event/calendar/`)
     },
     loadSuspendTradeDateList() { // 加载休市日期列表
       return new Promise((resolve, reject) => {
@@ -164,12 +160,5 @@ export default {
 </script>
 
 <style lang="scss">
-  .lr-calendar-popover{
-    padding: 0 !important;
-  }
 
-  .lr-calendar-important{
-    color: red;
-    font-weight: bold;
-  }
 </style>
