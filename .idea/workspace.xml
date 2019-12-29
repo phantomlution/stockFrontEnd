@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/analyzeModel/analyzeWrapper.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/analyzeModel/analyzeWrapper.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -89,7 +89,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analyzeWrapper.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="analyzeWrapper.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/analyzeModel/analyzeWrapper.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
@@ -115,11 +115,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+            <state relative-caret-position="228">
+              <caret line="12" column="34" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
               <folding>
                 <element signature="n#style#0;n#el-tabs#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -272,9 +272,9 @@
         <option value="$PROJECT_DIR$/src/chromeExtension/background.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/live/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/hint/index.vue" />
-        <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/chessManual/itemList.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/analyzeModel/analyzeWrapper.vue" />
+        <option value="$PROJECT_DIR$/src/App.vue" />
       </list>
     </option>
   </component>
@@ -813,14 +813,7 @@
       <workItem from="1577436331453" duration="1975000" />
       <workItem from="1577512515120" duration="713000" />
       <workItem from="1577528193400" duration="10361000" />
-      <workItem from="1577591293599" duration="926000" />
-    </task>
-    <task id="LOCAL-00168" summary="添加破板预测">
-      <created>1575342129369</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1575342129369</updated>
+      <workItem from="1577591293599" duration="947000" />
     </task>
     <task id="LOCAL-00169" summary="添加破板预测">
       <created>1575342244212</created>
@@ -1158,11 +1151,18 @@
       <option name="project" value="LOCAL" />
       <updated>1577550588771</updated>
     </task>
-    <option name="localTasksCounter" value="217" />
+    <task id="LOCAL-00217" summary="集成拉高出货点前后端联动">
+      <created>1577592843838</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1577592843842</updated>
+    </task>
+    <option name="localTasksCounter" value="218" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="799772000" />
+    <option name="totallyTimeSpent" value="799793000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1227,7 +1227,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="数据同步分离成组件" />
     <MESSAGE value="优化排版" />
     <MESSAGE value="重构数据分析模块" />
     <MESSAGE value="学模型调试中" />
@@ -1252,7 +1251,8 @@
     <MESSAGE value="集成复盘工具" />
     <MESSAGE value="修复7*24数据源失效的问题" />
     <MESSAGE value="页面优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="页面优化" />
+    <MESSAGE value="集成拉高出货点前后端联动" />
+    <option name="LAST_COMMIT_MESSAGE" value="集成拉高出货点前后端联动" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1599,16 +1599,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-          <folding>
-            <element signature="n#style#0;n#el-tabs#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/chessManual/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="152">
@@ -1635,6 +1625,16 @@
         <state relative-caret-position="204">
           <caret line="111" column="0" lean-forward="true" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" column="34" lean-forward="false" selection-start-line="12" selection-start-column="34" selection-end-line="12" selection-end-column="34" />
+          <folding>
+            <element signature="n#style#0;n#el-tabs#0;n#div#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
