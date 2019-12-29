@@ -7,11 +7,11 @@
       <div>
         <div style="display: flex">
           <!-- 表格视图 -->
-          <div v-if="itemList.length > 0">
-            <el-popover placement="left">
-              <div style="width: 256px">
-                <el-table :data="itemList">
-                  <el-table-column label="代码">
+          <div>
+            <el-popover placement="left" v-model="showTable">
+              <div style="width: 500px">
+                <el-table v-if="showTable" :data="itemList" maxHeight="300px">
+                  <el-table-column label="代码" width="150px">
                     <template slot-scope="scope">
                       <lr-stock-detail-link :add="false" :code="scope.row.code" :name="scope.row.name" />
                     </template>
@@ -27,7 +27,14 @@
                   </el-table-column>
                 </el-table>
               </div>
-              <el-link :underline="false" slot="reference" style="margin-top: 5px;margin-right: 8px"><i class="el-icon-d-arrow-left" /></el-link>
+              <el-link :underline="false" slot="reference" style="margin-top: 5px;margin-right: 8px">
+                <template v-if="showTable">
+                  <i class="el-icon-d-arrow-left" />
+                </template>
+                <template v-else>
+                  <i class="el-icon-d-arrow-right" />
+                </template>
+              </el-link>
             </el-popover>
           </div>
           <div style="flex: 1">
@@ -92,6 +99,7 @@ export default {
   props,
   data() {
     return {
+      showTable: false,
       analyzeCount: 0,
       loading: false,
       currentRowIndex: -1,
@@ -118,6 +126,10 @@ export default {
     reAnalyze() {
       this.startAnalyze()
     },
+    updateStockList(stockList) {
+      return Promise.resolve()
+//      return this.$http.post(`/api/analyze/stock/list`, stockList)
+    },
     startAnalyze() {
       if (this.loading) {
         return
@@ -138,7 +150,7 @@ export default {
 
         this.itemList = itemList
 
-        this.$http.post(`/api/analyze/stock/list`, stockList).then(_ => {
+        this.updateStockList(stockList).then(_ => {
           this.loading = false
           if (this.itemList.length > 0) {
             this.analyzeCount += 1

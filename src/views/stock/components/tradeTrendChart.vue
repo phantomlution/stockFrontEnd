@@ -39,8 +39,7 @@ export default {
       maxDataCount: 420,
       name: '',
       average: '',
-      isLoading: false,
-      stock: null
+      isLoading: false
     }
   },
   watch: {
@@ -61,16 +60,12 @@ export default {
       }
       this.isLoading = false
       this.$store.dispatch('loadStockData', this.code).then(stock => {
-        if (stock !== this.stock) {
-          this.stock = stock
-        }
-
         this.renderChart({
           stock,
           dataCount: this.dataCount
         })
       }).catch(_ => {
-
+        console.error(_)
       })
     },
     loadSurgeForShort() {
