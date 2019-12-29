@@ -5,7 +5,35 @@
     <div style="flex: 1">
       <!-- params -->
       <div>
-        <slot name="params"></slot>
+        <div style="display: flex">
+          <!-- 表格视图 -->
+          <div v-if="itemList.length > 0">
+            <el-popover placement="left">
+              <div style="width: 256px">
+                <el-table :data="itemList">
+                  <el-table-column label="代码">
+                    <template slot-scope="scope">
+                      <lr-stock-detail-link :add="false" :code="scope.row.code" :name="scope.row.name" />
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="主题">
+                    <template slot-scope="scope">
+                      <div class="lr-analyze-wrapper--theme">
+                        <el-tag v-for="(theme, themeIndex) of scope.row.themeList" :key="themeIndex">
+                          {{ theme }}
+                        </el-tag>
+                      </div>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+              <el-link :underline="false" slot="reference" style="margin-top: 5px;margin-right: 8px"><i class="el-icon-d-arrow-left" /></el-link>
+            </el-popover>
+          </div>
+          <div style="flex: 1">
+            <slot name="params"></slot>
+          </div>
+        </div>
       </div>
       <!-- current -->
       <div v-if="currentRowModel">

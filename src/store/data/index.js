@@ -25,16 +25,12 @@ export default {
     loadStockData(context, code) {
       const stockMap = context.state.stockMap
       return new Promise((resolve, reject) => {
-        if (!code) {
-          return reject('code is empty')
-        }
-
         if (stockMap.has(code)) { // 缓存中读取数据
           const stock = stockMap.get(code)
           return resolve(stock)
         }
 
-        return Promise.all([
+        Promise.all([
           http.get(`/api/stock/detail`, { code })
         ]).then(responseList => {
           if (!responseList[0]) {
@@ -43,14 +39,7 @@ export default {
           const base = responseList[0]['base']
           const source = responseList[0]['data']
 
-          const stockName = base.name.toUpperCase()
-
-          if (stockName.indexOf('债') !== -1) {
-            throw new Error('跳过债券')
-          }
-
           // 重新格式化数据
-
           const rawData = source.data.map(item => {
             let model = Object.create(null)
             for(let i=0; i<source.column.length; i++) {
@@ -59,21 +48,16 @@ export default {
             }
             // 强制转换日期格式
             model.timestamp = moment(model.date).toDate().getTime()
-
             return model
           })
 
-          if (rawData.length < this.historyDataCount / 2) {
-            throw new Error('数据不足')
-          }
           const stock = new Stock(base, rawData)
           stockMap.set(code, stock)
-          resolve(stock)
+          resolve(stockMap.get(code))
         }).catch(_ => {
           console.log(_)
           reject(_)
         })
-
       })
     },
     getStockCodeList(context) {

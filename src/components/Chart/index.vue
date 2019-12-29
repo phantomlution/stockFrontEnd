@@ -62,7 +62,25 @@
 
         return this._chart
       },
+      addHtmlAssistantLine(view, position, contentList) {
+        const contentHtml = contentList.map(content => {
+          return `<div style="width: 10px;font-size: 10px;line-height: 12px;margin-bottom: 8px;color: #999">
+            ${ content }
+          </div>`
+        })
+
+        view.guide().html({
+          position: position.end,
+          html: `<div>${ contentHtml.join('') }</div>`,
+          alignX: 'center',
+          alignY: 'bottom',
+          offsetX: 0
+        });
+      },
       addAssistantLine(view, position, content='', config={}) {
+        const isHorizontal = config.horizontal || false
+        const isVertical = !isHorizontal
+
         const contentList = []
         if (Array.isArray(content)) {
           Array.prototype.push.apply(contentList, content)
@@ -72,27 +90,31 @@
 
         const isTop = config.top || true
         const color = config.color || '#E6A23C'
-        const isDashline = config.dash === undefined ? true : config.dash
-        contentList.forEach((item, itemIndex) => {
-          const textModel = {}
-          if (item.length > 0) {
-            textModel.position = 'end'
-            textModel.autoRotate = false
-            textModel.content = item
-          }
+        const isDashLine = config.dash === undefined ? true : config.dash
 
-          view.guide().line({
-            top: isTop,
-            start: position.start,
-            end: position.end,
-            lineStyle: {
-              stroke: color,
-              lineDash: [isDashline ? 2 : 0 ],
-              lineWidth: 2
-            },
-            text: textModel
-          })
+        const displayText = contentList.join(',')
+
+        const textModel = {}
+        textModel.position = config.textPosition || 'end'
+        textModel.autoRotate = false
+        textModel.content = displayText
+
+        console.log(position)
+
+        view.guide().line({
+          top: isTop,
+          start: position.start,
+          end: position.end,
+          lineStyle: {
+            stroke: color,
+            lineDash: [isDashLine ? 2 : 0 ],
+            lineWidth: 2
+          },
+          text: isHorizontal ? textModel : ''
         })
+        if (isVertical) {
+          this.addHtmlAssistantLine(view, position, contentList)
+        }
       }
     }
   }

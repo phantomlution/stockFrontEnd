@@ -7,7 +7,7 @@
       </span>
       <el-button type="primary" :loading="isLoading" @click.stop="loadSurgeForShort">跌点分析</el-button>
     </div>
-    <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
+    <el-input-number slot="center" v-model="dataCount" :step="50" :min="10" :max="maxDataCount" />
     <lr-chart ref="chart" />
   </lr-box>
 </template>
@@ -35,7 +35,7 @@ export default {
   props,
   data() {
     return {
-      dataCount: 70,
+      dataCount: 10,
       maxDataCount: 420,
       name: '',
       average: '',
@@ -61,7 +61,10 @@ export default {
       }
       this.isLoading = false
       this.$store.dispatch('loadStockData', this.code).then(stock => {
-        this.stock = stock
+        if (stock !== this.stock) {
+          this.stock = stock
+        }
+
         this.renderChart({
           stock,
           dataCount: this.dataCount
@@ -73,12 +76,12 @@ export default {
     loadSurgeForShort() {
       // 同步时的代码
       const code = this.code
-      const stock = this.stock
-      if (!stock || this.isLoading) {
+      const stock = this.$store.state.data.stockMap.get(code)
+      if (this.isLoading) {
         return
       }
 
-      if (code === this.code && stock === this.stock) {
+      if (code === this.code) {
         this.isLoading = true
         // 分析数据点个数
         const historyItemList = lodash.takeRight(stock.rawData, 200)
@@ -87,10 +90,9 @@ export default {
           code,
           dateList
         }).then(_ => {
-          if (code === this.code && stock === this.stock) {
-            this.stock.surgeForShortList = _.filter(item => !!item.result)
+          if (code === this.code) {
+            stock.surgeForShortList = _.filter(item => !!item.result)
             this.isLoading = false
-
             this.updateChart()
           }
         }).catch(_ => {
@@ -116,7 +118,6 @@ export default {
       this.code = stock.code
       this.name = stock.name
       const data = lodash.takeRight(rawData, dataCount)
-      const surgeForShortList = stock.surgeForShortList || []
       this.calculateAmount(data)
 
       const chartRef = this.$refs.chart
@@ -131,39 +132,30 @@ export default {
         }
       }
 
-      view.source(data, scale);
-      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2);
-      view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff');
+      view.source(data, scale)
+      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2)
+      view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff')
 
       // 拉高出货点
-      surgeForShortList.forEach(item => {
-        item.timestamp = this.$moment(item.date).toDate().getTime()
-        const position = {
-          start: [item.timestamp, 'min'],
-          end: [item.timestamp, 'max']
-        }
-        chartRef.addAssistantLine(view, position, `拉高出货`)
-      })
-
+      const surgeForShortList = stock.surgeForShortList || []
       // 追加限售解禁信息
-      const restrict_sell_list = stock.base.restrict_sell_list || []
-      restrict_sell_list.forEach(item => {
-
-        const position = {
-          start: [item.timestamp, 'min'],
-          end: [item.timestamp, 'max']
-        }
-        chartRef.addAssistantLine(view, position, `${ item.date.substring(5) }解禁`)
-      })
-
+      const restrictSellList = stock.base.restrict_sell_list || []
       // 追加高亮点
-      const highlight = this.config ? this.config.highlight || [] : []
-      highlight.forEach(item => {
+      const highlightPointList = this.config ? this.config.highlight || [] : []
+
+      const pointList = []
+      Array.prototype.push.apply(pointList, surgeForShortList.map(item => ({ date: item.date, text: '拉高出货' })))
+      Array.prototype.push.apply(pointList, restrictSellList.map(item => ({ date: item.date, text: '解禁' })))
+      Array.prototype.push.apply(pointList, highlightPointList.map(item => ({ date: item.date, text: '当前点' })))
+
+      const groupResult = lodash.groupBy(pointList, item => item.date)
+      Object.keys(groupResult).forEach(date => {
         const position = {
-          start: [item.timestamp, 'min'],
-          end: [item.timestamp, 'max']
+          start: [date, 'min'],
+          end: [date, 'max']
         }
-        chartRef.addAssistantLine(view, position, `${ item.date }当前点`)
+
+        chartRef.addAssistantLine(view, position, groupResult[date].map(item => item.text))
       })
 
       for(let i=1; i<data.length; i++) {
@@ -190,7 +182,7 @@ export default {
         }
       }
 
-      view.guide().line({
+      chartRef.addAssistantLine(view, {
         start: {
           timestamp: 'min',
           diff: -1 * THRESHOLD_WATER_PERCENT
@@ -198,12 +190,12 @@ export default {
         end: {
           timestamp: 'max',
           diff: -1 * THRESHOLD_WATER_PERCENT
-        },
-        text: {
-          position: 'start',
-          content: `-${ THRESHOLD_WATER_PERCENT }%`
         }
+      }, `-${ THRESHOLD_WATER_PERCENT }%`, {
+        horizontal: true,
+        textPosition: 'start'
       })
+
 
       chart.render()
     },
