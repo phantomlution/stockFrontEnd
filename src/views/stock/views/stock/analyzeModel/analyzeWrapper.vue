@@ -99,14 +99,30 @@ export default {
 
       this.loading = true
       this.analyzePromise().then(rawList => {
-        this.loading = false
-        this.itemList = this.normalization(rawList)
-        if (this.itemList.length > 0) {
-          this.analyzeCount += 1
-          this.toNext()
-        } else {
-          return this.$message.warning('无任何数据')
-        }
+        const itemList = this.normalization(rawList)
+        // 更新数据库代码表
+        const stockList = itemList.map(item => {
+          return {
+            code: item.code,
+            name: item.name
+          }
+        })
+
+        this.itemList = itemList
+
+        this.$http.post(`/api/analyze/stock/list`, stockList).then(_ => {
+          this.loading = false
+          if (this.itemList.length > 0) {
+            this.analyzeCount += 1
+            this.toNext()
+          } else {
+            return this.$message.warning('无任何数据')
+          }
+        }).catch(_ => {
+          this.loading = false
+          this.$message.error('数据更新失败')
+          console.error(_)
+        })
       }).catch(_ => {
         this.loading = false
         this.$message.error('读取数据失败')
