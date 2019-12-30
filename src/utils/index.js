@@ -108,3 +108,10 @@ export const object2List = function(obj) {
 
   return result
 }
+
+/**
+ * 计算增量(%)
+ */
+export const increment = function(num1, num2, precision=2) {
+  return lodash.round((num1 - num2) / num2 * 100, precision)
+}
