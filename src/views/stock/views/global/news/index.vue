@@ -12,54 +12,43 @@
 
 <script>
 import item from './item.vue'
+import scheduleMixin from '@/mixins/schedule'
 
 export default {
+  mixins: [scheduleMixin],
   components: {
     item
   },
   data() {
     return {
-      interval: null,
       visible: false,
       newsList: []
     }
   },
   watch: {
     visible(val) {
-      if (!val) {
-        this.startInterval()
+      if (val) {
+        this.stopTracker()
+      } else {
+        this.startTracker()
       }
     }
   },
   beforeDestroy() {
     this.$bus.$off('openNewsPanel')
-    this.stopInterval()
   },
   mounted() {
     this.$bus.$on('openNewsPanel', _ => {
-      this.stopInterval()
       this.visible = true
     })
-    this.startInterval()
-    this.initNews()
+    this.startTracker()
   },
   methods: {
-    startInterval() {
-      this.stopInterval()
-      this.interval = setInterval(_ => {
-        this.loadNews()
-      }, 5 * 60 * 1000)
+    stopTracker() {
+      this.stopSchedule()
     },
-    stopInterval() {
-      if (this.interval) {
-        clearInterval(this.interval)
-        this.interval = null
-      }
-    },
-    initNews() {
-      if (this.newsList.length === 0) {
-        this.loadNews()
-      }
+    startTracker() {
+      this.startSchedule(this.loadNews, 5 * 60)
     },
     markRead(item) {
       this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {

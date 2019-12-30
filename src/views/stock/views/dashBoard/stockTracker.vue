@@ -1,15 +1,31 @@
 <template>
   <div class="lr-stock-tracker">
     <div class="lr-stock-tracker--tag">
-      <template v-if="stockPoolItem.threePhase">
-        <el-tag effect="dark" type="danger">③</el-tag>
-      </template>
-      <template v-if="stockPoolItem.isReducing">
-        <el-tag effect="dark" type="danger">减</el-tag>
-      </template>
-      <template v-if="stockPoolItem.weight && stockPoolItem.weight > 0">
-        <el-tag effect="dark" type="dander">{{ stockPoolItem.weight }}x</el-tag>
-      </template>
+      <div style="flex: 1">
+        <template v-if="stockPoolItem.threePhase">
+          <el-tag effect="dark" type="danger">③</el-tag>
+        </template>
+        <template v-if="stockPoolItem.isReducing">
+          <el-tag effect="dark" type="danger">减</el-tag>
+        </template>
+        <template v-if="stockPoolItem.weight && stockPoolItem.weight > 0">
+          <el-tag effect="dark" type="primary">{{ stockPoolItem.weight }}x</el-tag>
+        </template>
+      </div>
+      <div v-if="biding && biding.yesterday">
+        <el-popover placement="left" v-model="liveVisible">
+          <div style="width: 540px">
+            <div>
+              <span style="margin-left: 32px;">{{name}}(昨日成交{{ yesterdayItem.amount | amount }},目前进度为{{todayAmountPercent}})</span>
+            </div>
+            <div>
+              <real-time-deal :code="code" :name="name" :height="realTimeDealHeight" :yesterdayClose="biding.yesterday" :live="true" v-if="liveVisible"></real-time-deal>
+            </div>
+          </div>
+
+          <el-tag effect="dark" type="primary" slot="reference">实时</el-tag>
+        </el-popover>
+      </div>
     </div>
     <el-card :style="cardStyle">
       <div slot="header">
@@ -69,6 +85,9 @@
 <script>
 import lodash from 'lodash'
 import { deepClone} from '@/utils'
+import realTimeDeal from '@/views/stock/components/realTimeDeal.vue'
+import scheduleMixin, { STOP_CALLBACK_FOR_STOCK } from '@/mixins/schedule'
+
 
 const props = {
   name: {
@@ -94,9 +113,14 @@ const attention_interval = 5
 
 export default {
   props,
+  mixins: [scheduleMixin],
+  components: {
+    realTimeDeal
+  },
   data(){
     return {
-      tracker: null,
+      realTimeDealHeight: 240,
+      liveVisible: false,
       eventKey: `STOCK_POOL_UPDATE_${ this.code }`,
       stockPoolItem: this.item,
       interval: default_interval,
@@ -143,32 +167,25 @@ export default {
     },
     yesterday() {
       this.loadYesterdayData()
+    },
+    interval() {
+      this.startTracker()
     }
   },
   mounted() {
     this.updateTrackSpeed()
     this.$bus.$on(this.eventKey, newItem => {
       this.$set(this, 'stockPoolItem', newItem)
-      this.initTracker()
     })
-    this.initTracker()
     this.loadYesterdayData()
+    this.startTracker()
   },
   beforeDestroy() {
     this.$bus.$off(this.eventKey)
-    this.stopTracker()
   },
   methods: {
-    initTracker() {
-      this.stopTracker()
-      this.startTracker()
-      this.loadDetail()
-    },
-    stopTracker() {
-      if (this.tracker) {
-        clearInterval(this.tracker)
-        this.tracker = null
-      }
+    startTracker() {
+      this.startSchedule(this.loadDetail, this.interval, STOP_CALLBACK_FOR_STOCK)
     },
     updateTrackSpeed() {
       const val = this.stockPoolItem.payAttention || false
@@ -177,17 +194,6 @@ export default {
       } else {
         this.interval = attention_interval
       }
-    },
-    startTracker() {
-      this.tracker = setInterval(_ => {
-        const hour = new Date().getHours()
-        const day = new Date().getDay()
-        if (day === 6 || day === 7 || hour >= 15) {
-          this.stopTracker()
-          return
-        }
-        this.loadDetail()
-      }, 1000 * this.interval)
     },
     loadDetail() {
       const code = this.code
@@ -295,6 +301,7 @@ export default {
         // 加入消息队列
         notificationSource.push(condition)
 
+        return
         setTimeout(_ => {
           // 弹出通知
           this.$notify({
@@ -317,7 +324,11 @@ export default {
   .lr-stock-tracker--tag{
     position: absolute;
     top: 44px;
-    left: 16px;
+    left: 0;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 16px;
   }
   .el-card__header{
     padding: 16px;

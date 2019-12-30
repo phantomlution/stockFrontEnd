@@ -25,11 +25,12 @@
 
 <script>
 import lodash from 'lodash'
+import scheduleMixin, { STOP_CALLBACK_FOR_STOCK } from '@/mixins/schedule'
 
 export default {
+  mixins: [scheduleMixin],
   data() {
     return {
-      tracker: null,
       riskModel: {
         gold: null
       },
@@ -48,11 +49,8 @@ export default {
       riskModelList: []
     }
   },
-  beforeDestroy() {
-    this.stopTracker()
-  },
   mounted() {
-    this.startTracker()
+    this.startSchedule(this.loadData, 15, STOP_CALLBACK_FOR_STOCK)
   },
   methods: {
     loadData() {
@@ -75,22 +73,6 @@ export default {
       }).catch(_ => {
         console.error(_)
       })
-    },
-    startTracker() {
-      this.stopTracker()
-      this.loadData()
-      if (new Date().getHours() >= 15) {
-        return
-      }
-      this.tracker = setInterval(_ => {
-        this.loadData()
-      }, 15 * 1000)
-    },
-    stopTracker() {
-      if (this.tracker) {
-        clearInterval(this.tracker)
-      }
-      this.tracker = null
     }
   }
 }

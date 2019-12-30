@@ -5,8 +5,10 @@
 <script>
 import notificationContent from './content.vue'
 import { idGenerator } from '@/utils'
+import scheduleMixin from '@/mixins/schedule'
 
 export default {
+  mixins: [scheduleMixin],
   data() {
     return {
       notificationMap: new Map(),
@@ -22,11 +24,7 @@ export default {
       this.notificationMap.delete(_id)
     })
 
-    // 刷新通知
-    this.loadNotification()
-    setInterval(_ => {
-      this.loadNotification()
-    }, 60 * 1000)
+    this.startSchedule(this.loadNotification, 60)
   },
   methods: {
     loadNotification() {
@@ -59,9 +57,6 @@ export default {
         })
         this.notificationMap.set(notificationId, notification)
       }, 0)
-    },
-    test() {
-      this.loadNotification()
     }
   }
 }

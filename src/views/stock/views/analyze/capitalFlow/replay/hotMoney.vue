@@ -31,18 +31,10 @@
 
 <script>
 import lodash from 'lodash'
-import moment from 'moment'
 import { addStockDailyCoordinate, STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
+import scheduleMixin, { STOP_CALLBACK_FOR_STOCK } from '@/mixins/schedule'
 
 const props = {
-  date: {
-    type: String,
-    default: ''
-  },
-  live: { // 是否使用实时数据
-    type: Boolean,
-    default: false
-  },
   showLabel: {
     type: Boolean,
     default: false
@@ -67,12 +59,11 @@ const props = {
 
 export default {
   props,
+  mixins: [scheduleMixin],
   data() {
     return {
       northAnalyzeModel: this.getAnalyzeModel([]),
       southAnalyzeModel: this.getAnalyzeModel([]),
-      interval: 10,
-      tracker: null,
     }
   },
   computed: {
@@ -84,51 +75,16 @@ export default {
     }
   },
   mounted() {
-    this.loadData()
-    this.startTracker()
-  },
-  watch: {
-    date() {
-      this.loadData()
-    }
-  },
-  beforeDestroy() {
-    this.stopTracker()
+    this.startSchedule(this.loadData, 5, STOP_CALLBACK_FOR_STOCK)
   },
   methods: {
-    startTracker() {
-      this.stopTracker()
-      if (new Date().getHours() > 15) {
-        return
-      }
-      if (this.live) {
-        this.tracker = setInterval(_ => {
-          this.loadData()
-        }, this.interval * 1000)
-      }
-    },
-    stopTracker() {
-      if (this.tracker) {
-        clearInterval(this.tracker)
-      }
-      this.tracker = null
-
-    },
     formatDate(date) {
-      return moment(date).format('YYYY-MM-DD')
+      return this.$moment(date).format('YYYY-MM-DD')
     },
     loadData() {
-      if (!this.live && !this.date) {
-        return
-      }
-
       const query = {
-        live: this.live
-      }
-      if (this.live) {
-        query['date'] = this.formatDate(new Date())
-      } else {
-        query['date'] = this.formatDate(this.date)
+        live: true,
+        date: this.formatDate(new Date())
       }
 
       this.$http.get(`/api/stock/capital/hotMoney`, query).then(result => {
@@ -171,14 +127,6 @@ export default {
     },
     getChartData(key, response) {
       const result = []
-
-      if (!this.live) {
-        // 日期比对
-        let date_string = this.$moment(this.date).format('MM-DD')
-        if (date_string !== response[`${key}Date`]) {
-          return result
-        }
-      }
 
       response[key].forEach((_item, _itemIndex) => {
         let item = _item.split(',')

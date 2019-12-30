@@ -115,3 +115,16 @@ export const object2List = function(obj) {
 export const increment = function(num1, num2, precision=2) {
   return lodash.round((num1 - num2) / num2 * 100, precision)
 }
+
+/**
+ * 获取颜色，涨，跌，平
+ */
+export const getStockColor = function(diff) {
+  if (diff > 0) {
+    return '#ff4949'
+  } else if (diff < 0) {
+    return '#2f972f'
+  } else {
+    return '#7b7b7b'
+  }
+}
