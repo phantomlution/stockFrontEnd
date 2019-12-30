@@ -21,7 +21,7 @@
         <div v-show="currentTab === 'chessManual'">
           <chess-manual />
         </div>
-        <div v-show="currentTab === 'bigEvents'">
+        <div v-if="currentTab === 'bigEvents'">
           <big-events />
         </div>
         <div v-show="currentTab === 'stockDetail'">

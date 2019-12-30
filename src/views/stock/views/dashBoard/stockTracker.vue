@@ -301,7 +301,6 @@ export default {
         // 加入消息队列
         notificationSource.push(condition)
 
-        return
         setTimeout(_ => {
           // 弹出通知
           this.$notify({
