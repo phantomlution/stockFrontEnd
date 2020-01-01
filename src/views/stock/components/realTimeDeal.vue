@@ -81,7 +81,7 @@ export default {
         label: {
           htmlTemplate: value => {
             const color = getStockColor(value - close)
-            return `<span style="font-size: 13px;margin-left: -40px;color:${ color }">${ value }</span>`
+            return `<span style="font-size: 13px;margin-left: -48px;color:${ color }">${ value }</span>`
           }
         },
       })

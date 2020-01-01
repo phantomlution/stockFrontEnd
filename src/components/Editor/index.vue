@@ -116,4 +116,8 @@ export default {
 .medium-editor-toolbar{
   z-index: 999999 !important;
 }
+
+.medium-editor-stalker-toolbar{
+  display: none !important;
+}
 </style>

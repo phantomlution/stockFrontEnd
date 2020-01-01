@@ -3,7 +3,7 @@
     <div style="text-align: right">
       <el-button type="primary" @click.stop="openDialog">添加自定义事件</el-button>
     </div>
-    <el-dialog :visible.sync="dialogVisible" title="自定义事件" width="489px">
+    <el-dialog :visible.sync="dialogVisible" :close-on-click-modal="true" title="自定义事件" width="489px">
       <el-form :model="formModel" ref="form" label-width="100px">
         <el-form-item label="事件名称" prop="name" :rules="[ { required: true }]">
           <el-input v-model.trim="formModel.name"/>
@@ -11,6 +11,9 @@
         <el-form-item label="时间节点" prop="date" :rules="[ { required: true } ]">
           <el-date-picker v-model="formModel.date" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
           </el-date-picker>
+        </el-form-item>
+        <el-form-item label="链接地址" prop="url">
+          <el-input v-model.trim="formModel.url" />
         </el-form-item>
       </el-form>
       <div style="text-align: right">
@@ -28,6 +31,7 @@ export default {
       dialogVisible: false,
       formModel: {
         name: '',
+        url: '',
         date: []
       }
     }
@@ -47,6 +51,7 @@ export default {
             title: this.formModel.name,
             start: this.$moment(this.formModel.date[0]).format('YYYY-MM-DD'),
             end: this.$moment(this.formModel.date[1]).format('YYYY-MM-DD'),
+            url: this.formModel.url || '',
             isImportant: true
           }).then(_ => {
             this.$message.success('保存成功')
