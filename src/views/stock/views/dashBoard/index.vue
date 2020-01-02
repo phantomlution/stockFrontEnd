@@ -5,7 +5,7 @@
         <div>
           <el-form :inline="true">
             <el-form-item :label="`前交易日${ yesterdayDateLabel }`">
-              <el-date-picker :clearable="false" v-model="yesterdayDate" style="width: 140px"></el-date-picker>
+              <el-date-picker :clearable="false" @change="yesterdayChanged" v-model="yesterdayDate" style="width: 140px"></el-date-picker>
             </el-form-item>
             <el-form-item label="风险项">
               <risk-detector ref="riskDetector" />
@@ -80,7 +80,16 @@ export default {
     this.analyzeRisk()
   },
   methods: {
+    yesterdayChanged(val) {
+      const today = this.$moment().format('YYYY-MM-DD')
+      const current = this.$moment(val).format('YYYY-MM-DD')
+      this.$local.set('yesterday_date', current, this.$moment(`${ today } 23:59:59`).toDate())
+    },
     getYesterdayDate() { // 计算上一个交易日的日期
+      const historyValue = this.$local.get('yesterday_date')
+      if (historyValue) {
+        return this.$moment(historyValue).toDate()
+      }
       const day = new Date().getDay()
       let diff = -1
       if (day === 6) { // 周六

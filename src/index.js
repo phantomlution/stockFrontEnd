@@ -11,6 +11,7 @@ import socket from '@/socket'
 import eventBus from '@/plugins/eventBus'
 import store from './store'
 import utils from './utils'
+import storage from './utils/localStorage'
 
 Vue.config.productionTip = false
 
@@ -24,6 +25,7 @@ Vue.use(api)
 Vue.use(utils)
 Vue.use(socket)
 Vue.use(eventBus)
+Vue.use(storage)
 
 /* eslint-disable no-new */
 new Vue({
