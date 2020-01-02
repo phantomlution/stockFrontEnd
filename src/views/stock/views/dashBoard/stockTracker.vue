@@ -13,7 +13,7 @@
         </template>
       </div>
       <div v-if="biding && biding.yesterday">
-        <el-popover placement="left" v-model="liveVisible">
+        <el-popover placement="bottom" v-model="liveVisible">
           <div style="width: 540px">
             <div>
               <span style="margin-left: 32px;">{{name}}(昨日成交{{ yesterdayItem.amount | amount }},目前进度为{{todayAmountPercent}})</span>
