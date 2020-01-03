@@ -3,7 +3,7 @@ import { $moment } from '@/utils'
 export const STOCK_COORDINATE_DATE = '2019-06-19'
 
 export const COORDINATE_TIME_LIST = [
-  '09:31',
+  '09:30',
   '10:30',
   '11:30',
   '14:00',

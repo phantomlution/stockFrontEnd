@@ -114,7 +114,14 @@ export default {
         item.timestamp = this.$moment(`${ STOCK_COORDINATE_DATE } ${ item.time }`).toDate().getTime()
       })
       const result = [];
-      ['09:30', '13:00'].forEach(time => {
+      console.log(dealPointList)
+      if (dealPointList[0].time.indexOf('09:25') !== -1) {
+        result.push({
+          time: '09:25:00',
+          price: dealPointList[0].price
+        })
+      }
+      ;['09:30', '13:00'].forEach(time => {
         for(let i=0; i<=120; i++) {
           const currentMinute = this.$moment(`${ STOCK_COORDINATE_DATE } ${ time }:00`).add(i, 'minutes').format('HH:mm')
           const startTime = this.$moment(`${ STOCK_COORDINATE_DATE } ${ currentMinute }:00`).toDate().getTime()
