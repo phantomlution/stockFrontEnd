@@ -13,15 +13,15 @@
       </span>
     </div>
     <div>
-      <lr-chart ref="chart" :isEmpty="isEmpty" />
+      <stock-price-chart ref="chart" />
     </div>
   </lr-box>
 </template>
 
 <script>
 import searchStock from '@/views/stock/components/searchStock'
-import { addStockDailyCoordinate, STOCK_COORDINATE_DATE, COORDINATE_TIME_LIST } from '@/utils/ChartUtils'
-import moment from 'moment'
+import { STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
+import stockPriceChart from './stockPriceChart.vue'
 import lodash from 'lodash'
 
 const props = {
@@ -36,13 +36,12 @@ const props = {
 export default {
   props,
   components: {
-    searchStock
+    searchStock,
+    stockPriceChart
   },
   data() {
     return {
       stockCode: this.code,
-      isEmpty: false,
-      distributionList: [],
       currentDate: this.date || '',
       testResult: null
     }
@@ -72,7 +71,7 @@ export default {
   methods: {
     test() {
       const code = this.code
-      const date = moment(this.currentDate).format('YYYY-MM-DD')
+      const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
       this.$http.get(`/api/analyze/surge_for_short`, {
         code,
         date
@@ -95,8 +94,8 @@ export default {
       if (!this.currentDate) {
         return this.$message.error('请选择日期')
       }
-      const code = this.stockCode
-      const date = moment(this.currentDate).format('YYYY-MM-DD')
+      const code = this.stockCode.substring(2)
+      const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
 
       this.$http.get('/api/analyze/history/fragment/trade', {
         code,
@@ -106,124 +105,48 @@ export default {
           tradeList = []
         }
         this.renderChart(tradeList)
-        this.calculateDistribution(tradeList)
       }).catch(_ => {
         console.error(_)
       })
     },
-    calculateDistribution(tradeList) {
-      this.distributionList = []
-      const totalVolume = lodash.sum(tradeList.map(item => item.volume))
-      for (let i=2; i<=10; i++) {
-        let targetVolume = totalVolume / i
-        let tempTotalVolume = 0
-        for(let j=0; j<tradeList.length; j++) {
-          tempTotalVolume += tradeList[j].volume
-          if (tempTotalVolume >= targetVolume) {
-            this.distributionList.push({
-              volume: `1/${i}`,
-              time: tradeList[j].time
+    normalize(dealPointList) { // 将分时成交数据按照1分钟的序列进行合并
+      dealPointList.forEach(item => {
+        item.timestamp = this.$moment(`${ STOCK_COORDINATE_DATE } ${ item.time }`).toDate().getTime()
+      })
+      const result = [];
+      ['09:30', '13:00'].forEach(time => {
+        for(let i=0; i<=120; i++) {
+          const currentMinute = this.$moment(`${ STOCK_COORDINATE_DATE } ${ time }:00`).add(i, 'minutes').format('HH:mm')
+          const startTime = this.$moment(`${ STOCK_COORDINATE_DATE } ${ currentMinute }:00`).toDate().getTime()
+          const endTime = this.$moment(`${ STOCK_COORDINATE_DATE } ${ currentMinute }:59`).toDate().getTime()
+
+          const currentMinutePriceList = dealPointList.filter(item => item.timestamp >= startTime && item.timestamp <= endTime)
+          if (currentMinutePriceList.length === 0){
+            result.push({
+              time: `${ currentMinute }:00`,
+              price: result[result.length - 1].price
             })
-            break
+          } else {
+            result.push({
+              time: `${ currentMinute }:00`,
+              price: currentMinutePriceList[currentMinutePriceList.length -1].price
+            })
           }
         }
-      }
+      })
+
+      return result
     },
     renderChart(tradeList) {
-      const chart = this.$refs.chart.getChart()
-
       if (tradeList.length === 0) {
-        this.isEmpty = true
+        this.$message.warning('暂无数据')
         return
-      } else {
-        this.isEmpty = false
       }
-      const dataList = tradeList.map(item => {
-        return {
-          time: `${ STOCK_COORDINATE_DATE } ${ item.time }`,
-          value: item.price,
-          amount: item.amount
-        }
-      })
-
-      // 补齐坐标轴可能缺失的数据点
-      const missingPoint = []
-      COORDINATE_TIME_LIST.forEach(time_string => {
-        const isExisted = dataList.find(item => item.time === time_string)
-        if (!isExisted) { // 补齐
-          // 找到上一个时间点的价格
-          let lastItem = null
-          for (let i=0; i<dataList.length; i++) {
-            if (!lastItem) {
-              lastItem = dataList[i]
-              continue
-            }
-            let diff = moment(time_string).diff(moment(dataList[i].time))
-            if (diff >= 0) {
-              lastItem = dataList[i]
-              continue
-            } else {
-              break
-            }
-          }
-          if (lastItem) {
-            missingPoint.push({
-              time: time_string,
-              value: lastItem['value'],
-              amount: 0
-            })
-          }
-        }
-      })
-
-      Array.prototype.push.apply(dataList, missingPoint)
-
 
       const yesterdayClose = lodash.round(tradeList[0].price - tradeList[0].change, 2)
+      const dataList = this.normalize(tradeList)
 
-      chart.source(dataList)
-      addStockDailyCoordinate(chart)
-
-      // 添加辅助线
-      this.addAssistantLine(chart, yesterdayClose, `昨收 ${ yesterdayClose }`)
-
-
-      // 添加幅度变化辅助线
-      for(let i=1; i<= 10; i++) {
-        this.addAssistantLine(chart, lodash.round(yesterdayClose * (1 + 0.01 * i), 2), `${ i }%`)
-        this.addAssistantLine(chart, lodash.round(yesterdayClose * (1 - 0.01 * i), 2), `-${ i }%`)
-      }
-      chart.line().position('time*value')
-      chart.render()
-
-      // 绘制成交量
-//      const duplicateDataList = dataList.map(item => item)
-//      duplicateDataList.sort((former, later) => {
-//        return former.amount - later.amount
-//      })
-//      const renderDataList = lodash.takeRight(duplicateDataList, 10)
-//
-//      amountChart.source(renderDataList)
-//      addStockDailyCoordinate(amountChart)
-//      amountChart.interval().position('time*amount')
-//      amountChart.render()
-    },
-    addAssistantLine(chart, value, text) { // 添加价格辅助线
-      chart.guide().line({
-        start: {
-          time: 'min',
-          value: value
-        },
-        end: {
-          time: 'max',
-          value: value
-        },
-        text: {
-          position: 'end',
-          content: `       ${ text}`
-        }
-      })
-
+      this.$refs.chart.updateChart(dataList, yesterdayClose)
     }
   }
 }

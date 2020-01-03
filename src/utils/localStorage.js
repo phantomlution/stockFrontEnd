@@ -22,7 +22,7 @@ const localStorage = {
   },
   get(key) {
     const historyItem = storage.local.getItem(key)
-    debugger
+
     if (!historyItem) {
       return null
     } else {
