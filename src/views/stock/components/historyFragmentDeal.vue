@@ -95,7 +95,7 @@ export default {
       if (!this.currentDate) {
         return this.$message.error('请选择日期')
       }
-      const code = this.stockCode.substring(2)
+      const code = this.stockCode
       const date = moment(this.currentDate).format('YYYY-MM-DD')
 
       this.$http.get('/api/analyze/history/fragment/trade', {

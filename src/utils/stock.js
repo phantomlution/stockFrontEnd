@@ -32,6 +32,7 @@ export default class Stock {
       const yesterdayData = this.result[i - 1]
       todayData.isMakeShort = stockUtils.isMakeShortPoint(yesterdayData, todayData)
       todayData.isMakeLong = stockUtils.isMakeLongPoint(yesterdayData, todayData)
+      todayData.amountDiffPercent = lodash.round(todayData.amountInMillion / yesterdayData.amountInMillion * 100, 0)
     }
 
     let dataList = lodash.takeRight(this.result.filter(item => item.diff !== undefined), RANGE_RECENT_TRADE_VOLUME)

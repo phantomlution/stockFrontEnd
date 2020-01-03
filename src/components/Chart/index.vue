@@ -20,7 +20,16 @@ const props = {
   isEmpty: {
     type: Boolean,
     default: false
+  },
+  legend: { // 是否使用图例
+    type: Boolean,
+    default: true
+  },
+  reUse: { // 是否复用组件（用于临时解决一些官方bug）
+    type: Boolean,
+    default: true
   }
+
 }
 
 export default {
@@ -39,6 +48,11 @@ export default {
   },
   methods: {
     getChart() {
+      if (!this.reUse) {
+        this._chart && this._chart.destroy()
+        this._chart = null
+      }
+
       if (this._chart) {
         this._chart.clear()
       } else {
@@ -50,7 +64,11 @@ export default {
         }
         let padding = [20, 30, 60, 30]
         if (this.usePadding) {
-          padding = [20, 80, 20, 80]
+          let paddingBottom = 20
+          if (this.legend) {
+            paddingBottom += 60
+          }
+          padding = [20, 80, paddingBottom, 80]
         }
 
         this._chart = new G2.Chart({

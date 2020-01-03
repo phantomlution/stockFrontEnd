@@ -14,7 +14,6 @@
 
 <script>
 import lodash from 'lodash'
-import moment from 'moment'
 
 const THRESHOLD_WATER_PERCENT = 50
 
@@ -59,7 +58,11 @@ export default {
         return
       }
       this.isLoading = false
-      this.$store.dispatch('loadStockData', this.code).then(stock => {
+      Promise.all([
+        this.$store.dispatch('loadStockData', this.code),
+      ]).then(stockList => {
+        const stock = stockList[0]
+
         this.renderChart({
           stock,
           dataCount: this.dataCount
@@ -115,8 +118,7 @@ export default {
       const data = lodash.takeRight(rawData, dataCount)
       this.calculateAmount(data)
 
-      const chartRef = this.$refs.chart
-      const chart = chartRef.getChart()
+      const chart = this.$refs.chart.getChart()
 
       const view = chart.view()
       var scale = {
@@ -128,8 +130,33 @@ export default {
       }
 
       view.source(data, scale)
-      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2)
+      this.renderPriceView(view, stock, data)
+      this.renderVolumeView(view)
+      chart.render()
+    },
+    renderVolumeView(view) {
+      const chartRef = this.$refs.chart
+
       view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff')
+
+      chartRef.addAssistantLine(view, {
+        start: {
+          timestamp: 'min',
+          diff: -1 * THRESHOLD_WATER_PERCENT
+        },
+        end: {
+          timestamp: 'max',
+          diff: -1 * THRESHOLD_WATER_PERCENT
+        }
+      }, `-${ THRESHOLD_WATER_PERCENT }%`, {
+        horizontal: true,
+        textPosition: 'start'
+      })
+    },
+    renderPriceView(view, stock, data) {
+      const chartRef = this.$refs.chart
+
+      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2)
 
       // 拉高出货点
       const surgeForShortList = stock.surgeForShortList || []
@@ -177,22 +204,6 @@ export default {
         }
       }
 
-      chartRef.addAssistantLine(view, {
-        start: {
-          timestamp: 'min',
-          diff: -1 * THRESHOLD_WATER_PERCENT
-        },
-        end: {
-          timestamp: 'max',
-          diff: -1 * THRESHOLD_WATER_PERCENT
-        }
-      }, `-${ THRESHOLD_WATER_PERCENT }%`, {
-        horizontal: true,
-        textPosition: 'start'
-      })
-
-
-      chart.render()
     },
     addExtraInfoPoint(view, start, text) { // 添加涨停
       view.guide().dataMarker({

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <lr-chart ref="chart" :height="height" />
+    <lr-chart ref="chart" :height="height" :legend="false" :reUse="false" />
   </div>
 </template>
 
@@ -30,8 +30,8 @@ const props = {
 
 // 计算早盘和午盘
 const pointList = [];
-[`${ STOCK_COORDINATE_DATE} 09:30:00`, `${ STOCK_COORDINATE_DATE } 13:01:00`].forEach(startTime => {
-  for (let i=0; i< 120; i++) {
+[`${ STOCK_COORDINATE_DATE} 09:30:00`, `${ STOCK_COORDINATE_DATE } 13:00:00`].forEach(startTime => {
+  for (let i=0; i<= 120; i++) {
     pointList.push({
       time: $moment(startTime).add(i, 'minutes').format('YYYY-MM-DD HH:mm:ss'),
       value: null
@@ -71,9 +71,11 @@ export default {
 
       const close = this.yesterdayClose
       const tickList = this.getTickList(close, dataList)
+
       chart.source(dataList, this.getChartConfig(close, tickList))
       this.addChartAssistantElement(chart, close, tickList)
       chart.line().position('time*value')
+
       chart.render()
     },
     addChartAssistantElement(chart, close, tickList) { // 添加辅助元素
@@ -81,7 +83,7 @@ export default {
         label: {
           htmlTemplate: value => {
             const color = getStockColor(value - close)
-            return `<span style="font-size: 13px;margin-left: -48px;color:${ color }">${ value }</span>`
+            return `<span style="font-size: 13px;margin-left: -48px;color:${ color }">${ Number(value).toFixed(2) }</span>`
           }
         },
       })
@@ -89,7 +91,7 @@ export default {
         chart.guide().text({
           top: true,
           position: ['max', tick],
-          content: `${ increment(tick, close) }%`,
+          content: `${ Number(increment(tick, close)).toFixed(2) }%`,
           style: {
             fill: getStockColor(tick - close)
           },
