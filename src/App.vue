@@ -22,7 +22,7 @@
           <chess-manual />
         </div>
         <div v-if="currentTab === 'bigEvents'">
-          <big-events />
+          <big-events />i
         </div>
         <div v-show="currentTab === 'stockDetail'">
           <!-- 初始化数据 -->

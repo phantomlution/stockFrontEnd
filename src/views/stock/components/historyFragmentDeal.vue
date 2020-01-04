@@ -114,7 +114,7 @@ export default {
         item.timestamp = this.$moment(`${ STOCK_COORDINATE_DATE } ${ item.time }`).toDate().getTime()
       })
       const result = [];
-      console.log(dealPointList)
+
       if (dealPointList[0].time.indexOf('09:25') !== -1) {
         result.push({
           time: '09:25:00',

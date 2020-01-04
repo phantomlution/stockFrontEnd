@@ -19,8 +19,6 @@ export default {
   props,
   methods: {
     updateChart(itemList, close) {
-      console.log(itemList)
-      console.log(close)
       const chart = this.$refs.chart.getChart()
 
       const dataList = itemList.map(item => {

@@ -40,6 +40,8 @@ export default {
     this.$store.dispatch('getStockCodeList')
     // 加载自选股票池
     this.$store.dispatch('getStockPoolList')
+    // 加载最近的市场交易日
+    this.$store.dispatch('getRecentTradeDateList')
   }
 }
 </script>

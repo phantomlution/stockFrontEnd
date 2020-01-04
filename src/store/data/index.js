@@ -2,7 +2,7 @@ import blackList from './blackList'
 import { http } from '@/utils/http'
 import { Message } from 'element-ui'
 import Stock from '@/utils/stock'
-import moment from 'moment'
+import { $moment } from '@/utils'
 
 export default {
   state: {
@@ -11,6 +11,7 @@ export default {
     codeList: [],
     marketHeat: [],
     lowPriceCount: [],
+    tradeDateList: [], // 交易日列表
     marketPriceMap: new Map(), // 市场价格
   },
   mutations: {
@@ -47,7 +48,7 @@ export default {
               model[column] = item[i]
             }
             // 强制转换日期格式
-            model.timestamp = moment(model.date).toDate().getTime()
+            model.timestamp = $moment(model.date).toDate().getTime()
             return model
           })
 
@@ -81,6 +82,16 @@ export default {
       return new Promise((resolve, reject) => {
         http.get('/api/data/block/concept').then(result => {
           resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
+    },
+    getRecentTradeDateList(context) {
+      return new Promise((resolve, reject) => {
+        http.get(`/api/data/recent/market/open`).then(result => {
+          context.state.tradeDateList = result
+          resolve()
         }).catch(_ => {
           reject(_)
         })
