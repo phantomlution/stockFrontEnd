@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle">
-    <el-popover placement="left" :width="width" trigger="click">
-      <el-button slot="reference" type="primary">{{ title }}</el-button>
+    <el-popover v-model="visible" placement="left" :width="width" trigger="manual" :popper-class="uniqueClass">
+      <el-button slot="reference" type="primary" @click.stop="showContent">{{ title }}</el-button>
       <div>
         <slot />
       </div>
@@ -10,6 +10,11 @@
 </template>
 
 <script>
+/**
+ * 缓存 slot 中内容的状态
+ */
+import { idGenerator } from '@/utils'
+
 const props = {
   title: {
     type: String,
@@ -28,6 +33,9 @@ export default {
   props,
   data() {
     return {
+      uniqueClass: idGenerator.next('lr-popover-unique'),
+      visible: false,
+      contentVisible: false
     }
   },
   computed: {
@@ -38,6 +46,23 @@ export default {
         'top': this.top,
         'z-index': 2000
       }
+    }
+  },
+  watch: {
+    contentVisible(val) {
+      if (val) {
+        document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
+      } else {
+        document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
+      }
+    }
+  },
+  methods: {
+    showContent() {
+      if (!this.visible) {
+        this.visible = true
+      }
+      this.contentVisible = !this.contentVisible
     }
   }
 }

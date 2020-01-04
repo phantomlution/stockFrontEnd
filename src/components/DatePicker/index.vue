@@ -1,7 +1,7 @@
 <template>
   <div style="display: inline-block">
     <el-date-picker v-model="date" placeholder="请选择日期" :picker-options="pickerOptions" style="width: 160px" @change="dateChanged"/>
-    <span>
+    <span style="margin-left: 8px">
       <el-button type="primary" @click.stop="toLast">前一日</el-button>
       <el-button type="primary" @click.stop="toNext">后一日</el-button>
     </span>
