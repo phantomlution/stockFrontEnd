@@ -18,8 +18,11 @@ const props = {
 export default {
   props,
   methods: {
+    getChart() {
+      return this.$refs.chart.getChart()
+    },
     updateChart(itemList, close) {
-      const chart = this.$refs.chart.getChart()
+      const chart =this.getChart()
 
       const dataList = itemList.map(item => {
         return {

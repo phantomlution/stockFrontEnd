@@ -219,7 +219,7 @@ export default {
       const code = this.code
       return new Promise((resolve, reject) => {
         this.$http.get('/api/analyze/history/fragment/trade', {
-          code: code.substring(2),
+          code,
           date
         }).then(_ => {
           _.forEach(fragment => {

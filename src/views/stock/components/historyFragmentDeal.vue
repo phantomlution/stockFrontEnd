@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       stockCode: this.code,
-      currentDate: this.date || '',
+      currentDate: this.date || null,
       testResult: null
     }
   },
@@ -51,7 +51,7 @@ export default {
       this.currentDate = val
     },
     code(val) {
-      this.currentDate = ''
+      this.currentDate = null
       this.stockCode = val
     },
     currentDate(val) {
@@ -83,9 +83,11 @@ export default {
       })
     },
     checkAndLoad() {
-      if (this.stockCode && this.currentDate) {
-        this.loadData()
-      }
+      this.$nextTick(_ => {
+        if (this.stockCode && this.currentDate) {
+          this.loadData()
+        }
+      })
     },
     loadData() {
       if (!this.stockCode) {
@@ -94,7 +96,7 @@ export default {
       if (!this.currentDate) {
         return this.$message.error('请选择日期')
       }
-      const code = this.stockCode.substring(2)
+      const code = this.stockCode
       const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
 
       this.$http.get('/api/analyze/history/fragment/trade', {
