@@ -68,8 +68,10 @@ export default {
       currentTab: 'chessManual'
     }
   },
-  mounted() {
-
+  watch: {
+    currentTab() {
+      this.$bus.$emit('close_all_stick_bar')
+    }
   }
 }
 </script>

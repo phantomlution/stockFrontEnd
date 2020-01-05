@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/components/bulkStockComparison.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/Chart/index.vue" afterPath="$PROJECT_DIR$/src/components/Chart/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/data/index.js" afterPath="$PROJECT_DIR$/src/store/data/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/stock.js" afterPath="$PROJECT_DIR$/src/utils/stock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/analyze/indexConceptFragmentDeal.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/indexConceptFragmentDeal.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/themeMarket/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/themeMarket/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/StickBar/index.vue" afterPath="$PROJECT_DIR$/src/components/StickBar/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,7 +25,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="indexConceptFragmentDeal.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="indexConceptFragmentDeal.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/indexConceptFragmentDeal.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="162">
@@ -75,6 +71,26 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="237">
               <caret line="74" column="29" lean-forward="false" selection-start-line="74" selection-start-column="29" selection-end-line="74" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/StickBar/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="304">
+              <caret line="51" column="39" lean-forward="false" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/App.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="74" column="3" lean-forward="false" selection-start-line="74" selection-start-column="3" selection-end-line="74" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -204,14 +220,12 @@
         <option value="$PROJECT_DIR$/src/utils/localStorage.js" />
         <option value="$PROJECT_DIR$/src/views/stock/components/realTimeDeal.vue" />
         <option value="$PROJECT_DIR$/src/utils/ChartUtils.js" />
-        <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/tempAnalyze.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/historyFragmentDeal.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/analyze/index.vue" />
         <option value="$PROJECT_DIR$/src/components/DatePicker/index.vue" />
-        <option value="$PROJECT_DIR$/src/components/StickBar/index.vue" />
         <option value="$PROJECT_DIR$/src/store/data/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/themeMarket/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/bulkStockComparision.vue" />
@@ -219,6 +233,8 @@
         <option value="$PROJECT_DIR$/src/components/Chart/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/bulkStockComparison.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/analyze/indexConceptFragmentDeal.vue" />
+        <option value="$PROJECT_DIR$/src/components/StickBar/index.vue" />
+        <option value="$PROJECT_DIR$/src/App.vue" />
       </list>
     </option>
   </component>
@@ -347,6 +363,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="StickBar" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -700,14 +756,7 @@
       <workItem from="1577926935758" duration="4017000" />
       <workItem from="1578013074317" duration="9070000" />
       <workItem from="1578126637182" duration="12236000" />
-      <workItem from="1578200892326" duration="5010000" />
-    </task>
-    <task id="LOCAL-00189" summary="重构数据分析模块">
-      <created>1576920230045</created>
-      <option name="number" value="00189" />
-      <option name="presentableId" value="LOCAL-00189" />
-      <option name="project" value="LOCAL" />
-      <updated>1576920230046</updated>
+      <workItem from="1578200892326" duration="5349000" />
     </task>
     <task id="LOCAL-00190" summary="重构数据分析模块">
       <created>1576921804074</created>
@@ -1045,11 +1094,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578151125094</updated>
     </task>
-    <option name="localTasksCounter" value="238" />
+    <task id="LOCAL-00238" summary="集成板块内部比较">
+      <created>1578212998703</created>
+      <option name="number" value="00238" />
+      <option name="presentableId" value="LOCAL-00238" />
+      <option name="project" value="LOCAL" />
+      <updated>1578212998704</updated>
+    </task>
+    <option name="localTasksCounter" value="239" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="862884000" />
+    <option name="totallyTimeSpent" value="863223000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1114,7 +1170,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="关联股票池与各种相关的数据源" />
     <MESSAGE value="优化页面展示" />
     <MESSAGE value="提升chart服用性能" />
     <MESSAGE value="优化Dashboard" />
@@ -1139,7 +1194,8 @@
     <MESSAGE value="集成获取最近交易日，优化日期跳转算法" />
     <MESSAGE value="集成指数和板块的历史分时" />
     <MESSAGE value="优化stickbar" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化stickbar" />
+    <MESSAGE value="集成板块内部比较" />
+    <option name="LAST_COMMIT_MESSAGE" value="集成板块内部比较" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1388,13 +1444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="684">
@@ -1475,14 +1524,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/StickBar/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="22" column="10" lean-forward="false" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/store/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1543,6 +1584,22 @@
             <element signature="n#style#0;n#lr-date-picker#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#1325#1352#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/StickBar/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="51" column="39" lean-forward="false" selection-start-line="51" selection-start-column="20" selection-end-line="51" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="74" column="3" lean-forward="false" selection-start-line="74" selection-start-column="3" selection-end-line="74" selection-end-column="3" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -48,13 +48,24 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    this.$bus.$off('close_all_stick_bar')
+  },
+  mounted() {
+    this.$bus.$on('close_all_stick_bar', _ => {
+      this.contentVisible = false
+    })
+  },
   watch: {
     contentVisible(val) {
-      if (val) {
-        document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
-      } else {
-        document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
-      }
+      this.$nextTick(_ => {
+        if (val) {
+          document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
+        } else {
+          document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
+        }
+      })
+
     }
   },
   methods: {
