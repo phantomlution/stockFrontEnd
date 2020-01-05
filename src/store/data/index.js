@@ -96,6 +96,9 @@ export default {
           reject(_)
         })
       })
+    },
+    getThemeList() {
+      return http.get(`/api/stock/theme/market`)
     }
   }
 }

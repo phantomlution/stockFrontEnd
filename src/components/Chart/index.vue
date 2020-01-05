@@ -76,6 +76,7 @@ export default {
           forceFit: true,
           width: window.innerWidth,
           height,
+          animate: false,
           padding: padding
         })
       }

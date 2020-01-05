@@ -124,7 +124,7 @@ export default {
   methods: {
     loadMarketTheme() {
       this.loading = true
-      this.$http.get(`/api/stock/theme/market`).then(themeMarketList => {
+      this.$store.dispatch('getThemeList').then(themeMarketList => {
         // 初始化
         const themeMap = new Map()
         themeMap.set(this.defaultThemeRuleName, [])
