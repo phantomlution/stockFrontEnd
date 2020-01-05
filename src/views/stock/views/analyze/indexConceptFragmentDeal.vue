@@ -15,7 +15,7 @@
       <div >
         <stock-price-chart ref="chart" />
       </div>
-      <lr-stick-bar title="分析助手" top="84px" width="500">
+      <lr-stick-bar title="分析助手" top="84px" width="500" :keepAlive="true">
         <el-table sortable :data="tableData" @row-dblclick="setCurrent" max-height="320px">
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="name" label="name"></el-table-column>

@@ -1,6 +1,6 @@
 <template>
   <div :style="containerStyle">
-    <el-popover v-model="visible" placement="left" :width="width" trigger="manual" :popper-class="uniqueClass">
+    <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="uniqueClass">
       <el-button slot="reference" type="primary" @click.stop="showContent">{{ title }}</el-button>
       <div>
         <slot />
@@ -26,6 +26,14 @@ const props = {
   top: {
     type: String,
     default: '32px'
+  },
+  keepAlive: { // 是否保持 slot 中组件的状态（例如表格）
+    type: Boolean,
+    default: false
+  },
+  visible: {
+    type: Boolean,
+    default: false
   }
 }
 export default {
@@ -34,11 +42,17 @@ export default {
   data() {
     return {
       uniqueClass: idGenerator.next('lr-popover-unique'),
-      visible: false,
+      containerVisible: this.visible || false,
       contentVisible: false
     }
   },
   computed: {
+    trigger() {
+      if (this.keepAlive) {
+        return 'manual'
+      }
+      return 'click'
+    },
     containerStyle() {
       return {
         'position': 'fixed',
@@ -53,27 +67,45 @@ export default {
   },
   mounted() {
     this.$bus.$on('close_all_stick_bar', _ => {
-      this.contentVisible = false
+      this.containerVisible = false
     })
   },
   watch: {
+    visible(val) {
+      this.containerVisible = val
+    },
+    containerVisible(val) {
+      this.$emit('update:visible', val)
+      if (val) {
+        this.showContent()
+      } else {
+        this.hideContent()
+      }
+    },
     contentVisible(val) {
-      this.$nextTick(_ => {
-        if (val) {
-          document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
-        } else {
-          document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
-        }
-      })
-
+      if (this.keepAlive) {
+        this.$nextTick(_ => {
+          if (val) {
+            document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
+          } else {
+            document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
+          }
+        })
+      }
     }
   },
   methods: {
-    showContent() {
-      if (!this.visible) {
-        this.visible = true
+    hideContent() {
+      if (this.keepAlive) {
+        this.containerVisible = true
+        this.contentVisible = false
       }
-      this.contentVisible = !this.contentVisible
+    },
+    showContent() {
+      if (this.keepAlive) {
+        this.containerVisible = true
+        this.contentVisible = true
+      }
     }
   }
 }

@@ -13,7 +13,7 @@
       </span>
     </div>
     <div>
-      <stock-price-chart ref="chart" />
+      <stock-price-chart ref="chart" :height="height" />
     </div>
   </lr-box>
 </template>
@@ -21,7 +21,7 @@
 <script>
 import searchStock from '@/views/stock/components/searchStock'
 import { STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
-import stockPriceChart from './stockPriceChart.vue'
+import stockPriceChart from '../stockPriceChart.vue'
 import lodash from 'lodash'
 
 const props = {
@@ -31,6 +31,9 @@ const props = {
   },
   date: {
     type: [Date, String]
+  },
+  height: {
+    type: Number
   }
 }
 export default {
@@ -61,12 +64,6 @@ export default {
       }
       this.$emit('update:date', val)
     }
-  },
-  mounted() {
-    if (this.code && !this.currentDate) {
-      this.currentDate = this.$moment().add('days', -1).toDate()
-    }
-    this.checkAndLoad()
   },
   methods: {
     test() {

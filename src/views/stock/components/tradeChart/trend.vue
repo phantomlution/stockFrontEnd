@@ -8,7 +8,7 @@
       <el-button type="primary" :loading="isLoading" @click.stop="loadSurgeForShort">跌点分析</el-button>
     </div>
     <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
-    <lr-chart ref="chart" />
+    <lr-chart ref="chart" @dblclick="dblclick" />
   </lr-box>
 </template>
 
@@ -24,10 +24,7 @@ const props = {
   },
   showAdd: {
     type: Boolean,
-    default: false
-  },
-  config: {
-    type: Object
+    default: true
   }
 }
 export default {
@@ -109,7 +106,13 @@ export default {
       const average = lodash.round(lodash.mean(recentDataList.map(item => item.amountInMillion)), 2)
       this.average = average
     },
+    bindChartEvent() {
+      const chart = this.$refs.chart.getChart()
 
+      chart.off('dblclick')
+
+
+    },
     renderChart({stock, dataCount}) {
       let rawData = stock.result
       this.stock = stock
@@ -119,6 +122,7 @@ export default {
       this.calculateAmount(data)
 
       const chart = this.$refs.chart.getChart()
+      this.bindChartEvent()
 
       const view = chart.view()
       var scale = {
@@ -163,7 +167,7 @@ export default {
       // 追加限售解禁信息
       const restrictSellList = stock.base.restrict_sell_list || []
       // 追加高亮点
-      const highlightPointList = this.config ? this.config.highlight || [] : []
+      const highlightPointList = [] //this.config ? this.config.highlight || [] : []
 
       const pointList = []
       Array.prototype.push.apply(pointList, surgeForShortList.map(item => ({ date: item.date, text: '拉高出货' })))
@@ -239,6 +243,9 @@ export default {
         }
       });
     },
+    dblclick(item) {
+      this.$emit('dblclick', item)
+    }
   }
 }
 </script>

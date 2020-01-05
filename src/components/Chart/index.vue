@@ -38,19 +38,25 @@ export default {
   data() {
     return {
       _chart: null,
+      currentFocusItem: null, // 鼠标当前所在的点（由tooltip计算得出）
       chartId: idGenerator.next()
     }
   },
   beforeDestroy() {
-    if (this._chart) {
-      this._chart.destroy()
-    }
+    this.destroyChart()
   },
   methods: {
+    destroyChart() {
+      if (this._chart) {
+        // 移除所有事件
+        this._chart.off()
+        this._chart.destroy()
+      }
+      this._chart = null
+    },
     getChart() {
       if (!this.reUse) {
-        this._chart && this._chart.destroy()
-        this._chart = null
+        this.destroyChart()
       }
 
       if (this._chart) {
@@ -79,6 +85,7 @@ export default {
           animate: false,
           padding: padding
         })
+        this.bindEvent()
       }
 
       return this._chart
@@ -120,8 +127,6 @@ export default {
       textModel.autoRotate = false
       textModel.content = displayText
 
-      console.log(position)
-
       view.guide().line({
         top: isTop,
         start: position.start,
@@ -136,6 +141,39 @@ export default {
       if (isVertical) {
         this.addHtmlAssistantLine(view, position, contentList)
       }
+    },
+    bindEvent() {
+      const chart = this._chart
+
+      chart.on('tooltip:change', ev => {
+        const itemList = ev.items || []
+        const model = {
+          title: '',
+          data: null
+        }
+
+        if (itemList.length > 0) {
+          const title = itemList[0].title
+          const obj = {}
+          itemList.forEach(item => {
+            obj[item.name] = item.value
+          })
+
+          model.title = title
+          model.data = obj
+        }
+        this.currentFocusItem = model
+      })
+
+      chart.on('tooltip:hide', ev => {
+        this.currentFocusItem = null
+      })
+
+      chart.on('dblclick', ev => {
+        if (this.currentFocusItem) {
+          this.$emit('dblclick', this.currentFocusItem)
+        }
+      })
     }
   }
 }

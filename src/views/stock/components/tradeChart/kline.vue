@@ -4,7 +4,7 @@
       <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
     </div>
     <el-input-number v-model="dataCount" :step="50" :min="70" :max="maxDataCount" slot="center"/>
-    <lr-chart ref="amountChart" />
+    <lr-chart ref="amountChart" @dblclick="dblclick" />
   </lr-box>
 </template>
 
@@ -120,6 +120,9 @@ export default {
       })
 
       chart.render()
+    },
+    dblclick(item) {
+      this.$emit('dblclick', item)
     }
   }
 }

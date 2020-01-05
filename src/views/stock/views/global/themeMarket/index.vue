@@ -112,6 +112,13 @@ export default {
       }
     }
   },
+  watch: {
+    visible(val) {
+      if (!val) {
+        this.currentTheme = null
+      }
+    }
+  },
   beforeDestroy() {
     this.$bus.$off('openThemeMarket')
   },
