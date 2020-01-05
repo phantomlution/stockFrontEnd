@@ -1,5 +1,5 @@
 <template>
-  <el-select v-model="stockCode" filterable :filter-method="throttleSearch" v-show="true">
+  <el-select v-model="stockCode" filterable clearable :filter-method="throttleSearch" v-show="true">
     <el-option v-for="item in filteredStockList" :key="item.value" :label="`(${ item.label}) ${ item.value }`" :value="item.value"></el-option>
   </el-select>
 </template>
