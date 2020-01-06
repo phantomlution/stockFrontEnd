@@ -1,5 +1,28 @@
 <template>
   <div style="display: inline-block">
+    <el-tooltip effect="dark" placement="right" v-if="false">
+      <div slot="content">
+        <div>
+          <el-link >基础信息</el-link>
+        </div>
+        <div>
+          <el-link >趋势分析</el-link>
+        </div>
+        <div>
+          <el-link >实时走势</el-link>
+        </div>
+        <div>
+          <el-link >公告列表</el-link>
+        </div>
+        <div>
+          <el-link >股票质押</el-link>
+        </div>
+        <div>
+          <el-link >深度数据</el-link>
+        </div>
+      </div>
+      <el-link :type="type">{{ displayLabel }}</el-link>
+    </el-tooltip>
     <el-link :type="type" @click.stop="showStockDetail">{{ displayLabel }}</el-link>
     <lr-shopping-cart :code="code" v-if="add" :icon="icon" />
   </div>
