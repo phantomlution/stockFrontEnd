@@ -27,7 +27,7 @@ export default {
       const dataList = itemList.map(item => {
         return {
           time: `${ STOCK_COORDINATE_DATE } ${ item.time }`,
-          value: Number(item.price)
+          value: !item.price ? item.price : Number(item.price)
         }
       })
 

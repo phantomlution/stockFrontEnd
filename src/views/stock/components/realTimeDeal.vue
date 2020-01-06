@@ -26,7 +26,7 @@ const props = {
 // 计算早盘和午盘
 const pointList = [];
 [`${ STOCK_COORDINATE_DATE} 09:30:00`, `${ STOCK_COORDINATE_DATE } 13:00:00`].forEach(startTime => {
-  for (let i=0; i< 120; i++) {
+  for (let i=0; i<= 120; i++) {
     pointList.push({
       time: $moment(startTime).add(i, 'minutes').format('HH:mm:ss'),
       price: null
@@ -52,10 +52,12 @@ export default {
         if (dataList.length === 0) {
           Array.prototype.push.apply(dataList, pointList)
         } else {
-          Array.prototype.push.apply(dataList, pointList.filter(item => item.time >= dataList[dataList.length - 1].time))
+          Array.prototype.push.apply(dataList, pointList.filter(item => item.time > dataList[dataList.length - 1].time))
         }
 
-        this.$refs.stockPrice.updateChart(dataList, this.yesterdayClose)
+        console.log(dataList)
+
+        this.$refs.stockPrice && this.$refs.stockPrice.updateChart(dataList, this.yesterdayClose)
       })
     }
   }
