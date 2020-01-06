@@ -1,40 +1,49 @@
 <!-- 通用列表视图 -->
 <template>
-  <div tabindex="-1" @keydown.up.prevent="toPrevious" @keydown.down.prevent="toNext">
-    <div>
-      <el-radio-group v-model="viewType">
-        <el-radio-button label="table">table</el-radio-button>
-        <el-radio-button label="card">card</el-radio-button>
-      </el-radio-group>
-    </div>
-    <!-- table view -->
-    <div v-show="viewType === 'table'">
-      <el-table :data="data">
-        <slot name="table" />
-      </el-table>
-    </div>
-
-    <!-- card view -->
-    <div v-show="viewType === 'card'" style="display: flex">
+  <div class="lr-list" tabindex="-1" @keydown.up.prevent="toPrevious" @keydown.down.prevent="toNext" @keydown.left.prevent="hideAction" @keydown.right.prevent="showAction">
+    <div style="display: flex">
+      <!-- 左侧 -->
       <div style="flex: 1">
-        <slot name="card" :item="currentItem" v-show="currentItem"/>
-      </div>
-      <!-- 右侧操作区 -->
-      <div v-if="data.length > 0">
-        <div v-if="data.length > 0 && currentIndex !== -1">
-          {{ currentIndex + 1 }}/{{ data.length }}
+        <div v-show="actionVisible">
+          <slot name="action"></slot>
         </div>
-        <!--<div style="margin-top: 8px" v-if="analyzeCount > 0">-->
-          <!--<el-button circle icon="el-icon-refresh" @click.stop="reAnalyze"></el-button>-->
-        <!--</div>-->
-        <div style="margin-top: 8px">
-          <el-button :disabled="!hasPrevious" circle icon="el-icon-arrow-up" @click.stop="toPrevious"></el-button>
-        </div>
-        <div style="margin-top: 8px">
-          <el-button :disabled="!hasNext" circle icon="el-icon-arrow-down" @click.stop="toNext"></el-button>
-        </div>
-      </div>
+        <!-- content -->
+        <div>
+          <!-- table view -->
+          <div v-show="viewType === 'table'">
+            <el-table :data="data" :maxHeight="maxHeight">
+              <slot name="table-column" />
+            </el-table>
+          </div>
 
+          <!-- card view -->
+          <div v-show="viewType === 'card'" style="display: flex">
+            <div style="flex: 1">
+              <slot name="card" :row="currentItem" v-if="currentItem" />
+            </div>
+        </div>
+      </div>
+      </div>
+      <!-- 右侧 -->
+      <div>
+        <div style="margin-bottom: 8px">
+          <el-radio-group v-model="viewType">
+            <el-radio-button label="table"><i class="el-icon-tickets"></i></el-radio-button>
+            <el-radio-button label="card"><i class="el-icon-reading"></i></el-radio-button>
+          </el-radio-group>
+        </div>
+        <div v-if="viewType === 'card' && data.length > 0">
+          <div v-if="data.length > 0 && currentIndex !== -1" class="lr-list--button">
+            {{ currentIndex + 1 }}/{{ data.length }}
+          </div>
+          <div class="lr-list--button">
+            <el-button :disabled="!hasPrevious" circle icon="el-icon-arrow-up" @click.stop="toPrevious"></el-button>
+          </div>
+          <div class="lr-list--button">
+            <el-button :disabled="!hasNext" circle icon="el-icon-arrow-down" @click.stop="toNext"></el-button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,6 +60,10 @@ const props = {
   data: {
     type: Array,
     required: true
+  },
+  maxHeight: {
+    type: String,
+    default: ''
   }
 }
 
@@ -60,7 +73,8 @@ export default {
   data() {
     return {
       currentIndex: 0,
-      viewType: 'table' // or card
+      actionVisible: true,
+      viewType: 'card' // or card
     }
   },
   computed: {
@@ -80,6 +94,11 @@ export default {
       return this.data[this.currentIndex]
     }
   },
+  watch: {
+    currentItem(val) {
+      this.$emit('change', val)
+    }
+  },
   methods: {
     toPrevious() {
       if (this.hasPrevious) {
@@ -91,6 +110,29 @@ export default {
         this.currentIndex += 1
       }
     },
+    showAction() { // 隐藏 slot-action
+      this.actionVisible = true
+    },
+    hideAction() {
+      this.actionVisible = false
+    }
   }
 }
 </script>
+
+<style lang="scss">
+.lr-list{
+  width: 100%;
+  &:focus{
+    outline: none;
+  }
+  .el-radio-button__inner{
+    padding: 7px;
+  }
+}
+
+.lr-list--button{
+  margin-bottom: 8px;
+  text-align: right;
+}
+</style>

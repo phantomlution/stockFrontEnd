@@ -1,14 +1,11 @@
 <template>
   <div>
     <analyze-wrapper :analyzePromise="startAnalyze">
-      <el-form :inline="true" slot="params">
+      <el-form :inline="true" slot="params" style="display: inline-block">
         <el-form-item label="流量回归">
           <el-switch v-model="flowReturn"  />
         </el-form-item>
-        <el-form-item label="连续点个数">
-          <el-input-number v-model="continuousCount" :min="3" />
-        </el-form-item>
-        <el-form-item label="是否历史涨停">
+        <el-form-item label="历史涨停">
           <el-switch v-model="hasEverLimitUp" />
         </el-form-item>
       </el-form>
@@ -30,7 +27,6 @@ export default {
   data() {
     return {
       flowReturn: false, // 是否考虑流量回归
-      continuousCount: 3, // 连续数据点个数
       hasEverLimitUp: true,
     }
   },
@@ -166,27 +162,10 @@ export default {
     },
     rankItem(data) {
       data.forEach(item => {
-        item.rank = 0
-
         const recentItemLength = item.recentItemList.length
-        let positiveTrendCount = 0
-        let continuousCount = this.continuousCount
-
         // 计算热度
         item.diffIncrement = item.recentItemList[recentItemLength - 1].diff - item.recentItemList[recentItemLength - 6].diff
         item.diffIncrement = Math.ceil(item.diffIncrement)
-
-        if (recentItemLength >= continuousCount) {
-          for(let i = recentItemLength - 1; i > recentItemLength - continuousCount; i--) {
-            let result = item.recentItemList[i].diff - item.recentItemList[i - 1].diff > 0 ? 1 : 0
-            if (result === 1) {
-              positiveTrendCount++
-            }
-          }
-          if (positiveTrendCount >= (continuousCount - 2)) {
-            item.rank = 3
-          }
-        }
       })
 
       let firstRoundDataList = data

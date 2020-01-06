@@ -18,12 +18,21 @@
         <stock-price-chart ref="chart" />
       </div>
       <lr-stick-bar title="分析助手" top="84px" width="500" :keepAlive="true">
-        <el-table sortable :data="tableData" @row-dblclick="setCurrent" max-height="120px">
-          <el-table-column type="index"></el-table-column>
-          <el-table-column prop="name" label="name"></el-table-column>
-          <el-table-column prop="count" label="count" ></el-table-column>
-          <el-table-column prop="diff" label="diff"></el-table-column>
-        </el-table>
+        <lr-list :data="tableData" @change="setCurrent" max-height="120px">
+          <template slot="table-column">
+            <el-table-column type="index"></el-table-column>
+            <el-table-column prop="name" label="name"></el-table-column>
+            <el-table-column prop="count" label="count" ></el-table-column>
+            <el-table-column prop="diff" label="diff"></el-table-column>
+          </template>
+          <template slot="card" slot-scope="scope">
+            <el-form :inline="true">
+              <el-form-item label="name">{{ scope.row.name }}</el-form-item>
+              <el-form-item label="count">{{ scope.row.count }}</el-form-item>
+              <el-form-item label="diff">{{ scope.row.diff }}</el-form-item>
+            </el-form>
+          </template>
+        </lr-list>
       </lr-stick-bar>
       <div>
         <bulk-stock-comparison ref="compare"></bulk-stock-comparison>

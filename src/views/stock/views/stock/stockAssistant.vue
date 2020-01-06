@@ -1,16 +1,12 @@
 <template>
-  <lr-stick-bar title="选股助手" width="600" top="128px">
-    <div>
-      <el-tabs v-model="currentTab" type="card">
-        <el-tab-pane label="三阶段模型" name="threePhase">
-          <three-phase />
-        </el-tab-pane>
-        <el-tab-pane label="自助分析" name="customAnalyze">
-          <custom-analyze />
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-  </lr-stick-bar>
+  <div>
+    <lr-stick-bar title="三阶段模型" width="600" top="80px">
+      <three-phase />
+    </lr-stick-bar>
+    <lr-stick-bar title="自助分析" width="600" top="140px">
+      <custom-analyze />
+    </lr-stick-bar>
+  </div>
 </template>
 
 <script>
@@ -21,11 +17,6 @@ export default {
   components: {
     threePhase,
     customAnalyze
-  },
-  data() {
-    return {
-      currentTab: 'threePhase'
-    }
   }
 }
 </script>

@@ -16,7 +16,9 @@ import storage from './utils/localStorage'
 Vue.config.productionTip = false
 Vue.config.keyCodes = {
   up: [38, 87],
-  down: [40, 83]
+  down: [40, 83],
+  left: [37, 65],
+  right: [39, 68]
 }
 
 Vue.use(ElementUI, {

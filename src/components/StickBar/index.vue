@@ -30,10 +30,6 @@ const props = {
   keepAlive: { // 是否保持 slot 中组件的状态（例如表格）
     type: Boolean,
     default: false
-  },
-  visible: {
-    type: Boolean,
-    default: false
   }
 }
 export default {
@@ -42,7 +38,6 @@ export default {
   data() {
     return {
       uniqueClass: idGenerator.next('lr-popover-unique'),
-      visibleState: false, // 同步外部的 visible 状态
       containerVisible: false, // 容器是否可见
       contentVisible: false // 内容是否课件
     }
@@ -67,14 +62,6 @@ export default {
     }
   },
   watch: {
-    visible(val) {
-      if (this.manual) {
-        this.contentVisible = val
-        this.containerVisible = true
-      } else {
-        this.contentVisible = val
-      }
-    },
     contentVisible(val) {
       if (this.manual) {
         this.$nextTick(_ => {
@@ -84,14 +71,8 @@ export default {
             document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
           }
         })
-        this.$emit('update:visible', val)
       }
     },
-    containerVisible(val) {
-      if (!this.manual) {
-        this.$emit('update:visible', val)
-      }
-    }
   },
   beforeDestroy() {
     this.$bus.$off('close_all_stick_bar')
@@ -108,6 +89,12 @@ export default {
         this.contentVisible = !this.contentVisible
       }
     },
+    show() {
+      if (this.manual) {
+        this.contentVisible = true
+      }
+      this.containerVisible = true
+    }
   }
 }
 </script>
