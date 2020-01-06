@@ -55,6 +55,7 @@ export default {
       this._chart = null
     },
     getChart() {
+      console.log(this.reUse)
       if (!this.reUse) {
         this.destroyChart()
       }

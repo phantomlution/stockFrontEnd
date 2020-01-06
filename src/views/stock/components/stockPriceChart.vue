@@ -18,11 +18,8 @@ const props = {
 export default {
   props,
   methods: {
-    getChart() {
-      return this.$refs.chart.getChart()
-    },
-    updateChart(itemList, close) {
-      const chart =this.getChart()
+    updateChart(itemList, preClose) {
+      const chart = this.$refs.chart.getChart()
 
       const dataList = itemList.map(item => {
         return {
@@ -31,19 +28,21 @@ export default {
         }
       })
 
-      const tickList = this.getTickList(close, dataList)
+      const tickList = this.getTickList(preClose, dataList)
 
-      chart.source(dataList, this.getChartConfig(close, tickList))
-      this.addChartAssistantElement(chart, close, tickList)
+      chart.source(dataList, this.getChartConfig(preClose, tickList))
+      this.addChartAssistantElement(chart, preClose, tickList, dataList)
       chart.line().position('time*value')
 
       chart.render()
     },
-    addChartAssistantElement(chart, close, tickList) { // 添加辅助元素
+    addChartAssistantElement(chart, preClose, tickList, dataList) { // 添加辅助元素
+      const chartRef = this.$refs.chart
+
       chart.axis('value', {
         label: {
           htmlTemplate: value => {
-            const color = getStockColor(value - close)
+            const color = getStockColor(value - preClose)
             return `<span style="font-size: 13px;margin-left: -48px;color:${ color }">${ Number(value).toFixed(2) }</span>`
           }
         },
@@ -52,13 +51,24 @@ export default {
         chart.guide().text({
           top: true,
           position: ['max', tick],
-          content: `${ Number(increment(tick, close)).toFixed(2) }%`,
+          content: `${ Number(increment(tick, preClose)).toFixed(2) }%`,
           style: {
-            fill: getStockColor(tick - close)
+            fill: getStockColor(tick - preClose)
           },
           offsetX: 16
         })
       })
+
+      // 绘制最后收盘价的辅助线
+      const validPointList = dataList.filter(item => item.value)
+
+      if (validPointList.length > 0) {
+        const closeValue = validPointList[validPointList.length - 1].value
+        chartRef.addAssistantLine(chart,{
+          start: ['min', closeValue],
+          end: ['max', closeValue]
+        })
+      }
 
       // 横坐标辅助线
       addStockDailyCoordinate(chart)
