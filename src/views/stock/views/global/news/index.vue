@@ -71,7 +71,9 @@ export default {
     },
     markRead(item) {
       this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {
-        item.has_read = true
+        const itemIndex = this.unreadNewsList.findIndex(news => news._id === item._id)
+        this.unreadNewsList.splice(itemIndex, 1)
+
         this.updateUnReadNewsCount()
       }).catch(_ => {
         console.error(_)

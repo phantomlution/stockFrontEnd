@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <lr-chart ref="chart" />
+    <lr-chart ref="chart" @dblclick="showDetail"/>
   </div>
 </template>
 
@@ -60,23 +60,14 @@ export default {
             chartDataList.push(model)
           })
 
-          this.renderChart(chartDataList)
+          resolve(chartDataList)
         }).catch(_ => {
           reject(_)
         })
       })
     },
     loadData(conceptModel, stockList, date) {
-      const targetDate = this.$moment(this.date).format('YYYY-MM-DD')
-      const today = this.$moment().format('YYYY-MM-DD')
-
-      let dataPromise = null
-      if (targetDate === today) { // 加载实时数据
-        dataPromise = this.loadTodayData(conceptModel)
-      } else {
-        dataPromise = this.loadHistoryData(stockList, date)
-      }
-      dataPromise.then(chartDataList => {
+      this.loadHistoryData(stockList, date).then(chartDataList => {
         // 加入一个空点，防止左侧坐标轴被覆盖
         chartDataList.unshift({})
 
@@ -84,6 +75,7 @@ export default {
           item.count = itemIndex
         })
 
+        this.renderChart(chartDataList)
       }).catch(_ => {
         this.$message.error(_)
       })
@@ -91,8 +83,6 @@ export default {
 
     },
     renderChart(dataList) {
-      console.log(dataList)
-      console.log('123')
       const chart = this.$refs.chart.getChart()
       chart.source(dataList, {
         count: {
@@ -133,9 +123,15 @@ export default {
           }
         })
         .shape('candle')
-        .tooltip('name*time*start*end*max*min*volume')
+        .tooltip('name*time*start*end*max*min*volume*code')
 
       chart.render();
+    },
+    showDetail(meta) {
+      const code = meta.data.code
+      this.$bus.$emit('showStockDetail', {
+        code
+      })
     }
   }
 }

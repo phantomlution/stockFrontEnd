@@ -141,7 +141,7 @@ export default {
             return this.$message.error('找不到对应的板块信息')
           }
 
-          this.$refs.compare.analyze(themeItem.list, date)
+          this.$refs.compare.loadData(secid, themeItem.list, date)
         })
       }
     },
