@@ -1,10 +1,12 @@
 <template>
   <lr-box style="position: relative;">
     <div slot="title">
-      <el-button @click.stop="test">test</el-button>
-      <el-date-picker v-model="testDate" ></el-date-picker>
-      <el-button @click.stop="sort('diff', true)">diff, ascending</el-button>
-      <el-button @click.stop="sort('diff')">diff, descending</el-button>
+      <span>个股</span>
+      <el-switch v-model="syncConceptStock" ></el-switch>
+      <el-date-picker v-model="testDate" type="datetime"></el-date-picker>
+      <el-button @click.stop="test" type="primary" style="margin-right: 64px;">test</el-button>
+      <!--<el-button @click.stop="sort('diff', true)">diff, ascending</el-button>-->
+      <!--<el-button @click.stop="sort('diff')">diff, descending</el-button>-->
       <span v-if="name" style="font-size: 14px;margin-right: 8px;">
         {{ name }}
       </span>
@@ -16,7 +18,7 @@
         <stock-price-chart ref="chart" />
       </div>
       <lr-stick-bar title="分析助手" top="84px" width="500" :keepAlive="true">
-        <el-table sortable :data="tableData" @row-dblclick="setCurrent" max-height="320px">
+        <el-table sortable :data="tableData" @row-dblclick="setCurrent" max-height="120px">
           <el-table-column type="index"></el-table-column>
           <el-table-column prop="name" label="name"></el-table-column>
           <el-table-column prop="count" label="count" ></el-table-column>
@@ -46,7 +48,8 @@ export default {
     return {
       name: '',
       date: null,
-      testDate: this.$moment('2019-12-31').toDate(),
+      syncConceptStock: false,
+      testDate: this.$moment().toDate(),
       current: [],
       optionList: [],
       tableData: [],
@@ -72,31 +75,21 @@ export default {
       this.date = this.$moment(row.date).toDate()
       this.current = ['concept', row.secid]
     },
-    sort(field, reverse=false) {
-      const newList = lodash.sortBy(this.tableData, item => item[field])
-      if (reverse) {
-        newList.reverse()
-      }
-      this.tableData = newList
-    },
-    sortOriginalDiff() {
-      const newList = lodash.sortBy(this.tableData, item => item.originalDiff)
-      newList.reverse()
-      this.tableData = newList
-    },
     reload() {
       this.loadData()
     },
     test() {
       const conceptList = this.optionList[1].children
       const date = this.$moment(this.testDate).format('YYYY-MM-DD')
+      const time = this.$moment(this.testDate).format('HH:mm')
 
       const result = []
+
       Promise.all(conceptList.map(item => this.getFragmentDeal(date, item.value))).then(_ => {
         const themeList = this.themeList
         _.forEach(item => {
           if (item) {
-            const plan = this.dynamicPlan(item)
+            const plan = this.dynamicPlan(item, time)
             plan.date = date
             const themeItem = themeList.find(theme => theme.name === item.name)
             if (themeItem) {
@@ -115,7 +108,9 @@ export default {
           }
         })
 
-        this.tableData = result
+        const newList = lodash.sortBy(result, item => item['diff'])
+        newList.reverse()
+        this.tableData = newList
       })
     },
     getFragmentDeal(date, secid) {
@@ -136,12 +131,14 @@ export default {
           this.name = _.name
           this.$refs.chart.updateChart(_.data, _.pre_close)
 
-          const themeItem = this.themeList.find(item => item.name === _.name)
-          if (!themeItem) {
-            return this.$message.error('找不到对应的板块信息')
-          }
+          if (this.syncConceptStock) {
+            const themeItem = this.themeList.find(item => item.name === _.name)
+            if (!themeItem) {
+              return this.$message.error('找不到对应的板块信息')
+            }
 
-          this.$refs.compare.loadData(secid, themeItem.list, date)
+            this.$refs.compare.loadData(secid, themeItem.list, date)
+          }
         })
       }
     },
@@ -164,13 +161,17 @@ export default {
         })
       })
     },
-    dynamicPlan({ data, name, secid, pre_close }) {
-      const pointList = data
+    dynamicPlan({ data, name, secid, pre_close }, time) {
+      const pointList = data.filter(item => item.time >= time)
+      console.log(pointList)
+      const closeItem = pointList[pointList.length - 1]
+      const minItem = lodash.minBy(pointList, item => item.price)
+
 
       const model = {
         name,
         secid,
-        diff: increment(data[data.length - 1].price, pre_close)
+        diff: increment(closeItem.price, minItem.price)
       }
 
       return model

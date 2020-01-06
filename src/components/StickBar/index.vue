@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle">
     <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="uniqueClass">
-      <el-button slot="reference" type="primary" @click.stop="showContent">{{ title }}</el-button>
+      <el-button slot="reference" type="primary" @click.stop="toggleContent">{{ visible }}{{ title }}</el-button>
       <div>
         <slot />
       </div>
@@ -42,13 +42,17 @@ export default {
   data() {
     return {
       uniqueClass: idGenerator.next('lr-popover-unique'),
-      containerVisible: this.visible || false,
-      contentVisible: false
+      visibleState: false, // 同步外部的 visible 状态
+      containerVisible: false, // 容器是否可见
+      contentVisible: false // 内容是否课件
     }
   },
   computed: {
+    manual() {
+      return this.keepAlive
+    },
     trigger() {
-      if (this.keepAlive) {
+      if (this.manual) {
         return 'manual'
       }
       return 'click'
@@ -62,6 +66,33 @@ export default {
       }
     }
   },
+  watch: {
+    visible(val) {
+      if (this.manual) {
+        this.contentVisible = val
+        this.containerVisible = true
+      } else {
+        this.contentVisible = val
+      }
+    },
+    contentVisible(val) {
+      if (this.manual) {
+        this.$nextTick(_ => {
+          if (val) {
+            document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
+          } else {
+            document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
+          }
+        })
+        this.$emit('update:visible', val)
+      }
+    },
+    containerVisible(val) {
+      if (!this.manual) {
+        this.$emit('update:visible', val)
+      }
+    }
+  },
   beforeDestroy() {
     this.$bus.$off('close_all_stick_bar')
   },
@@ -70,43 +101,13 @@ export default {
       this.containerVisible = false
     })
   },
-  watch: {
-    visible(val) {
-      this.containerVisible = val
-    },
-    containerVisible(val) {
-      this.$emit('update:visible', val)
-      if (val) {
-        this.showContent()
-      } else {
-        this.hideContent()
-      }
-    },
-    contentVisible(val) {
-      if (this.keepAlive) {
-        this.$nextTick(_ => {
-          if (val) {
-            document.querySelector(`.${this.uniqueClass}`).style.display = 'block'
-          } else {
-            document.querySelector(`.${this.uniqueClass}`).style.display = 'none'
-          }
-        })
-      }
-    }
-  },
   methods: {
-    hideContent() {
-      if (this.keepAlive) {
+    toggleContent() {
+      if (this.manual) {
         this.containerVisible = true
-        this.contentVisible = false
+        this.contentVisible = !this.contentVisible
       }
     },
-    showContent() {
-      if (this.keepAlive) {
-        this.containerVisible = true
-        this.contentVisible = true
-      }
-    }
   }
 }
 </script>
