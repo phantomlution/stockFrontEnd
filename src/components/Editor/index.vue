@@ -118,6 +118,6 @@ export default {
 }
 
 .medium-editor-stalker-toolbar{
-  display: none !important;
+  /*display: none !important;*/
 }
 </style>

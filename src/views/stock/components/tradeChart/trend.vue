@@ -31,7 +31,7 @@ export default {
   props,
   data() {
     return {
-      dataCount: 70,
+      dataCount: 120,
       maxDataCount: 420,
       name: '',
       average: '',

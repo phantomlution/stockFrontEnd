@@ -24,9 +24,12 @@ export default {
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
-  padding: 15px 15px 15px 20px;
+  padding: 9px 12px;
   display: flex;
   align-items: center;
+  .el-message__content{
+    font-size: 13px;
+  }
 
 }
 </style>

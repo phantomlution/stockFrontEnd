@@ -22,61 +22,73 @@ export default {
     }
   },
   methods: {
-    analyze(stockList, date) {
-      this.date = this.$moment(date).toDate()
-      this.stockList = stockList
-      this.loadData()
+    loadTodayData() { // 加载今日数据
+
     },
-    loadData() {
-      if (this.stockList.length === 0 || !this.date) {
-        return this.$message.error('数据不完整')
-      }
+    loadHistoryData(stockList, date) { // 加载历史数据
+      const targetDate = this.$moment(date).format('YYYY-MM-DD')
+      return new Promise((resolve, reject) => {
+        Promise.all(stockList.map(item => this.$store.dispatch('loadStockData', item.code))).then(_ => {
+          const chartDataList = []
 
-      const targetDate = this.$moment(this.date).format('YYYY-MM-DD')
-      Promise.all(this.stockList.map(item => this.$store.dispatch('loadStockData', item.code))).then(_ => {
-        const chartDataList = []
+          _.forEach(item => {
+            const model = {
+              "name": item.name,
+              "code": item.code,
+            }
+            const currentItem = item.result.find(resultItem => resultItem.date === targetDate)
+            if (!currentItem) {
+              return this.$message.warning('找不到数据点')
+            }
 
-        // 加入一个空点，防止左侧坐标轴被覆盖
-        chartDataList.push({
-          count: 0,
+            const close = currentItem.yesterdayClose
+            model.start = increment(currentItem.open, close)
+            model.max = increment(currentItem.max, close)
+            model.min = increment(currentItem.min, close)
+            model.end = increment(currentItem.close, close)
+            model.volume = currentItem.amountInMillion
+
+            model.time = targetDate
+            model.range = [ model.start, model.end, model.max, model.min ];
+
+
+            if (model.end >= model.start) {
+              model.trend = '上涨'
+            } else {
+              model.trend = '下跌'
+            }
+            chartDataList.push(model)
+          })
+
+          this.renderChart(chartDataList)
+        }).catch(_ => {
+          reject(_)
         })
-
-        _.forEach(item => {
-          const model = {
-            "name": item.name,
-            "code": item.code,
-          }
-          const currentItem = item.result.find(resultItem => resultItem.date === targetDate)
-          if (!currentItem) {
-            return this.$message.warning('找不到数据点')
-          }
-
-          const close = currentItem.yesterdayClose
-          model.start = increment(currentItem.open, close)
-          model.max = increment(currentItem.max, close)
-          model.min = increment(currentItem.min, close)
-          model.end = increment(currentItem.close, close)
-          model.volume = currentItem.amountInMillion
-//          model.start = currentItem.open
-//          model.max = currentItem.max
-//          model.min = currentItem.min
-//          model.end = currentItem.close
-
-          model.time = targetDate
-          model.range = [ model.start, model.end, model.max, model.min ];
-
-
-          if (model.end >= model.start) {
-            model.trend = '上涨'
-          } else {
-            model.trend = '下跌'
-          }
-          model.count = chartDataList.length
-          chartDataList.push(model)
-        })
-
-        this.renderChart(chartDataList)
       })
+    },
+    loadData(conceptModel, stockList, date) {
+      const targetDate = this.$moment(this.date).format('YYYY-MM-DD')
+      const today = this.$moment().format('YYYY-MM-DD')
+
+      let dataPromise = null
+      if (targetDate === today) { // 加载实时数据
+        dataPromise = this.loadTodayData(conceptModel)
+      } else {
+        dataPromise = this.loadHistoryData(stockList, date)
+      }
+      dataPromise.then(chartDataList => {
+        // 加入一个空点，防止左侧坐标轴被覆盖
+        chartDataList.unshift({})
+
+        chartDataList.forEach((item, itemIndex) => {
+          item.count = itemIndex
+        })
+
+      }).catch(_ => {
+        this.$message.error(_)
+      })
+
+
     },
     renderChart(dataList) {
       console.log(dataList)
@@ -123,50 +135,7 @@ export default {
         .shape('candle')
         .tooltip('name*time*start*end*max*min*volume')
 
-//      const barView = chart.view({
-//        start: {
-//          x: 0,
-//          y: 0.65
-//        }
-//      });
-//      barView.source(dv, {
-//        volumn: {
-//          tickCount: 2
-//        }
-//      });
-//      barView.axis('time', {
-//        tickLine: null,
-//        label: null
-//      });
-//      barView.axis('volumn', {
-//        label: {
-//          formatter: val => {
-//            return parseInt(val / 1000, 10) + 'k';
-//          }
-//        }
-//      });
-//      barView.interval()
-//        .position('time*volumn')
-//        .color('trend', val => {
-//          if (val === '上涨') {
-//            return '#f04864';
-//          }
-//
-//          if (val === '下跌') {
-//            return '#2fc25b';
-//          }
-//        })
-//        .tooltip('time*volumn', (time, volumn) => {
-//          return {
-//            name: time,
-//            value: '<br/><span style="padding-left: 16px">成交量：' + volumn + '</span><br/>'
-//          };
-//        });
-
       chart.render();
-
-
-
     }
   }
 }

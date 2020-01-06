@@ -2,10 +2,21 @@
   <el-drawer direction="ltr" size="50%" :visible.sync="visible">
     <div slot="title">
       <span>新闻面板</span>
-      <el-button type="text" @click.stop="loadNews" icon="el-icon-refresh"></el-button>
+      <el-button type="text" @click.stop="loadUnReadNews" icon="el-icon-refresh"></el-button>
     </div>
-    <div style="height: calc(100vh - 80px);overflow: auto;padding: 16px;">
-      <item v-if="!item.has_read" :item="item" :key="itemIndex" v-for="(item, itemIndex) of newsList" @markRead="markRead(item)" @subscribeChanged="subscribeChanged(item)" />
+    <div style="text-align: center;margin-bottom: 8px">
+      <el-radio-group v-model="currentTab">
+        <el-radio-button label="unread">未读</el-radio-button>
+        <el-radio-button label="read">已读</el-radio-button>
+      </el-radio-group>
+    </div>
+    <div style="height: calc(100vh - 120px);overflow: auto;padding: 16px;" v-loading="loading">
+      <div v-if="currentTab === 'unread'">
+        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of unreadNewsList" @markRead="markRead(item)" @subscribeChanged="subscribeChanged(item)" />
+      </div>
+      <div v-else>
+        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of readNewsList" @markRead="markRead(item)" @subscribeChanged="subscribeChanged(item)" />
+      </div>
     </div>
   </el-drawer>
 </template>
@@ -22,7 +33,10 @@ export default {
   data() {
     return {
       visible: false,
-      newsList: []
+      loading: false,
+      currentTab: 'unread',
+      readNewsList: [],
+      unreadNewsList: []
     }
   },
   watch: {
@@ -31,6 +45,11 @@ export default {
         this.stopTracker()
       } else {
         this.startTracker()
+      }
+    },
+    currentTab(val) {
+      if (val === 'read') {
+        this.loadReadNews()
       }
     }
   },
@@ -48,12 +67,12 @@ export default {
       this.stopSchedule()
     },
     startTracker() {
-      this.startSchedule(this.loadNews, 5 * 60)
+      this.startSchedule(this.loadUnReadNews, 5 * 60)
     },
     markRead(item) {
       this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {
         item.has_read = true
-        this.updateNewsCount()
+        this.updateUnReadNewsCount()
       }).catch(_ => {
         console.error(_)
       })
@@ -65,23 +84,41 @@ export default {
         console.error(_)
       })
     },
-    loadNews() {
-      this.$http.get(`/api/news/page`).then(page => {
-        const newsList = page['list']
-        newsList.forEach(item => {
-          const title = item.title.toLowerCase()
-          if (title.indexOf('chinese') !== -1 || title.indexOf('china') !== -1) {
-            item.important = true
-          }
-        })
-        this.newsList = newsList
-        this.updateNewsCount()
-      }).catch(_ => {
-        this.$message.error('加载新闻失败')
+    normalization(newsList) {
+      newsList.forEach(item => {
+        const title = item.title.toLowerCase()
+        if (title.indexOf('chinese') !== -1 || title.indexOf('china') !== -1) {
+          item.important = true
+        }
       })
     },
-    updateNewsCount() {
-      const unReadCount = this.newsList.filter(item => !item.has_read && !item.subscribe).length
+    loadReadNews() {
+      this.loading = true
+      setTimeout(_ => {
+        this.$http.get(`/api/news/page/read`).then(page => {
+          const newsList = page['list']
+          this.normalization(newsList)
+          this.readNewsList = newsList
+          this.loading = false
+        }).catch(_ => {
+          this.loading = false
+        })
+      }, 300)
+    },
+    loadUnReadNews() {
+      this.loading = true
+      this.$http.get(`/api/news/page/unread`).then(page => {
+        const newsList = page['list']
+        this.normalization(newsList)
+        this.unreadNewsList = newsList
+        this.updateUnReadNewsCount()
+        this.loading = false
+      }).catch(_ => {
+        this.loading = false
+      })
+    },
+    updateUnReadNewsCount() {
+      const unReadCount = this.unreadNewsList.length
       this.$bus.$emit('update_news_count', unReadCount)
     }
   }

@@ -2,7 +2,7 @@
   <lr-box style="margin-top: 16px" v-if="stockCode">
     <div slot="title">
       <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
-      <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
+      <lr-date-picker v-model="currentDate" :pattern="stock" @change="checkAndLoad" pattern="stock" />
       <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
       <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
         {{ currentDate | date }}

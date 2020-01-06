@@ -58,8 +58,8 @@ export default {
   computed: {
     editorStyle() {
       return {
-        'height': '120px',
-        'overflow': 'auto',
+        'height': '200px',
+        'overflow': 'auto'
       }
     }
   },
