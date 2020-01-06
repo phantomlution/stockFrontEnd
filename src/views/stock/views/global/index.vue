@@ -1,5 +1,7 @@
 <template>
   <div>
+    <!-- 做一些临时试验 -->
+    <playground />
     <custom-event />
     <stock-detail-panel />
     <news-panel />
@@ -20,6 +22,7 @@ import themeMarket from './themeMarket/index'
 import messageLive from './live/index.vue'
 import customEvent from './customEvent/index.vue'
 import articleReader from './article/index.vue'
+import playground from './playground/index.vue'
 
 export default {
   components: {
@@ -31,6 +34,7 @@ export default {
     messageLive,
     customEvent,
     articleReader,
+    playground
   },
   mounted() {
     /**

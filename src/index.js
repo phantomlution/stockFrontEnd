@@ -14,6 +14,10 @@ import utils from './utils'
 import storage from './utils/localStorage'
 
 Vue.config.productionTip = false
+Vue.config.keyCodes = {
+  up: [38, 87],
+  down: [40, 83]
+}
 
 Vue.use(ElementUI, {
   size: 'mini'
@@ -25,7 +29,9 @@ Vue.use(api)
 Vue.use(utils)
 Vue.use(socket)
 Vue.use(eventBus)
-Vue.use(storage)
+Vue.use(storage
+
+)
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle">
     <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="uniqueClass">
-      <el-button slot="reference" type="primary" @click.stop="toggleContent">{{ visible }}{{ title }}</el-button>
+      <el-button slot="reference" type="primary" @click.stop="toggleContent">{{ title }}</el-button>
       <div>
         <slot />
       </div>
