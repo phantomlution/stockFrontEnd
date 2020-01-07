@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     handleKeyDown() {
-      console.log('test')
       this.$refs.reader.toNext()
     }
   }

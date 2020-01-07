@@ -36,6 +36,7 @@
     data() {
       return {
         visibleState: false,
+        loading: false,
         current: null,
         history: [],
         itemList: []
@@ -62,6 +63,7 @@
           data: item
         }
         this.addItem(model)
+        this.showView()
       })
 
       this.$bus.$on('fast_reader_add_news', itemList => {
@@ -73,15 +75,16 @@
           }
           this.addItem(model)
         })
+        this.showView()
       })
     },
     methods: {
       addItem(model) {
         model.created = this.$moment().format('HH:mm')
-        this.itemList.push(model)
-        if (!this.current) {
-          this.toNext()
+        if(this.itemList.find(item => item.id === model.id)) {
+          return
         }
+        this.itemList.push(model)
       },
       markReadCurrentItem() {
         const current = this.current
@@ -91,11 +94,22 @@
           return this.$refs.item.markRead()
         }
       },
+      showView() {
+        if (!this.current) {
+          this.toNext()
+        }
+      },
       toNext() {
+        if (this.loading) {
+          return this.$message.warning('有任务正在进行中')
+        }
+        this.loading = true
         this.markReadCurrentItem().then(_ => {
           this.current = this.itemList.shift()
+          this.loading = false
         }).catch(_ => {
           console.error(_)
+          this.loading = false
         })
       },
       reloadNews() { // 刷新新闻
