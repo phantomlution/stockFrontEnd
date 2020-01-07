@@ -24,7 +24,8 @@ export default {
       const dataList = itemList.map(item => {
         return {
           time: `${ STOCK_COORDINATE_DATE } ${ item.time }`,
-          value: !item.price ? item.price : Number(item.price)
+          value: !item.price ? null : Number(item.price),
+          increment: !item.price ? null : increment(Number(item.price), preClose)
         }
       })
 
@@ -32,7 +33,7 @@ export default {
 
       chart.source(dataList, this.getChartConfig(preClose, tickList))
       this.addChartAssistantElement(chart, preClose, tickList, dataList)
-      chart.line().position('time*value')
+      chart.line().position('time*value').tooltip('value*increment')
 
       chart.render()
     },

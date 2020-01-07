@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -71,13 +70,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="304">
               <caret line="80" column="25" lean-forward="false" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
               <folding>
                 <element signature="e#1415#1466#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stockPriceChart.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="380">
+              <caret line="35" column="66" lean-forward="false" selection-start-line="35" selection-start-column="66" selection-end-line="35" selection-end-column="66" />
+              <folding>
+                <marker date="1578403904000" expanded="true" signature="1339:1380" ph="..." />
               </folding>
             </state>
           </provider>
@@ -122,16 +133,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="444">
               <caret line="60" column="16" lean-forward="false" selection-start-line="60" selection-start-column="16" selection-end-line="60" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="schedule.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mixins/schedule.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="17" column="14" lean-forward="false" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -245,7 +246,6 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/chessManual/item.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/bulkStockComparison.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/realTimeDeal.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
         <option value="$PROJECT_DIR$/src/components/Chart/index.vue" />
         <option value="$PROJECT_DIR$/src/components/DatePicker/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/index.vue" />
@@ -276,6 +276,7 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/global/playground/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
       </list>
     </option>
   </component>
@@ -532,6 +533,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="stock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -873,14 +878,7 @@
       <workItem from="1578126637182" duration="12236000" />
       <workItem from="1578200892326" duration="11551000" />
       <workItem from="1578272492816" duration="21745000" />
-      <workItem from="1578358937839" duration="16035000" />
-    </task>
-    <task id="LOCAL-00206" summary="重构自选股票池">
-      <created>1577346812432</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1577346812432</updated>
+      <workItem from="1578358937839" duration="16410000" />
     </task>
     <task id="LOCAL-00207" summary="关联股票池与各种相关的数据源">
       <created>1577347887573</created>
@@ -1218,11 +1216,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578400870053</updated>
     </task>
-    <option name="localTasksCounter" value="255" />
+    <task id="LOCAL-00255" summary="页面逻辑优化">
+      <created>1578403539841</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1578403539841</updated>
+    </task>
+    <option name="localTasksCounter" value="256" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="907205000" />
+    <option name="totallyTimeSpent" value="907580000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1268,7 +1273,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32763532" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4002849" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3148148" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3148148" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3462783" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46581197" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1287,7 +1292,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="修复日期问题" />
     <MESSAGE value="集成实时走势" />
     <MESSAGE value="集成股票实时数据" />
     <MESSAGE value="修复medium editor 右下角的UI问题" />
@@ -1312,7 +1316,8 @@
     <MESSAGE value="集成所有新消息阅读快速视图" />
     <MESSAGE value="集成全局快速消息阅读器" />
     <MESSAGE value="页面优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="页面优化" />
+    <MESSAGE value="页面逻辑优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="页面逻辑优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1441,13 +1446,6 @@
         <state relative-caret-position="38">
           <caret line="2" column="56" lean-forward="false" selection-start-line="2" selection-start-column="56" selection-end-line="2" selection-end-column="56" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="52" column="34" lean-forward="false" selection-start-line="52" selection-start-column="34" selection-end-line="52" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -1747,6 +1745,16 @@
           <caret line="80" column="25" lean-forward="false" selection-start-line="80" selection-start-column="25" selection-end-line="80" selection-end-column="25" />
           <folding>
             <element signature="e#1415#1466#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="35" column="66" lean-forward="false" selection-start-line="35" selection-start-column="66" selection-end-line="35" selection-end-column="66" />
+          <folding>
+            <marker date="1578403904000" expanded="true" signature="1339:1380" ph="..." />
           </folding>
         </state>
       </provider>
