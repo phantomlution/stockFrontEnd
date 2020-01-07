@@ -3,10 +3,10 @@
     <el-tooltip effect="dark" placement="right">
       <div slot="content" class="lr-detail-link--contextmenu">
         <div>
-          <el-link @click.stop="showStockDetail('基础信息')">基础信息</el-link>
+          <el-link @click.stop="showStockDetail('趋势分析')">趋势分析</el-link>
         </div>
         <div>
-          <el-link @click.stop="showStockDetail('趋势分析')">趋势分析</el-link>
+          <el-link @click.stop="showStockDetail('基础信息')">基础信息</el-link>
         </div>
         <div>
           <el-link @click.stop="showStockDetail('实时走势')">实时走势</el-link>

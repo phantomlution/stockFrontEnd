@@ -8,7 +8,7 @@
           </div>
         </div>
         <div>
-          <div>
+          <div v-if="showMarkRead">
             <el-button type="text" @click.stop="markRead" v-if="!item.has_read">已读</el-button>
           </div>
           <div style="margin-top: 8px;" @click.stop="openCustomEventDialog">
@@ -50,6 +50,10 @@ const props = {
   item: {
     type: Object,
     required: true
+  },
+  showMarkRead: {
+    type: Boolean,
+    default: true
   }
 }
 
@@ -86,11 +90,21 @@ export default {
         this.subscribeValue = 0
       }
     },
-    subscribeChanged() {
-      this.$emit('subscribeChanged')
-    },
     markRead() {
-      this.$emit('markRead')
+      const item = this.item
+      return this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {
+        this.$emit('itemRead', item)
+      }).catch(_ => {
+        console.error(_)
+      })
+    },
+    subscribeChanged() {
+      const item = this.item
+      this.$http.put(`/api/news/mark/subscribe?id=${ item._id }&subscribe=${ Number(!item.subscribe) }`).then(_ => {
+        item.subscribe = !item.subscribe
+      }).catch(_ => {
+        console.error(_)
+      })
     },
     openArticle() {
       const url = this.item.url || ''

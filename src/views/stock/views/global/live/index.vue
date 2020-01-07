@@ -13,35 +13,7 @@
         </div>
         <el-timeline style="padding-left: 0">
           <el-timeline-item :timestamp="item.dateStr" placement="top" v-for="item of itemList" :key="item.id">
-            <div :class="{ 'lr-live-item--important': item.isImportant }">
-              <template v-if="item.macro">
-                <el-card>
-                  <h3>
-                    <el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>
-                    <span v-html="item.title"></span>
-                  </h3>
-                  <p>
-                    <span>前值: {{ item.former }}</span>
-                    <el-divider direction="vertical"></el-divider>
-                    <span>预测值: {{ item.predict }}</span>
-                    <el-divider direction="vertical"></el-divider>
-                    <span>实际值: {{ item.current }}</span>
-                  </p>
-                </el-card>
-              </template>
-              <template v-else>
-                <div style="display: flex">
-                  <div style="flex: 1">
-                    <el-link :underline="false" style="margin-right: 8px" @click.stop="openCustomEventDialog(item)"><i class="el-icon-paperclip" /></el-link>
-                    <span v-html="item.title"></span>
-                  </div>
-                  <div v-if="item.imageList" style="margin-left: 32px;">
-                    <el-image style="max-width: 96px;max-height: 72px" :data-src="url" :src="url" :preview-src-list="[url]" v-for="url of item.imageList" :key="url"></el-image>
-                  </div>
-                </div>
-
-              </template>
-            </div>
+            <live-item :item="item" />
           </el-timeline-item>
         </el-timeline>
       </div>
@@ -54,6 +26,7 @@
 
 <script>
 import { idGenerator } from '@/utils'
+import liveItem from './item.vue'
 
 const sensitiveWord = [
   '在岸人民币', '现货钯金', 'Nymex钯金', '美元指数', 'Nymex美原油', '澳元兑美元'
@@ -61,6 +34,9 @@ const sensitiveWord = [
 const contentFilterRegex = new RegExp(`^(${ sensitiveWord.map(word => '(' + word +')').join('|') })`)
 
 export default {
+  components: {
+    liveItem
+  },
   data() {
     return {
       visible: false,
@@ -124,14 +100,6 @@ export default {
     loadData(date) {
       return this.$http.get(`/api/live/fx?date=${date}`)
     },
-    openCustomEventDialog(item) {
-      // TODO 宏观数据html生成
-      this.$bus.$emit('openCustomEventDialog', {
-        content: item.title,
-        time: item.timestamp,
-        url: item.url
-      })
-    },
     beautify(model) { // 重新排版
       const paragraphList = model['title'].replace(/；/g, ';').split(';').filter(item => item)
       model.title = paragraphList.map((item, itemIndex) => {
@@ -142,7 +110,7 @@ export default {
         }
       }).join('')
     },
-    addNewestToList(model) { // 将最新的数据插入列表
+    addNewestToList(model, isNew=false) { // 将最新的数据插入列表
       if (!model.isImportant) {
         if (contentFilterRegex.test(model.title)) {
           return
@@ -175,10 +143,12 @@ export default {
 
       // 展示
       this.itemList.unshift(model)
-    },
-    updateMessageCount() {
-      if (!this.visible) {
-        this.newMessageCount += 1
+      if (isNew) {
+        // 加入快速查看视图
+        this.$bus.$emit('fast_reader_add_live', {
+          type: 'live',
+          data: model
+        })
       }
     },
     resolveMessage(message) {
@@ -195,6 +165,7 @@ export default {
         "isImportant": message['importantLevel'] === 3,
         "timestamp": message['publishtime'] * 1000,
         "newsId": message['newsId'],
+        "id": message['newsId'],
         "isTop": message['isTop'] || false
       }
       if (message['newsimage']) {
@@ -211,8 +182,7 @@ export default {
         return
       }
 
-      this.updateMessageCount()
-      this.addNewestToList(model)
+      this.addNewestToList(model, true)
     },
     initEventSource() { // 连接数据源
       const url = 'https://js.fx678img.com:8800'
@@ -250,13 +220,6 @@ export default {
     position: absolute;
     top: 1px;
     left: 68px;
-  }
-}
-
-.lr-live-item--important{
-  color: red;
-  .el-card{
-    color: inherit;
   }
 }
 

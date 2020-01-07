@@ -203,3 +203,11 @@ export default {
 }
 
 </script>
+
+<style lang="scss">
+.lr-stock-detail-theme{
+  .el-tag {
+    margin-right: 8px;
+  }
+}
+</style>

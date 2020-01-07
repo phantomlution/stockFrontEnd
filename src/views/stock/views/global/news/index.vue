@@ -12,10 +12,10 @@
     </div>
     <div style="height: calc(100vh - 120px);overflow: auto;padding: 16px;" v-loading="loading">
       <div v-if="currentTab === 'unread'">
-        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of unreadNewsList" @markRead="markRead(item)" @subscribeChanged="subscribeChanged(item)" />
+        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of unreadNewsList" @itemRead="itemRead(item)" />
       </div>
       <div v-else>
-        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of readNewsList" @markRead="markRead(item)" @subscribeChanged="subscribeChanged(item)" />
+        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of readNewsList" @itemRead="itemRead(item)" />
       </div>
     </div>
   </el-drawer>
@@ -67,24 +67,12 @@ export default {
       this.stopSchedule()
     },
     startTracker() {
-      this.startSchedule(this.loadUnReadNews, 5 * 60)
+      this.startSchedule(this.loadUnReadNews, 60)
     },
-    markRead(item) {
-      this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {
-        const itemIndex = this.unreadNewsList.findIndex(news => news._id === item._id)
-        this.unreadNewsList.splice(itemIndex, 1)
-
-        this.updateUnReadNewsCount()
-      }).catch(_ => {
-        console.error(_)
-      })
-    },
-    subscribeChanged(item) {
-      this.$http.put(`/api/news/mark/subscribe?id=${ item._id }&subscribe=${ Number(!item.subscribe) }`).then(_ => {
-        item.subscribe = !item.subscribe
-      }).catch(_ => {
-        console.error(_)
-      })
+    itemRead(item) {
+      const itemIndex = this.unreadNewsList.findIndex(news => news._id === item._id)
+      this.unreadNewsList.splice(itemIndex, 1)
+      this.updateUnReadNewsCount()
     },
     normalization(newsList) {
       newsList.forEach(item => {
@@ -115,6 +103,8 @@ export default {
         this.unreadNewsList = newsList
         this.updateUnReadNewsCount()
         this.loading = false
+        // 更新快速阅读视图
+        this.$bus.$emit('fast_reader_add_news', newsList)
       }).catch(_ => {
         this.loading = false
       })

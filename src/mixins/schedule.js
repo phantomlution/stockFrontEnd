@@ -12,7 +12,7 @@ export const STOP_CALLBACK_FOR_STOCK = function() {
   if (day === 0 || day === 6) {
     return true
   }
-  if (date.getHours() > 15) {
+  if (date.getHours() >= 15) {
     return true
   }
   return false
