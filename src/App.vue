@@ -1,8 +1,9 @@
 <template>
-  <div id="app" style="padding: 8px">
+  <div id="app" style="padding: 8px" tabindex="0" @keydown.down.prevent="handleKeyDown">
     <div>
       <!--全局使用的组件-->
       <div>
+        <fast-reader ref="reader"/>
         <global-item />
       </div>
       <!-- 页面内容 -->
@@ -22,7 +23,7 @@
           <chess-manual />
         </div>
         <div v-if="currentTab === 'bigEvents'">
-          <big-events />i
+          <big-events />
         </div>
         <div v-show="currentTab === 'stockDetail'">
           <!-- 初始化数据 -->
@@ -51,6 +52,7 @@ import analyzePanel from '@/views/stock/views/analyze/index'
 import globalItem from '@/views/stock/views/global/index'
 import lrHint from '@/views/stock/views/global/hint/index'
 import chessManual from '@/views/stock/views/chessManual/index'
+import fastReader from '@/views/stock/views/global/fastReader/index'
 
 export default {
   components: {
@@ -61,7 +63,8 @@ export default {
     analyzePanel,
     globalItem,
     lrHint,
-    chessManual
+    chessManual,
+    fastReader
   },
   data() {
     return {
@@ -71,6 +74,12 @@ export default {
   watch: {
     currentTab() {
       this.$bus.$emit('close_all_stick_bar')
+    }
+  },
+  methods: {
+    handleKeyDown() {
+      console.log('test')
+      this.$refs.reader.toNext()
     }
   }
 }

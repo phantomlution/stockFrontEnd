@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'lr-live-item--important': item.isImportant }">
+  <div class="lr-live-item" :class="{ 'lr-live-item--important': item.isImportant }">
     <template v-if="item.macro">
       <el-card>
         <h3>
@@ -57,6 +57,9 @@ export default {
 </script>
 
 <style lang="scss">
+.lr-live-item h3{
+  margin-top: 0;
+}
 .lr-live-item--important{
   color: red;
   .el-card{

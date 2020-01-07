@@ -90,10 +90,13 @@ export default {
         this.subscribeValue = 0
       }
     },
+    readStateChanged() {
+      this.$emit('itemRead', this.item)
+    },
     markRead() {
       const item = this.item
       return this.$http.put(`/api/news/mark/read?id=${ item._id }`).then(_ => {
-        this.$emit('itemRead', item)
+        this.readStateChanged()
       }).catch(_ => {
         console.error(_)
       })

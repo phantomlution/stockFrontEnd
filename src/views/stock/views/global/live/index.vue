@@ -139,16 +139,14 @@ export default {
         this.topItemList.push(model)
       }
 
-      this.beautify(model)
+//      this.beautify(model)
 
       // 展示
       this.itemList.unshift(model)
+
       if (isNew) {
         // 加入快速查看视图
-        this.$bus.$emit('fast_reader_add_live', {
-          type: 'live',
-          data: model
-        })
+        this.$bus.$emit('fast_reader_add_live', model)
       }
     },
     resolveMessage(message) {

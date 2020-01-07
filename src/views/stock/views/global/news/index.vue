@@ -12,7 +12,7 @@
     </div>
     <div style="height: calc(100vh - 120px);overflow: auto;padding: 16px;" v-loading="loading">
       <div v-if="currentTab === 'unread'">
-        <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of unreadNewsList" @itemRead="itemRead(item)" />
+        <item :item="item" :showMarkRead="false" :key="itemIndex" v-for="(item, itemIndex) of unreadNewsList" @itemRead="itemRead(item)" />
       </div>
       <div v-else>
         <item :item="item" :key="itemIndex" v-for="(item, itemIndex) of readNewsList" @itemRead="itemRead(item)" />
@@ -24,6 +24,7 @@
 <script>
 import item from './item.vue'
 import scheduleMixin from '@/mixins/schedule'
+import lodash from 'lodash'
 
 export default {
   mixins: [scheduleMixin],
@@ -55,12 +56,19 @@ export default {
   },
   beforeDestroy() {
     this.$bus.$off('openNewsPanel')
+    this.$bus.$off('reloadNews')
   },
   mounted() {
     this.$bus.$on('openNewsPanel', _ => {
       this.visible = true
     })
     this.startTracker()
+
+    // 外部唤起刷新新闻频率，最多5秒刷新一次
+    const loadNewsDebounce = lodash.debounce(this.loadUnReadNews, 3 * 1000)
+    this.$bus.$on('reloadNews', _ => {
+      loadNewsDebounce()
+    })
   },
   methods: {
     stopTracker() {
