@@ -23,7 +23,6 @@
       </div>
       <el-link :type="type">{{ displayLabel }}</el-link>
     </el-tooltip>
-    <el-link :type="type" @click.stop="showStockDetail()">{{ displayLabel }}</el-link>
     <lr-shopping-cart :code="code" v-if="add" :icon="icon" />
   </div>
 </template>
