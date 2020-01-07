@@ -1,29 +1,29 @@
 <template>
   <div style="display: inline-block">
-    <el-tooltip effect="dark" placement="right" v-if="false">
-      <div slot="content">
+    <el-tooltip effect="dark" placement="right">
+      <div slot="content" class="lr-detail-link--contextmenu">
         <div>
-          <el-link >基础信息</el-link>
+          <el-link @click.stop="showStockDetail('基础信息')">基础信息</el-link>
         </div>
         <div>
-          <el-link >趋势分析</el-link>
+          <el-link @click.stop="showStockDetail('趋势分析')">趋势分析</el-link>
         </div>
         <div>
-          <el-link >实时走势</el-link>
+          <el-link @click.stop="showStockDetail('实时走势')">实时走势</el-link>
         </div>
         <div>
-          <el-link >公告列表</el-link>
+          <el-link @click.stop="showStockDetail('公告列表')">公告列表</el-link>
         </div>
         <div>
-          <el-link >股票质押</el-link>
+          <el-link @click.stop="showStockDetail('股票质押')">股票质押</el-link>
         </div>
         <div>
-          <el-link >深度数据</el-link>
+          <el-link @click.stop="showStockDetail('深度数据')">深度数据</el-link>
         </div>
       </div>
       <el-link :type="type">{{ displayLabel }}</el-link>
     </el-tooltip>
-    <el-link :type="type" @click.stop="showStockDetail">{{ displayLabel }}</el-link>
+    <el-link :type="type" @click.stop="showStockDetail()">{{ displayLabel }}</el-link>
     <lr-shopping-cart :code="code" v-if="add" :icon="icon" />
   </div>
 </template>
@@ -94,14 +94,24 @@ export default {
     }
   },
   methods: {
-    showStockDetail() {
+    showStockDetail(tab) {
       const code = this.code
-      const defaultTab = this.defaultTab
       this.$bus.$emit('showStockDetail', {
         code,
-        defaultTab
+        tab
       })
     }
   }
 }
 </script>
+
+<style lang="scss">
+.lr-detail-link--contextmenu{
+  .el-link{
+    & + .el-link{
+      margin-right: 8px;
+    }
+  }
+
+}
+</style>

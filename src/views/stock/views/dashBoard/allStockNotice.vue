@@ -70,11 +70,6 @@ export default {
           reject(_)
         })
       })
-    },
-    showStockDetail(code) {
-      this.$bus.$emit('showStockDetail', {
-        code
-      })
     }
   }
 }
