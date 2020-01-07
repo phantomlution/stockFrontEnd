@@ -3,8 +3,8 @@
   <div v-show="visibleState" class="lr-fast-reader">
     <el-card>
       <div style="display: flex">
-        <div class="lr-fast-reader__badge">
-          <el-badge :max="99" :value="newItemCount" v-show="newItemCount > 0"/>
+        <div class="lr-fast-reader__badge" v-if="newItemCount > 0">
+          <span style="color: #888">未读</span>&nbsp;<el-badge :max="99" :value="newItemCount"/>
         </div>
         <div class="lr-fast-reader__time" v-if="current">
           {{ current.created }}
@@ -113,13 +113,14 @@
   bottom: 16px;
   z-index: 9999999;
   min-height: 48px;
-.el-card__body{
-  padding: 12px 20px;
-}
+  .el-card__body{
+    padding: 12px 20px;
+  }
 }
 
 .lr-fast-reader__badge{
-  width: 48px;
+  width: 84px;
+  font-size: 14px;
   padding-top: 2px;
 }
 
