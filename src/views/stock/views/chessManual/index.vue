@@ -2,7 +2,7 @@
   <div>
     <div style="margin-bottom: 16px">
       <lr-motto>
-        所有预测分为：开盘，盘中，收盘走势。且要包含买卖点分析。
+        所有预测分为：开盘，早盘，午盘，尾盘走势。且要包含买卖点分析。
       </lr-motto>
     </div>
     <div>

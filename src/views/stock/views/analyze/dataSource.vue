@@ -25,6 +25,9 @@
         <el-link class="lr-data-source-link" type="primary" target="_blank" href="https://quote.fx678.com/symbol/VIXDX">VIX-恐慌指数</el-link>
         <el-link class="lr-data-source-link" type="primary" target="_blank" href="https://quote.fx678.com/symbol/XAU">黄金现货走势</el-link>
       </el-form-item>
+      <el-form-item label="股票数据">
+        <el-link class="lr-data-source-link" type="danger" target="_blank" href="http://data.eastmoney.com/hsgt/index.html">北向资金</el-link>
+      </el-form-item>
       <el-form-item label="其他数据">
         <el-link class="lr-data-source-link" type="primary" target="_blank" href="http://www.stats.gov.cn/">国家统计局</el-link>
         <el-link class="lr-data-source-link" type="primary" target="_blank" href="http://114.115.232.154:8080/" >中国宏观杠杆率数据</el-link>

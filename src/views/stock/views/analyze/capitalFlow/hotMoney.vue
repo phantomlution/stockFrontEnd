@@ -13,18 +13,18 @@
     </div>
     <!-- 图形展示区 -->
     <div>
-      <lr-box v-if="showNorthChart">
-        <span slot="title" v-if="!lightMode">
+      <div v-if="showNorthChart">
+        <span v-if="!lightMode">
           北向资金(亿元)
         </span>
         <lr-chart ref="northChart" :height="height" :usePadding="useChartPadding" />
-      </lr-box>
-      <lr-box v-if="showSouthChart">
-        <span slot="title" v-if="!lightMode">
+      </div>
+      <div v-if="showSouthChart">
+        <span v-if="!lightMode">
           南向资金(亿元)
         </span>
         <lr-chart ref="southChart" :height="height" :usePadding="useChartPadding" />
-      </lr-box>
+      </div>
     </div>
   </div>
 </template>
@@ -54,6 +54,10 @@ const props = {
   lightMode: { // 是否轻量化展示
     type: Boolean,
     default: false
+  },
+  live: {
+    type: Boolean,
+    default: true
   }
 }
 
@@ -81,10 +85,11 @@ export default {
     formatDate(date) {
       return this.$moment(date).format('YYYY-MM-DD')
     },
-    loadData() {
+    loadData(date = new Date()) {
+
       const query = {
-        live: true,
-        date: this.formatDate(new Date())
+        live: this.live,
+        date
       }
 
       this.$http.get(`/api/stock/capital/hotMoney`, query).then(result => {

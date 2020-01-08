@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import hotMoney from '@/views/stock/views/analyze/capitalFlow/replay/hotMoney'
+import hotMoney from '@/views/stock/views/analyze/capitalFlow/hotMoney'
 
 export default {
   components: {

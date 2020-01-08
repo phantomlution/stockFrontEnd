@@ -14,9 +14,6 @@
       <lr-date-picker v-model="date" pattern="stock" style="margin-left: 8px"></lr-date-picker>
     </div>
     <div>
-      <div >
-        <stock-price-chart ref="chart" />
-      </div>
       <lr-stick-bar title="分析助手" top="84px" width="500" :keepAlive="true">
         <lr-list :data="tableData" @change="setCurrent" max-height="120px">
           <template slot="table-column">
@@ -34,11 +31,19 @@
           </template>
         </lr-list>
       </lr-stick-bar>
-      <div>
-        <bulk-stock-comparison ref="compare"></bulk-stock-comparison>
+      <div v-show="currentView !== 'capital'">
+        <div>
+          <stock-price-chart ref="chart" />
+        </div>
+
+        <div>
+          <bulk-stock-comparison ref="compare"></bulk-stock-comparison>
+        </div>
+      </div>
+      <div v-show="currentView === 'capital'">
+        <hotMoney :live="false" ref="hotMoney" :showSouthChart="false" :lightMode="true" :height="capitalChartHeight" />
       </div>
     </div>
-
   </lr-box>
 </template>
 
@@ -47,9 +52,11 @@ import lodash from 'lodash'
 import stockPriceChart from '@/views/stock/components/stockPriceChart.vue'
 import { increment } from '@/utils'
 import bulkStockComparison from '@/views/stock/components/bulkStockComparison.vue'
+import hotMoney from '@/views/stock/views/analyze/capitalFlow/hotMoney.vue'
 
 export default {
   components: {
+    hotMoney,
     stockPriceChart,
     bulkStockComparison
   },
@@ -62,7 +69,9 @@ export default {
       current: [],
       optionList: [],
       tableData: [],
-      themeList: []
+      themeList: [],
+      currentView: '',
+      capitalChartHeight: window.innerHeight * 0.8
     }
   },
   watch: {
@@ -132,23 +141,28 @@ export default {
       if (this.date && this.current.length == 2) {
         const date = this.$moment(this.date).format('YYYY-MM-DD')
         const secid = this.current[1]
+        this.currentView = this.current[0]
 
-        this.getFragmentDeal(date, secid).then(_ => {
-          if (!_) {
-            return this.$message.warning('没有相关数据')
-          }
-          this.name = _.name
-          this.$refs.chart.updateChart(_.data, _.pre_close)
-
-          if (this.syncConceptStock) {
-            const themeItem = this.themeList.find(item => item.name === _.name)
-            if (!themeItem) {
-              return this.$message.error('找不到对应的板块信息')
+        if (this.currentView === 'capital') {
+          this.$refs.hotMoney.loadData(date)
+        } else {
+          this.getFragmentDeal(date, secid).then(_ => {
+            if (!_) {
+              return this.$message.warning('没有相关数据')
             }
+            this.name = _.name
+            this.$refs.chart.updateChart(_.data, _.pre_close)
 
-            this.$refs.compare.loadData(secid, themeItem.list, date)
-          }
-        })
+            if (this.syncConceptStock) {
+              const themeItem = this.themeList.find(item => item.name === _.name)
+              if (!themeItem) {
+                return this.$message.error('找不到对应的板块信息')
+              }
+
+              this.$refs.compare.loadData(secid, themeItem.list, date)
+            }
+          })
+        }
       }
     },
     getOptionList() {
@@ -167,6 +181,14 @@ export default {
             value: key,
             children: group[key].map(item => ({ label: item.name, value: item.secid }))
           }
+        })
+        // 加入资金option
+        this.optionList.push({
+          label: '资金',
+          value: 'capital',
+          children: [
+            { label: '北向资金', value: 'capital_north' }
+          ]
         })
       })
     },

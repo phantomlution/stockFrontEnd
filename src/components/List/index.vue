@@ -26,7 +26,7 @@
       </div>
       <!-- 右侧 -->
       <div>
-        <div style="margin-bottom: 8px">
+        <div style="margin-bottom: 8px" v-if="showChangeViewButton">
           <el-radio-group v-model="viewType">
             <el-radio-button label="table"><i class="el-icon-tickets"></i></el-radio-button>
             <el-radio-button label="card"><i class="el-icon-reading"></i></el-radio-button>
@@ -74,10 +74,24 @@ export default {
     return {
       currentIndex: 0,
       actionVisible: true,
-      viewType: 'card' // or card
+      viewType: 'card'
+    }
+  },
+  mounted() {
+    if (!this.hasCardView & this.hasTableView) {
+      this.viewType = 'table'
     }
   },
   computed: {
+    hasTableView() { // 是否传入 table-column slot
+      return !!this.$slots['table-column']
+    },
+    hasCardView() { // 是否传入 card slot
+      return !!this.$slots['card']
+    },
+    showChangeViewButton() { // 是否显示切换视图按钮
+      return this.hasTableView & this.hasCardView
+    },
     isEmpty() {
       return this.data.length === 0
     },

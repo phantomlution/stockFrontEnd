@@ -1,5 +1,5 @@
 <template>
-  <el-popover width="540" placement="right-start">
+  <el-popover width="540">
     <el-table :data="riskList">
       <el-table-column label="代码" prop="code" width="200px">
         <template slot-scope="scope">
@@ -13,7 +13,7 @@
       </el-table-column>
     </el-table>
     <el-badge slot="reference" :value="riskList.length" class="item" type="warning">
-      <el-button >相关风险</el-button>
+      <el-button >风险项</el-button>
     </el-badge>
   </el-popover>
 </template>
@@ -25,35 +25,40 @@ export default {
       riskList: []
     }
   },
+  computed: {
+    stockPoolList() {
+      return this.$store.getters.stockPoolList
+    }
+  },
+  mounted() {
+    this.detectRisk()
+  },
   methods: {
-    collect(stockItemList) {
+    detectRisk() {
       const riskList = []
-      stockItemList.forEach(item => {
-        item.riskList.forEach(riskItem => {
+
+      this.stockPoolList.forEach(stockPoolItem => {
+        const duration = 90
+        this.getRecentRestrictSellList(stockPoolItem.base, duration).forEach(item => {
           riskList.push({
-            code: item.code,
-            name: item.name,
-            risk: riskItem
+            code: stockPoolItem.code,
+            name: stockPoolItem.name,
+            risk: {
+              type: 'warning',
+              message: `${ item.date }(${ this.$moment(item.date).fromNow() })：${ item.desc }`
+            }
           })
         })
       })
       this.riskList = riskList
     },
-    detect(code) { // 检测异常信息
-      const riskList = []
-      return new Promise((resolve, reject) => {
-        this.$store.dispatch('loadStockData', code).then(stock => {
-          const duration = 90
-          stock.getRecentRestrictSellList(duration).forEach(item => {
-            riskList.push({
-              type: 'warning',
-              message: `${ item.date }(${ this.$moment(item.date).fromNow() })：${ item.desc }`
-            })
-          })
-          resolve(riskList)
-        }).catch(_ => {
-          reject(_)
-        })
+    getRecentRestrictSellList(base, days) { // 近期（前后）发生解禁的数量
+      const restrictSellList = base.restrict_sell_list || []
+      const today = this.$moment()
+
+      return restrictSellList.filter(item => {
+        let diff = today.diff(this.$moment(item.date), 'days')
+        return Math.abs(diff) <= days
       })
     }
   }

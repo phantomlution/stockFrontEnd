@@ -7,8 +7,9 @@
             <el-form-item :label="`前交易日${ yesterdayDateLabel }`">
               <el-date-picker :clearable="false" @change="yesterdayChanged" v-model="yesterdayDate" style="width: 140px"></el-date-picker>
             </el-form-item>
-            <el-form-item label="风险项">
-              <risk-detector ref="riskDetector" />
+            <el-form-item label="">
+              <risk-detector />
+              <stock-concept style="margin-left: 8px"/>
             </el-form-item>
           </el-form>
         </div>
@@ -40,6 +41,7 @@ import allStockNotice from './allStockNotice.vue'
 import riskDetector from './riskDetector.vue'
 import moneyTracker from './moneyTracker.vue'
 import emotionTracker from './emotionTracker.vue'
+import stockConcept from './stockConcept.vue'
 
 export default {
   components: {
@@ -47,7 +49,8 @@ export default {
     allStockNotice,
     riskDetector,
     moneyTracker,
-    emotionTracker
+    emotionTracker,
+    stockConcept
   },
   data() {
     return {
@@ -57,9 +60,6 @@ export default {
     }
   },
   computed: {
-    riskDetector() {
-      return this.$refs.riskDetector
-    },
     yesterdayDateLabel() {
       if (this.yesterdayDate) {
         const day = this.$moment(this.yesterdayDate).toDate().getDay()
@@ -70,14 +70,6 @@ export default {
     stockPool() {
       return this.$store.getters.stockPoolList
     }
-  },
-  watch: {
-    stockPool() {
-      this.analyzeRisk()
-    }
-  },
-  mounted() {
-    this.analyzeRisk()
   },
   methods: {
     yesterdayChanged(val) {
@@ -100,30 +92,6 @@ export default {
         diff = -3
       }
       return this.$moment().add('days', diff).toDate()
-    },
-    analyzeRisk() {
-      const stockPoolList = this.stockPool
-      // 执行强检测任务
-      Promise.all(stockPoolList.map(item => this.detectRisk(item))).then(riskItemList => {
-        // 收集相关信息
-        this.riskDetector.collect(riskItemList)
-      }).catch(_ => {
-        this.$message.error('风险检测失败')
-        console.error(_)
-      })
-    },
-    detectRisk(stockPoolItem) { // 风险检测
-      return new Promise((resolve, reject) => {
-        this.riskDetector.detect(stockPoolItem.code).then(riskList => {
-          resolve({
-            code: stockPoolItem.code,
-            name: stockPoolItem.name,
-            riskList
-          })
-        }).catch(_ => {
-          reject(_)
-        })
-      })
     }
   }
 }
