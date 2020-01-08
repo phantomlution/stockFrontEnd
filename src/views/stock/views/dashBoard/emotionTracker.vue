@@ -12,7 +12,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <el-link :underline="false" slot="reference" style="margin-top: -4px">情绪点&nbsp;</el-link>
+      <el-link :underline="false" slot="reference" style="margin-top: -4px">被动情绪点&nbsp;</el-link>
     </el-popover>
     <div style="display: inline-block" v-if="riskModelList.length > 0">
       <span v-for="item of riskModelList" :key="item.name">
