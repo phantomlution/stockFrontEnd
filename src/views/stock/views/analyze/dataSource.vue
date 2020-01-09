@@ -2,6 +2,8 @@
   <div>
     <el-form>
       <el-form-item label="重点关注">
+        <el-link class="lr-data-source-link" type="danger" href="https://www.fx678.com/" target="_blank">汇通网</el-link>
+        <el-link class="lr-data-source-link" type="primary" href="https://www.jin10.com/" target="_blank">金十数据</el-link>
         <el-link class="lr-data-source-link" type="danger" href="http://www.sse.com.cn/" target="_blank">上海证券交易所</el-link>
         <el-link class="lr-data-source-link" type="danger" href="https://rl.fx678.com/" target="_blank">财经大事件日历</el-link>
         <el-link class="lr-data-source-link" type="danger" href="https://cn.investing.com/rates-bonds/usa-government-bonds" target="_blank">美债收益率</el-link>

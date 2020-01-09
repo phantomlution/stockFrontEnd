@@ -1,5 +1,5 @@
 <template>
-  <div class="lr-quote">
+  <div class="lr-quote" v-show="visible">
     <div class="lr-quote__item">
       <div class="lr-quote__item--label">现货黄金</div>
       <div class="lr-quote__item--price">{{ quote.xau.price }}</div>
@@ -17,6 +17,7 @@ import { increment } from '@/utils'
 export default {
   data() {
     return {
+      socket: null,
       socketState: 0,
       quote: {
         xau: { // 现货黄金
@@ -26,8 +27,18 @@ export default {
       }
     }
   },
+  computed: {
+    visible() {
+      return this.quote.xau.price
+    }
+  },
   mounted() {
     this.initEventSource()
+  },
+  beforeDestroy() {
+    if (this.socket) {
+      this.socket.close()
+    }
   },
   methods: {
     initEventSource() { // 连接数据源
@@ -42,7 +53,7 @@ export default {
       // const quoteItemList = ['XAU','XAG','EURUSD','USD','CONC','1A0001','NIKKI','FTSE','DAX','NASDAQ','GBPUSD','USDJPY','AUDUSD','USDCAD','USDCNY']
 
       // 目前只提取美元数据
-      const quoteItemList = ['XAU']
+      const quoteItemList = ['XAU', 'VIXDX']
       socket.on('connect', _ => {
         socket.emit('code', quoteItemList)
         this.socketState = 1
@@ -61,7 +72,6 @@ export default {
       const type = data.i.toLowerCase()
       const yesterday = Number(data.x)
       const now = Number(data.c)
-      console.log(type)
 
       this.quote[type].price = Number(now).toFixed(2)
       this.quote[type].diff = increment(now, yesterday)
