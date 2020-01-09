@@ -21,10 +21,12 @@ export const STOP_CALLBACK_FOR_STOCK = function() {
 export default {
   data() {
     return {
-      defaultScheduler: null
+      defaultScheduler: null,
+      componentDestroyed: false
     }
   },
   beforeDestroy() {
+    this.componentDestroyed = true
     this.stopSchedule()
   },
   methods: {
@@ -38,8 +40,14 @@ export default {
      */
     startSchedule(executedFunc, seconds, stopCallback) {
       this.stopSchedule()
-      executedFunc.call()
+      if (!this.componentDestroyed) {
+        executedFunc.call()
+      }
       this.defaultScheduler = setInterval(_ => {
+        if (this.componentDestroyed) { // 防止延迟启动后，不销毁的问题
+          this.stopSchedule()
+          return
+        }
         if (stopCallback !== undefined && stopCallback.call()) {
           this.stopSchedule()
           return

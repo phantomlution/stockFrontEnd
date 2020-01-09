@@ -178,13 +178,20 @@ export default {
       this.$set(this, 'stockPoolItem', newItem)
     })
     this.loadYesterdayData()
-    this.startTracker()
+
+    const randomMilliSeconds = parseInt(Math.random() * (15 * 1000), 10)
+    // 请求分流，缓解目前后台的压力
+    setTimeout(_ => {
+      this.startTracker()
+    }, randomMilliSeconds)
+
   },
   beforeDestroy() {
     this.$bus.$off(this.eventKey)
   },
   methods: {
     startTracker() {
+      console.log('called')
       this.startSchedule(this.loadDetail, this.interval, STOP_CALLBACK_FOR_STOCK)
     },
     updateTrackSpeed() {
