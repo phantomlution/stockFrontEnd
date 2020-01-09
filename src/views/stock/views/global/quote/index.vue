@@ -5,7 +5,6 @@
       <div class="lr-quote__item--price">{{ quote.xau.price }}</div>
       <div class="lr-quote__item--change">
         <lr-number-tag :amount="quote.xau.diff" ></lr-number-tag>
-        <!--{{ quote.xau.diff }}-->
       </div>
     </div>
   </div>
@@ -74,16 +73,22 @@ export default {
 
 <style lang="scss">
 .lr-quote{
-  border: 1px solid #e9e9e9;
+  border: 1px solid #DCDFE6;
   display: inline-block;
   background: #FFFFFF;
   border-radius: 15px;
+  padding: 7px 16px;
+  font-size: 11px;
+  &:hover{
+    color: #409EFF;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
+    cursor: pointer;
+  }
 }
 
 .lr-quote__item{
   display: flex;
-  padding: 7px 16px;
-  font-size: 11px;
 }
 
 .lr-quote__item--label{
