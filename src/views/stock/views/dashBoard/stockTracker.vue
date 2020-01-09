@@ -191,7 +191,6 @@ export default {
   },
   methods: {
     startTracker() {
-      console.log('called')
       this.startSchedule(this.loadDetail, this.interval, STOP_CALLBACK_FOR_STOCK)
     },
     updateTrackSpeed() {

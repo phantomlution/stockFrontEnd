@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="分散前端请求实时数据时的数据密度，相对均匀分散到15秒内">
+    <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mixins/schedule.js" afterPath="$PROJECT_DIR$/src/mixins/schedule.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -45,17 +44,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="stockTracker.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1558">
-              <caret line="182" column="21" lean-forward="false" selection-start-line="182" selection-start-column="21" selection-end-line="182" selection-end-column="21" />
+            <state relative-caret-position="266">
+              <caret line="193" column="27" lean-forward="false" selection-start-line="193" selection-start-column="27" selection-end-line="193" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="schedule.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="schedule.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/mixins/schedule.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="228">
@@ -271,8 +270,8 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/live/index.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
         <option value="$PROJECT_DIR$/src/mixins/schedule.js" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue" />
       </list>
     </option>
   </component>
@@ -710,14 +709,7 @@
       <workItem from="1578272492816" duration="21745000" />
       <workItem from="1578358937839" duration="16523000" />
       <workItem from="1578444790514" duration="6780000" />
-      <workItem from="1578531743381" duration="6690000" />
-    </task>
-    <task id="LOCAL-00214" summary="修复7*24数据源失效的问题">
-      <created>1577541993194</created>
-      <option name="number" value="00214" />
-      <option name="presentableId" value="LOCAL-00214" />
-      <option name="project" value="LOCAL" />
-      <updated>1577541993194</updated>
+      <workItem from="1578531743381" duration="6710000" />
     </task>
     <task id="LOCAL-00215" summary="页面优化">
       <created>1577542417200</created>
@@ -1055,11 +1047,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578573552979</updated>
     </task>
-    <option name="localTasksCounter" value="263" />
+    <task id="LOCAL-00263" summary="分散前端请求实时数据时的数据密度，相对均匀分散到15秒内">
+      <created>1578575173421</created>
+      <option name="number" value="00263" />
+      <option name="presentableId" value="LOCAL-00263" />
+      <option name="project" value="LOCAL" />
+      <updated>1578575173421</updated>
+    </task>
+    <option name="localTasksCounter" value="264" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="921163000" />
+    <option name="totallyTimeSpent" value="921183000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1124,7 +1123,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="集成本地数据存储" />
     <MESSAGE value="尝试集成全市场做空点分析" />
     <MESSAGE value="不复用chart, 临时修复chart更新时坐标轴重叠问题" />
     <MESSAGE value="优化历史分时成交" />
@@ -1149,7 +1147,8 @@
     <MESSAGE value="集成其他交易市场的报价数据，目前只集成了现货黄金" />
     <MESSAGE value="报价样式调整" />
     <MESSAGE value="页面优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="页面优化" />
+    <MESSAGE value="分散前端请求实时数据时的数据密度，相对均匀分散到15秒内" />
+    <option name="LAST_COMMIT_MESSAGE" value="分散前端请求实时数据时的数据密度，相对均匀分散到15秒内" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1550,18 +1549,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1558">
-          <caret line="182" column="21" lean-forward="false" selection-start-line="182" selection-start-column="21" selection-end-line="182" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/mixins/schedule.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="14" column="27" lean-forward="false" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/dashBoard/stockTracker.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="193" column="27" lean-forward="false" selection-start-line="193" selection-start-column="27" selection-end-line="193" selection-end-column="27" />
           <folding />
         </state>
       </provider>
