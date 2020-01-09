@@ -7,7 +7,7 @@
         </el-timeline-item>
       </el-timeline>
     </div>
-    <el-button circle icon="el-icon-date" slot="reference"></el-button>
+    <el-button size="small" circle icon="el-icon-date" slot="reference"></el-button>
   </el-popover>
 </template>
 

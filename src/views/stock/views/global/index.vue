@@ -34,7 +34,7 @@ export default {
     messageLive,
     customEvent,
     articleReader,
-    playground
+    playground,
   },
   mounted() {
     /**

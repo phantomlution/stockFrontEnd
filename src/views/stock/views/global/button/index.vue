@@ -1,5 +1,6 @@
 <template>
   <div class="lr-global-button">
+    <item-quote style="margin-right: 10px;" />
     <event-calendar style="margin-right: 10px" />
     <data-source-button style="margin-right: 10px"/>
     <el-button size="small" circle icon="el-icon-collection" @click.stop="openEventPanel"></el-button>
@@ -13,11 +14,13 @@
 <script>
 import dataSourceButton from '../dataSource/index.vue'
 import eventCalendar from '../calendar/index.vue'
+import itemQuote from '../quote/index.vue'
 
 export default {
   components: {
     dataSourceButton,
-    eventCalendar
+    eventCalendar,
+    itemQuote
   },
   data() {
     return {

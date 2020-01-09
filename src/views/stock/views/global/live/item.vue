@@ -22,7 +22,7 @@
           <span v-html="item.title"></span>
         </div>
         <div v-if="item.imageList" style="margin-left: 32px;">
-          <el-image style="max-width: 96px;max-height: 72px" :data-src="url" :src="url" :preview-src-list="[url]" v-for="url of item.imageList" :key="url"></el-image>
+          <el-image style="max-width: 96px;max-height: 72px;color: #fff" :data-src="url" :src="url" :preview-src-list="[url]" v-for="url of item.imageList" :key="url"></el-image>
         </div>
       </div>
 
