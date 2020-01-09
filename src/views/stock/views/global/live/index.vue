@@ -171,7 +171,6 @@ export default {
           message['newsimage']
         ]
       }
-      console.warn(message)
 
       // 新闻去重
       if (this.newsIdCache.indexOf(model.newsId) === -1) {

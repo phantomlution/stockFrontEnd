@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="padding: 8px" tabindex="0" @keydown.down.prevent="handleKeyDown">
+  <div id="app" tabindex="0" @keydown.down.prevent="handleKeyDown">
     <div>
       <!--全局使用的组件-->
       <div>
@@ -87,6 +87,8 @@ export default {
 <style lang="scss">
 #app {
   height: 100vh;
+  padding: 8px;
+  outline: none;
 }
 
 .lr-hover{
