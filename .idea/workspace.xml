@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="优化所有股票相关图表展示">
+    <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/StickBar/index.vue" afterPath="$PROJECT_DIR$/src/components/StickBar/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -58,12 +56,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="266">
-              <caret line="44" column="26" lean-forward="false" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
-              <folding />
+              <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#el-drawer#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#1337#1371#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="trend.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="trend.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+            <state relative-caret-position="246">
+              <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -152,7 +153,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>stockPool</find>
       <find>$store.getters.stockPoolList</find>
       <find>getOptionList</find>
       <find>setCurrent</find>
@@ -178,10 +178,11 @@
       <find>THRESHOLD_WATER_PERCENT</find>
       <find>dataCount</find>
       <find>bindChartEvent</find>
-      <find>addExtraInfoPoint</find>
       <find>renderChart</find>
       <find>分时成交</find>
       <find>position</find>
+      <find>个股详情</find>
+      <find>addExtraInfoPoint</find>
     </findStrings>
     <replaceStrings>
       <replace>secondPhaseCount</replace>
@@ -240,7 +241,6 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/pledge.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/deep.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/notice.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue" />
         <option value="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/news/item.vue" />
@@ -279,6 +279,7 @@
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" />
         <option value="$PROJECT_DIR$/src/components/StickBar/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" />
       </list>
     </option>
   </component>
@@ -894,14 +895,7 @@
       <workItem from="1578444790514" duration="6780000" />
       <workItem from="1578531743381" duration="7203000" />
       <workItem from="1578581787654" duration="293000" />
-      <workItem from="1578617848832" duration="13811000" />
-    </task>
-    <task id="LOCAL-00220" summary="完善图形分析">
-      <created>1577605984354</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1577605984354</updated>
+      <workItem from="1578617848832" duration="14002000" />
     </task>
     <task id="LOCAL-00221" summary="修复风险检测的问题">
       <created>1577610178367</created>
@@ -1239,11 +1233,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578666279237</updated>
     </task>
-    <option name="localTasksCounter" value="269" />
+    <task id="LOCAL-00269" summary="优化所有股票相关图表展示">
+      <created>1578667055450</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1578667055450</updated>
+    </task>
+    <option name="localTasksCounter" value="270" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="935780000" />
+    <option name="totallyTimeSpent" value="935971000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1308,7 +1309,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="集成指数和板块的历史分时" />
     <MESSAGE value="优化stickbar" />
     <MESSAGE value="集成板块内部比较" />
     <MESSAGE value="聚合股票趋势，K线和历史分时图" />
@@ -1333,7 +1333,8 @@
     <MESSAGE value="操作效率提升" />
     <MESSAGE value="集成1.0版全集成K线图，UI还在优化中" />
     <MESSAGE value="集成板K线图DONE" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成板K线图DONE" />
+    <MESSAGE value="优化所有股票相关图表展示" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化所有股票相关图表展示" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1639,14 +1640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="44" column="26" lean-forward="false" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/trend.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1717,9 +1710,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="122" column="29" lean-forward="true" selection-start-line="122" selection-start-column="29" selection-end-line="122" selection-end-column="29" />
+        <state relative-caret-position="246">
+          <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="28" lean-forward="false" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#el-drawer#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#1337#1371#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

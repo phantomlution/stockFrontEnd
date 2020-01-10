@@ -1,7 +1,7 @@
 <template>
   <el-drawer title="个股详情" size="90%" :visible.sync="drawerVisible">
     <div>
-      <div style="text-align: center;position: absolute;width: 100%;background: #FFFFFF;z-index: 999">
+      <div style="text-align: center;position: absolute;top: 22px;width: 100%;z-index: 999">
         <el-radio-group v-model="currentTab">
           <el-radio-button label="基础信息">基础信息</el-radio-button>
           <el-radio-button label="趋势分析">趋势分析</el-radio-button>
@@ -12,7 +12,7 @@
         </el-radio-group>
       </div>
 
-      <div style="padding: 40px 16px 16px 16px;">
+      <div style="padding: 2px 16px 16px 16px;">
         <div v-if="currentTab === '基础信息'">
           <stock-base :code="code" />
         </div>
