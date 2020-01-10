@@ -55,8 +55,6 @@ export default {
           Array.prototype.push.apply(dataList, pointList.filter(item => item.time > dataList[dataList.length - 1].time))
         }
 
-        console.log(dataList)
-
         this.$refs.stockPrice && this.$refs.stockPrice.updateChart(dataList, this.yesterdayClose)
       })
     }
