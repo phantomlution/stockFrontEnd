@@ -1,33 +1,16 @@
 <template>
   <div>
-    <el-button @click.stop="test">test</el-button>
     <lr-chart ref="chart" @dblclick="dblclick" />
   </div>
 </template>
 
 <script>
-import { increment } from '@/utils'
+import { increment, getStockColor } from '@/utils'
 import lodash from 'lodash'
 
 export default {
   name: 'KLine',
-  data() {
-    return {
-
-    }
-  },
   methods: {
-    test() {
-      this.loadData()
-    },
-    loadData() {
-      const code = 'SZ000001'
-      return this.$store.dispatch('loadStockData', code).then(_ => {
-        // 生成 model
-        const chartDataList = lodash.takeRight(_.result, 200)
-        this.renderChart(chartDataList)
-      })
-    },
     parseDataList(rawDataList) {
       const result = rawDataList.map(item => {
         const model = {
@@ -37,7 +20,9 @@ export default {
           min: item.min,
           volume: item.volume,
           amount: lodash.round(item.amount / 10000 / 10000, 2),
-          date: item.date
+          date: item.date,
+          yesterdayClose: item.yesterdayClose,
+          name: item.name
         }
 
         model.range = [model.start, model.end, model.max, model.min]
@@ -85,9 +70,11 @@ export default {
     },
     renderChart(rawDataList, config = {}) {
       const dataList = this.parseDataList(rawDataList)
-      const { scale } = config
+      const { scale, assistantLine = [] } = config
+      console.log(assistantLine)
 
-      const chart = this.$refs.chart.getChart()
+      const chartRef = this.$refs.chart
+      const chart = chartRef.getChart()
       chart.source(dataList, {
         date: {
           type: 'timeCat',
@@ -95,22 +82,16 @@ export default {
           range: [ 0, 1 ]
         },
         trend: {
-          values: [ '上涨', '下跌' ]
+          values: ['上涨', '下跌']
         },
         ...scale
       })
 
       chart.legend(false)
-
-      chart.tooltip({
-        showTitle: false,
-        itemTpl: '<li data-index={index}>'
-        + '<span style="background-color:{color};" class="g2-tooltip-marker"></span>'
-        + '{name}{value}</li>'
-      });
+      this.customizeToolTip(chart)
 
       const kView = chart.view()
-      kView.area().position('date*amount').color('#64b5f6')
+      kView.area().position('date*amount').color('#64b5f6').tooltip(false)
       kView.axis('amount', {
         position: 'right'
       })
@@ -132,9 +113,57 @@ export default {
           }
         })
         .shape('candle')
-        .tooltip('name*date*start*end*max*min*amount*code')
+        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose')
+
+      // 辅助线
+      assistantLine.forEach(assistantItem => {
+        chartRef.addAssistantLine(kView, assistantItem.position, assistantItem.content)
+      })
 
       chart.render()
+    },
+    getItemHtml(name, value, color) {
+      return `
+        <div class="lr-tooltip__item">
+          <div class="lr-tooltip__item--label">${ name }</div>
+          <div class="lr-tooltip__item--value" style="color:${color}">${ value }</div>
+        </div>`
+    },
+    customizeToolTip(chart) { // 自定义tooltip html
+      chart.tooltip({
+        crosshairs: {
+          type: 'cross'
+        },
+        useHtml: true,
+        htmlContent: (title, items) => {
+          const itemHtmlList = []
+          const yesterdayClose = Number(items.find(item => item.name === 'yesterdayClose').value)
+          items.forEach(item => {
+            const itemValue = item.value
+            if (item.name === 'start') {
+              itemHtmlList.push(this.getItemHtml('开盘', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+            } else if (item.name === 'end') {
+              itemHtmlList.push(this.getItemHtml('收盘', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+            } else if(item.name === 'max') {
+              itemHtmlList.push(this.getItemHtml('最高', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+            } else if (item.name === 'min') {
+              itemHtmlList.push(this.getItemHtml('最低', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+            } else if (item.name === 'amount') {
+              itemHtmlList.push(this.getItemHtml('成交额', `${ itemValue }亿`))
+            }
+          })
+
+          const nameItem = items.find(item => item.name === 'name')
+          if (nameItem) {
+            title = nameItem.value
+          }
+
+          return `<div class="lr-tooltip" style="position: absolute">
+            <div class="lr-tooltip__header">${ title }</div>
+              <div>${ itemHtmlList.join('') }</div>
+            </div>`;
+        },
+      })
     },
     dblclick(model) {
       this.$emit('dblclick', model)
@@ -142,3 +171,35 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-tooltip{
+  /*visibility: visible !important;*/
+  /*display: block !important;*/
+  padding: 8px;
+  font-size: 13px;
+  background: #FFFFFF;
+  border: 1px solid #97c8ff;
+}
+
+.lr-tooltip__header{
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.lr-tooltip__item{
+  display: flex;
+  width: 100px;
+  line-height: 20px;
+}
+
+.lr-tooltip__item--label{
+  width: 42px;
+  color: #b0b0b0;
+}
+
+.lr-tooltip__item--value{
+  flex: 1;
+  text-align: right;
+}
+</style>

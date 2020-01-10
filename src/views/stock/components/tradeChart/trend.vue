@@ -7,15 +7,12 @@
       </span>
       <el-button type="primary" :loading="isLoading" @click.stop="loadSurgeForShort">跌点分析</el-button>
     </div>
-    <el-input-number slot="center" v-model="dataCount" :step="50" :min="70" :max="maxDataCount" />
-    <lr-chart ref="chart" @dblclick="dblclick" />
+    <k-line ref="chart" @dblclick="dblclick" />
   </lr-box>
 </template>
 
 <script>
 import lodash from 'lodash'
-
-const THRESHOLD_WATER_PERCENT = 50
 
 const props = {
   code: {
@@ -31,8 +28,6 @@ export default {
   props,
   data() {
     return {
-      dataCount: 120,
-      maxDataCount: 420,
       name: '',
       average: '',
       isLoading: false
@@ -40,9 +35,6 @@ export default {
   },
   watch: {
     code() {
-      this.updateChart()
-    },
-    dataCount() {
       this.updateChart()
     }
   },
@@ -62,7 +54,6 @@ export default {
 
         this.renderChart({
           stock,
-          dataCount: this.dataCount
         })
       }).catch(_ => {
         console.error(_)
@@ -106,61 +97,21 @@ export default {
       const average = lodash.round(lodash.mean(recentDataList.map(item => item.amountInMillion)), 2)
       this.average = average
     },
-    bindChartEvent() {
-      const chart = this.$refs.chart.getChart()
-
-      chart.off('dblclick')
-
-
-    },
-    renderChart({stock, dataCount}) {
+    renderChart({stock}) {
       let rawData = stock.result
       this.stock = stock
       this.code = stock.code
       this.name = stock.name
-      const data = lodash.takeRight(rawData, dataCount)
+      const data = lodash.takeRight(rawData, 200)
       this.calculateAmount(data)
 
-      const chart = this.$refs.chart.getChart()
-      this.bindChartEvent()
-
-      const view = chart.view()
-      var scale = {
-        timestamp: {
-          alias: '日期',
-          type: 'time',
-          mask: 'YYYY-MM-DD'
-        }
-      }
-
-      view.source(data, scale)
-      this.renderPriceView(view, stock, data)
-      this.renderVolumeView(view)
-      chart.render()
-    },
-    renderVolumeView(view) {
-      const chartRef = this.$refs.chart
-
-      view.line().position('timestamp*diff').color('#9AD681').tooltip('amountInMillion*diff')
-
-      chartRef.addAssistantLine(view, {
-        start: {
-          timestamp: 'min',
-          diff: -1 * THRESHOLD_WATER_PERCENT
-        },
-        end: {
-          timestamp: 'max',
-          diff: -1 * THRESHOLD_WATER_PERCENT
-        }
-      }, `-${ THRESHOLD_WATER_PERCENT }%`, {
-        horizontal: true,
-        textPosition: 'start'
+      this.$refs.chart.renderChart(data, {
+        assistantLine: this.getAssistantLine(stock)
       })
     },
-    renderPriceView(view, stock, data) {
-      const chartRef = this.$refs.chart
+    getAssistantLine(stock) {
 
-      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2)
+//      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2)
 
       // 拉高出货点
       const surgeForShortList = stock.surgeForShortList || []
@@ -169,79 +120,28 @@ export default {
       // 追加高亮点
       const highlightPointList = [] //this.config ? this.config.highlight || [] : []
 
+      // TODO 添加涨停，跌停到辅助线中 ？？
+
       const pointList = []
       Array.prototype.push.apply(pointList, surgeForShortList.map(item => ({ date: item.date, text: '拉高出货' })))
       Array.prototype.push.apply(pointList, restrictSellList.map(item => ({ date: item.date, text: '解禁' })))
       Array.prototype.push.apply(pointList, highlightPointList.map(item => ({ date: item.date, text: '当前点' })))
 
       const groupResult = lodash.groupBy(pointList, item => item.date)
+      const assistantLineList = []
       Object.keys(groupResult).forEach(date => {
         const position = {
           start: [date, 'min'],
           end: [date, 'max']
         }
 
-        chartRef.addAssistantLine(view, position, groupResult[date].map(item => item.text))
+        assistantLineList.push({
+          position,
+          content: groupResult[date].map(item => item.text)
+        })
       })
 
-      for(let i=1; i<data.length; i++) {
-        const today = data[i]
-        // 添加涨停提示
-        if (today.percent >= 9.9) {
-          this.addExtraInfoPoint(view, [today.timestamp, today.close], '涨停')
-        }
-
-        if (today.isMakeShort) {
-          this.addMakeShortPoint(view, [today.timestamp, today.close])
-        } else if (today.isMakeLong){
-          this.addMakeLongPoint(view, [today.timestamp, today.close])
-        }
-        const yesterday = data[i - 1]
-        const position = {
-          start: [today.timestamp, today.close],
-          end: [yesterday.timestamp, yesterday.close]
-        }
-        if (today.isMakeShort && yesterday.isMakeShort) {
-          chartRef.addAssistantLine(view, position, '', { color: 'red', dash: false })
-        } else if (today.isMakeLong && yesterday.isMakeLong) {
-          chartRef.addAssistantLine(view, position, '', { color: '#0f0', dash: false })
-        }
-      }
-
-    },
-    addExtraInfoPoint(view, start, text) { // 添加涨停
-      view.guide().dataMarker({
-        top: false,
-        position: start,
-        content: text,
-        style: {
-          point: {
-            stroke: 'orange'
-          }
-        }
-      });
-    },
-    addMakeShortPoint(view, start) {
-      view.guide().dataMarker({
-        position: start,
-        content: '',
-        style: {
-          point: {
-            stroke: 'red'
-          }
-        }
-      })
-    },
-    addMakeLongPoint(view, start) {
-      view.guide().dataMarker({
-        position: start,
-        content: '',
-        style: {
-          point: {
-            stroke: 'green'
-          }
-        }
-      });
+      return assistantLineList
     },
     dblclick(item) {
       this.$emit('dblclick', item)

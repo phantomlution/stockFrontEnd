@@ -90,7 +90,7 @@ export default {
 
       return this._chart
     },
-    addHtmlAssistantLine(view, position, contentList) {
+    _addHtmlAssistantLine(view, position, contentList) {
       const contentHtml = contentList.map(content => {
         return `<div style="width: 10px;font-size: 10px;line-height: 12px;margin-bottom: 8px;color: #999">
           ${ content }
@@ -139,7 +139,7 @@ export default {
         text: isHorizontal ? textModel : ''
       })
       if (isVertical) {
-        this.addHtmlAssistantLine(view, position, contentList)
+        this._addHtmlAssistantLine(view, position, contentList)
       }
     },
     bindEvent() {

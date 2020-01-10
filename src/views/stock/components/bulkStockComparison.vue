@@ -49,6 +49,7 @@ export default {
             model.volume = currentItem.volume || 100
             model.amount = currentItem.amount
             model.date = targetDate
+            model.yesterdayClose = currentItem.yesterdayClose
 
             chartDataList.push(model)
           })

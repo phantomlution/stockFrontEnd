@@ -6,9 +6,6 @@
       <stock-trend :code="code" v-if="code" @dblclick="displayItem"/>
     </div>
     <div>
-      <stock-kline :code="code" v-if="code" @dblclick="displayItem"/>
-    </div>
-    <div>
       <!-- 分时成交 -->
       <lr-stick-bar title="分时成交" ref="bar" top="50%" v-if="code">
         <stock-history-tick :code="code" :date.sync="historyDate" :height="400" style="min-width: 66vw;min-height: 400px"/>
@@ -19,7 +16,6 @@
 
 <script>
 import stockTrend from './trend.vue'
-import stockKline from './kline.vue'
 import stockHistoryTick from './historyTick.vue'
 
 const props = {
@@ -33,7 +29,6 @@ export default {
   props,
   components: {
     stockTrend,
-    stockKline,
     stockHistoryTick
   },
   data() {
