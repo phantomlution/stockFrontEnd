@@ -143,12 +143,15 @@ export default {
         htmlContent: (title, items) => {
           const itemHtmlList = []
           const yesterdayClose = Number(items.find(item => item.name === 'yesterdayClose').value)
+          const todayClose = Number(items.find(item => item.name === 'end').value)
+
+          itemHtmlList.push(this.getItemHtml('昨收', yesterdayClose))
           items.forEach(item => {
             const itemValue = item.value
             if (item.name === 'start') {
               itemHtmlList.push(this.getItemHtml('开盘', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
             } else if (item.name === 'end') {
-              itemHtmlList.push(this.getItemHtml('收盘', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+              itemHtmlList.push(this.getItemHtml('收盘', itemValue, getStockColor(todayClose - yesterdayClose)))
             } else if(item.name === 'max') {
               itemHtmlList.push(this.getItemHtml('最高', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
             } else if (item.name === 'min') {
@@ -157,6 +160,9 @@ export default {
               itemHtmlList.push(this.getItemHtml('成交额', `${ itemValue }亿`))
             }
           })
+          // 计算涨跌幅
+          const diff = increment(todayClose, yesterdayClose)
+          itemHtmlList.push(this.getItemHtml('涨跌幅', `${diff}%`, getStockColor(todayClose - yesterdayClose)))
 
           const nameItem = items.find(item => item.name === 'name')
           if (nameItem) {
