@@ -81,6 +81,9 @@
     methods: {
       addItem(model) {
         model.created = this.$moment().format('HH:mm')
+        if (this.current && this.current.id === model.id) {
+          return
+        }
         if(this.itemList.find(item => item.id === model.id)) {
           return
         }

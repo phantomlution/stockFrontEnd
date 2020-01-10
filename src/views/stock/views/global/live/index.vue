@@ -29,7 +29,12 @@ import { idGenerator } from '@/utils'
 import liveItem from './item.vue'
 
 const sensitiveWord = [
-  '在岸人民币', '现货钯金', 'Nymex钯金', '美元指数', 'Nymex美原油', '澳元兑美元'
+  '在岸人民币', '现货钯金', 'Nymex钯金', '美元指数', 'Nymex美原油', '澳元兑美元',
+  '工行纸钯金', '豆粕主连', '沪锌期货', '工行纸黄金', '沪燃料油期货', '美元兑离岸人民币',
+  '现货黄金', '美元指数', '中国INE原油', '国内期货主力合约', '工行天然气',
+  'LME铝期货', '铁矿石期货', '焦炭期货', '工行北美原油', '香港黄金',
+  '现货白银', '布伦特原油期货',
+  '\\d{1,2}月\\d{1,2}日银行间外汇'
 ]
 const contentFilterRegex = new RegExp(`^(${ sensitiveWord.map(word => '(' + word +')').join('|') })`)
 
