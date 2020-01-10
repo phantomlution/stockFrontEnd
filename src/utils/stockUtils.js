@@ -9,12 +9,6 @@ const TRADE_COUNT_ONE_YEAR = 210 // 每年的交易日数量
 
 export default class StockUtils {
 
-  static getAmountInMillionInDays(data, lastDays) { // 获取指定时间的成交额
-    const calculateDataList = lodash.takeRight(data, lastDays)
-    const waterList = calculateDataList.map(item => item.amountInMillion).filter(item => item !== null)
-    return lodash.round(lodash.mean(waterList), 2)
-  }
-
   static hasEverSuspend(dataList, threshold = MIN_CONTINUOUS_TRADE_DAYS) { // 判断是否有比较长的交易日无法交易（判断停牌等）
     // 尝试一下最大考虑1年的数据
     dataList = lodash.takeRight(dataList, TRADE_COUNT_ONE_YEAR)
@@ -47,14 +41,6 @@ export default class StockUtils {
       result += 1
     }
     return result
-  }
-
-  static isMakeShortPoint(yesterday, today) { // 是否当日交易量上升且价格下跌
-    return today.diff > yesterday.diff && today.close < yesterday.close
-  }
-
-  static isMakeLongPoint(yesterday, today) {
-    return today.diff < yesterday.diff && today.close > yesterday.close
   }
 
 }

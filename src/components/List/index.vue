@@ -19,7 +19,7 @@
           <!-- card view -->
           <div v-show="viewType === 'card'" style="display: flex">
             <div style="flex: 1">
-              <slot name="card" :row="currentItem" v-if="currentItem" />
+              <slot name="card" :row="currentItem" v-if="currentItem"/>
             </div>
         </div>
       </div>
@@ -78,19 +78,22 @@ export default {
     }
   },
   mounted() {
-    if (!this.hasCardView & this.hasTableView) {
+    if (!this.hasCardView) {
       this.viewType = 'table'
     }
+    console.log(this.hasTableView)
+    console.log(this.hasCardView)
+    console.log(this)
   },
   computed: {
-    hasTableView() { // 是否传入 table-column slot
-      return !!this.$slots['table-column']
-    },
-    hasCardView() { // 是否传入 card slot
-      return !!this.$slots['card']
-    },
     showChangeViewButton() { // 是否显示切换视图按钮
       return this.hasTableView & this.hasCardView
+    },
+    hasTableView() { // 是否传入 table-column slot
+      return !!this.$scopedSlots['table-column']
+    },
+    hasCardView() { // 是否传入 card slot
+      return !!this.$scopedSlots['card']
     },
     isEmpty() {
       return this.data.length === 0
