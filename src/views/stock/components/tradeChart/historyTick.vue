@@ -1,5 +1,5 @@
 <template>
-  <lr-box style="margin-top: 16px" v-if="stockCode">
+  <lr-box v-if="stockCode">
     <div slot="title">
       <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
       <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />

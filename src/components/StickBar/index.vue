@@ -1,6 +1,6 @@
 <template>
   <div :style="containerStyle">
-    <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="uniqueClass">
+    <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="customClass">
       <el-button slot="reference" type="primary" @click.stop="toggleContent">{{ title }}</el-button>
       <div>
         <slot />
@@ -30,6 +30,10 @@ const props = {
   keepAlive: { // 是否保持 slot 中组件的状态（例如表格）
     type: Boolean,
     default: false
+  },
+  clearPadding: {
+    type: Boolean,
+    default: false
   }
 }
 export default {
@@ -37,12 +41,19 @@ export default {
   props,
   data() {
     return {
-      uniqueClass: idGenerator.next('lr-popover-unique'),
+      uniqueClass: idGenerator.next('lr-popover-unique'), // 用于外部获取当前DOM
       containerVisible: false, // 容器是否可见
       contentVisible: false // 内容是否课件
     }
   },
   computed: {
+    customClass() {
+      const classList = [this.uniqueClass]
+      if (this.clearPadding) {
+        classList.push('lr-clear')
+      }
+      return classList.join(' ')
+    },
     manual() {
       return this.keepAlive
     },

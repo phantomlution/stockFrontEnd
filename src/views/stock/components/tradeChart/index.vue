@@ -7,7 +7,7 @@
     </div>
     <div>
       <!-- 分时成交 -->
-      <lr-stick-bar title="分时成交" ref="bar" top="50%" v-if="code">
+      <lr-stick-bar title="分时成交" :clearPadding="true" ref="bar" top="50%" v-if="code">
         <stock-history-tick :code="code" :date.sync="historyDate" :height="400" style="min-width: 66vw;min-height: 400px"/>
       </lr-stick-bar>
     </div>
