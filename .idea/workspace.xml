@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/KLine/index.vue" afterPath="$PROJECT_DIR$/src/components/KLine/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -56,7 +56,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="266">
@@ -89,18 +89,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/KLine/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="14" column="39" lean-forward="false" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
+            <state relative-caret-position="246">
+              <caret line="100" column="9" lean-forward="false" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
               <folding>
                 <element signature="e#100#150#0" expanded="true" />
-                <marker date="1578666262000" expanded="true" signature="3115:3280" ph="..." />
-                <marker date="1578666262000" expanded="true" signature="3234:3240" ph="..." />
-                <marker date="1578666262000" expanded="true" signature="3266:3267" ph="..." />
-                <marker date="1578666262000" expanded="true" signature="4683:4701" ph="..." />
-                <marker date="1578666262000" expanded="true" signature="4702:4834" ph="..." />
+                <marker date="1578667655000" expanded="true" signature="3214:3379" ph="..." />
+                <marker date="1578667655000" expanded="true" signature="3333:3339" ph="..." />
+                <marker date="1578667655000" expanded="true" signature="3365:3366" ph="..." />
+                <marker date="1578667655000" expanded="true" signature="4782:4800" ph="..." />
+                <marker date="1578667655000" expanded="true" signature="4801:4933" ph="..." />
               </folding>
             </state>
           </provider>
@@ -110,7 +110,7 @@
         <entry file="file://$PROJECT_DIR$/src/components/Chart/index.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="247">
-              <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+              <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
               <folding>
                 <marker date="1578666213000" expanded="true" signature="1942:2018" ph="..." />
                 <marker date="1578666213000" expanded="true" signature="2019:2057" ph="..." />
@@ -123,7 +123,7 @@
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="246">
-              <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+              <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -275,11 +275,11 @@
         <option value="$PROJECT_DIR$/src/views/stock/components/bulkStockComparison.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
         <option value="$PROJECT_DIR$/src/components/Chart/index.vue" />
-        <option value="$PROJECT_DIR$/src/components/KLine/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" />
         <option value="$PROJECT_DIR$/src/components/StickBar/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/index.vue" />
+        <option value="$PROJECT_DIR$/src/components/KLine/index.vue" />
       </list>
     </option>
   </component>
@@ -895,14 +895,7 @@
       <workItem from="1578444790514" duration="6780000" />
       <workItem from="1578531743381" duration="7203000" />
       <workItem from="1578581787654" duration="293000" />
-      <workItem from="1578617848832" duration="14002000" />
-    </task>
-    <task id="LOCAL-00221" summary="修复风险检测的问题">
-      <created>1577610178367</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1577610178367</updated>
+      <workItem from="1578617848832" duration="14226000" />
     </task>
     <task id="LOCAL-00222" summary="重构日历组件">
       <created>1577623146166</created>
@@ -1240,11 +1233,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578667055450</updated>
     </task>
-    <option name="localTasksCounter" value="270" />
+    <task id="LOCAL-00270" summary="样式优化">
+      <created>1578667343810</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1578667343810</updated>
+    </task>
+    <option name="localTasksCounter" value="271" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="935971000" />
+    <option name="totallyTimeSpent" value="936195000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1290,7 +1290,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32763532" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4002849" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3148148" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3148148" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34304208" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24358974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1312,7 +1312,6 @@
     <MESSAGE value="优化stickbar" />
     <MESSAGE value="集成板块内部比较" />
     <MESSAGE value="聚合股票趋势，K线和历史分时图" />
-    <MESSAGE value="样式优化" />
     <MESSAGE value="修复实时图像数据问题" />
     <MESSAGE value="优化新闻获取" />
     <MESSAGE value="bug修复" />
@@ -1334,7 +1333,8 @@
     <MESSAGE value="集成1.0版全集成K线图，UI还在优化中" />
     <MESSAGE value="集成板K线图DONE" />
     <MESSAGE value="优化所有股票相关图表展示" />
-    <option name="LAST_COMMIT_MESSAGE" value="优化所有股票相关图表展示" />
+    <MESSAGE value="样式优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="样式优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1659,25 +1659,10 @@
     <entry file="file://$PROJECT_DIR$/src/components/Chart/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
-          <caret line="123" column="0" lean-forward="true" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+          <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
           <folding>
             <marker date="1578666213000" expanded="true" signature="1942:2018" ph="..." />
             <marker date="1578666213000" expanded="true" signature="2019:2057" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/KLine/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="14" column="39" lean-forward="false" selection-start-line="14" selection-start-column="39" selection-end-line="14" selection-end-column="39" />
-          <folding>
-            <element signature="e#100#150#0" expanded="true" />
-            <marker date="1578666262000" expanded="true" signature="3115:3280" ph="..." />
-            <marker date="1578666262000" expanded="true" signature="3234:3240" ph="..." />
-            <marker date="1578666262000" expanded="true" signature="3266:3267" ph="..." />
-            <marker date="1578666262000" expanded="true" signature="4683:4701" ph="..." />
-            <marker date="1578666262000" expanded="true" signature="4702:4834" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1711,7 +1696,7 @@
     <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
-          <caret line="128" column="0" lean-forward="true" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+          <caret line="128" column="0" lean-forward="false" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1723,6 +1708,21 @@
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#el-drawer#0;n#template#0;n#!!top" expanded="true" />
             <element signature="e#1337#1371#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/KLine/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="100" column="9" lean-forward="false" selection-start-line="100" selection-start-column="9" selection-end-line="100" selection-end-column="9" />
+          <folding>
+            <element signature="e#100#150#0" expanded="true" />
+            <marker date="1578667655000" expanded="true" signature="3214:3379" ph="..." />
+            <marker date="1578667655000" expanded="true" signature="3333:3339" ph="..." />
+            <marker date="1578667655000" expanded="true" signature="3365:3366" ph="..." />
+            <marker date="1578667655000" expanded="true" signature="4782:4800" ph="..." />
+            <marker date="1578667655000" expanded="true" signature="4801:4933" ph="..." />
           </folding>
         </state>
       </provider>

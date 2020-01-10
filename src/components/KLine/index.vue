@@ -93,7 +93,12 @@ export default {
       const kView = chart.view()
       kView.area().position('date*amount').color('#64b5f6').tooltip(false)
       kView.axis('amount', {
-        position: 'right'
+        position: 'right',
+        label: {
+          formatter: val => {
+            return val + '亿'
+          }
+        }
       })
       kView.axis('range', {
         position: 'left'
