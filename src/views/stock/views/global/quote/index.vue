@@ -22,7 +22,7 @@ export default {
       quote: {
         xau: { // 现货黄金
           price: null,
-          diff: null
+          diff: 0
         }
       }
     }

@@ -11,7 +11,7 @@
         <el-date-picker type="datetime" v-model="formModel.time" ></el-date-picker>
       </el-form-item>
       <el-form-item label="股票代码" prop="stockCode" v-if="formModel.type === 'stock'" :rules="[ { required: true }]">
-        <search-stock v-model="formModel.stockCode"/>
+        <item-search v-model="formModel.stockCode"/>
       </el-form-item>
       <el-form-item label="事件名称" prop="eventId" :rules="[ { required: true, message: '请选择相关事件' } ]" v-if="formModel.type === 'custom'">
         <div style="display: flex">
@@ -55,11 +55,11 @@
 </template>
 
 <script>
-import searchStock from '@/views/stock/components/searchStock'
+import itemSearch from '@/views/stock/components/itemSearch'
 
 export default {
   components: {
-    searchStock
+    itemSearch
   },
   data() {
     return {

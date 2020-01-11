@@ -19,12 +19,6 @@
         </span>
         <lr-chart ref="northChart" :height="height" :usePadding="useChartPadding" />
       </div>
-      <div v-if="showSouthChart">
-        <span v-if="!lightMode">
-          南向资金(亿元)
-        </span>
-        <lr-chart ref="southChart" :height="height" :usePadding="useChartPadding" />
-      </div>
     </div>
   </div>
 </template>
@@ -89,17 +83,18 @@ export default {
 
       const query = {
         live: this.live,
-        date
+        date,
+        code: 'CAPITAL.NORTH'
       }
 
-      this.$http.get(`/api/stock/capital/hotMoney`, query).then(result => {
+      this.$http.get(`/api/stock/capital/hotMoney`, query).then(response => {
         // 生成数据
-        const northChartData = this.getChartData('s2n', result)
-        const southChartData = this.getChartData('n2s', result)
+        const northChartData = this.getChartData(response.list)
+//        const southChartData = this.getChartData('n2s', result)
 
         // 生成文本
         this.northAnalyzeModel = this.getAnalyzeModel(northChartData)
-        this.southAnalyzeModel = this.getAnalyzeModel(southChartData)
+//        this.southAnalyzeModel = this.getAnalyzeModel(southChartData)
 
         // 更新图表
         this.showNorthChart && this.renderChart('northChart', northChartData, [
@@ -108,11 +103,11 @@ export default {
           '北向资金'
         ])
 
-        this.showSouthChart && this.renderChart('southChart', southChartData, [
-          '港股通(沪)',
-          '港股通(深)',
-          '南向资金'
-        ])
+//        this.showSouthChart && this.renderChart('southChart', southChartData, [
+//          '港股通(沪)',
+//          '港股通(深)',
+//          '南向资金'
+//        ])
 
       }).catch(_ => {
         console.error(_)
@@ -130,19 +125,17 @@ export default {
         "min": minValue ? minValue.value : ''
       }
     },
-    getChartData(key, response) {
+    getChartData(response) {
       const result = []
 
-      response[key].forEach((_item, _itemIndex) => {
-        let item = _item.split(',')
-
+      response.forEach(item => {
         function getLastResult(val) {
           val = Number(val)
-          return Number((val / 10000).toFixed(2))
+          return Number((val / 10000 / 10000).toFixed(2))
         }
-        let time = this.appendDate(item[0])
-        let huAmount = item[1] ? getLastResult(item[1]) : null
-        let shenAmount = item[3] ? getLastResult(item[3]) : null
+        let time = this.appendDate(item.time)
+        let huAmount = getLastResult(item['huAmount'])
+        let shenAmount = getLastResult(item['shenAmount'])
         let totalAmount = (huAmount && shenAmount) ?Number((huAmount + shenAmount).toFixed(2)) : null
 
         result.push({

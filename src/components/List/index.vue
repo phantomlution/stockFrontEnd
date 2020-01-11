@@ -81,9 +81,6 @@ export default {
     if (!this.hasCardView) {
       this.viewType = 'table'
     }
-    console.log(this.hasTableView)
-    console.log(this.hasCardView)
-    console.log(this)
   },
   computed: {
     showChangeViewButton() { // 是否显示切换视图按钮

@@ -40,8 +40,8 @@ export default {
     /**
      * 数据初始化
      */
-    // 加载股票代码表
-    this.$store.dispatch('getStockCodeList')
+    // 加载搜索项
+    this.$store.dispatch('loadSearchOptionList')
     // 加载自选股票池
     this.$store.dispatch('getStockPoolList')
     // 加载最近的市场交易日

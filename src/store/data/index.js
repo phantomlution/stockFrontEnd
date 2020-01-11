@@ -8,11 +8,15 @@ export default {
   state: {
     blackList, // 黑名单
     stockMap: new Map(), // 股票数据
+    searchOptionList: [],
     codeList: [],
     marketHeat: [],
     lowPriceCount: [],
     tradeDateList: [], // 交易日列表
     marketPriceMap: new Map(), // 市场价格
+  },
+  getters: {
+    searchOptionList: state => state.searchOptionList
   },
   mutations: {
     updateData(state, { key, data }) {
@@ -99,6 +103,16 @@ export default {
     },
     getThemeList() {
       return http.get(`/api/stock/theme/market`)
+    },
+    loadSearchOptionList(context) {
+      return new Promise((resolve, reject) => {
+        http.get(`/api/data/search/option`).then(list => {
+          context.state.searchOptionList = list
+          resolve()
+        }).catch(_ => {
+          reject(_)
+        })
+      })
     }
   }
 }

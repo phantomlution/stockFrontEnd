@@ -1,7 +1,7 @@
 <template>
   <lr-box v-if="stockCode">
     <div slot="title">
-      <search-stock v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
+      <item-search v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
       <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
       <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
       <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import searchStock from '@/views/stock/components/searchStock'
+import itemSearch from '@/views/stock/components/itemSearch'
 import { STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
 import stockPriceChart from '../stockPriceChart.vue'
 import lodash from 'lodash'
@@ -39,7 +39,7 @@ const props = {
 export default {
   props,
   components: {
-    searchStock,
+    itemSearch,
     stockPriceChart
   },
   data() {

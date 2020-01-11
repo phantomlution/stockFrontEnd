@@ -3,7 +3,7 @@
     <div style="padding: 8px">
       <el-form :inline="true">
         <el-form-item label="股票代码：">
-          <search-stock v-model="stockCode" ref="searchStock" @change="searchStock"/>
+          <item-search ref="searchStock" @change="searchStock"/>
         </el-form-item>
       </el-form>
       <stock-trade-chart :code="stockCode" ></stock-trade-chart>
@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import searchStock from '@/views/stock/components/searchStock.vue'
+import itemSearch from '@/views/stock/components/itemSearch.vue'
 import stockAssistant from './stockAssistant.vue'
 import tempAnalyze from './tempAnalyze.vue'
 import stockTradeChart from '@/views/stock/components/tradeChart/index.vue'
 
 export default {
   components: {
-    searchStock,
+    itemSearch,
     stockAssistant,
     tempAnalyze,
     stockTradeChart
@@ -41,6 +41,10 @@ export default {
   },
   methods: {
     searchStock(code) {
+      console.log(code)
+      this.stockCode = code
+
+      return
       this.$bus.$emit('searchStockDetail', {
         code
       })
