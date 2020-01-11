@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/KLine/index.vue" afterPath="$PROJECT_DIR$/src/components/KLine/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/store/data/index.js" afterPath="$PROJECT_DIR$/src/store/data/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/stock.js" afterPath="$PROJECT_DIR$/src/utils/stock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -1059,14 +1055,7 @@
       <workItem from="1578617848832" duration="18432000" />
       <workItem from="1578672614784" duration="1073000" />
       <workItem from="1578712749396" duration="5132000" />
-      <workItem from="1578743168861" duration="5228000" />
-    </task>
-    <task id="LOCAL-00226" summary="集成股票实时数据">
-      <created>1577701402308</created>
-      <option name="number" value="00226" />
-      <option name="presentableId" value="LOCAL-00226" />
-      <option name="project" value="LOCAL" />
-      <updated>1577701402310</updated>
+      <workItem from="1578743168861" duration="5237000" />
     </task>
     <task id="LOCAL-00227" summary="集成股票实时数据">
       <created>1577712693618</created>
@@ -1404,11 +1393,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578729968801</updated>
     </task>
-    <option name="localTasksCounter" value="275" />
+    <task id="LOCAL-00275" summary="对齐所有交易相关数据">
+      <created>1578762857094</created>
+      <option name="number" value="00275" />
+      <option name="presentableId" value="LOCAL-00275" />
+      <option name="project" value="LOCAL" />
+      <updated>1578762857094</updated>
+    </task>
+    <option name="localTasksCounter" value="276" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="951834000" />
+    <option name="totallyTimeSpent" value="951843000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1473,7 +1469,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="优化新闻获取" />
     <MESSAGE value="bug修复" />
     <MESSAGE value="修复组件状态同步" />
     <MESSAGE value="完成list组件alpha版本，数据分析效率爆炸" />
@@ -1498,7 +1493,8 @@
     <MESSAGE value="优化K线展示" />
     <MESSAGE value="修复list组件中判断组件是否传入的 bug" />
     <MESSAGE value="集成所有类型的数据源ing" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成所有类型的数据源ing" />
+    <MESSAGE value="对齐所有交易相关数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="对齐所有交易相关数据" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
