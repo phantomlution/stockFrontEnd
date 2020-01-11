@@ -33,21 +33,17 @@ export default class Stock {
 
     const result = []
     return this.rawData.map(todayData => {
-      const timestamp = todayData.timestamp
+
       return {
         code: this.code,
-        timestamp,
+        date: todayData.date,
         close: todayData.close,
         max: todayData.max,
         min: todayData.min,
         open: todayData.open,
-        percent: todayData.percent,
         amount: todayData.amount,
         amountInMillion: todayData.amountInMillion,
-        turnoverRate: todayData.turnoverRate,
-        date: stockUtils.dateFormat(timestamp),
-        lastDataTimestamp: timestamp,
-        yesterdayClose: lodash.round(todayData.close / (1 + todayData.percent / 100) , 2),
+        yesterdayClose: todayData.pre_close
       }
     })
   }

@@ -11,6 +11,9 @@ import lodash from 'lodash'
 export default {
   name: 'KLine',
   methods: {
+    divideByOneHundredMillion(val) { // 除以一亿
+      return lodash.round(val / 10000 / 10000, 2)
+    },
     parseDataList(rawDataList) {
       const result = rawDataList.map(item => {
         const model = {
@@ -19,7 +22,7 @@ export default {
           max: item.max,
           min: item.min,
           volume: item.volume,
-          amount: lodash.round(item.amount / 10000 / 10000, 2),
+          amount: this.divideByOneHundredMillion(item.amount),
           date: item.date,
           yesterdayClose: item.yesterdayClose,
           name: item.name
@@ -35,9 +38,27 @@ export default {
         return model
       })
 
+      // 判断是否需要对数据单位进行放大
+      let unit = ''
+      if (result[0].start >= 1000 * 10000) {
+        unit = '亿'
+        result.forEach(item => {
+          item.start = this.divideByOneHundredMillion(item.start)
+          item.end = this.divideByOneHundredMillion(item.end)
+          item.max = this.divideByOneHundredMillion(item.max)
+          item.min = this.divideByOneHundredMillion(item.min)
+          item.yesterdayClose = this.divideByOneHundredMillion(item.yesterdayClose)
+
+          item.range = [item.start, item.end, item.max, item.min]
+        })
+      }
+
       this.beautify(result)
 
-      return result
+      return {
+        unit,
+        dataList: result
+      }
     },
     beautify(dataList) { // 点数过少，左侧坐标轴会被遮挡，左右各补上一个点
       if (dataList.length >= 60) {
@@ -69,9 +90,8 @@ export default {
 
     },
     renderChart(rawDataList, config = {}) {
-      const dataList = this.parseDataList(rawDataList)
+      const { dataList, unit } = this.parseDataList(rawDataList)
       const { scale, assistantLine = [] } = config
-      console.log(assistantLine)
 
       const chartRef = this.$refs.chart
       const chart = chartRef.getChart()
@@ -101,7 +121,12 @@ export default {
         }
       })
       kView.axis('range', {
-        position: 'left'
+        position: 'left',
+        label: {
+          formatter: val => {
+            return val + unit
+          }
+        }
       })
 
       kView.source(dataList)

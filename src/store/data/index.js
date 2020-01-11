@@ -44,19 +44,7 @@ export default {
           const base = responseList[0]['base']
           const source = responseList[0]['data']
 
-          // 重新格式化数据
-          const rawData = source.data.map(item => {
-            let model = Object.create(null)
-            for(let i=0; i<source.column.length; i++) {
-              let column = source.column[i]
-              model[column] = item[i]
-            }
-            // 强制转换日期格式
-            model.timestamp = $moment(model.date).toDate().getTime()
-            return model
-          })
-
-          const stock = new Stock(base, rawData)
+          const stock = new Stock(base, source)
           stockMap.set(code, stock)
           resolve(stockMap.get(code))
         }).catch(_ => {

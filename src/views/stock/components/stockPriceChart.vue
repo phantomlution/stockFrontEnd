@@ -18,6 +18,9 @@ const props = {
 export default {
   props,
   methods: {
+    divideByOneHundredMillion(val) { // 除以一亿
+      return lodash.round(val / 10000 / 10000, 2)
+    },
     updateChart(itemList, preClose) {
       const chart = this.$refs.chart.getChart()
 
@@ -29,25 +32,42 @@ export default {
         }
       })
 
+      // 优化单位
+      let unit = ''
+      if (dataList[0].value > 100 * 10000) {
+        unit = '亿'
+        preClose = this.divideByOneHundredMillion(preClose)
+        dataList.forEach(item => {
+          item.value = this.divideByOneHundredMillion(item.value)
+        })
+      }
+
       const tickList = this.getTickList(preClose, dataList)
 
       chart.source(dataList, this.getChartConfig(preClose, tickList))
-      this.addChartAssistantElement(chart, preClose, tickList, dataList)
+      this.addChartAssistantElement(chart, preClose, tickList, dataList, unit)
       chart.line().position('time*value').tooltip('value*increment')
 
       chart.render()
     },
-    addChartAssistantElement(chart, preClose, tickList, dataList) { // 添加辅助元素
+    addChartAssistantElement(chart, preClose, tickList, dataList, unit) { // 添加辅助元素
       const chartRef = this.$refs.chart
 
       chart.axis('value', {
         label: {
           htmlTemplate: value => {
             const color = getStockColor(value - preClose)
-            return `<span style="font-size: 13px;margin-left: -48px;color:${ color }">${ Number(value).toFixed(2) }</span>`
+            return `<span style="font-size: 13px;margin-left: -64px;color:${ color }">${ Number(value).toFixed(2) }${unit}</span>`
           }
         },
       })
+
+      chart.tooltip({
+        crosshairs: {
+          type: 'cross'
+        }
+      })
+
       tickList.forEach(tick => {
         chart.guide().text({
           top: true,
