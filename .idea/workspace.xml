@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/index.js" afterPath="$PROJECT_DIR$/src/utils/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -28,10 +27,11 @@
       <file leaf-file-name="stockPriceChart.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-627">
-              <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+            <state relative-caret-position="297">
+              <caret line="137" column="21" lean-forward="false" selection-start-line="137" selection-start-column="21" selection-end-line="137" selection-end-column="21" />
               <folding>
-                <marker date="1578834386000" expanded="true" signature="2185:2255" ph="..." />
+                <element signature="e#146#246#0" expanded="true" />
+                <marker date="1578834477000" expanded="true" signature="2185:2255" ph="..." />
               </folding>
             </state>
           </provider>
@@ -1042,14 +1042,7 @@
       <workItem from="1578712749396" duration="5132000" />
       <workItem from="1578743168861" duration="7146000" />
       <workItem from="1578794386886" duration="3108000" />
-      <workItem from="1578819882186" duration="12755000" />
-    </task>
-    <task id="LOCAL-00233" summary="优化历史分时成交">
-      <created>1578056855712</created>
-      <option name="number" value="00233" />
-      <option name="presentableId" value="LOCAL-00233" />
-      <option name="project" value="LOCAL" />
-      <updated>1578056855713</updated>
+      <workItem from="1578819882186" duration="12841000" />
     </task>
     <task id="LOCAL-00234" summary="页面优化">
       <created>1578066821408</created>
@@ -1387,11 +1380,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578832830157</updated>
     </task>
-    <option name="localTasksCounter" value="282" />
+    <task id="LOCAL-00282" summary="优化图像坐标位置">
+      <created>1578834415111</created>
+      <option name="number" value="00282" />
+      <option name="presentableId" value="LOCAL-00282" />
+      <option name="project" value="LOCAL" />
+      <updated>1578834415111</updated>
+    </task>
+    <option name="localTasksCounter" value="283" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="969615000" />
+    <option name="totallyTimeSpent" value="969701000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1458,7 +1458,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="重构详情页面" />
     <MESSAGE value="集成所有新消息阅读快速视图" />
     <MESSAGE value="集成全局快速消息阅读器" />
     <MESSAGE value="页面逻辑优化" />
@@ -1483,7 +1482,8 @@
     <MESSAGE value="分时成交优化" />
     <MESSAGE value="优化dashboard, 效率翻倍" />
     <MESSAGE value="提高fastReader阅读效率" />
-    <option name="LAST_COMMIT_MESSAGE" value="提高fastReader阅读效率" />
+    <MESSAGE value="优化图像坐标位置" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化图像坐标位置" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1891,10 +1891,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-627">
-          <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+        <state relative-caret-position="297">
+          <caret line="137" column="21" lean-forward="false" selection-start-line="137" selection-start-column="21" selection-end-line="137" selection-end-column="21" />
           <folding>
-            <marker date="1578834386000" expanded="true" signature="2185:2255" ph="..." />
+            <element signature="e#146#246#0" expanded="true" />
+            <marker date="1578834477000" expanded="true" signature="2185:2255" ph="..." />
           </folding>
         </state>
       </provider>

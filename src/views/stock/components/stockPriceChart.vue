@@ -135,7 +135,7 @@ export default {
           style: {
             fill: getStockColor(tick - preClose)
           },
-          offsetX: 0
+          offsetX: 10
         })
       })
 
