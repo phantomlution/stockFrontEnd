@@ -128,3 +128,18 @@ export const getStockColor = function(diff) {
     return '#7b7b7b'
   }
 }
+
+/**
+ * 计算字节长度
+ */
+export const getStringByteLength = function(text) {
+  let length = 0
+  for(let i=0; i<text.length; i++) {
+    if (text.charCodeAt(i) > 255) {
+      length += 2
+    } else {
+      length += 1
+    }
+  }
+  return length
+}

@@ -6,7 +6,7 @@
 
 <script>
 import { addStockDailyCoordinate, STOCK_COORDINATE_DATE, generateTooltip } from '@/utils/ChartUtils'
-import { increment, getStockColor } from '@/utils'
+import { increment, getStockColor, getStringByteLength } from '@/utils'
 import lodash from 'lodash'
 
 const props = {
@@ -70,17 +70,15 @@ export default {
     },
     addChartAssistantElement(chart, preClose, tickList, dataList, unit) { // 添加辅助元素
       const chartRef = this.$refs.chart
-      let marginLeft= 48
-      if (unit) {
-        marginLeft += 16
-      }
 
       chart.axis('value', {
         position: 'left',
         label: {
           htmlTemplate: value => {
             const color = getStockColor(value - preClose)
-            return `<span style="font-size: 13px;margin-left: -${marginLeft}px;color:${ color }">${ Number(value).toFixed(2) }${unit}</span>`
+            const str = `${ Number(value).toFixed(2) }${unit}`
+
+            return `<span style="font-size: 13px;margin-left: -${getStringByteLength(str) * 7}px;color:${ color }">${ str }</span>`
           }
         },
       })
