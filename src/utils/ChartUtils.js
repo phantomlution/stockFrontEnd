@@ -24,3 +24,18 @@ export const addStockDailyCoordinate = function(chartInstance) {
     }
   })
 }
+
+const getTooltipItemHtml = function(name, value, color){
+  return `<div class="lr-tooltip__item">
+            <div class="lr-tooltip__item--label">${ name }</div>
+            <div class="lr-tooltip__item--value" style="color:${color}">${ value }</div>
+          </div>`
+}
+
+export const generateTooltip = function(title, itemList) { // 生成自定义tooltip
+  return `<div class="lr-tooltip" style="position: absolute">
+            <div class="lr-tooltip__header">${ title }</div>
+            <div class="lr-tooltip__body">${ itemList.map(item => getTooltipItemHtml(item.name, item.value, item.color)).join('') }</div>
+          </div>`
+
+}

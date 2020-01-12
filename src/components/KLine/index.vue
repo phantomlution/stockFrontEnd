@@ -6,6 +6,7 @@
 
 <script>
 import { increment, getStockColor } from '@/utils'
+import { generateTooltip } from '@/utils/ChartUtils'
 import lodash from 'lodash'
 
 export default {
@@ -108,7 +109,7 @@ export default {
       })
 
       chart.legend(false)
-      this.customizeToolTip(chart)
+      this.customizeToolTip(chart, unit)
 
       const kView = chart.view()
       kView.area().position('date*amount').color('#64b5f6').tooltip(false)
@@ -152,52 +153,68 @@ export default {
 
       chart.render()
     },
-    getItemHtml(name, value, color) {
-      return `
-        <div class="lr-tooltip__item">
-          <div class="lr-tooltip__item--label">${ name }</div>
-          <div class="lr-tooltip__item--value" style="color:${color}">${ value }</div>
-        </div>`
-    },
-    customizeToolTip(chart) { // 自定义tooltip html
+    customizeToolTip(chart, unit) { // 自定义tooltip html
       chart.tooltip({
         crosshairs: {
           type: 'cross'
         },
         useHtml: true,
         htmlContent: (title, items) => {
-          const itemHtmlList = []
+          const itemList = []
           const yesterdayClose = Number(items.find(item => item.name === 'yesterdayClose').value)
           const todayClose = Number(items.find(item => item.name === 'end').value)
 
-          itemHtmlList.push(this.getItemHtml('昨收', yesterdayClose))
+          itemList.push({
+            name: '昨收',
+            value: `${yesterdayClose}${unit}`
+          })
           items.forEach(item => {
             const itemValue = item.value
             if (item.name === 'start') {
-              itemHtmlList.push(this.getItemHtml('开盘', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+              itemList.push({
+                name:'开盘',
+                value: `${itemValue}${unit}`,
+                color: getStockColor(Number(itemValue) - yesterdayClose)
+              })
             } else if (item.name === 'end') {
-              itemHtmlList.push(this.getItemHtml('收盘', itemValue, getStockColor(todayClose - yesterdayClose)))
+              itemList.push({
+                name: '收盘',
+                value: `${itemValue}${unit}`,
+                color: getStockColor(todayClose - yesterdayClose)
+              })
             } else if(item.name === 'max') {
-              itemHtmlList.push(this.getItemHtml('最高', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+              itemList.push({
+                name: '最高',
+                value: `${itemValue}${unit}`,
+                color: getStockColor(Number(itemValue) - yesterdayClose)
+              })
             } else if (item.name === 'min') {
-              itemHtmlList.push(this.getItemHtml('最低', itemValue, getStockColor(Number(itemValue) - yesterdayClose)))
+              itemList.push({
+                name: '最低',
+                value: `${itemValue}${unit}`,
+                color: getStockColor(Number(itemValue) - yesterdayClose)
+              })
             } else if (item.name === 'amount') {
-              itemHtmlList.push(this.getItemHtml('成交额', `${ itemValue }亿`))
+              itemList.push({
+                name: '成交额',
+                value: `${itemValue}亿`
+              })
             }
           })
           // 计算涨跌幅
           const diff = increment(todayClose, yesterdayClose)
-          itemHtmlList.push(this.getItemHtml('涨跌幅', `${diff}%`, getStockColor(todayClose - yesterdayClose)))
+          itemList.push({
+            name: '涨跌幅',
+            value: `${diff}%`,
+            color: getStockColor(todayClose - yesterdayClose)
+          })
 
           const nameItem = items.find(item => item.name === 'name')
           if (nameItem) {
             title = nameItem.value
           }
 
-          return `<div class="lr-tooltip" style="position: absolute">
-            <div class="lr-tooltip__header">${ title }</div>
-              <div>${ itemHtmlList.join('') }</div>
-            </div>`;
+          return generateTooltip(title, itemList)
         },
       })
     },
@@ -207,35 +224,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.lr-tooltip{
-  /*visibility: visible !important;*/
-  /*display: block !important;*/
-  padding: 8px;
-  font-size: 13px;
-  background: #FFFFFF;
-  border: 1px solid #97c8ff;
-}
-
-.lr-tooltip__header{
-  text-align: center;
-  margin-bottom: 8px;
-}
-
-.lr-tooltip__item{
-  display: flex;
-  width: 100px;
-  line-height: 20px;
-}
-
-.lr-tooltip__item--label{
-  width: 42px;
-  color: #b0b0b0;
-}
-
-.lr-tooltip__item--value{
-  flex: 1;
-  text-align: right;
-}
-</style>

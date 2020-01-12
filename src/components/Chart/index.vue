@@ -180,15 +180,55 @@ export default {
 </script>
 
 <style lang="scss">
-  .lr-chart-wrapper{
-    position: relative;
-  }
+.lr-chart-wrapper{
+  position: relative;
+}
 
-  .lr-chart__empty{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: rgba(0, 0, 0, 0.65)
-  }
+.lr-chart__empty{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(0, 0, 0, 0.65)
+}
 </style>
+
+<style lang="scss">
+.lr-tooltip{
+  /*visibility: visible !important;*/
+  /*display: block !important;*/
+  font-size: 13px;
+  background: #FFFFFF;
+  border: 1px solid #97c8ff;
+}
+
+.lr-tooltip__header{
+  text-align: center;
+  background: #edf5ff;
+  height: 30px;
+  line-height: 30px;
+  color: #000;
+  font-weight: 400;
+}
+
+.lr-tooltip__body{
+  padding: 8px;
+}
+
+.lr-tooltip__item{
+  display: flex;
+  width: 120px;
+  line-height: 20px;
+}
+
+.lr-tooltip__item--label{
+  width: 42px;
+  color: #b0b0b0;
+}
+
+.lr-tooltip__item--value{
+  flex: 1;
+  text-align: right;
+}
+</style>
+

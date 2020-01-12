@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { addStockDailyCoordinate, STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
+import { addStockDailyCoordinate, STOCK_COORDINATE_DATE, generateTooltip } from '@/utils/ChartUtils'
 import { increment, getStockColor } from '@/utils'
 import lodash from 'lodash'
 
@@ -65,6 +65,29 @@ export default {
       chart.tooltip({
         crosshairs: {
           type: 'cross'
+        },
+        useHtml: true,
+        htmlContent: (title, items) => {
+          const itemList = []
+          items.forEach(item => {
+            const name = item.name
+            const value = item.value
+            if (name === 'value') {
+              itemList.push({
+                name: '价格',
+                value: `${value}${unit}`,
+                color: getStockColor(value - preClose)
+              })
+            } else if (name === 'increment') {
+              itemList.push({
+                name: '涨跌幅',
+                value: `${value}%`,
+                color: getStockColor(value)
+              })
+            }
+          })
+
+          return generateTooltip(title, itemList)
         }
       })
 
