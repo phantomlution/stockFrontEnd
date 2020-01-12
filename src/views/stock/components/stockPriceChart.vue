@@ -12,6 +12,10 @@ import lodash from 'lodash'
 const props = {
   height: {
     Number
+  },
+  lightMode: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -115,7 +119,7 @@ export default {
       }
 
       // 横坐标辅助线
-      addStockDailyCoordinate(chart)
+      addStockDailyCoordinate(chart, this.lightMode)
     },
     getChartConfig(close, tickList) { // 添加辅助元素
       return {

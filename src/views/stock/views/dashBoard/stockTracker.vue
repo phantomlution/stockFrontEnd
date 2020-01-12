@@ -12,20 +12,20 @@
           <el-tag effect="dark" type="primary">{{ stockPoolItem.weight }}x</el-tag>
         </template>
       </div>
-      <div v-if="biding && biding.yesterday">
-        <el-popover placement="bottom" v-model="liveVisible">
-          <div style="width: 540px">
-            <div v-if="yesterdayItem">
-              <span style="margin-left: 32px;">{{name}}(昨日成交{{ yesterdayItem.amount | amount }},目前进度为{{todayAmountPercent}})</span>
-            </div>
-            <div>
-              <real-time-deal :code="code" :name="name" :height="realTimeDealHeight" :yesterdayClose="biding.yesterday" :live="true" v-if="liveVisible"></real-time-deal>
-            </div>
-          </div>
+      <!--<div v-if="biding && biding.yesterday">-->
+        <!--<el-popover placement="bottom" v-model="liveVisible">-->
+          <!--<div style="width: 540px">-->
+            <!--<div v-if="yesterdayItem">-->
+              <!--<span style="margin-left: 32px;">{{name}}(昨日成交{{ yesterdayItem.amount | amount }},目前进度为{{todayAmountPercent}})</span>-->
+            <!--</div>-->
+            <!--<div>-->
+              <!--<real-time-deal :code="code" :name="name" :height="realTimeDealHeight" :yesterdayClose="biding.yesterday" :live="true" v-if="liveVisible"></real-time-deal>-->
+            <!--</div>-->
+          <!--</div>-->
 
-          <el-tag effect="dark" type="primary" slot="reference">实时</el-tag>
-        </el-popover>
-      </div>
+          <!--<el-tag effect="dark" type="primary" slot="reference">实时</el-tag>-->
+        <!--</el-popover>-->
+      <!--</div>-->
     </div>
     <el-card :style="cardStyle">
       <div slot="header">
@@ -44,39 +44,40 @@
           </span>
         </span>
       </div>
-      <div v-if="biding">
-        <el-form label-width="42px">
-          <el-row :gutter="0">
-            <el-col :span="12">
-              <el-form-item label="今开">
-                {{ biding.open}}
-                <lr-number-tag :amount="biding.openDiff" ></lr-number-tag>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="昨收" style="white-space: nowrap;overflow: hidden">
-                <span>{{ biding.yesterday }}</span>
-                <template v-if="yesterdayItem">
-                  <span :title="todayAmountPercent">({{ yesterdayItem.amount | amount }},{{todayAmountPercent}})</span>
-                </template>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="最高">
-                {{ biding.max || '-' }}
-                <lr-number-tag :amount="biding.maxDiff" ></lr-number-tag>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="最低">
-                {{ biding.min || '-' }}
-                <lr-number-tag :amount="biding.minDiff" ></lr-number-tag>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
+      <div v-if="biding" style="margin: -16px -16px -8px -16px;">
+        <real-time-deal :code="code" :name="name" :height="realTimeDealHeight" :lightMode="true" :yesterdayClose="biding.yesterday" :live="true"></real-time-deal>
+        <!--<el-form label-width="42px">-->
+          <!--<el-row :gutter="0">-->
+            <!--<el-col :span="12">-->
+              <!--<el-form-item label="今开">-->
+                <!--{{ biding.open}}-->
+                <!--<lr-number-tag :amount="biding.openDiff" ></lr-number-tag>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="12">-->
+              <!--<el-form-item label="昨收" style="white-space: nowrap;overflow: hidden">-->
+                <!--<span>{{ biding.yesterday }}</span>-->
+                <!--<template v-if="yesterdayItem">-->
+                  <!--<span :title="todayAmountPercent">({{ yesterdayItem.amount | amount }},{{todayAmountPercent}})</span>-->
+                <!--</template>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+          <!--</el-row>-->
+          <!--<el-row>-->
+            <!--<el-col :span="12">-->
+              <!--<el-form-item label="最高">-->
+                <!--{{ biding.max || '-' }}-->
+                <!--<lr-number-tag :amount="biding.maxDiff" ></lr-number-tag>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+            <!--<el-col :span="12">-->
+              <!--<el-form-item label="最低">-->
+                <!--{{ biding.min || '-' }}-->
+                <!--<lr-number-tag :amount="biding.minDiff" ></lr-number-tag>-->
+              <!--</el-form-item>-->
+            <!--</el-col>-->
+          <!--</el-row>-->
+        <!--</el-form>-->
       </div>
     </el-card>
   </div>
@@ -119,7 +120,7 @@ export default {
   },
   data(){
     return {
-      realTimeDealHeight: 240,
+      realTimeDealHeight: 160,
       liveVisible: false,
       eventKey: `STOCK_POOL_UPDATE_${ this.code }`,
       stockPoolItem: this.item,

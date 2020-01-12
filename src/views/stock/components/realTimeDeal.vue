@@ -1,6 +1,6 @@
 <template>
   <div>
-    <stock-price-chart ref="stockPrice" :height="height" />
+    <stock-price-chart ref="stockPrice" :height="height" :lightMode="lightMode" />
   </div>
 </template>
 
@@ -20,6 +20,10 @@ const props = {
   },
   yesterdayClose: {
     type: Number
+  },
+  lightMode: { // 是否使用轻量化模式，节省页面空间
+    type: Boolean,
+    default: false
   }
 }
 

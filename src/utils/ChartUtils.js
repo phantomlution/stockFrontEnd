@@ -11,10 +11,16 @@ export const COORDINATE_TIME_LIST = [
 ].map(item => `${ STOCK_COORDINATE_DATE } ${ item }:00`)
 
 // 生成坐标轴
-export const addStockDailyCoordinate = function(chartInstance) {
+export const addStockDailyCoordinate = function(chartInstance, lightMode=false) {
+  const coordinate_item_list = COORDINATE_TIME_LIST.filter((item, itemIndex) => {
+    if (!lightMode) {
+      return true
+    }
+    return itemIndex % 2 === 0
+  })
   chartInstance.scale('time', {
     type: 'timeCat',
-    ticks: COORDINATE_TIME_LIST.map(item => $moment(item).toDate().getTime()),
+    ticks: coordinate_item_list.map(item => $moment(item).toDate().getTime()),
     formatter: function(val) {
       let date_format = $moment(val).format('HH:mm')
       if (date_format === '11:30') {
