@@ -131,6 +131,9 @@
         }
       },
       toNext() {
+        if (this.collapse) {
+          return
+        }
         if (this.loading) {
           return this.$message.warning('有任务正在进行中')
         }

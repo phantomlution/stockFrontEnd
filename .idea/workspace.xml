@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -87,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+            <state relative-caret-position="304">
+              <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -121,7 +120,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/index.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
@@ -277,9 +276,9 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/global/live/index.vue" />
         <option value="$PROJECT_DIR$/src/utils/index.js" />
         <option value="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" />
       </list>
     </option>
   </component>
@@ -1038,14 +1037,7 @@
       <workItem from="1578712749396" duration="5132000" />
       <workItem from="1578743168861" duration="7146000" />
       <workItem from="1578794386886" duration="3108000" />
-      <workItem from="1578819882186" duration="13155000" />
-    </task>
-    <task id="LOCAL-00236" summary="集成指数和板块的历史分时">
-      <created>1578142860241</created>
-      <option name="number" value="00236" />
-      <option name="presentableId" value="LOCAL-00236" />
-      <option name="project" value="LOCAL" />
-      <updated>1578142860241</updated>
+      <workItem from="1578819882186" duration="13384000" />
     </task>
     <task id="LOCAL-00237" summary="优化stickbar">
       <created>1578151125094</created>
@@ -1383,11 +1375,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578837610343</updated>
     </task>
-    <option name="localTasksCounter" value="285" />
+    <task id="LOCAL-00285" summary="标签名称优化">
+      <created>1578837753468</created>
+      <option name="number" value="00285" />
+      <option name="presentableId" value="LOCAL-00285" />
+      <option name="project" value="LOCAL" />
+      <updated>1578837753469</updated>
+    </task>
+    <option name="localTasksCounter" value="286" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="970015000" />
+    <option name="totallyTimeSpent" value="970244000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1454,7 +1453,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="集成全局快速消息阅读器" />
     <MESSAGE value="页面逻辑优化" />
     <MESSAGE value="整合所有历史分时数据" />
     <MESSAGE value="集成其他交易市场的报价数据，目前只集成了现货黄金" />
@@ -1479,7 +1477,8 @@
     <MESSAGE value="提高fastReader阅读效率" />
     <MESSAGE value="优化图像坐标位置" />
     <MESSAGE value="UI优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI优化" />
+    <MESSAGE value="标签名称优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="标签名称优化" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1860,18 +1859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/historyFragment.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -1893,6 +1880,18 @@
         <state relative-caret-position="76">
           <caret line="4" column="33" lean-forward="false" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
