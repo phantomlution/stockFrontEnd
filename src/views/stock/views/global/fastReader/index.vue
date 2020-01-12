@@ -26,7 +26,7 @@
         <el-button circle icon="el-icon-d-arrow-right" ></el-button>
       </div>
     </div>
-    <div v-if="collapse" @click.stop="collapse = false" style="bottom: 0" class="lr-fast-reader__collapse">
+    <div v-if="collapse" @click.stop="collapse = false" style="bottom: -14px" class="lr-fast-reader__collapse">
       <el-button round icon="el-icon-d-arrow-left" ><el-badge :max="99" :value="collapseItemCount"></el-badge></el-button>
     </div>
   </div>
