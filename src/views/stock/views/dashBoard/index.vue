@@ -21,7 +21,7 @@
         <money-tracker />
       </div>
     </div>
-    <div style="margin-top: 16px;display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
+    <div style="display: grid;grid-template-columns: 1fr 1fr 1fr;grid-row-gap: 8px; grid-column-gap: 16px;">
       <stock-tracker :yesterday="yesterdayDate" :code="item.code" :name="item.name" :item="item" v-for="(item, itemIndex) of stockPool" :key="item.code"></stock-tracker>
     </div>
     <div style="margin-top: 16px;margin-bottom: 8px;">

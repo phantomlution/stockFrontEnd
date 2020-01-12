@@ -1,6 +1,6 @@
 <template>
   <div>
-    <stock-price-chart ref="stockPrice" :height="height" :lightMode="lightMode" />
+    <stock-price-chart ref="stockPrice" :padding="padding" :height="height" :lightMode="lightMode" />
   </div>
 </template>
 
@@ -33,6 +33,9 @@ const props = {
   duration: { // 更新间隔
     type: Number,
     default: 5
+  },
+  padding: {
+    type: Array
   }
 }
 
@@ -105,7 +108,6 @@ export default {
         statModel.amountPercent = lodash.round(statModel.amount / this.yesterdayAmount * 100, 0)
       }
       this.$emit('statChange', statModel)
-      console.log(statModel)
     }
   }
 }

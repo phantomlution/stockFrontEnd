@@ -31,7 +31,7 @@
         </span>
       </div>
       <div>
-        <real-time-deal v-if="dependency" :code="dependency.secid" :name="name" :height="realTimeDealHeight" :lightMode="true" :duration="interval" :yesterdayClose="dependency.yesterdayClose" :yesterdayAmount="dependency.yesterdayAmount" :live="true" @statChange="updateStatInfo"></real-time-deal>
+        <real-time-deal v-if="dependency" :padding="[20, 60, 20, 60]" :code="dependency.secid" :name="name" :height="realTimeDealHeight" :lightMode="true" :duration="interval" :yesterdayClose="dependency.yesterdayClose" :yesterdayAmount="dependency.yesterdayAmount" :live="true" @statChange="updateStatInfo"></real-time-deal>
       </div>
     </el-card>
   </div>
@@ -244,7 +244,7 @@ export default {
     padding: 16px;
   }
   .el-card__body{
-    padding: 8px;
+    padding: 0 8px 8px 8px;
     background: #FFFFFF;
   }
 }

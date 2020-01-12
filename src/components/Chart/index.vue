@@ -61,16 +61,17 @@ export default {
       if (this._chart) {
         this._chart.clear()
       } else {
+
         let height = this.height
         if (this.height <= 1) { //
           height = window.innerHeight * this.height
-        } else {
-          height = this.height
         }
-        let padding = [20, 30, 60, 30]
+
+        let padding = [20, 80, 20, 80]
         if (this.padding) {
           padding = this.padding
         }
+        console.log(padding)
 
         this._chart = new G2.Chart({
           container: this.chartId,

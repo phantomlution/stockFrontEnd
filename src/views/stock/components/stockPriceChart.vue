@@ -1,6 +1,6 @@
 <template>
   <div>
-    <lr-chart ref="chart"  :height="height" :legend="false" :reUse="false" />
+    <lr-chart ref="chart" :padding="padding" :height="height" :legend="false" :reUse="false" />
   </div>
 </template>
 
@@ -16,6 +16,9 @@ const props = {
   lightMode: {
     type: Boolean,
     default: false
+  },
+  padding: {
+    type: Array
   }
 }
 
@@ -61,7 +64,7 @@ export default {
 
       chart.area().position('time*amount').color('#64b5f6').tooltip(false)
 
-      chart.line().position('time*value').tooltip('value*increment')
+      chart.line().position('time*value').tooltip('value*increment*amount')
 
       chart.render()
     },
@@ -82,6 +85,7 @@ export default {
         },
       })
 
+      chart.legend(false)
       chart.axis('amount', false)
 
       chart.tooltip({
@@ -93,7 +97,7 @@ export default {
           const itemList = []
           items.forEach(item => {
             const name = item.name
-            const value = item.value
+            let value = item.value
             if (name === 'value') {
               itemList.push({
                 name: '价格',
@@ -105,6 +109,17 @@ export default {
                 name: '涨跌幅',
                 value: `${value}%`,
                 color: getStockColor(value)
+              })
+            } else if (name === 'amount') {
+              if (value > 1000 * 10000) {
+                value = `${ lodash.round(value / 10000 / 10000, 2)}亿`
+              } else {
+                value = `${ lodash.round(value / 10000, 2)}万`
+              }
+
+              itemList.push({
+                name: '成交量',
+                value
               })
             }
           })
