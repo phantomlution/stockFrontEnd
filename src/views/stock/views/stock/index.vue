@@ -2,7 +2,7 @@
   <div>
     <div style="padding: 8px">
       <el-form :inline="true">
-        <el-form-item label="股票代码：">
+        <el-form-item label="交易代码：">
           <item-search ref="searchStock" @change="searchStock"/>
         </el-form-item>
       </el-form>

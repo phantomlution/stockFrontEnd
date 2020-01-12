@@ -12,7 +12,7 @@
         <el-tabs v-model="currentTab" type="card" style="margin-top: 8px">
           <el-tab-pane label="每日分析" name="chessManual"></el-tab-pane>
           <el-tab-pane label="大事件" name="bigEvents"></el-tab-pane>
-          <el-tab-pane label="个股" name="stockDetail" ></el-tab-pane>
+          <el-tab-pane label="分析仪" name="stockDetail" ></el-tab-pane>
           <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
           <el-tab-pane label="宏观数据" name="宏观数据"></el-tab-pane>
           <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
