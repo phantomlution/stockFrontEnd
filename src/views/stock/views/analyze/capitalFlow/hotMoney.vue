@@ -17,7 +17,7 @@
         <span v-if="!lightMode">
           北向资金(亿元)
         </span>
-        <lr-chart ref="northChart" :height="height" :usePadding="useChartPadding" />
+        <lr-chart ref="northChart" :height="height" />
       </div>
     </div>
   </div>
@@ -65,9 +65,6 @@ export default {
     }
   },
   computed: {
-    useChartPadding() {
-      return !this.lightMode
-    },
     chart() {
       return this.$refs.chart.getChart()
     }
@@ -89,7 +86,7 @@ export default {
 
       this.$http.get(`/api/stock/capital/hotMoney`, query).then(response => {
         // 生成数据
-        const northChartData = this.getChartData(response.list)
+        const northChartData = this.getChartData(response.data)
 //        const southChartData = this.getChartData('n2s', result)
 
         // 生成文本

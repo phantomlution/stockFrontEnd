@@ -13,9 +13,8 @@ const props = {
     type: Number,
     default: 0.8
   },
-  usePadding: {
-    type: Boolean,
-    default: true
+  padding: {
+    type: Array
   },
   isEmpty: {
     type: Boolean,
@@ -69,12 +68,8 @@ export default {
           height = this.height
         }
         let padding = [20, 30, 60, 30]
-        if (this.usePadding) {
-          let paddingBottom = 20
-          if (this.legend) {
-            paddingBottom += 60
-          }
-          padding = [20, 80, paddingBottom, 80]
+        if (this.padding) {
+          padding = this.padding
         }
 
         this._chart = new G2.Chart({

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <lr-chart ref="chart" :height="height" :legend="false" :reUse="false" />
+    <lr-chart ref="chart"  :height="height" :legend="false" :reUse="false" />
   </div>
 </template>
 
@@ -32,6 +32,7 @@ export default {
         return {
           time: `${ STOCK_COORDINATE_DATE } ${ item.time }`,
           value: !item.price ? null : Number(item.price),
+          amount: item.amount,
           increment: !item.price ? null : increment(Number(item.price), preClose)
         }
       })
@@ -48,23 +49,40 @@ export default {
 
       const tickList = this.getTickList(preClose, dataList)
 
-      chart.source(dataList, this.getChartConfig(preClose, tickList))
+      chart.source(dataList, {
+        value: {
+          ticks: tickList,
+          max: lodash.max(tickList),
+          min: lodash.min(tickList),
+        }
+      })
+
       this.addChartAssistantElement(chart, preClose, tickList, dataList, unit)
+
+      chart.area().position('time*amount').color('#64b5f6').tooltip(false)
+
       chart.line().position('time*value').tooltip('value*increment')
 
       chart.render()
     },
     addChartAssistantElement(chart, preClose, tickList, dataList, unit) { // 添加辅助元素
       const chartRef = this.$refs.chart
+      let marginLeft= 48
+      if (unit) {
+        marginLeft += 16
+      }
 
       chart.axis('value', {
+        position: 'left',
         label: {
           htmlTemplate: value => {
             const color = getStockColor(value - preClose)
-            return `<span style="font-size: 13px;margin-left: -64px;color:${ color }">${ Number(value).toFixed(2) }${unit}</span>`
+            return `<span style="font-size: 13px;margin-left: -${marginLeft}px;color:${ color }">${ Number(value).toFixed(2) }${unit}</span>`
           }
         },
       })
+
+      chart.axis('amount', false)
 
       chart.tooltip({
         crosshairs: {
@@ -95,15 +113,16 @@ export default {
         }
       })
 
+      // 添加右侧辅助线
       tickList.forEach(tick => {
         chart.guide().text({
           top: true,
-          position: ['max', tick],
+          position: { time: 'max', value: tick },
           content: `${ Number(increment(tick, preClose)).toFixed(2) }%`,
           style: {
             fill: getStockColor(tick - preClose)
           },
-          offsetX: 16
+          offsetX: 0
         })
       })
 
@@ -113,25 +132,13 @@ export default {
       if (validPointList.length > 0) {
         const closeValue = validPointList[validPointList.length - 1].value
         chartRef.addAssistantLine(chart,{
-          start: ['min', closeValue],
-          end: ['max', closeValue]
+          start: { time: 'min', value: closeValue },
+          end: { time: 'max', value: closeValue }
         })
       }
 
       // 横坐标辅助线
       addStockDailyCoordinate(chart, this.lightMode)
-    },
-    getChartConfig(close, tickList) { // 添加辅助元素
-      return {
-        value: {
-          ticks: tickList,
-          max: lodash.max(tickList),
-          min: lodash.min(tickList),
-        },
-        percent: {
-          ticks: tickList.map(item => lodash.round((item - close) / close * 100, 2))
-        }
-      }
     },
     getTickList(close, dataList) { // 计算刻度点
       const maxItem = lodash.maxBy(dataList, item => item.value)

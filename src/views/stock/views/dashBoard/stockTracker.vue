@@ -12,20 +12,6 @@
           <el-tag effect="dark" type="primary">{{ stockPoolItem.weight }}x</el-tag>
         </template>
       </div>
-      <!--<div v-if="biding && biding.yesterday">-->
-        <!--<el-popover placement="bottom" v-model="liveVisible">-->
-          <!--<div style="width: 540px">-->
-            <!--<div v-if="yesterdayItem">-->
-              <!--<span style="margin-left: 32px;">{{name}}(昨日成交{{ yesterdayItem.amount | amount }},目前进度为{{todayAmountPercent}})</span>-->
-            <!--</div>-->
-            <!--<div>-->
-              <!--<real-time-deal :code="code" :name="name" :height="realTimeDealHeight" :yesterdayClose="biding.yesterday" :live="true" v-if="liveVisible"></real-time-deal>-->
-            <!--</div>-->
-          <!--</div>-->
-
-          <!--<el-tag effect="dark" type="primary" slot="reference">实时</el-tag>-->
-        <!--</el-popover>-->
-      <!--</div>-->
     </div>
     <el-card :style="cardStyle">
       <div slot="header">
@@ -33,51 +19,19 @@
         <span style="float: right;margin-left: 8px;margin-top: 1px" @click.stop="removeItem">
           <el-link icon="el-icon-close" />
         </span>
-        <span style="float: right; margin: 3px 0;" v-if="biding">
-          <lr-number-tag :amount="biding.currentDiff">
+        <span style="float: right; margin: 3px 0;" v-if="statModel">
+          <lr-number-tag :amount="statModel.priceDiff">
             <span slot="prepend">
-              {{ biding.current | price }}
+              {{ statModel.price | price }}
             </span>
           </lr-number-tag>
           <span style="font-size: 12px;font-weight: bold">
-            {{ biding.amount | amount }}
+            {{ statModel.amount | amount }}({{ statModel.amountPercent }}%)
           </span>
         </span>
       </div>
-      <div v-if="biding" style="margin: -16px -16px -8px -16px;">
-        <real-time-deal :code="code" :name="name" :height="realTimeDealHeight" :lightMode="true" :yesterdayClose="biding.yesterday" :live="true"></real-time-deal>
-        <!--<el-form label-width="42px">-->
-          <!--<el-row :gutter="0">-->
-            <!--<el-col :span="12">-->
-              <!--<el-form-item label="今开">-->
-                <!--{{ biding.open}}-->
-                <!--<lr-number-tag :amount="biding.openDiff" ></lr-number-tag>-->
-              <!--</el-form-item>-->
-            <!--</el-col>-->
-            <!--<el-col :span="12">-->
-              <!--<el-form-item label="昨收" style="white-space: nowrap;overflow: hidden">-->
-                <!--<span>{{ biding.yesterday }}</span>-->
-                <!--<template v-if="yesterdayItem">-->
-                  <!--<span :title="todayAmountPercent">({{ yesterdayItem.amount | amount }},{{todayAmountPercent}})</span>-->
-                <!--</template>-->
-              <!--</el-form-item>-->
-            <!--</el-col>-->
-          <!--</el-row>-->
-          <!--<el-row>-->
-            <!--<el-col :span="12">-->
-              <!--<el-form-item label="最高">-->
-                <!--{{ biding.max || '-' }}-->
-                <!--<lr-number-tag :amount="biding.maxDiff" ></lr-number-tag>-->
-              <!--</el-form-item>-->
-            <!--</el-col>-->
-            <!--<el-col :span="12">-->
-              <!--<el-form-item label="最低">-->
-                <!--{{ biding.min || '-' }}-->
-                <!--<lr-number-tag :amount="biding.minDiff" ></lr-number-tag>-->
-              <!--</el-form-item>-->
-            <!--</el-col>-->
-          <!--</el-row>-->
-        <!--</el-form>-->
+      <div>
+        <real-time-deal v-if="dependency" :code="dependency.secid" :name="name" :height="realTimeDealHeight" :lightMode="true" :duration="interval" :yesterdayClose="dependency.yesterdayClose" :yesterdayAmount="dependency.yesterdayAmount" :live="true" @statChange="updateStatInfo"></real-time-deal>
       </div>
     </el-card>
   </div>
@@ -87,8 +41,6 @@
 import lodash from 'lodash'
 import { deepClone} from '@/utils'
 import realTimeDeal from '@/views/stock/components/realTimeDeal.vue'
-import scheduleMixin, { STOP_CALLBACK_FOR_STOCK } from '@/mixins/schedule'
-
 
 const props = {
   name: {
@@ -114,19 +66,16 @@ const attention_interval = 5
 
 export default {
   props,
-  mixins: [scheduleMixin],
   components: {
     realTimeDeal
   },
   data(){
     return {
       realTimeDealHeight: 160,
-      liveVisible: false,
       eventKey: `STOCK_POOL_UPDATE_${ this.code }`,
       stockPoolItem: this.item,
       interval: default_interval,
-      lastUpdate: -1,
-      biding: null,
+      statModel: null,
       defaultNotificationList: [],
       customNotificationList: [],
       defaultConditionList: [
@@ -140,13 +89,8 @@ export default {
           value: '5',
           unit: '%'
         },
-        {
-          key: 'breakCeilWarn',
-          value: '30000'
-        }
       ],
-      yesterdayItem: null,
-      todayAmountPercent: ''
+      dependency: null,
     }
   },
   computed: {
@@ -168,9 +112,6 @@ export default {
     },
     yesterday() {
       this.loadYesterdayData()
-    },
-    interval() {
-      this.startTracker()
     }
   },
   mounted() {
@@ -179,21 +120,11 @@ export default {
       this.$set(this, 'stockPoolItem', newItem)
     })
     this.loadYesterdayData()
-
-    const randomMilliSeconds = parseInt(Math.random() * (15 * 1000), 10)
-    // 请求分流，缓解目前后台的压力
-    setTimeout(_ => {
-      this.startTracker()
-    }, randomMilliSeconds)
-
   },
   beforeDestroy() {
     this.$bus.$off(this.eventKey)
   },
   methods: {
-    startTracker() {
-      this.startSchedule(this.loadDetail, this.interval, STOP_CALLBACK_FOR_STOCK)
-    },
     updateTrackSpeed() {
       const val = this.stockPoolItem.payAttention || false
       if (!val) {
@@ -202,30 +133,6 @@ export default {
         this.interval = attention_interval
       }
     },
-    loadDetail() {
-      const code = this.code
-      this.$http.get(`/api/stock/detail/biding`, { code }).then(response => {
-        response.maxDiff = this.calculateDiff(response, 'max')
-        response.minDiff = this.calculateDiff(response, 'min')
-        response.openDiff = this.calculateDiff(response, 'open')
-        response.currentDiff = this.calculateDiff(response, 'current')
-
-        this.biding = response
-        this.lastUpdate = new Date().getTime()
-        this.updateAmountInfo()
-
-        this.checkAllNotification(response)
-      }).catch(_ => {
-        console.error(_)
-      })
-    },
-    updateAmountInfo() { // 更新成交量信息
-      let result = ''
-      if (this.biding && this.yesterdayItem) {
-        result = `${ Math.ceil(this.biding.amount / this.yesterdayItem.amount * 100) }%`
-      }
-      this.todayAmountPercent = result
-    },
     loadYesterdayData() {
       if (!this.yesterday) {
         return
@@ -233,8 +140,12 @@ export default {
       const date = this.$moment(this.yesterday).format('YYYY-MM-DD')
       this.$store.dispatch('loadStockData', this.code).then(stockItem => {
         const yesterday = stockItem.rawData.find(item => item.date === date)
-        this.yesterdayItem = yesterday
-        this.updateAmountInfo()
+
+        this.dependency = {
+          secid: stockItem.base.secid,
+          yesterdayClose: yesterday.close,
+          yesterdayAmount: yesterday.amount
+        }
       }).catch(_ => {
         console.error(_)
       })
@@ -243,9 +154,6 @@ export default {
       this.$fastConfirm().then(_ => {
         this.$store.dispatch('removeStockPoolItem', this.code)
       })
-    },
-    calculateDiff(biding, fieldName, target='yesterday') {
-      return lodash.round((biding[fieldName] - biding[target]) * 100 / biding[target], 2)
     },
     checkAllNotification(biding) {
       // 默认消息
@@ -257,10 +165,16 @@ export default {
         this.checkConditionItem(biding, notificationSource, conditionItem)
       })
     },
+    updateStatInfo(statModel) {
+      this.statModel = statModel
+      if (statModel) {
+        this.checkAllNotification(statModel)
+      }
+    },
     checkConditionItem(biding, notificationSource, condition) {
       // 所有数据应该考虑实时的值，和历史的值
       if (condition.key === 'price') {
-        if (biding.current <= Number(condition.value)) {
+        if (biding.price <= Number(condition.value)) {
           this.addNotification(notificationSource, condition)
         }
         if (biding.min <= Number(condition.value)) { // 判断历史
@@ -272,7 +186,7 @@ export default {
         }
       } else if (condition.key === 'slump') { // 判断历史
         let slumpValue = -1 * Math.abs(Number(condition.value))
-        if (Number(biding.currentDiff) <= slumpValue) {
+        if (Number(biding.priceDiff) <= slumpValue) {
           this.addNotification(notificationSource, condition)
         }
         if (Number(biding.minDiff) <= slumpValue) {
@@ -280,23 +194,13 @@ export default {
         }
       } else if(condition.key === 'surge') {
         let surgeValue = Math.abs(Number(condition.value))
-        if (Number(biding.currentDiff) >= surgeValue) {
+        if (Number(biding.priceDiff) >= surgeValue) {
           this.addNotification(notificationSource, condition)
         }
         if (Number(biding.maxDiff) >= surgeValue) {
           this.addNotification(notificationSource, condition, true)
         }
-      }else if (condition.key === 'breakCeilWarn') {
-        // 判断涨停板买一挂单量，破板前提前通知
-        if (Number(biding.currentDiff) >= 9.9) {
-          if (Number(biding.biding[5][2]) <= Number(condition.value)) {
-            condition = deepClone(condition)
-            condition.value = `可能破板预测：${ condition.value }`
-            this.addNotification(notificationSource, condition)
-          }
-        }
       }
-
     },
     addNotification(notificationSource, conditionItem, history=false) {
       const condition = {
@@ -340,7 +244,10 @@ export default {
     padding: 16px;
   }
   .el-card__body{
-    padding: 16px;
+    padding: 8px;
+    background: #FFFFFF;
   }
 }
+
+
 </style>
