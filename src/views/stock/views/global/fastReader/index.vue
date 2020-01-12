@@ -1,26 +1,34 @@
 <!-- -->
 <template>
   <div v-show="visibleState" class="lr-fast-reader">
-    <el-card>
-      <div style="display: flex">
-        <div class="lr-fast-reader__badge" v-if="newItemCount > 0">
-          <span style="color: #888">未读</span>&nbsp;<el-badge :max="99" :value="newItemCount"/>
-        </div>
-        <div class="lr-fast-reader__time" v-if="current">
-          {{ current.created }}
-        </div>
-        <div style="flex: 1">
-          <template v-if="current">
-            <template v-if="current.type === 'live'">
-              <live-item :item="current.data" ref="item" />
+    <div style="position: relative">
+      <el-card v-if="!collapse">
+        <div style="display: flex">
+          <div class="lr-fast-reader__badge" v-if="newItemCount > 0">
+            <span style="color: #888">未读</span>&nbsp;<el-badge :max="99" :value="newItemCount"/>
+          </div>
+          <div class="lr-fast-reader__time" v-if="current">
+            {{ current.created }}
+          </div>
+          <div style="flex: 1">
+            <template v-if="current">
+              <template v-if="current.type === 'live'">
+                <live-item :item="current.data" ref="item" />
+              </template>
+              <template v-else-if="current.type === 'news'">
+                <news-item :item="current.data" :showMarkRead="false" ref="item" @itemRead="reloadNews" />
+              </template>
             </template>
-            <template v-else-if="current.type === 'news'">
-              <news-item :item="current.data" :showMarkRead="false" ref="item" @itemRead="reloadNews" />
-            </template>
-          </template>
+          </div>
         </div>
+      </el-card>
+      <div v-if="!collapse" @click.stop="collapse = true" style="bottom: -12px;" class="lr-fast-reader__collapse">
+        <el-button circle icon="el-icon-d-arrow-right" ></el-button>
       </div>
-    </el-card>
+    </div>
+    <div v-if="collapse" @click.stop="collapse = false" style="bottom: 0" class="lr-fast-reader__collapse">
+      <el-button round icon="el-icon-d-arrow-left" ><el-badge :max="99" :value="collapseItemCount"></el-badge></el-button>
+    </div>
   </div>
 </template>
 
@@ -39,10 +47,30 @@
         loading: false,
         current: null,
         history: [],
-        itemList: []
+        itemList: [],
+        collapse: false,
       }
     },
     computed: {
+      containerOffset() {
+        if (!this.collapse) {
+          return {
+            bottom: '16px'
+          }
+        } else {
+          return {
+            top: '100%',
+            'margin-top': '32px'
+          }
+        }
+      },
+      collapseItemCount() { // 收缩时显示的新消息数量
+        if (this.current) {
+          return this.newItemCount + 1
+        } else {
+          return this.newItemCount
+        }
+      },
       newItemCount() {
         return this.itemList.length
       },
@@ -127,11 +155,11 @@
   width: 80vw;
   position: fixed;
   left: 10vw;
-  bottom: 16px;
   z-index: 9999999;
   min-height: 48px;
+  bottom: 20px;
   .el-card__body{
-    padding: 12px 20px;
+    padding: 16px 20px;
   }
 }
 
@@ -145,5 +173,14 @@
   width: 48px;
   font-size: 14px;
   margin-top: 3px;
+}
+
+.lr-fast-reader__collapse{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  i{
+    transform: rotate(90deg);
+  }
 }
 </style>
