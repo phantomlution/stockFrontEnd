@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/analyze/surgeForShortPointCheck.vue" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/utils/ChartUtils.js" afterPath="$PROJECT_DIR$/src/utils/ChartUtils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/playground/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/playground/index.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -65,26 +59,6 @@
         </entry>
       </file>
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/DatePicker/index.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="calendar.vue" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/views/stock/views/bigEvents/calendar.vue">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-46">
-              <caret line="139" column="54" lean-forward="false" selection-start-line="139" selection-start-column="54" selection-end-line="139" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/fastReader/index.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="2243">
@@ -133,17 +107,40 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="surgeForShortPointCheck.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="surgeForShortPointCheck.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/analyze/surgeForShortPointCheck.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1254">
-              <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+            <state relative-caret-position="247">
+              <caret line="90" column="7" lean-forward="false" selection-start-line="90" selection-start-column="7" selection-end-line="90" selection-end-column="7" />
               <folding>
                 <element signature="n#style#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#el-form-item#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#el-form-item#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#el-button#0;n#div#0;n#el-form-item#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tempAnalyze.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/tempAnalyze.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="95">
+              <caret line="5" column="39" lean-forward="false" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trend.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="129">
+              <caret line="79" column="66" lean-forward="false" selection-start-line="79" selection-start-column="66" selection-end-line="79" selection-end-column="66" />
+              <folding>
+                <marker date="1578909508000" expanded="true" signature="1699:1892" ph="{...}" />
+                <marker date="1578909508000" expanded="true" signature="1905:2090" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -161,8 +158,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>loadStockData</find>
-      <find>breakCeilWarn</find>
       <find>real-time-deal</find>
       <find>成交量</find>
       <find>getTickList</find>
@@ -189,8 +184,10 @@
       <find>.lr-fast-reader</find>
       <find>checkAndLoad</find>
       <find>lr-disable-select</find>
-      <find>hasPoint</find>
       <find>testResult</find>
+      <find>拉高出货</find>
+      <find>hasPoint</find>
+      <find>surgeForShortList</find>
     </findStrings>
     <replaceStrings>
       <replace>simplifySecondPhaseTrendData</replace>
@@ -277,7 +274,6 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/stockConcept.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/bigEvents/calendar.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/live/index.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" />
         <option value="$PROJECT_DIR$/src/components/DatePicker/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/surgeForShortPointCheck.vue" />
@@ -288,6 +284,7 @@
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/utils/ChartUtils.js" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/analyze/surgeForShortPointCheck.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
       </list>
     </option>
   </component>
@@ -1062,14 +1059,7 @@
       <workItem from="1578794386886" duration="3108000" />
       <workItem from="1578819882186" duration="13921000" />
       <workItem from="1578843919940" duration="181000" />
-      <workItem from="1578877898870" duration="9770000" />
-    </task>
-    <task id="LOCAL-00239" summary="集成板块内部比较">
-      <created>1578229767250</created>
-      <option name="number" value="00239" />
-      <option name="presentableId" value="LOCAL-00239" />
-      <option name="project" value="LOCAL" />
-      <updated>1578229767250</updated>
+      <workItem from="1578877898870" duration="9939000" />
     </task>
     <task id="LOCAL-00240" summary="聚合股票趋势，K线和历史分时图">
       <created>1578236378782</created>
@@ -1407,11 +1397,18 @@
       <option name="project" value="LOCAL" />
       <updated>1578899824172</updated>
     </task>
-    <option name="localTasksCounter" value="288" />
+    <task id="LOCAL-00288" summary="前端集成拉高出货点强确认，用于生成分析报告">
+      <created>1578907542693</created>
+      <option name="number" value="00288" />
+      <option name="presentableId" value="LOCAL-00288" />
+      <option name="project" value="LOCAL" />
+      <updated>1578907542693</updated>
+    </task>
+    <option name="localTasksCounter" value="289" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="980732000" />
+    <option name="totallyTimeSpent" value="980901000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1478,7 +1475,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="集成其他交易市场的报价数据，目前只集成了现货黄金" />
     <MESSAGE value="报价样式调整" />
     <MESSAGE value="页面优化" />
     <MESSAGE value="分散前端请求实时数据时的数据密度，相对均匀分散到15秒内" />
@@ -1503,7 +1499,8 @@
     <MESSAGE value="标签名称优化" />
     <MESSAGE value="组件逻辑优化" />
     <MESSAGE value="汇通网历史报价提取" />
-    <option name="LAST_COMMIT_MESSAGE" value="汇通网历史报价提取" />
+    <MESSAGE value="前端集成拉高出货点强确认，用于生成分析报告" />
+    <option name="LAST_COMMIT_MESSAGE" value="前端集成拉高出货点强确认，用于生成分析报告" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1512,13 +1509,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/components/NumberTag/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-76">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/chessManual/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
@@ -1786,14 +1776,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="74" column="56" lean-forward="false" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -1899,14 +1881,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/analyze/surgeForShortPointCheck.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1254">
-          <caret line="11" column="33" lean-forward="false" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
+        <state relative-caret-position="247">
+          <caret line="90" column="7" lean-forward="false" selection-start-line="90" selection-start-column="7" selection-end-line="90" selection-end-column="7" />
           <folding>
             <element signature="n#style#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#el-form-item#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#el-form-item#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#el-button#0;n#div#0;n#el-form-item#0;n#el-form#0;n#div#0;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#el-popover#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/tempAnalyze.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="39" lean-forward="false" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="79" column="66" lean-forward="false" selection-start-line="79" selection-start-column="66" selection-end-line="79" selection-end-column="66" />
+          <folding>
+            <marker date="1578909508000" expanded="true" signature="1699:1892" ph="{...}" />
+            <marker date="1578909508000" expanded="true" signature="1905:2090" ph="{...}" />
           </folding>
         </state>
       </provider>

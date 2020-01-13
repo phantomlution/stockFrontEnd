@@ -77,7 +77,7 @@ export default {
           dateList
         }).then(_ => {
           if (code === this.code) {
-            stock.surgeForShortList = _.filter(item => !!item.result)
+            stock.surgeForShortList = _.filter(item => !!item.time)
             this.isLoading = false
             this.updateChart()
           }
