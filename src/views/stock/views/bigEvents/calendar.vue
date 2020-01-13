@@ -137,6 +137,8 @@ export default {
       })
     },
     loadCentralBankEvent() { // 加载央行会议
+      this.$message.error('前端未修改, loadCentralBankEvent')
+      return Promise.resolve([])
       return new Promise((resolve, reject) => {
         this.$http.get(`/api/data/centralBank`).then(response => {
           const result = response.data.map(item => {

@@ -33,7 +33,17 @@ export default {
     }
   },
   mounted() {
-    this.initEventSource()
+    // 汇通网推送的数据: ['XAU','XAG','EURUSD','USD','CONC','1A0001','NIKKI','FTSE','DAX','NASDAQ','GBPUSD','USDJPY','AUDUSD','USDCAD','USDCNY']
+
+    // 目前只提取美元数据
+    const quoteItemList = ['XAU']
+
+    this.doInit(quoteItemList).then(_ => {
+      this.initEventSource(quoteItemList)
+    }).catch(_ => {
+      this.initEventSource(quoteItemList)
+      console.error(_)
+    })
   },
   beforeDestroy() {
     if (this.socket) {
@@ -41,7 +51,20 @@ export default {
     }
   },
   methods: {
-    initEventSource() { // 连接数据源
+    doInit(quoteItemList) {
+      return Promise.all(quoteItemList.map(item => this.loadHistoryQuote(item)))
+    },
+    loadHistoryQuote(code) {
+      code = code.toLowerCase()
+      return this.$http.get(`/api/data/fx/quote`, {
+        code
+      }).then(_ => {
+        this.quote[code].price = _.current
+        this.quote[code].diff = increment(_.current, _.pre_close)
+      })
+      // 加载历史报价数据
+    },
+    initEventSource(quoteItemList) { // 连接数据源
       const url = 'https://hqjs.fx678img.com:9180'
       const socket = window.io(url, {
         'reconnection': true,
@@ -50,10 +73,7 @@ export default {
         'force new connection' : true
       })
 
-      // const quoteItemList = ['XAU','XAG','EURUSD','USD','CONC','1A0001','NIKKI','FTSE','DAX','NASDAQ','GBPUSD','USDJPY','AUDUSD','USDCAD','USDCNY']
 
-      // 目前只提取美元数据
-      const quoteItemList = ['XAU', 'VIXDX']
       socket.on('connect', _ => {
         socket.emit('code', quoteItemList)
         this.socketState = 1

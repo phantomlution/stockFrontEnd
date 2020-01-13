@@ -72,7 +72,7 @@ export default {
         // 分析数据点个数
         const historyItemList = lodash.takeRight(stock.rawData, 200)
         const dateList = historyItemList.map(item => item.date)
-        this.$http.put(`/api/analyze/surge_for_short`, {
+        this.$http.put(`/api/analyze/surgeForShort/batch`, {
           code,
           dateList
         }).then(_ => {
