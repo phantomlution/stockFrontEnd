@@ -39,7 +39,7 @@ const getTooltipItemHtml = function(name, value, color){
 }
 
 export const generateTooltip = function(title, itemList) { // 生成自定义tooltip
-  return `<div class="lr-tooltip" style="position: absolute">
+  return `<div class="lr-tooltip lr-disable-select" style="position: absolute">
             <div class="lr-tooltip__header">${ title }</div>
             <div class="lr-tooltip__body">${ itemList.map(item => getTooltipItemHtml(item.name, item.value, item.color)).join('') }</div>
           </div>`

@@ -1,28 +1,27 @@
 <template>
   <lr-box v-if="stockCode">
     <div slot="title">
-      <item-search v-model="stockCode" @change="checkAndLoad" v-if="!code"/>
-      <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
-      <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
-      <span v-if="date" style="font-size: 14px;color: rgba(0, 0, 0, 0.65)">
-        {{ currentDate | date }}
-      </span>
-      <span>
-        <el-button @click.stop="test">test</el-button>
-        result: {{ testResult}}
-      </span>
+      <div style="display: flex">
+        <div style="flex: 1;">
+          <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
+          <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
+        </div>
+        <div>
+          <surge-for-short-point ref="point" />
+        </div>
+      </div>
     </div>
     <div>
-      <stock-price-chart ref="chart" :height="height" />
+      <stock-price-chart ref="chart" :height="height" @dblclick="pointClick"/>
     </div>
   </lr-box>
 </template>
 
 <script>
-import itemSearch from '@/views/stock/components/itemSearch'
 import { STOCK_COORDINATE_DATE } from '@/utils/ChartUtils'
 import stockPriceChart from '../stockPriceChart.vue'
 import lodash from 'lodash'
+import surgeForShortPoint from './analyze/surgeForShortPointCheck.vue'
 
 const props = {
   code: { // 指定代码
@@ -39,14 +38,13 @@ const props = {
 export default {
   props,
   components: {
-    itemSearch,
-    stockPriceChart
+    stockPriceChart,
+    surgeForShortPoint
   },
   data() {
     return {
       stockCode: this.code,
       currentDate: this.date || null,
-      testResult: null
     }
   },
   watch: {
@@ -66,18 +64,15 @@ export default {
     }
   },
   methods: {
-    test() {
-      const code = this.code
-      const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
-      this.$http.get(`/api/analyze/surge_for_short`, {
-        code,
-        date
-      }).then(testResult => {
-        this.testResult = {
-          date,
-          testResult
-        }
-      })
+    pointClick(item) { // 分时图被双击
+      if (this.stockCode && this.currentDate) {
+        const code = this.stockCode
+        const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
+
+        const time = item['title']
+
+        this.$refs.point.setTime(code, date, time)
+      }
     },
     checkAndLoad() {
       this.$nextTick(_ => {
@@ -95,6 +90,9 @@ export default {
       }
       const code = this.stockCode
       const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
+
+      // 加载点位分析
+      this.$refs.point.load(code, date)
 
       this.$http.get('/api/analyze/history/fragment/trade', {
         code,

@@ -123,4 +123,8 @@ p:first-child{
     padding-bottom: 0;
   }
 }
+
+.lr-disable-select{
+  user-select: none;
+}
 </style>

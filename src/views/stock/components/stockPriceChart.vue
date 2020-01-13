@@ -1,6 +1,6 @@
 <template>
   <div>
-    <lr-chart ref="chart" :padding="padding" :height="height" :legend="false" :reUse="false" />
+    <lr-chart ref="chart" :padding="padding" :height="height" :legend="false" :reUse="false" @dblclick="dblclick"/>
   </div>
 </template>
 
@@ -174,6 +174,9 @@ export default {
       }
 
       return tickList
+    },
+    dblclick(data) {
+      this.$emit('dblclick', data)
     }
   }
 

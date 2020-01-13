@@ -158,7 +158,7 @@
   width: 80vw;
   position: fixed;
   left: 10vw;
-  z-index: 9999999;
+  z-index: 100;
   min-height: 48px;
   bottom: 20px;
   .el-card__body{
