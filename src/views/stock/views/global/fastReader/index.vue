@@ -22,12 +22,12 @@
           </div>
         </div>
       </el-card>
-      <div v-if="!collapse" @click.stop="collapse = true" style="bottom: -12px;" class="lr-fast-reader__collapse">
-        <el-button circle icon="el-icon-d-arrow-right" ></el-button>
+      <div v-if="!collapse" style="bottom: -12px;" class="lr-fast-reader__collapse">
+        <el-button circle icon="el-icon-d-arrow-right" @click.stop="collapse = true"></el-button>
       </div>
     </div>
-    <div v-if="collapse" @click.stop="collapse = false" style="bottom: -14px" class="lr-fast-reader__collapse">
-      <el-button round icon="el-icon-d-arrow-left" ><el-badge :max="99" :value="collapseItemCount"></el-badge></el-button>
+    <div v-if="collapse" style="bottom: -14px" class="lr-fast-reader__collapse">
+      <el-button round icon="el-icon-d-arrow-left" @click.stop="collapse = false"><el-badge :max="99" :value="collapseItemCount"></el-badge></el-button>
     </div>
   </div>
 </template>
