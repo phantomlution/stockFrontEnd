@@ -56,7 +56,7 @@ export default {
     },
     loadHistoryQuote(code) {
       code = code.toLowerCase()
-      return this.$http.get(`/api/data/fx/quote`, {
+      return this.$http.get(`/api/data/quote`, {
         code
       }).then(_ => {
         this.quote[code].price = _.current

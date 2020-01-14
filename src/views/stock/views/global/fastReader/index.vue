@@ -48,7 +48,7 @@
         current: null,
         history: [],
         itemList: [],
-        collapse: false,
+        collapse: true,
       }
     },
     computed: {
@@ -131,9 +131,6 @@
         }
       },
       toNext() {
-        if (this.collapse) {
-          return
-        }
         if (this.loading) {
           return this.$message.warning('有任务正在进行中')
         }
