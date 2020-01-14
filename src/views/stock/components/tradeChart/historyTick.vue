@@ -119,12 +119,13 @@ export default {
       dealPointList.forEach(item => {
         item.timestamp = this.$moment(`${ STOCK_COORDINATE_DATE } ${ item.time }`).toDate().getTime()
       })
-      const result = [];
+      const result = []
 
       if (dealPointList[0].time.indexOf('09:25') !== -1) {
         result.push({
           time: '09:25:00',
-          price: dealPointList[0].price
+          price: dealPointList[0].price,
+          amount: dealPointList[0].amount
         })
       }
       ;['09:30', '13:00'].forEach(time => {
@@ -137,12 +138,14 @@ export default {
           if (currentMinutePriceList.length === 0){
             result.push({
               time: `${ currentMinute }:00`,
-              price: result[result.length - 1].price
+              price: result[result.length - 1].price,
+              amount: result[result.length - 1].amount
             })
           } else {
             result.push({
               time: `${ currentMinute }:00`,
-              price: currentMinutePriceList[currentMinutePriceList.length -1].price
+              price: currentMinutePriceList[currentMinutePriceList.length -1].price,
+              amount: currentMinutePriceList[currentMinutePriceList.length -1].amount
             })
           }
         }
