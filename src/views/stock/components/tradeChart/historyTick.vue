@@ -1,6 +1,6 @@
 <template>
   <lr-box v-if="stockCode">
-    <div slot="title">
+    <div slot="title" v-if="!snapShot">
       <div style="display: flex">
         <div style="flex: 1;">
           <lr-stock-detail-link :code="stockCode" :add="false" defaultTab="trendAnalyze" />
@@ -37,7 +37,13 @@ const props = {
   visible: { // 外部容器的可见状态
     type: Boolean,
     default: true
+  },
+  snapShot: { // 快照模式，只显示图表
+    type: Boolean,
+    default: false
+
   }
+
 }
 export default {
   props,
@@ -72,6 +78,11 @@ export default {
       this.$emit('update:date', val)
     }
   },
+  mounted() {
+    if (this.stockCode && this.currentDate) {
+      this.loadData()
+    }
+  },
   methods: {
     pointClick(item) { // 分时图被双击
       if (this.stockCode && this.currentDate) {
@@ -100,8 +111,9 @@ export default {
       const code = this.stockCode
       const date = this.$moment(this.currentDate).format('YYYY-MM-DD')
 
+
       // 加载点位分析
-      this.$refs.point.load(code, date)
+      this.$refs.point && this.$refs.point.load(code, date)
 
       this.$http.get('/api/analyze/history/fragment/trade', {
         code,

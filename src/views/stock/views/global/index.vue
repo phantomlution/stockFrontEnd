@@ -2,6 +2,7 @@
   <div>
     <!-- 做一些临时试验 -->
     <playground />
+    <article-reader />
     <custom-event />
     <stock-detail-panel />
     <news-panel />
@@ -9,7 +10,7 @@
     <global-button />
     <theme-market />
     <message-live />
-    <article-reader />
+    <report />
   </div>
 </template>
 
@@ -23,6 +24,7 @@ import messageLive from './live/index.vue'
 import customEvent from './customEvent/index.vue'
 import articleReader from './article/index.vue'
 import playground from './playground/index.vue'
+import report from './report/index.vue'
 
 export default {
   components: {
@@ -35,6 +37,7 @@ export default {
     customEvent,
     articleReader,
     playground,
+    report
   },
   mounted() {
     /**

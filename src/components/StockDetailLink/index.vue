@@ -20,6 +20,9 @@
         <div>
           <el-link @click.stop="showStockDetail('深度数据')">深度数据</el-link>
         </div>
+        <div>
+          <el-link @click.stop="showStockReport">分析报告</el-link>
+        </div>
       </div>
       <el-link :type="type">{{ displayLabel }}</el-link>
     </el-tooltip>
@@ -98,6 +101,12 @@ export default {
       this.$bus.$emit('showStockDetail', {
         code,
         tab
+      })
+    },
+    showStockReport() {
+      this.$bus.$emit('report', {
+        code: this.code,
+        name: this.name
       })
     }
   }
