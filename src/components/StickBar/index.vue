@@ -1,6 +1,6 @@
 <template>
   <div :style="containerStyle">
-    <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="customClass">
+    <el-popover v-model="containerVisible" :placement="placement" :width="width" :trigger="trigger" :popper-class="customClass">
       <el-button slot="reference" type="primary" @click="toggleContent">{{ title }}</el-button>
       <div>
         <slot />
@@ -37,6 +37,10 @@ const props = {
   },
   visible: {
     type: Boolean
+  },
+  placement: {
+    type: String,
+    default: 'left'
   }
 }
 export default {

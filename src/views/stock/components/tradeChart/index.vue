@@ -7,8 +7,8 @@
     </div>
     <div>
       <!-- 分时成交 -->
-      <lr-stick-bar :visible.sync="visible" title="分时成交" :clearPadding="true" ref="bar" top="50%" v-if="code">
-        <stock-history-tick :visible="visible" :code="code" :date.sync="historyDate" :height="400" style="min-width: 66vw;min-height: 400px"/>
+      <lr-stick-bar placement="left-start" :visible.sync="visible" title="分时成交" :clearPadding="true" ref="bar" top="50%" v-if="code">
+        <stock-history-tick :visible="visible" :code="code" :date.sync="historyDate" :height="320" style="min-width: 66vw;min-height: 420px"/>
       </lr-stick-bar>
     </div>
   </div>

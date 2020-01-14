@@ -7,7 +7,7 @@
           <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
         </div>
         <div>
-          <surge-for-short-point :visible="visible" ref="point" :code="stockCode"/>
+          <surge-for-short-point :visible="visible" ref="point" :hasItem="hasItem"/>
         </div>
       </div>
     </div>
@@ -49,6 +49,11 @@ export default {
     return {
       stockCode: this.code,
       currentDate: this.date || null,
+    }
+  },
+  computed: {
+    hasItem() {
+      return !!this.code && !!this.date
     }
   },
   watch: {

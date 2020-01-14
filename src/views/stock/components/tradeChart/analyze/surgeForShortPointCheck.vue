@@ -1,5 +1,5 @@
 <template>
-  <div class="lr-surge-for-short__result">
+  <div v-show="hasItem" class="lr-surge-for-short__result">
     <span class="lr-surge-for-short__result">
       <template v-if="hasPoint">
         <el-link :underline="false" type="success">有</el-link>
@@ -25,10 +25,16 @@
           </el-form-item>
         </el-form>
       </div>
-      <div style="text-align: right; margin: 0">
-        <el-button size="mini" type="text" @click.stop="closeDialog">取消</el-button>
-        <el-button type="primary" size="mini" @click.stop="confirmPoint">确定</el-button>
+      <div style="display: flex;align-items: center;padding-top: 16px">
+        <div style="flex: 1">
+          <el-checkbox v-model="autoMode">自动模式</el-checkbox>
+        </div>
+        <div>
+          <el-button size="mini" type="text" @click.stop="closeDialog">取消</el-button>
+          <el-button type="primary" size="mini" @click.stop="confirmPoint">确定</el-button>
+        </div>
       </div>
+
       <el-button :type="color" @click.stop="dialogVisible = !dialogVisible" slot="reference">{{ label }}</el-button>
     </el-popover>
   </div>
@@ -39,6 +45,10 @@ const props = {
   visible: { // 外部容器的可见状态
     type: Boolean,
     default: true
+  },
+  hasItem: {
+    type: Boolean,
+    default: false
   }
 }
 
@@ -47,6 +57,8 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      autoMode: true,
+      realCheckState: false,
       model: null
     }
   },
@@ -61,19 +73,13 @@ export default {
       return !!this.timePoint
     },
     label() {
-      if (this.checked) {
+      if (this.realCheckState) {
         return '已确认'
       }
       return '未确认'
     },
-    checked() {
-      return this.model && this.model.formModel && this.model.formModel.check
-    },
-    showItem() {
-      return this.model && this.model.formModel
-    },
     color() {
-      if (this.checked) {
+      if (this.realCheckState) {
         return 'success'
       }
       return 'info'
@@ -83,6 +89,13 @@ export default {
     visible(val) {
       if (!val) {
         this.closeDialog()
+      }
+    },
+    autoMode(val) {
+      if (val) {
+        if (this.model && this.model.formModel) {
+          this.model.formModel.check = true
+        }
       }
     }
   },
@@ -104,6 +117,7 @@ export default {
         formModel: null
       }
       this.model = model
+      this.realCheckState = false
 
       const today = this.$moment().format('YYYY-MM-DD')
       if (today === date) { // 当天数据
@@ -128,6 +142,11 @@ export default {
           "check": _.check,
           'desc': _.desc,
         }
+        this.realCheckState = _.check
+
+        if (this.autoMode) { // 自动模式
+          model.formModel.check = true
+        }
       }).catch(_ => {
         console.error(_)
       })
@@ -138,6 +157,7 @@ export default {
         return
       }
       this.$http.put(`/api/analyze/surgeForShort`, formModel).then(_ => {
+        this.realCheckState = true
         this.$message.success('更新成功')
 //        this.closeDialog()
       }).catch(_ => {

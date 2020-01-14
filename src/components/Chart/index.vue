@@ -71,7 +71,6 @@ export default {
         if (this.padding) {
           padding = this.padding
         }
-        console.log(padding)
 
         this._chart = new G2.Chart({
           container: this.chartId,
