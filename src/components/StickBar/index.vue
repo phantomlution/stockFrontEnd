@@ -1,7 +1,7 @@
 <template>
   <div :style="containerStyle">
     <el-popover v-model="containerVisible" placement="left" :width="width" :trigger="trigger" :popper-class="customClass">
-      <el-button slot="reference" type="primary" @click.stop="toggleContent">{{ title }}</el-button>
+      <el-button slot="reference" type="primary" @click="toggleContent">{{ title }}</el-button>
       <div>
         <slot />
       </div>
@@ -34,6 +34,9 @@ const props = {
   clearPadding: {
     type: Boolean,
     default: false
+  },
+  visible: {
+    type: Boolean
   }
 }
 export default {
@@ -70,9 +73,18 @@ export default {
         'top': this.top,
         'z-index': 2000
       }
+    },
+    isShow() {
+      if (this.manual) {
+        return this.contentVisible
+      }
+      return this.containerVisible
     }
   },
   watch: {
+    isShow(val) {
+      this.$emit('update:visible', val)
+    },
     contentVisible(val) {
       if (this.manual) {
         this.$nextTick(_ => {
@@ -90,21 +102,33 @@ export default {
   },
   mounted() {
     this.$bus.$on('close_all_stick_bar', _ => {
-      this.containerVisible = false
+      this.hide()
     })
   },
   methods: {
     toggleContent() {
+      if (!this.manual) {
+        return
+      }
+      if (this.isShow) {
+        this.hide()
+      } else {
+        this.show()
+      }
+    },
+    hide() {
       if (this.manual) {
         this.containerVisible = true
-        this.contentVisible = !this.contentVisible
+        this.contentVisible = false
+      } else {
+        this.containerVisible = false
       }
     },
     show() {
+      this.containerVisible = true
       if (this.manual) {
         this.contentVisible = true
       }
-      this.containerVisible = true
     }
   }
 }

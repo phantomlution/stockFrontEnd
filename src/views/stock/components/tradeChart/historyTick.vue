@@ -7,7 +7,7 @@
           <lr-date-picker v-model="currentDate" @change="checkAndLoad" pattern="stock" />
         </div>
         <div>
-          <surge-for-short-point ref="point" />
+          <surge-for-short-point :visible="visible" ref="point" :code="stockCode"/>
         </div>
       </div>
     </div>
@@ -33,6 +33,10 @@ const props = {
   },
   height: {
     type: Number
+  },
+  visible: { // 外部容器的可见状态
+    type: Boolean,
+    default: true
   }
 }
 export default {

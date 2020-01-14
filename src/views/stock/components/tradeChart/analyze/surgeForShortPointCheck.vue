@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showItem" class="lr-surge-for-short__result">
+  <div class="lr-surge-for-short__result">
     <span class="lr-surge-for-short__result">
       <template v-if="hasPoint">
         <el-link :underline="false" type="success">有</el-link>
@@ -9,7 +9,7 @@
         <el-link :underline="false" type="info">无</el-link>
       </template>
     </span>
-    <el-popover placement="bottom" width="250" v-model="visible">
+    <el-popover trigger="manual" placement="top-end" width="250" v-model="dialogVisible">
       <div>
         <el-form :model="model.formModel" label-width="64px" v-if="model && model.formModel" style="margin-top: 8px;margin-bottom: -16px">
           <el-form-item label="时间点">
@@ -29,16 +29,24 @@
         <el-button size="mini" type="text" @click.stop="closeDialog">取消</el-button>
         <el-button type="primary" size="mini" @click.stop="confirmPoint">确定</el-button>
       </div>
-      <el-button :type="color" slot="reference">{{ label }}</el-button>
+      <el-button :type="color" @click.stop="dialogVisible = !dialogVisible" slot="reference">{{ label }}</el-button>
     </el-popover>
   </div>
 </template>
 
 <script>
+const props = {
+  visible: { // 外部容器的可见状态
+    type: Boolean,
+    default: true
+  }
+}
+
 export default {
+  props,
   data() {
     return {
-      visible: false,
+      dialogVisible: false,
       model: null
     }
   },
@@ -71,6 +79,13 @@ export default {
       return 'info'
     }
   },
+  watch: {
+    visible(val) {
+      if (!val) {
+        this.closeDialog()
+      }
+    }
+  },
   methods: {
     setTime(code, date, time) {
       if (this.model && this.model.code === code && this.model.date === date) {
@@ -83,7 +98,6 @@ export default {
       this.loadSurgeForShort(code, date)
     },
     loadSurgeForShort(code, date) { // 加载数据
-      this.visible = false
       const model = {
         date,
         code,
@@ -125,13 +139,13 @@ export default {
       }
       this.$http.put(`/api/analyze/surgeForShort`, formModel).then(_ => {
         this.$message.success('更新成功')
-        this.closeDialog()
+//        this.closeDialog()
       }).catch(_ => {
         console.error(_)
       })
     },
     closeDialog() {
-      this.visible = false
+      this.dialogVisible = false
     }
   }
 }
