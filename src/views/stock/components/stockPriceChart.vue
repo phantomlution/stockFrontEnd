@@ -102,6 +102,12 @@ export default {
                 value: `${value}${unit}`,
                 color: getStockColor(value - preClose)
               })
+              const change = lodash.round(value - preClose, 2)
+              itemList.push({
+                name: '较昨收',
+                value: `${ change }${unit}`,
+                color: getStockColor(change)
+              })
             } else if (name === 'increment') {
               itemList.push({
                 name: '涨跌幅',
