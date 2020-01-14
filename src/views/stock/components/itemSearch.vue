@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <el-cascader v-model="current" filterable clearable :options="$store.getters.searchOptionList"></el-cascader>
-  </div>
+  <el-cascader v-model="current" filterable clearable :options="$store.getters.searchOptionList"></el-cascader>
 </template>
 
 <script>

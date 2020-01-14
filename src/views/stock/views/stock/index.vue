@@ -3,7 +3,7 @@
     <div style="padding: 8px">
       <el-form :inline="true">
         <el-form-item label="交易代码：">
-          <item-search ref="searchStock" @change="searchStock"/>
+          <item-search ref="searchStock" @change="searchStock" style="width: 210px;"/>
         </el-form-item>
       </el-form>
       <stock-trade-chart :code="stockCode" ></stock-trade-chart>
@@ -41,13 +41,7 @@ export default {
   },
   methods: {
     searchStock(code) {
-      console.log(code)
       this.stockCode = code
-
-      return
-      this.$bus.$emit('searchStockDetail', {
-        code
-      })
     }
   }
 }
