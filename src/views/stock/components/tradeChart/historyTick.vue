@@ -152,7 +152,7 @@ export default {
     },
     renderChart(tradeList) {
       if (tradeList.length === 0) {
-        this.$message.warning('暂无数据')
+        this.$refs.chart.updateChart(tradeList)
         return
       }
 

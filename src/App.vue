@@ -127,4 +127,8 @@ p:first-child{
 .lr-disable-select{
   user-select: none;
 }
+
+.g-label{
+  user-select: none;
+}
 </style>

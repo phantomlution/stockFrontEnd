@@ -30,6 +30,10 @@ export default {
     },
     updateChart(itemList, preClose) {
       const chart = this.$refs.chart.getChart()
+      if (itemList.length === 0) {
+        this.$message.warning('暂无数据')
+        return
+      }
 
       const dataList = itemList.map(item => {
         return {

@@ -1,5 +1,5 @@
 <template>
-  <div v-show="hasItem" class="lr-surge-for-short__result">
+  <div v-show="showItem" class="lr-surge-for-short__result">
     <span class="lr-surge-for-short__result">
       <template v-if="hasPoint">
         <el-link :underline="false" type="success">有</el-link>
@@ -57,6 +57,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      hideItem: false,
       autoMode: true,
       realCheckState: false,
       model: null
@@ -83,6 +84,9 @@ export default {
         return 'success'
       }
       return 'info'
+    },
+    showItem() {
+      return !this.hideItem && this.hasItem
     }
   },
   watch: {
@@ -122,13 +126,17 @@ export default {
       const today = this.$moment().format('YYYY-MM-DD')
       if (today === date) { // 当天数据
         if (new Date().getHours() < 18) { // 18点之前未生成，无法确认
+          this.hideItem = true
           return
         }
       } else {
         if (this.$moment(date).isAfter(this.$moment(today))) { // 未来的数据，无法确认
+          this.hideItem = true
           return
         }
       }
+
+      this.hideItem = false
 
       this.$http.get(`/api/analyze/surgeForShort`, {
         code,
