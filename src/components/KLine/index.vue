@@ -13,6 +13,9 @@ export default {
   name: 'KLine',
   methods: {
     divideByOneHundredMillion(val) { // 除以一亿
+      if (!val) {
+        return val
+      }
       return lodash.round(val / 10000 / 10000, 2)
     },
     parseDataList(rawDataList) {
@@ -195,6 +198,9 @@ export default {
                 color: getStockColor(Number(itemValue) - yesterdayClose)
               })
             } else if (item.name === 'amount') {
+              if (!itemValue) {
+                return
+              }
               itemList.push({
                 name: '成交额',
                 value: `${itemValue}亿`

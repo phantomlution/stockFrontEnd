@@ -36,13 +36,14 @@ export default {
         }
 
         Promise.all([
-          http.get(`/api/stock/detail`, { code })
+          http.get('/api/data/base', { code }),
+          http.get(`/api/data/kline`, { code })
         ]).then(responseList => {
           if (!responseList[0]) {
             throw new Error('找不到该数据')
           }
-          const base = responseList[0]['base']
-          const source = responseList[0]['data']
+          const base = responseList[0]
+          const source = responseList[1]
 
           const stock = new Stock(base, source)
           stockMap.set(code, stock)
