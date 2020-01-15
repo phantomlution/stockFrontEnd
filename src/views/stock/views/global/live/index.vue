@@ -36,7 +36,7 @@ const sensitiveWord = [
   '现货白银', '布伦特原油期货', '焦煤期货', '沪金期货', 'LME镍期货',
   '热卷期货', '螺纹主连', '现货铂金', '工行纸铂金', 'Nymex铂金',
   '工行纸白银', '沥青期货', '沪银期货', '白银T+D', 'LME锌期货',
-  '沪镍期货',
+  '沪镍期货', '美燃油期货', 'COMEX白银期货',
   '\\d{1,2}月\\d{1,2}日银行间外汇'
 ]
 const contentFilterRegex = new RegExp(`^(${ sensitiveWord.map(word => '(' + word +')').join('|') })`)

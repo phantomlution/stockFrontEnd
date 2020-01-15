@@ -85,6 +85,7 @@ export default {
 
       chart.source(chartData)
       chart.line().position('date*value').color('type')
+      chart.legend(true)
       chart.render()
     }
   }

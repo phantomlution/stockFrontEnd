@@ -67,7 +67,7 @@ export default {
           height = window.innerHeight * this.height
         }
 
-        let padding = [20, 80, 20, 80]
+        let padding = [20, 80, 70, 80]
         if (this.padding) {
           padding = this.padding
         }
