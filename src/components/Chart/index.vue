@@ -217,7 +217,7 @@ export default {
 }
 
 .lr-tooltip__item--label{
-  width: 42px;
+  width: 64px;
   color: #b0b0b0;
 }
 

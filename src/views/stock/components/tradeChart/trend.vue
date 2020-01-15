@@ -100,13 +100,42 @@ export default {
     renderChart({stock}) {
       let rawData = stock.result
       this.stock = stock
+      console.log(stock)
       this.code = stock.code
       this.name = stock.name
       const data = lodash.takeRight(rawData, 200)
+      const dateList = data.map(item => item.date)
       this.calculateAmount(data)
 
-      this.$refs.chart.renderChart(data, {
-        assistantLine: this.getAssistantLine(stock)
+      // 聚合其他数据
+      this.mergeData(stock, data, dateList).then(_ => {
+        this.$refs.chart.renderChart(data, {
+          type: stock.type,
+          assistantLine: this.getAssistantLine(stock)
+        })
+      }).catch(_ => {
+        console.error(_)
+        this.$message.error('数据加载失败，请重试')
+      })
+    },
+    mergeData(stock, dataList, dateList) {
+      return new Promise((resolve, reject) => {
+        if (stock.type === 'concept') {
+          this.getConceptRank(stock.name, dateList).then(rankResult => {
+            dataList.forEach(item => {
+              const rankItem = rankResult.find(rankItem => rankItem.date === item.date)
+              if (rankItem) {
+                item.rank = rankItem.rank
+                item.rankWeight = rankItem.rankWeight
+              }
+            })
+            resolve()
+          }).catch(_ => {
+            reject(_)
+          })
+        } else {
+          resolve()
+        }
       })
     },
     getAssistantLine(stock) {
@@ -142,6 +171,33 @@ export default {
       })
 
       return assistantLineList
+    },
+    getConceptRank(conceptName, dateList) { // 获取概念在指定日期内的排行
+      return new Promise((resolve, reject) => {
+        this.$http.put(`/api/data/concept/ranking`, {
+          dateList
+        }).then(rankingList => {
+          const result = []
+          rankingList.forEach(rankingItem => {
+            const date = rankingItem.date
+            const ranking = rankingItem.ranking
+            const totalCount = ranking.length
+
+            const conceptIndex = ranking.findIndex(item => item.name === conceptName)
+            if (conceptIndex !== -1) {
+              console.log(ranking[conceptIndex])
+              result.push({
+                date,
+                rankWeight: totalCount - conceptIndex,
+                rank: `${ conceptIndex + 1 }/${totalCount}`
+              })
+            }
+          })
+          resolve(result)
+        }).catch(_ => {
+          reject(_)
+        })
+      })
     },
     dblclick(item) {
       this.$emit('dblclick', item)

@@ -11,6 +11,16 @@ import lodash from 'lodash'
 
 export default {
   name: 'KLine',
+  data() {
+    return {
+      type: ''
+    }
+  },
+  computed: {
+    isConcept() {
+      return this.type === 'concept'
+    }
+  },
   methods: {
     divideByOneHundredMillion(val) { // 除以一亿
       if (!val) {
@@ -39,6 +49,10 @@ export default {
           model.trend = '下跌'
         }
 
+        if (this.isConcept) {
+          model.rank = item.rank
+          model.rankWeight = item.rankWeight
+        }
         return model
       })
 
@@ -94,8 +108,9 @@ export default {
 
     },
     renderChart(rawDataList, config = {}) {
+      const { type, scale, assistantLine = [] } = config
+      this.type = type
       const { dataList, unit } = this.parseDataList(rawDataList)
-      const { scale, assistantLine = [] } = config
 
       const chartRef = this.$refs.chart
       const chart = chartRef.getChart()
@@ -115,6 +130,9 @@ export default {
       this.customizeToolTip(chart, unit)
 
       const kView = chart.view()
+      kView.source(dataList)
+
+      // 1. 成交量图
       kView.area().position('date*amount').color('#64b5f6').tooltip(false)
       kView.axis('amount', {
         position: 'right',
@@ -124,19 +142,15 @@ export default {
           }
         }
       })
-      kView.axis('range', {
-        position: 'left',
-        label: {
-          formatter: val => {
-            return val + unit
-          }
-        }
-      })
 
-      kView.source(dataList)
+      // 针对概念板块，还要绘制排行榜
+      if (this.isConcept) {
+        kView.line().position('date*rankWeight').color('#fbd437').tooltip(false)
+        kView.axis('rankWeight', false)
+      }
 
-      kView.schema()
-        .position('date*range')
+      // 2. K线图
+      kView.schema().position('date*range')
         .color('trend', val => {
           if (val === '上涨') {
             return '#f04864';
@@ -147,7 +161,17 @@ export default {
           }
         })
         .shape('candle')
-        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose')
+        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose*rank')
+
+
+      kView.axis('range', {
+          position: 'left',
+          label: {
+            formatter: val => {
+            return val + unit
+          }
+        }
+      })
 
       // 辅助线
       assistantLine.forEach(assistantItem => {
@@ -198,6 +222,11 @@ export default {
                 color: getStockColor(Number(itemValue) - yesterdayClose)
               })
             } else if (item.name === 'amount') {
+              itemList.push({ // 计算涨跌幅
+                name: '涨跌幅',
+                value: `${ increment(todayClose, yesterdayClose) }%`,
+                color: getStockColor(todayClose - yesterdayClose)
+              })
               if (!itemValue) {
                 return
               }
@@ -205,14 +234,16 @@ export default {
                 name: '成交额',
                 value: `${itemValue}亿`
               })
+            } else if (item.name === 'rank') {
+              if (!itemValue) {
+                return
+              }
+              itemList.push({
+                name: '板块排行',
+                value: `${itemValue}`
+              })
+              console.log()
             }
-          })
-          // 计算涨跌幅
-          const diff = increment(todayClose, yesterdayClose)
-          itemList.push({
-            name: '涨跌幅',
-            value: `${diff}%`,
-            color: getStockColor(todayClose - yesterdayClose)
           })
 
           const nameItem = items.find(item => item.name === 'name')

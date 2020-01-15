@@ -12,6 +12,7 @@ export default class Stock {
     this.base = base
     this.code = base.symbol
     this.name = base.name
+    this.type = base.type
     // 调整部分单位
     rawData.map(item => {
       item.amountInMillion = lodash.round(item.amount / (100 * 10000), 2)
