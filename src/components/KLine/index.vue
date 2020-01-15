@@ -11,16 +11,6 @@ import lodash from 'lodash'
 
 export default {
   name: 'KLine',
-  data() {
-    return {
-      type: ''
-    }
-  },
-  computed: {
-    isConcept() {
-      return this.type === 'concept'
-    }
-  },
   methods: {
     divideByOneHundredMillion(val) { // 除以一亿
       if (!val) {
@@ -49,10 +39,10 @@ export default {
           model.trend = '下跌'
         }
 
-        if (this.isConcept) {
-          model.rank = item.rank
-          model.rankWeight = item.rankWeight
-        }
+        model.rankWeight = item.rankWeight // 板块名次
+        model.rank = item.rank // 板块名次数说明
+        model.stockIndexPercent = item.stockIndexPercent // 上证指数涨跌幅
+
         return model
       })
 
@@ -144,7 +134,7 @@ export default {
       })
 
       // 针对概念板块，还要绘制排行榜
-      if (this.isConcept) {
+      if (type ==='concept') {
         kView.line().position('date*rankWeight').color('#fbd437').tooltip(false)
         kView.axis('rankWeight', false)
       }
@@ -161,7 +151,7 @@ export default {
           }
         })
         .shape('candle')
-        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose*rank')
+        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose*rank*stockIndexPercent')
 
 
       kView.axis('range', {
@@ -242,7 +232,15 @@ export default {
                 name: '板块排行',
                 value: `${itemValue}`
               })
-              console.log()
+            } else if (item.name === 'stockIndexPercent') {
+              if (!itemValue) {
+                return
+              }
+              itemList.push({
+                name: '上证涨幅',
+                value: `${itemValue}%`,
+                color: getStockColor(itemValue)
+              })
             }
           })
 
