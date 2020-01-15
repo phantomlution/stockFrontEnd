@@ -43,7 +43,6 @@ export default {
   },
   data() {
     return {
-      visibleState: false,
       loading: false,
       current: null,
       history: [],
@@ -76,11 +75,9 @@ export default {
     },
     hasNext() {
       return this.itemList.length > 0
-    }
-  },
-  watch: {
-    current(val) {
-      this.visibleState = !!val
+    },
+    visibleState() {
+      return this.collapseItemCount > 0
     }
   },
   mounted() {
@@ -131,6 +128,9 @@ export default {
       }
     },
     toNext() {
+      if (this.collapse) {
+        return
+      }
       if (this.loading) {
         return this.$message.warning('有任务正在进行中')
       }
