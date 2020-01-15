@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/analyze/capitalFlow/hotMoney.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/analyze/capitalFlow/hotMoney.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -69,14 +69,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hotMoney.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hotMoney.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/capitalFlow/hotMoney.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+            <state relative-caret-position="339">
+              <caret line="138" column="34" lean-forward="false" selection-start-line="138" selection-start-column="34" selection-end-line="138" selection-end-column="34" />
               <folding>
                 <element signature="e#890#917#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="139">
+              <caret line="173" column="38" lean-forward="false" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,16 +137,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/store/data/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="39" column="47" lean-forward="false" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -149,7 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>hasPoint</find>
       <find>surgeForShortList</find>
       <find>this.visible</find>
       <find>closeDialog</find>
@@ -178,6 +177,7 @@
       <find>showStockReport</find>
       <find>console.log</find>
       <find>huRemain</find>
+      <find>/stock/base</find>
       <find>getLastResult</find>
     </findStrings>
     <replaceStrings>
@@ -225,7 +225,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/riskDetector.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/analyze/capitalFlow/replay/hotMoney.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/dashBoard/moneyTracker.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/analyze/indexConceptFragmentDeal.vue" />
@@ -276,6 +275,7 @@
         <option value="$PROJECT_DIR$/src/components/StockDetailLink/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/report/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/analyze/capitalFlow/hotMoney.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue" />
       </list>
     </option>
   </component>
@@ -922,14 +922,7 @@
       <workItem from="1578843919940" duration="181000" />
       <workItem from="1578877898870" duration="10081000" />
       <workItem from="1578964246159" duration="16617000" />
-      <workItem from="1579062665979" duration="412000" />
-    </task>
-    <task id="LOCAL-00251" summary="重构详情页面">
-      <created>1578363240297</created>
-      <option name="number" value="00251" />
-      <option name="presentableId" value="LOCAL-00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1578363240297</updated>
+      <workItem from="1579062665979" duration="505000" />
     </task>
     <task id="LOCAL-00252" summary="集成所有新消息阅读快速视图">
       <created>1578392580235</created>
@@ -1267,11 +1260,18 @@
       <option name="project" value="LOCAL" />
       <updated>1579014521964</updated>
     </task>
-    <option name="localTasksCounter" value="300" />
+    <task id="LOCAL-00300" summary="北向资金问题修复">
+      <created>1579064254606</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1579064254607</updated>
+    </task>
+    <option name="localTasksCounter" value="301" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="998072000" />
+    <option name="totallyTimeSpent" value="998165000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1338,7 +1338,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="优化K线展示" />
     <MESSAGE value="修复list组件中判断组件是否传入的 bug" />
     <MESSAGE value="集成所有类型的数据源ing" />
     <MESSAGE value="对齐所有交易相关数据" />
@@ -1363,7 +1362,8 @@
     <MESSAGE value="页面交互优化" />
     <MESSAGE value="添加期权算法" />
     <MESSAGE value="集成分析报告1.0" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成分析报告1.0" />
+    <MESSAGE value="北向资金问题修复" />
+    <option name="LAST_COMMIT_MESSAGE" value="北向资金问题修复" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1573,6 +1573,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
           <caret line="131" column="20" lean-forward="false" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1594,13 +1595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2622">
           <caret line="138" column="0" lean-forward="false" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="194" column="30" lean-forward="false" selection-start-line="194" selection-start-column="30" selection-end-line="194" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -1659,7 +1653,7 @@
         <state relative-caret-position="19">
           <caret line="5" column="7" lean-forward="false" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
           <folding>
-            <element signature="e#59#123#0" expanded="true" />
+            <element signature="e#59#123#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1749,11 +1743,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/analyze/capitalFlow/hotMoney.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+        <state relative-caret-position="339">
+          <caret line="138" column="34" lean-forward="false" selection-start-line="138" selection-start-column="34" selection-end-line="138" selection-end-column="34" />
           <folding>
             <element signature="e#890#917#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/stockDetail/base.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="173" column="38" lean-forward="false" selection-start-line="173" selection-start-column="38" selection-end-line="173" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
     </entry>

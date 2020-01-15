@@ -171,7 +171,7 @@ export default {
   methods: {
     loadBase() {
       const code = this.code
-      return this.$http.get(`/api/stock/base`, { code }).then(base => {
+      return this.$http.get(`/api/data/base`, { code }).then(base => {
         this.base = base
         // 异步加载各个股东，其他持股的公司
         base.stock_holder_list = base.stock_holder_list || []
