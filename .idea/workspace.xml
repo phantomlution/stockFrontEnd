@@ -47,8 +47,8 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/KLine/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="43" column="67" lean-forward="false" selection-start-line="43" selection-start-column="67" selection-end-line="43" selection-end-column="67" />
+            <state relative-caret-position="74">
+              <caret line="229" column="3" lean-forward="true" selection-start-line="229" selection-start-column="3" selection-end-line="229" selection-end-column="3" />
               <folding>
                 <element signature="e#100#150#0" expanded="true" />
               </folding>
@@ -117,7 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>三阶段模型</find>
       <find>keepAlive</find>
       <find>trigger</find>
       <find>visible</find>
@@ -147,6 +146,7 @@
       <find>startAnalyze</find>
       <find>customizeToolTip</find>
       <find>rankPercent</find>
+      <find>stockIndexPercent</find>
     </findStrings>
     <replaceStrings>
       <replace>simplifySecondPhaseTrendData</replace>
@@ -905,14 +905,7 @@
       <workItem from="1578877898870" duration="10081000" />
       <workItem from="1578964246159" duration="16617000" />
       <workItem from="1579062665979" duration="1062000" />
-      <workItem from="1579083384866" duration="12677000" />
-    </task>
-    <task id="LOCAL-00255" summary="页面逻辑优化">
-      <created>1578403539841</created>
-      <option name="number" value="00255" />
-      <option name="presentableId" value="LOCAL-00255" />
-      <option name="project" value="LOCAL" />
-      <updated>1578403539841</updated>
+      <workItem from="1579083384866" duration="12963000" />
     </task>
     <task id="LOCAL-00256" summary="页面逻辑优化">
       <created>1578406318829</created>
@@ -1250,11 +1243,18 @@
       <option name="project" value="LOCAL" />
       <updated>1579102251835</updated>
     </task>
-    <option name="localTasksCounter" value="304" />
+    <task id="LOCAL-00304" summary="优化K线画图逻辑">
+      <created>1579103837325</created>
+      <option name="number" value="00304" />
+      <option name="presentableId" value="LOCAL-00304" />
+      <option name="project" value="LOCAL" />
+      <updated>1579103837325</updated>
+    </task>
+    <option name="localTasksCounter" value="305" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1011399000" />
+    <option name="totallyTimeSpent" value="1011685000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1321,7 +1321,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="统一所有chart 的tooltip样式" />
     <MESSAGE value="集成实时报价ing" />
     <MESSAGE value="分时成交优化" />
     <MESSAGE value="优化dashboard, 效率翻倍" />
@@ -1346,7 +1345,8 @@
     <MESSAGE value="页面修复" />
     <MESSAGE value="fastReader样式优化" />
     <MESSAGE value="板块内部集成排行榜" />
-    <option name="LAST_COMMIT_MESSAGE" value="板块内部集成排行榜" />
+    <MESSAGE value="优化K线画图逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="优化K线画图逻辑" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1768,8 +1768,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/KLine/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="43" column="67" lean-forward="false" selection-start-line="43" selection-start-column="67" selection-end-line="43" selection-end-column="67" />
+        <state relative-caret-position="74">
+          <caret line="229" column="3" lean-forward="true" selection-start-line="229" selection-start-column="3" selection-end-line="229" selection-end-column="3" />
           <folding>
             <element signature="e#100#150#0" expanded="true" />
           </folding>

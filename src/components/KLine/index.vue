@@ -41,7 +41,6 @@ export default {
 
         model.rankWeight = item.rankWeight // 板块名次
         model.rank = item.rank // 板块名次数说明
-        model.stockIndexPercent = item.stockIndexPercent // 上证指数涨跌幅
 
         return model
       })
@@ -151,7 +150,7 @@ export default {
           }
         })
         .shape('candle')
-        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose*rank*stockIndexPercent')
+        .tooltip('name*date*start*end*max*min*amount*code*yesterdayClose*rank')
 
 
       kView.axis('range', {
@@ -231,15 +230,6 @@ export default {
               itemList.push({
                 name: '板块排行',
                 value: `${itemValue}`
-              })
-            } else if (item.name === 'stockIndexPercent') {
-              if (!itemValue) {
-                return
-              }
-              itemList.push({
-                name: '上证涨幅',
-                value: `${itemValue}%`,
-                color: getStockColor(itemValue)
               })
             }
           })
