@@ -127,6 +127,9 @@ export default {
 
       response.forEach(item => {
         function getLastResult(val) {
+          if (!val) {
+            return val
+          }
           val = Number(val)
           return Number((val / 10000 / 10000).toFixed(2))
         }
