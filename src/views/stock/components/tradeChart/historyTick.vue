@@ -72,8 +72,7 @@ export default {
     },
     currentDate(val) {
       if (!val) {
-        const chart = this.$refs.chart.getChart()
-        chart.clear()
+        this.clearChart()
       }
       this.$emit('update:date', val)
     }
@@ -84,6 +83,12 @@ export default {
     }
   },
   methods: {
+    clearChart() {
+      if (this.$refs.chart) {
+        const chart = this.$refs.chart.getChart()
+        chart.clear()
+      }
+    },
     pointClick(item) { // 分时图被双击
       if (this.stockCode && this.currentDate) {
         const code = this.stockCode

@@ -13,10 +13,16 @@ export default class Stock {
     this.code = base.symbol
     this.name = base.name
     this.type = base.type
-    // 调整部分单位
-    rawData.map(item => {
-      item.amountInMillion = lodash.round(item.amount / (100 * 10000), 2)
-    })
+
+    // 昨日成交量
+    this.oneNightAmount = lodash.round(lodash.meanBy(lodash.takeRight(rawData, 1), item => item.amount), 2)
+    // 近一周成交量(5天)
+    this.oneWeekAmount = lodash.round(lodash.meanBy(lodash.takeRight(rawData, 5), item => item.amount), 2)
+    // 近一月成交量
+    this.oneMonthAmount = lodash.round(lodash.meanBy(lodash.takeRight(rawData, 22), item => item.amount), 2)
+    // 近一季度成交量
+    this.oneSeasonAmount = lodash.round(lodash.meanBy(lodash.takeRight(rawData, 22 * 3), item => item.amount), 2)
+
     this.rawData = rawData
     this.label = `${ base.name }(${ base.symbol })`
     this.options = {}
@@ -32,7 +38,6 @@ export default class Stock {
     const dateList = this.rawData.map(item => item.timestamp)
     this.options.isDataContinuous = !stockUtils.hasEverSuspend(dateList)
 
-    const result = []
     return this.rawData.map(todayData => {
 
       return {
@@ -43,7 +48,6 @@ export default class Stock {
         min: todayData.min,
         open: todayData.open,
         amount: todayData.amount,
-        amountInMillion: todayData.amountInMillion,
         yesterdayClose: todayData.pre_close
       }
     })

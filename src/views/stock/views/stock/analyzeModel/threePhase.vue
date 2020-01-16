@@ -40,7 +40,7 @@ export default {
       let firstRoundDataList = data
         .filter(item => item.close >= STOCK_PRICE_MIN)
         .filter(item => item.close <= STOCK_PRICE_MAX)
-        .filter(item => item.amountInMillion >= 20) // 成交量基本要求
+        .filter(item => item.amount >= 20 * 100 * 10000) // 成交量基本要求
         .filter(item => item.closeMaxIncrement <= -20) // 低于最高值 20%
 
       // 低价的股票可能说明股票没有价值
@@ -79,10 +79,9 @@ export default {
           lastDiff: today.diff,
           close: today.close,
           amount: today.amount,
-          amountInMillion: today.amountInMillion,
           minClose: lodash.min(closePriceList),
           maxClose: lodash.max(closePriceList),
-          limitUpCount,
+          limitUpCount
         }
 
         model.closeMaxIncrement = lodash.round((model.close / model.maxClose - 1) * 100)

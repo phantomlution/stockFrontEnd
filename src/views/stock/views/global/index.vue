@@ -49,6 +49,8 @@ export default {
     this.$store.dispatch('getStockPoolList')
     // 加载最近的市场交易日
     this.$store.dispatch('getRecentTradeDateList')
+    // 加载个股热度榜
+    this.$store.dispatch('loadStockHeatRank')
   }
 }
 </script>

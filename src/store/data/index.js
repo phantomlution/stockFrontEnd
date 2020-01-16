@@ -3,6 +3,7 @@ import { http } from '@/utils/http'
 import { Message } from 'element-ui'
 import Stock from '@/utils/stock'
 import { $moment } from '@/utils'
+import lodash from 'lodash'
 
 export default {
   state: {
@@ -12,6 +13,7 @@ export default {
     codeList: [],
     marketHeat: [],
     lowPriceCount: [],
+    stockHeatRank: {}, // 热度榜
     tradeDateList: [], // 交易日列表
     marketPriceMap: new Map(), // 市场价格
   },
@@ -102,6 +104,40 @@ export default {
           reject(_)
         })
       })
+    },
+    loadStockHeatRank(context) { // 生成热度榜
+      return new Promise((resolve, reject) => {
+        http.get(`/api/analyze/heat/report`).then(_ => {
+          _ = lodash.sortBy(_, item => -1 * item.count / item.total)
+
+          const upperRank = []
+          let currentRank = []
+          let currentRatio = 1
+          _.forEach(item => {
+            const ratio = lodash.round(item.count / item.total, 4)
+            if (ratio < currentRatio) {
+              Array.prototype.push.apply(upperRank, currentRank)
+              currentRank = [item]
+              currentRatio = ratio
+            } else {
+              currentRank.push(item)
+            }
+
+            item.rank = upperRank.length + 1
+          })
+
+          // 生成热度榜
+          _.forEach(item => {
+            context.state.stockHeatRank[item.code] = item
+          })
+          resolve()
+        }).catch(_ => {
+          console.error(_)
+        })
+      })
+    },
+    getStockHeatRank(context, code) {
+      return context.state.stockHeatRank[code]
     }
   }
 }

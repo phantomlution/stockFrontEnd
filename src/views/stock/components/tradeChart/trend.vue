@@ -1,10 +1,20 @@
 <template>
   <lr-box style="min-height: 420px" v-loading="isLoading">
-    <div slot="title">
-      <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
-      <span style="display: inline-block; font-size: 14px;margin-left: 8px">
-        近一个月成交额: {{ average }} million
-      </span>
+    <div slot="title" style="display: flex">
+      <div style="margin-right: 16px;">
+        <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
+      </div>
+      <div v-if="rankItem && rankItem.code === code">
+        <el-tag><span style="color: red">RANK:&nbsp;</span>{{ rankItem.rank }}</el-tag>
+      </div>
+      <div v-if="stock && stock.code === code" style="margin-left: 8px">
+        <el-form :inline="true">
+          <el-tag><span style="color: red">3M:&nbsp;</span>{{ stock.oneSeasonAmount | amount }}</el-tag>
+          <el-tag><span style="color: red">1M:&nbsp;</span>{{ stock.oneMonthAmount | amount }}</el-tag>
+          <el-tag><span style="color: red">1W:&nbsp;</span>{{ stock.oneWeekAmount | amount }}</el-tag>
+          <el-tag><span style="color: red">ON:&nbsp;</span>{{ stock.oneNightAmount | amount }}</el-tag>
+        </el-form>
+      </div>
     </div>
     <k-line ref="chart" @dblclick="dblclick" />
   </lr-box>
@@ -29,6 +39,8 @@ export default {
     return {
       name: '',
       average: '',
+      stock: null,
+      rankItem: null,
       isLoading: false
     }
   },
@@ -36,6 +48,8 @@ export default {
     code() {
       this.updateChart()
     }
+  },
+  computed: {
   },
   beforeDestroy(){
     this.$bus.$off('surgeForShortChanged')
@@ -82,8 +96,8 @@ export default {
             this.renderChart({
               stock,
             })
+            this.loadRank(code)
           }
-
           resolve()
         }).catch(_ => {
           console.error(_)
@@ -91,22 +105,18 @@ export default {
         })
       })
     },
-    calculateAmount(data) {
-      this.average = ''
-      const recentDataList = lodash.takeRight(data, 30)
-      // 计算最近一个自然月的平均成交量
-      const average = lodash.round(lodash.mean(recentDataList.map(item => item.amountInMillion)), 2)
-      this.average = average
+    loadRank(code) {
+      this.$store.dispatch('getStockHeatRank', code).then(item => {
+        this.rankItem = item
+      })
     },
     renderChart({stock}) {
       let rawData = stock.result
       this.stock = stock
-      console.log(stock)
       this.code = stock.code
       this.name = stock.name
       const data = lodash.takeRight(rawData, 200)
       const dateList = data.map(item => item.date)
-      this.calculateAmount(data)
 
       // 聚合其他数据
       this.mergeData(stock, data, dateList).then(_ => {

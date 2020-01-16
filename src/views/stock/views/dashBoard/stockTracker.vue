@@ -12,6 +12,9 @@
           <el-tag effect="dark" type="primary">{{ stockPoolItem.weight }}x</el-tag>
         </template>
       </div>
+      <div>
+        <el-tag effect="dark" type="primary" v-if="heatRank">第{{ heatRank }}</el-tag>
+      </div>
     </div>
     <el-card :style="cardStyle">
       <div slot="header">
@@ -76,6 +79,7 @@ export default {
       stockPoolItem: this.item,
       interval: default_interval,
       statModel: null,
+      heatItem: null,
       defaultNotificationList: [],
       customNotificationList: [],
       defaultConditionList: [
@@ -94,6 +98,13 @@ export default {
     }
   },
   computed: {
+    heatRank() {
+      if (this.heatItem) {
+        return this.heatItem.rank
+      } else {
+        return ''
+      }
+    },
     cardStyle() {
       if (this.stockPoolItem.payAttention) {
         return {
@@ -120,6 +131,7 @@ export default {
       this.$set(this, 'stockPoolItem', newItem)
     })
     this.loadYesterdayData()
+    this.loadStockHeat()
   },
   beforeDestroy() {
     this.$bus.$off(this.eventKey)
@@ -132,6 +144,13 @@ export default {
       } else {
         this.interval = attention_interval
       }
+    },
+    loadStockHeat() { // 加载热度
+      const code = this.code
+      this.$store.dispatch('getStockHeatRank', code).then(item => {
+        this.heatItem = item
+      })
+
     },
     loadYesterdayData() {
       if (!this.yesterday) {
