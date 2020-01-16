@@ -212,7 +212,7 @@ export default {
 
 .lr-tooltip__item{
   display: flex;
-  width: 120px;
+  width: 140px;
   line-height: 20px;
 }
 

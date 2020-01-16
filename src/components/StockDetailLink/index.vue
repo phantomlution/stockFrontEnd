@@ -97,6 +97,7 @@ export default {
   },
   methods: {
     showStockDetail(tab) {
+      console.log(this.code)
       const code = this.code
       this.$bus.$emit('showStockDetail', {
         code,

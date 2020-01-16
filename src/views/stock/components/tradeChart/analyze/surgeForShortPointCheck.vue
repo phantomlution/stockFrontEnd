@@ -159,15 +159,20 @@ export default {
         console.error(_)
       })
     },
+    notifyChange(code) {
+      this.$bus.$emit('surgeForShortChanged', code)
+    },
     confirmPoint() {
       const formModel = this.model.formModel
       if (!formModel) {
         return
       }
+      const code = formModel.code
+
       this.$http.put(`/api/analyze/surgeForShort`, formModel).then(_ => {
         this.realCheckState = true
         this.$message.success('更新成功')
-//        this.closeDialog()
+        this.notifyChange(code)
       }).catch(_ => {
         console.error(_)
       })

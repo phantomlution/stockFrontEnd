@@ -1,11 +1,10 @@
 <template>
-  <lr-box>
+  <lr-box style="min-height: 420px" v-loading="isLoading">
     <div slot="title">
       <lr-stock-detail-link :add="showAdd" :code="code" :name="name" />
       <span style="display: inline-block; font-size: 14px;margin-left: 8px">
         近一个月成交额: {{ average }} million
       </span>
-      <el-button type="primary" :loading="isLoading" @click.stop="loadSurgeForShort">跌点分析</el-button>
     </div>
     <k-line ref="chart" @dblclick="dblclick" />
   </lr-box>
@@ -38,37 +37,39 @@ export default {
       this.updateChart()
     }
   },
+  beforeDestroy(){
+    this.$bus.$off('surgeForShortChanged')
+  },
   mounted() {
     this.updateChart()
+    this.$bus.$on('surgeForShortChanged', code => {
+      this.loadSurgeForShort(code)
+    })
   },
   methods: {
     updateChart() {
-      if (!this.code) {
+      const code = this.code
+      if (!code) {
         return
       }
-      this.isLoading = false
+      this.isLoading = true
       Promise.all([
-        this.$store.dispatch('loadStockData', this.code),
+        this.$store.dispatch('loadStockData', code),
       ]).then(stockList => {
-        const stock = stockList[0]
-
-        this.renderChart({
-          stock,
+        this.loadSurgeForShort(code).then(_ => {
+          this.isLoading = false
+        }).catch(_ => {
+          this.isLoading = false
+          console.error(_)
         })
       }).catch(_ => {
+        this.isLoading = false
         console.error(_)
       })
     },
-    loadSurgeForShort() {
-      // 同步时的代码
-      const code = this.code
+    loadSurgeForShort(code) {
       const stock = this.$store.state.data.stockMap.get(code)
-      if (this.isLoading) {
-        return
-      }
-
-      if (code === this.code) {
-        this.isLoading = true
+      return new Promise((resolve, reject) => {
         // 分析数据点个数
         const historyItemList = lodash.takeRight(stock.rawData, 200)
         const dateList = historyItemList.map(item => item.date)
@@ -76,19 +77,19 @@ export default {
           code,
           dateList
         }).then(_ => {
+          stock.surgeForShortList = _.filter(item => !!item.time)
           if (code === this.code) {
-            stock.surgeForShortList = _.filter(item => !!item.time)
-            this.isLoading = false
-            this.updateChart()
+            this.renderChart({
+              stock,
+            })
           }
+
+          resolve()
         }).catch(_ => {
           console.error(_)
-          if (code === this.code && stock === this.stock) {
-            this.isLoading = false
-            this.$message.error('分析失败')
-          }
+          reject(_)
         })
-      }
+      })
     },
     calculateAmount(data) {
       this.average = ''
