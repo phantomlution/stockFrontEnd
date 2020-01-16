@@ -93,6 +93,7 @@ export default {
       this.itemList = []
       this.loading = true
       this.analyzePromise().then(rawList => {
+        console.log(rawList)
         this.loading = false
         this.itemList = this.normalization(rawList)
       }).catch(_ => {

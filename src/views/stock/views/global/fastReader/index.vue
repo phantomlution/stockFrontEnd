@@ -80,6 +80,13 @@ export default {
       return this.collapseItemCount > 0
     }
   },
+  watch: {
+    collapse(val) {
+      if (!val) {
+        this.showView()
+      }
+    }
+  },
   mounted() {
     this.$bus.$on('fast_reader_add_live', item => {
       const model = {
