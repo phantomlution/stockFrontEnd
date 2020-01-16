@@ -1,6 +1,7 @@
 <template>
-  <div style="display: inline-block">
+  <div style="display: inline-block; position: relative">
     <el-date-picker v-model="date" :type="type" placeholder="请选择日期" :picker-options="pickerOptions" style="width: 160px" @change="dateChanged"/>
+    <span class="lr-date-picker__day">{{ date | week }}</span>
     <span style="margin-left: 8px">
       <el-button type="primary" @click.stop="toLast">前一日</el-button>
       <el-button type="primary" @click.stop="toNext">后一日</el-button>
@@ -48,6 +49,7 @@ export default {
     date(val) {
       this.$emit('input', val)
       this.dateChanged(val)
+      new Date().get
     }
   },
   computed: {
@@ -102,3 +104,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.lr-date-picker__day{
+  position: absolute;
+  left: 110px;
+  font-size: 12px;
+  top: 6px;
+  color: #bbb;
+}
+</style>

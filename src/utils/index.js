@@ -89,6 +89,9 @@ export default {
 
     const week = ['日', '一', '二', '三', '四', '五', '六']
     Vue.filter('week', val => {
+      if (!val) {
+        return ''
+      }
       return `周${week[$moment(val).toDate().getDay()] }`
     })
   }
