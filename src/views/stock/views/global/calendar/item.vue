@@ -1,5 +1,5 @@
 <template>
-  <div class="lr-financial-calendar--item">
+  <div class="lr-financial-calendar--item" :style="containerStyle">
     <div class="lr-financial-calendar--item--time">
       <span>{{ item.time }}</span>
     </div>
@@ -19,6 +19,13 @@ const props = {
 export default {
   props,
   computed: {
+    containerStyle() {
+      const style = {}
+      if (this.item.notify) {
+        style['background'] = '#fdf6ec'
+      }
+      return style
+    },
     itemStyle() {
       const style = {}
       if (this.item.importantLevel === '3') {

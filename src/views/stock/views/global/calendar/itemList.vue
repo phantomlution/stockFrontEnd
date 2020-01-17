@@ -34,9 +34,16 @@ const ignoredDataRegexList = [ // 忽略数据
   new FilterRule('库存变动', ['美国']),
   new FilterRule('失业金人数', ['美国']),
   new FilterRule('钻井总数', ['美国']),
-  new FilterRule('零售销售', ['德国']),
+  new FilterRule('零售', ['德国', '英国']),
   new FilterRule('批发库存月率', ['美国']),
   new FilterRule('BBA房屋购买', ['英国']),
+  new FilterRule('贸易帐', ['意大利']),
+  new FilterRule('CPI', ['欧元']),
+  new FilterRule('新屋', ['美国']),
+  new FilterRule('营建', ['美国']),
+  new FilterRule('信心', ['美国']),
+  new FilterRule('工业', ['美国']),
+  new FilterRule('职位', ['美国'])
 ]
 
 const props = {
@@ -81,6 +88,9 @@ export default {
       const eventList = []
       const ignoredEventList = []
       this.list.forEach(item => {
+        if (item.name.indexOf('GDP') !== -1) {
+          item.notify = true
+        }
         if (item.type === 'event') {
           eventList.push(item)
         } else if(item.type === 'data') {

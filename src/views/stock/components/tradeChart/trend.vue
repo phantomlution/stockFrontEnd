@@ -22,6 +22,7 @@
 
 <script>
 import lodash from 'lodash'
+import { getDeliveryDate } from '@/store/option/utils'
 
 const props = {
   code: {
@@ -150,36 +151,67 @@ export default {
       })
     },
     getAssistantLine(stock) {
-
-//      view.line().position('timestamp*close').color('#4FAAEB').tooltip('close*percent').size(2)
-
-      // 拉高出货点
-      const surgeForShortList = stock.surgeForShortList || []
-      // 追加限售解禁信息
-      const restrictSellList = stock.base.restrict_sell_list || []
-      // 追加高亮点
-      const highlightPointList = [] //this.config ? this.config.highlight || [] : []
-
-      // TODO 添加涨停，跌停到辅助线中 ？？
-
-      const pointList = []
-      Array.prototype.push.apply(pointList, surgeForShortList.map(item => ({ date: item.date, text: '拉高出货' })))
-      Array.prototype.push.apply(pointList, restrictSellList.map(item => ({ date: item.date, text: '解禁' })))
-      Array.prototype.push.apply(pointList, highlightPointList.map(item => ({ date: item.date, text: '当前点' })))
-
-      const groupResult = lodash.groupBy(pointList, item => item.date)
+      const base = stock.base
+      const type = base.type
       const assistantLineList = []
-      Object.keys(groupResult).forEach(date => {
-        const position = {
-          start: [date, 'min'],
-          end: [date, 'max']
-        }
 
-        assistantLineList.push({
-          position,
-          content: groupResult[date].map(item => item.text)
+      if (type === 'stock') {
+        // 拉高出货点
+        const surgeForShortList = stock.surgeForShortList || []
+        // 追加限售解禁信息
+        const restrictSellList = stock.base.restrict_sell_list || []
+        // 追加高亮点
+        const highlightPointList = [] //this.config ? this.config.highlight || [] : []
+
+        // TODO 添加涨停，跌停到辅助线中 ？？
+
+        const pointList = []
+        Array.prototype.push.apply(pointList, surgeForShortList.map(item => ({ date: item.date, text: '拉高出货' })))
+        Array.prototype.push.apply(pointList, restrictSellList.map(item => ({ date: item.date, text: '解禁' })))
+        Array.prototype.push.apply(pointList, highlightPointList.map(item => ({ date: item.date, text: '当前点' })))
+
+        const groupResult = lodash.groupBy(pointList, item => item.date)
+
+        Object.keys(groupResult).forEach(date => {
+          const position = {
+            start: [date, 'min'],
+            end: [date, 'max']
+          }
+
+          assistantLineList.push({
+            position,
+            content: groupResult[date].map(item => item.text)
+          })
         })
-      })
+      } else if (type === 'etf') {
+        const rawData = stock.rawData
+        const startMonthList = []
+        rawData.forEach(item => {
+          const startMonth = this.$moment(item.date).format('YYYY-MM')
+          if (startMonthList.indexOf(startMonth) === -1) {
+            startMonthList.push(startMonth)
+          }
+        })
+        const deliveryDate = base.delivery.split(',')
+        const deliveryItemList = startMonthList.map(item => {
+          return {
+            dayOfWeek: deliveryDate[1],
+            dayOfWeekOrder: deliveryDate[0],
+            startMonth: item
+          }
+        })
+        // 提取交割日
+        const deliveryDateList = deliveryItemList.map(item => getDeliveryDate(item, item.startMonth))
+        deliveryDateList.forEach(item => {
+          assistantLineList.push({
+            position: {
+              start: [item, 'min'],
+              end: [item, 'max']
+            },
+            content: '交割日'
+          })
+        })
+      }
 
       return assistantLineList
     },
