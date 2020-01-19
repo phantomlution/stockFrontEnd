@@ -14,7 +14,6 @@
           <el-tab-pane label="大事件" name="bigEvents"></el-tab-pane>
           <el-tab-pane label="分析仪" name="stockDetail" ></el-tab-pane>
           <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
-          <el-tab-pane label="宏观数据" name="宏观数据"></el-tab-pane>
           <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
         </el-tabs>
       </div>
@@ -32,9 +31,6 @@
         <div v-if="currentTab === 'dashBoard'">
           <dash-board />
         </div>
-        <div v-if="currentTab === '宏观数据'">
-          <futurePredict />
-        </div>
         <div v-if="currentTab === '统计分析'">
           <analyze-panel />
         </div>
@@ -47,7 +43,6 @@
 import stockDetail from '@/views/stock/views/stock'
 import dashBoard from '@/views/stock/views/dashBoard/index'
 import bigEvents from '@/views/stock/views/bigEvents/index'
-import futurePredict from '@/views/stock/views/futureEconomyPredict/index'
 import analyzePanel from '@/views/stock/views/analyze/index'
 import globalItem from '@/views/stock/views/global/index'
 import lrHint from '@/views/stock/views/global/hint/index'
@@ -59,7 +54,6 @@ export default {
     stockDetail,
     dashBoard,
     bigEvents,
-    futurePredict,
     analyzePanel,
     globalItem,
     lrHint,

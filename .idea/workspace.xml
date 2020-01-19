@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/chartTemplate.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/index.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/countryStat/stat.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/currencyInflation.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/index.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/selfService.vue" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/views/stock/views/futureEconomyPredict/treasurySecurity.vue" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/App.vue" afterPath="$PROJECT_DIR$/src/App.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -61,12 +68,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="historyTick.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="historyTick.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="475">
               <caret line="164" column="46" lean-forward="false" selection-start-line="164" selection-start-column="46" selection-end-line="164" selection-end-column="46" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/App.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="67" column="10" lean-forward="true" selection-start-line="67" selection-start-column="10" selection-end-line="67" selection-end-column="10" />
+              <folding>
+                <element signature="e#1246#1297#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,16 +98,6 @@
               <folding>
                 <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="utils.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/store/option/utils.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="10" column="70" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="70" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -162,7 +171,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>visibleState</find>
       <find>自助分析</find>
       <find>showDetailItem</find>
       <find>analyzePromise</find>
@@ -192,6 +200,7 @@
       <find>lr-quote</find>
       <find>lr-quote__item</find>
       <find>lr-quote__item--price</find>
+      <find>宏观数据</find>
     </findStrings>
     <replaceStrings>
       <replace>simplifySecondPhaseTrendData</replace>
@@ -253,7 +262,6 @@
         <option value="$PROJECT_DIR$/src/utils/ChartUtils.js" />
         <option value="$PROJECT_DIR$/src/components/StickBar/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue" />
-        <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/itemSearch.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
@@ -289,6 +297,7 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/historyTick.vue" />
+        <option value="$PROJECT_DIR$/src/App.vue" />
       </list>
     </option>
   </component>
@@ -368,7 +377,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="store" />
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fancyDashboard" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="stock" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -387,10 +426,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="store" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="option" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -751,14 +786,7 @@
       <workItem from="1579136210094" duration="9090000" />
       <workItem from="1579224258218" duration="2113000" />
       <workItem from="1579345402611" duration="148000" />
-      <workItem from="1579412724970" duration="3259000" />
-    </task>
-    <task id="LOCAL-00265" summary="优化预测的策略">
-      <created>1578576002011</created>
-      <option name="number" value="00265" />
-      <option name="presentableId" value="LOCAL-00265" />
-      <option name="project" value="LOCAL" />
-      <updated>1578576002011</updated>
+      <workItem from="1579412724970" duration="3508000" />
     </task>
     <task id="LOCAL-00266" summary="操作效率提升">
       <created>1578623065089</created>
@@ -1096,11 +1124,18 @@
       <option name="project" value="LOCAL" />
       <updated>1579417682206</updated>
     </task>
-    <option name="localTasksCounter" value="314" />
+    <task id="LOCAL-00314" summary="修复历史K线逻辑">
+      <created>1579420495617</created>
+      <option name="number" value="00314" />
+      <option name="presentableId" value="LOCAL-00314" />
+      <option name="project" value="LOCAL" />
+      <updated>1579420495617</updated>
+    </task>
+    <option name="localTasksCounter" value="315" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1027237000" />
+    <option name="totallyTimeSpent" value="1027486000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1167,7 +1202,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="前端集成拉高出货点强确认，用于生成分析报告" />
     <MESSAGE value="拉高出货点前端逻辑调整" />
     <MESSAGE value="修正fastReader点击区域的问题" />
     <MESSAGE value="优化tooltip显示" />
@@ -1192,7 +1226,8 @@
     <MESSAGE value="etf期权集成" />
     <MESSAGE value="集成离岸人民币模块" />
     <MESSAGE value="页面样式优化" />
-    <option name="LAST_COMMIT_MESSAGE" value="页面样式优化" />
+    <MESSAGE value="修复历史K线逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="修复历史K线逻辑" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1318,13 +1353,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="31" column="0" lean-forward="false" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1102">
-          <caret line="66" column="4" lean-forward="false" selection-start-line="66" selection-start-column="4" selection-end-line="66" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -1586,6 +1614,16 @@
         <state relative-caret-position="475">
           <caret line="164" column="46" lean-forward="false" selection-start-line="164" selection-start-column="46" selection-end-line="164" selection-end-column="46" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="67" column="10" lean-forward="true" selection-start-line="67" selection-start-column="10" selection-end-line="67" selection-end-column="10" />
+          <folding>
+            <element signature="e#1246#1297#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
