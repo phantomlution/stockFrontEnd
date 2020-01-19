@@ -161,8 +161,8 @@ export default {
           } else {
             result.push({
               time: `${ currentMinute }:00`,
-              price: currentMinutePriceList[currentMinutePriceList.length -1].price,
-              amount: currentMinutePriceList[currentMinutePriceList.length -1].amount
+              price: currentMinutePriceList[0].price,
+              amount: currentMinutePriceList[0].amount
             })
           }
         }
