@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="80a68652-b4e9-43e7-b3d6-4e68822d3ffc" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" afterPath="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/calendar/item.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/calendar/item.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/calendar/itemList.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/calendar/itemList.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" afterPath="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="trend.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="trend.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4020">
-              <caret line="214" column="0" lean-forward="true" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+            <state relative-caret-position="380">
+              <caret line="233" column="7" lean-forward="false" selection-start-line="233" selection-start-column="7" selection-end-line="233" selection-end-column="7" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
@@ -51,6 +49,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="228">
+              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/store/option/index.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -64,7 +74,7 @@
       <file leaf-file-name="utils.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/store/option/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
+            <state relative-caret-position="190">
               <caret line="10" column="70" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="70" />
               <folding />
             </state>
@@ -84,7 +94,7 @@
       <file leaf-file-name="index.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
+            <state relative-caret-position="323">
               <caret line="17" column="7" lean-forward="false" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
               <folding>
                 <element signature="n#style#0;n#stock-history-tick#0;n#lr-stick-bar#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -107,7 +117,7 @@
       <file leaf-file-name="stockHeat.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/analyzeModel/stockHeat.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
+            <state relative-caret-position="741">
               <caret line="39" column="5" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="5" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -119,7 +129,7 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/store/data/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2622">
+            <state relative-caret-position="2527">
               <caret line="138" column="20" lean-forward="false" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="20" />
               <folding>
                 <element signature="e#0#35#0" expanded="true" />
@@ -140,12 +150,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>legend</find>
-      <find>surgeForShort</find>
-      <find>startAnalyze</find>
-      <find>customizeToolTip</find>
-      <find>rankPercent</find>
-      <find>stockIndexPercent</find>
       <find>visibleState</find>
       <find>自助分析</find>
       <find>showDetailItem</find>
@@ -170,6 +174,12 @@
       <find>getDeliveryDate</find>
       <find>ignoredDataRegexList</find>
       <find>getAssistantLine</find>
+      <find>XAU</find>
+      <find>quote</find>
+      <find>loadHistoryQuote</find>
+      <find>lr-quote</find>
+      <find>lr-quote__item</find>
+      <find>lr-quote__item--price</find>
     </findStrings>
     <replaceStrings>
       <replace>simplifySecondPhaseTrendData</replace>
@@ -233,7 +243,6 @@
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue" />
         <option value="$PROJECT_DIR$/src/App.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/stockPriceChart.vue" />
-        <option value="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/itemSearch.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/stock/index.vue" />
         <option value="$PROJECT_DIR$/src/store/option/algorithm.js" />
@@ -267,6 +276,7 @@
         <option value="$PROJECT_DIR$/src/views/stock/views/global/calendar/itemList.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/views/global/calendar/item.vue" />
         <option value="$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue" />
+        <option value="$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue" />
       </list>
     </option>
   </component>
@@ -304,6 +314,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -372,8 +384,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -727,14 +737,9 @@
       <workItem from="1579083384866" duration="13471000" />
       <workItem from="1579105034348" duration="434000" />
       <workItem from="1579136210094" duration="9090000" />
-      <workItem from="1579224258218" duration="1979000" />
-    </task>
-    <task id="LOCAL-00262" summary="页面优化">
-      <created>1578573552979</created>
-      <option name="number" value="00262" />
-      <option name="presentableId" value="LOCAL-00262" />
-      <option name="project" value="LOCAL" />
-      <updated>1578573552979</updated>
+      <workItem from="1579224258218" duration="2113000" />
+      <workItem from="1579345402611" duration="148000" />
+      <workItem from="1579412724970" duration="1934000" />
     </task>
     <task id="LOCAL-00263" summary="分散前端请求实时数据时的数据密度，相对均匀分散到15秒内">
       <created>1578575173421</created>
@@ -1072,11 +1077,18 @@
       <option name="project" value="LOCAL" />
       <updated>1579182165440</updated>
     </task>
-    <option name="localTasksCounter" value="311" />
+    <task id="LOCAL-00311" summary="etf期权集成">
+      <created>1579240301537</created>
+      <option name="number" value="00311" />
+      <option name="presentableId" value="LOCAL-00311" />
+      <option name="project" value="LOCAL" />
+      <updated>1579240301537</updated>
+    </task>
+    <option name="localTasksCounter" value="312" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1023696000" />
+    <option name="totallyTimeSpent" value="1025912000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1088,10 +1100,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="773" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="773" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3616505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3592233" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36609685" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1123,11 +1135,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32763532" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4002849" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23931624" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23931624" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3616505" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36003235" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36609685" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36609685" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -1143,7 +1155,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="标签名称优化" />
     <MESSAGE value="组件逻辑优化" />
     <MESSAGE value="汇通网历史报价提取" />
     <MESSAGE value="前端集成拉高出货点强确认，用于生成分析报告" />
@@ -1168,7 +1179,8 @@
     <MESSAGE value="拉高出货点自动更新" />
     <MESSAGE value="日期展示优化" />
     <MESSAGE value="集成热度榜" />
-    <option name="LAST_COMMIT_MESSAGE" value="集成热度榜" />
+    <MESSAGE value="etf期权集成" />
+    <option name="LAST_COMMIT_MESSAGE" value="etf期权集成" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1202,13 +1214,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="35" column="7" lean-forward="false" selection-start-line="35" selection-start-column="7" selection-end-line="35" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="58" column="38" lean-forward="false" selection-start-line="58" selection-start-column="38" selection-end-line="58" selection-end-column="38" />
         </state>
       </provider>
     </entry>
@@ -1434,7 +1439,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="817">
           <caret line="52" column="43" lean-forward="false" selection-start-line="52" selection-start-column="43" selection-end-line="52" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1442,9 +1446,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
           <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1452,9 +1453,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" column="53" lean-forward="false" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
-          <folding>
-            <element signature="e#445#499#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1462,9 +1460,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/calendar/itemList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="91" column="28" lean-forward="false" selection-start-line="91" selection-start-column="28" selection-end-line="91" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/calendar/item.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="233" column="7" lean-forward="false" selection-start-line="233" selection-start-column="7" selection-end-line="233" selection-end-column="7" />
           <folding>
-            <element signature="e#377#441#0" expanded="false" />
+            <element signature="n#style#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#el-tag#0;n#div#1;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#342#348#0" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#el-tag#0;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#549#555#0" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#el-tag#1;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#654#660#0" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#el-tag#2;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#758#764#0" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#el-tag#3;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#861#867#0" expanded="true" />
+            <element signature="e#1044#1071#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/option/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="5" column="47" lean-forward="false" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/option/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="70" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="70" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1476,25 +1524,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/calendar/itemList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="91" column="28" lean-forward="false" selection-start-line="91" selection-start-column="28" selection-end-line="91" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/calendar/item.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" column="7" lean-forward="true" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
+        <state relative-caret-position="323">
           <caret line="17" column="7" lean-forward="false" selection-start-line="17" selection-start-column="7" selection-end-line="17" selection-end-column="7" />
           <folding>
             <element signature="n#style#0;n#stock-history-tick#0;n#lr-stick-bar#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -1513,7 +1545,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/views/stock/views/stock/analyzeModel/stockHeat.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
+        <state relative-caret-position="741">
           <caret line="39" column="5" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="5" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -1523,7 +1555,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/store/data/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2622">
+        <state relative-caret-position="2527">
           <caret line="138" column="20" lean-forward="false" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="20" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
@@ -1531,41 +1563,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/option/utils.js">
+    <entry file="file://$PROJECT_DIR$/src/views/stock/views/global/quote/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="10" column="70" lean-forward="false" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/option/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="5" column="47" lean-forward="false" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/views/stock/components/tradeChart/trend.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4020">
-          <caret line="214" column="0" lean-forward="true" selection-start-line="214" selection-start-column="0" selection-end-line="214" selection-end-column="0" />
+        <state relative-caret-position="228">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#el-tag#0;n#div#1;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#342#348#0" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#el-tag#0;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#549#555#0" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#el-tag#1;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#654#660#0" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#el-tag#2;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#758#764#0" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#el-tag#3;n#el-form#0;n#div#2;n#div#0;n#lr-box#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="e#861#867#0" expanded="true" />
-            <element signature="e#1044#1071#0" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

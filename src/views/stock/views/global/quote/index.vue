@@ -1,10 +1,20 @@
 <template>
-  <div class="lr-quote" v-show="visible">
-    <div class="lr-quote__item">
-      <div class="lr-quote__item--label">现货黄金</div>
-      <div class="lr-quote__item--price">{{ quote.xau.price }}</div>
-      <div class="lr-quote__item--change">
-        <lr-number-tag :amount="quote.xau.diff" ></lr-number-tag>
+  <div style="display: inline-block">
+    <div class="lr-quote" v-show="visible">
+      <div class="lr-quote__item">
+        <div class="lr-quote__item--label">现货黄金</div>
+        <div class="lr-quote__item--price">{{ quote.xau.price }}</div>
+        <div class="lr-quote__item--change">
+          <lr-number-tag :amount="quote.xau.diff" ></lr-number-tag>
+        </div>
+      </div>
+      <el-divider direction="vertical"></el-divider>
+      <div class="lr-quote__item">
+        <div class="lr-quote__item--label">离岸人民币</div>
+        <div class="lr-quote__item--price">{{ quote.usdcnh.price }}</div>
+        <div class="lr-quote__item--change">
+          <lr-number-tag :amount="quote.usdcnh.diff" ></lr-number-tag>
+        </div>
       </div>
     </div>
   </div>
@@ -23,6 +33,10 @@ export default {
         xau: { // 现货黄金
           price: null,
           diff: 0
+        },
+        usdcnh: { // 美元兑离岸人民币
+          price: null,
+          diff: 0
         }
       }
     }
@@ -36,7 +50,7 @@ export default {
     // 汇通网推送的数据: ['XAU','XAG','EURUSD','USD','CONC','1A0001','NIKKI','FTSE','DAX','NASDAQ','GBPUSD','USDJPY','AUDUSD','USDCAD','USDCNY']
 
     // 目前只提取美元数据
-    const quoteItemList = ['XAU']
+    const quoteItemList = ['XAU', 'USDCNH']
 
     this.doInit(quoteItemList).then(_ => {
       this.initEventSource(quoteItemList)
@@ -55,12 +69,12 @@ export default {
       return Promise.all(quoteItemList.map(item => this.loadHistoryQuote(item)))
     },
     loadHistoryQuote(code) {
-      code = code.toLowerCase()
+      const localCodeKey = code.toLowerCase()
       return this.$http.get(`/api/data/quote`, {
         code
       }).then(_ => {
-        this.quote[code].price = _.current
-        this.quote[code].diff = increment(_.current, _.pre_close)
+        this.quote[localCodeKey].price = lodash.round(_.current, 2)
+        this.quote[localCodeKey].diff = increment(_.current, _.pre_close)
       })
       // 加载历史报价数据
     },
@@ -104,10 +118,10 @@ export default {
 <style lang="scss">
 .lr-quote{
   border: 1px solid #DCDFE6;
-  display: inline-block;
+  display: flex;
   background: #FFFFFF;
   border-radius: 15px;
-  padding: 7px 16px;
+  padding: 7px 8px;
   font-size: 11px;
   &:hover{
     color: #409EFF;
@@ -115,18 +129,24 @@ export default {
     background-color: #ecf5ff;
     cursor: pointer;
   }
+  .el-divider--vertical{
+    height: 1.5em;
+  }
 }
 
 .lr-quote__item{
   display: flex;
+  padding: 0 4px;
+  & + .lr-quote__item{
+  }
 }
 
 .lr-quote__item--label{
-  width: 60px;
   font-weight: 400;
 }
 .lr-quote__item--price{
-  width: 54px;
+  margin-left: 12px;
+  margin-right: 6px;
   font-weight: 400;
 }
 
