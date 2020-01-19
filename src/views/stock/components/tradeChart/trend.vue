@@ -9,10 +9,10 @@
       </div>
       <div v-if="stock && stock.code === code" style="margin-left: 8px">
         <el-form :inline="true">
-          <el-tag><span style="color: red">3M:&nbsp;</span>{{ stock.oneSeasonAmount | amount }}</el-tag>
-          <el-tag><span style="color: red">1M:&nbsp;</span>{{ stock.oneMonthAmount | amount }}</el-tag>
-          <el-tag><span style="color: red">1W:&nbsp;</span>{{ stock.oneWeekAmount | amount }}</el-tag>
-          <el-tag><span style="color: red">ON:&nbsp;</span>{{ stock.oneNightAmount | amount }}</el-tag>
+          <el-tag v-if="stock.oneSeasonAmount"><span style="color: red">3M:&nbsp;</span>{{ stock.oneSeasonAmount | amount }}</el-tag>
+          <el-tag v-if="stock.oneMonthAmount"><span style="color: red">1M:&nbsp;</span>{{ stock.oneMonthAmount | amount }}</el-tag>
+          <el-tag v-if="stock.oneWeekAmount"><span style="color: red">1W:&nbsp;</span>{{ stock.oneWeekAmount | amount }}</el-tag>
+          <el-tag v-if="stock.oneNightAmount"><span style="color: red">ON:&nbsp;</span>{{ stock.oneNightAmount | amount }}</el-tag>
         </el-form>
       </div>
     </div>
