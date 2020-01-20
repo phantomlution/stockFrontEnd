@@ -15,6 +15,7 @@
           <el-tab-pane label="分析仪" name="stockDetail" ></el-tab-pane>
           <el-tab-pane label="DashBoard" name="dashBoard"></el-tab-pane>
           <el-tab-pane label="统计分析" name="统计分析"></el-tab-pane>
+          <el-tab-pane label="交易策略" name="交易策略"></el-tab-pane>
         </el-tabs>
       </div>
       <div>
@@ -34,6 +35,9 @@
         <div v-if="currentTab === '统计分析'">
           <analyze-panel />
         </div>
+        <div v-if="currentTab === '交易策略'">
+          <market-strategy />
+        </div>
       </div>
     </div>
   </div>
@@ -48,6 +52,7 @@ import globalItem from '@/views/stock/views/global/index'
 import lrHint from '@/views/stock/views/global/hint/index'
 import chessManual from '@/views/stock/views/chessManual/index'
 import fastReader from '@/views/stock/views/global/fastReader/index'
+import marketStrategy from '@/views/stock/views/marketStrategy/index'
 
 export default {
   components: {
@@ -58,7 +63,8 @@ export default {
     globalItem,
     lrHint,
     chessManual,
-    fastReader
+    fastReader,
+    marketStrategy
   },
   data() {
     return {
