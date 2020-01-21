@@ -6,9 +6,9 @@
         <el-cascader :options="optionList" v-model="formModel.movie" style="width: 300px"></el-cascader>
       </el-form-item>
       <el-form-item label="时间" prop="time" :rules="[ { required: true }]">
-        <el-time-picker v-model="formModel.time" format="HH:mm"></el-time-picker>
+        <el-time-picker v-model="formModel.time" format="HH:mm:ss"></el-time-picker>
       </el-form-item>
-      <el-form-item label="内容" props="content">
+      <el-form-item label="内容" prop="content">
         <lr-editor v-model="formModel.content" style="height: 55vh"></lr-editor>
       </el-form-item>
     </el-form>
@@ -43,7 +43,7 @@ export default {
             movieId: movie[0],
             season: movie[1],
             episode: movie[2],
-            time: this.formModel.time.getTime(),
+            time: this.$moment(this.formModel.time).format('HH:mm:ss'),
             content: this.formModel.content
           }
           this.$http.post(`/api/movie/comment`, model).then(_ => {

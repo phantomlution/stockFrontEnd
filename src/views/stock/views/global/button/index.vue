@@ -52,7 +52,7 @@ export default {
 <style lang="scss">
 .lr-global-button{
   position: fixed;
-  right: 32px;
+  right: 16px;
   top: 16px;
   z-index: 100
 }

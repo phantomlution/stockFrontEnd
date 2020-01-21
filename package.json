@@ -1,8 +1,8 @@
 {
-  "name": "@shellybits/v-chacheli",
-  "version": "0.1.1",
-  "description": "A fancy Vue.js dashboard designer",
-  "author": "shellyBits",
+  "name": "phantomlution/financial",
+  "version": "1.0.0",
+  "description": "Native Financial Framework",
+  "author": "phatomlution",
   "contributors": [
     {
       "name": "Daniel Ritz",

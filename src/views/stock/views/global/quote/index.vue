@@ -10,7 +10,7 @@
       </div>
       <el-divider direction="vertical"></el-divider>
       <div class="lr-quote__item">
-        <div class="lr-quote__item--label">离岸人民币</div>
+        <div class="lr-quote__item--label">美元离岸人民币</div>
         <div class="lr-quote__item--price">{{ quote.usdcnh.price }}</div>
         <div class="lr-quote__item--change">
           <lr-number-tag :amount="quote.usdcnh.diff" ></lr-number-tag>
